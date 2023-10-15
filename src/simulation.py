@@ -3,6 +3,16 @@ import random
 from src import growth_cone
 
 
+def bounding_box(gc, substrate):
+    # Calculate the bounds of the bounding box
+    x_min = max(0, int(gc.position[0] - gc.size))
+    x_max = min(substrate.cols - 1, int(gc.position[0] + gc.size))
+    y_min = max(0, int(gc.position[1] - gc.size))
+    y_max = min(substrate.rows - 1, int(gc.position[1] + gc.size))
+
+    return x_min, x_max, y_min, y_max
+
+
 def clamp_to_boundaries(growth_cone, substrate, xt_direction, yt_direction):
     new_x = growth_cone.position[0] + xt_direction
     new_y = growth_cone.position[1] + yt_direction
@@ -22,9 +32,9 @@ def step_decision(growth_cone, substrate):
     # TODO: check if matlab does it this way too.
     # Randomly step in xt and yt directions -1, 0, +1
     xt_direction = \
-    random.choices([-1, 0, 1], weights=[(1 - x_step_probability) / 3, 1 / 3, x_step_probability / 3])[0]
+        random.choices([-1, 0, 1], weights=[(1 - x_step_probability) / 3, 1 / 3, x_step_probability / 3])[0]
     yt_direction = \
-    random.choices([-1, 0, 1], weights=[(1 - y_step_probability) / 3, 1 / 3, y_step_probability / 3])[0]
+        random.choices([-1, 0, 1], weights=[(1 - y_step_probability) / 3, 1 / 3, y_step_probability / 3])[0]
 
     # TODO: step size
     # Calculate new potential
@@ -51,11 +61,14 @@ def calculate_probability(old_potential, new_potential):
 def calculate_potential_at(growth_cone, substrate, position, options):
     pass
 
+
 def calculate_forward_potential(growth_cone, substrate):
     pass
 
+
 def calculate_reverse_potential(growth_cone, substrate):
     pass
+
 
 def calculate_ff_interaction(growth_cone, substrate):
     pass
@@ -73,7 +86,7 @@ class Simulation:
         for step in range(self.num_steps):
             # Update growth cones
             for cone in self.growth_cones:
-                step_decision(cone,self.substrate)
+                step_decision(cone, self.substrate)
 
     def initialize_growth_cones(self):
         # TODO: position and signal protein configuration
