@@ -5,26 +5,18 @@ class Substrate:
     def __init__(self, rows, cols, config_dict=None):
         self.rows = rows
         self.cols = cols
+        self.type = "wedges"
         self.config_dict = config_dict or {}  # Use the provided configuration dictionary or an empty dictionary
 
         # Initialize the grid with 3D array to store ligand and receptor values
-        self.grid = np.zeros((rows, cols, 2), dtype=float)
+        self.ligands = np.zeros((rows, cols), dtype=float)
+        self.receptors = np.zeros((rows, cols), dtype=float)
+
         self.initialize_substrate()  # Initialize substrate based on the initial configuration
 
-    def set_ligand(self, x, y, value):
-        self.grid[y][x][0] = value
-
-    def set_receptor(self, x, y, value):
-        self.grid[y][x][1] = value
-
-    def get_ligand(self, x, y):
-        return self.grid[y][x][0]
-
-    def get_receptor(self, x, y):
-        return self.grid[y][x][1]
-
     def initialize_substrate(self):
-        substrate_type = self.config_dict.get("substrate_type")
+        # substrate_type = self.config_dict.get("substrate_type")
+        substrate_type = self.type
 
         if substrate_type == "continuous_gradients":
             self.initialize_continuous_gradients()
@@ -34,55 +26,61 @@ class Substrate:
             raise ValueError("Invalid substrate type specified in the configuration dictionary.")
 
     def initialize_continuous_gradients(self):
-        rows, cols, _ = self.grid.shape
-        min_value = 0.0
-        max_value = 1.0  # Adjust these values according to your requirements
-
+        rows, cols, _ = self.ligands.shape
         # Calculate the ligand and receptor gradients
-        ligand_gradient = np.linspace(1.0, 0.0, cols)
-        receptor_gradient = np.linspace(0.0, 1.0, cols)
+        ligand_gradient = np.linspace(0.0, 1.0, self.cols)
+        receptor_gradient = np.linspace(1.0, 0.0, self.cols)
 
-        for row in range(rows):
+        for row in range(self.rows):
             # Set the ligand and receptor values in each cell based on the gradients
-            self.grid[row, :, 0] = min_value + ligand_gradient * (max_value - min_value)
-            self.grid[row, :, 1] = min_value + receptor_gradient * (max_value - min_value)
+            self.ligands[row, :] = ligand_gradient
+            self.receptors[row, :] = receptor_gradient
 
     def initialize_wedges(self):
-
-        # TODO: fix this
-
+        rows, cols, = self.ligands.shape
         # Extract configuration parameters
+        """
         min_edge_length = self.config_dict.get("min_edge_length")
         max_edge_length = self.config_dict.get("max_edge_length")
+        """
+        min_edge_length = 2
+        max_edge_length = 40
+        ratio = (cols / max_edge_length) * 2
 
         # Calculate the number of wedges that fit in the substrate along the x-axis
-        num_wedges_x = self.cols // max_edge_length
+        num_wedges_x = self.cols // (max_edge_length + min_edge_length + 2)
 
-        # Initialize the substrate with wedges
-        for i in range(num_wedges_x):
-            x_start = i * max_edge_length
-            x_end = (i + 1) * max_edge_length
 
-            # Create Cell objects with ligand and receptor values and set them in the grid
-            ligament = 1.0
-            receptor = 1.0
-            for y in range(self.rows):
-                for x in range(x_start, x_end):
-                    self.set_ligand(x, y, 1.0 - ligament)
-                    self.set_receptor(x, y, receptor)
+        # TODO: Fit extra cones to bottom, fix ligands, currently only receptors correct
+        for n in range(num_wedges_x):
 
-            # Adjust ligand and receptor values for the next wedge
-            ligament = 1.0 - ligament
-            receptor = 1.0 - receptor
+            # Make upper triangle
+            start_row_upperhalf = n * (max_edge_length + min_edge_length) # Adjust the start_row calculation
+            end_row_upperhalf = start_row_upperhalf + (max_edge_length // 2)  # Adjust the end_row calculation
+            for i in range(start_row_upperhalf, end_row_upperhalf):
+                fill_until = int((i - start_row_upperhalf + 1) * ratio)
+                self.receptors[i, :fill_until] = 1.0  # Adjust the slicing to fill only up to 'fill_until'
+                self.ligands[i, :fill_until] = 1.0
+
+            # Make the rectangle in the middle
+            if min_edge_length > 1:
+                for i in range(end_row_upperhalf, end_row_upperhalf + min_edge_length - 1):
+                    self.receptors[i, :] = 1.0
+                    self.ligands[i, :] = 1.0
+                end_row_upperhalf += min_edge_length - 1
+
+            # Make lower triangle
+            start_row_lowerhalf = end_row_upperhalf - 1
+            end_row_lowerhalf = start_row_lowerhalf + (max_edge_length // 2)
+            for i in range(start_row_lowerhalf, end_row_lowerhalf + 1):
+                fill_until = int((end_row_lowerhalf - i + 1) * ratio)
+                self.receptors[i, :fill_until] = 1.0  # Adjust the slicing to fill only up to 'fill_until'
+                self.ligands[i, :fill_until] = 1.0
 
     def __str__(self):
-        # Customize the string representation of the Substrate
-        result = ""
-        for y in range(self.rows):
-            row_str = ""
-            for x in range(self.cols):
-                ligand = self.get_ligand(x, y)
-                receptor = self.get_receptor(x, y)
-                row_str += f"({ligand},{receptor}) "
-            result += row_str + "\n"
+        # Create a string representation of the substrate
+        result = "Ligands:\n"
+        result += str(self.ligands) + "\n\n"
+        result += "Receptors:\n"
+        result += str(self.receptors)
         return result

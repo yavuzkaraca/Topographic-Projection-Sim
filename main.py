@@ -1,19 +1,13 @@
-from substrate import Substrate  # Import the Substrate class from your substrate module
+from src.substrate import Substrate  # Import the Substrate class from your substrate module
+from src.visualization import visualize_substrate
+import matplotlib.pyplot as plt
 
 def run():
 
-
-    # Example configuration for initializing wedges
-    config_dict = {
-        "substrate_type": "wedges",
-        "min_edge_length": 3,  # Adjust the edge lengths as needed
-        "max_edge_length": 6,
-    }
-
     # Create a Substrate instance with your desired rows and columns
-    rows = 6
-    cols = 30
-    substrate = Substrate(rows, cols, config_dict)
+    rows = 140
+    cols = 140
+    substrate = Substrate(rows, cols)
 
     # Assign the configuration dictionary to the Substrate
 
@@ -23,6 +17,9 @@ def run():
 
     # Print the substrate
     print(substrate)
+
+    visualize_substrate(substrate)
+
 
 
 if __name__ == '__main__':
