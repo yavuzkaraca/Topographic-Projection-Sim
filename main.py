@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 def run():
 
     # Create a Substrate instance with your desired rows and columns
-    rows = 140
-    cols = 140
+    rows = 15
+    cols = 15
     substrate = Substrate(rows, cols)
 
     # Assign the configuration dictionary to the Substrate

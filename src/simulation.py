@@ -1,21 +1,12 @@
 import random
 
 from src import growth_cone
+from src.potential_calculation import calculate_potential_at
 
 
-def bounding_box(gc, substrate):
-    # Calculate the bounds of the bounding box
-    x_min = max(0, int(gc.position[0] - gc.size))
-    x_max = min(substrate.cols - 1, int(gc.position[0] + gc.size))
-    y_min = max(0, int(gc.position[1] - gc.size))
-    y_max = min(substrate.rows - 1, int(gc.position[1] + gc.size))
-
-    return x_min, x_max, y_min, y_max
-
-
-def clamp_to_boundaries(growth_cone, substrate, xt_direction, yt_direction):
-    new_x = growth_cone.position[0] + xt_direction
-    new_y = growth_cone.position[1] + yt_direction
+def clamp_to_boundaries(position, substrate, xt_direction, yt_direction):
+    new_x = position[0] + xt_direction
+    new_y = position[1] + yt_direction
 
     # Clamp the new positions to stay within the substrate boundaries
     new_x = max(0, min(new_x, substrate.cols - 1))
@@ -24,7 +15,7 @@ def clamp_to_boundaries(growth_cone, substrate, xt_direction, yt_direction):
     return new_x, new_y
 
 
-def step_decision(growth_cone, substrate):
+def step_decision(growth_cone, substrate, step_size):
     # Step probabilities
     x_step_probability = 0.2
     y_step_probability = 0.3
@@ -36,13 +27,15 @@ def step_decision(growth_cone, substrate):
     yt_direction = \
         random.choices([-1, 0, 1], weights=[(1 - y_step_probability) / 3, 1 / 3, y_step_probability / 3])[0]
 
-    # TODO: step size
+    xt_direction, yt_direction = xt_direction * step_size, yt_direction * step_size
+
     # Calculate new potential
     new_position = clamp_to_boundaries(growth_cone, substrate, xt_direction, yt_direction)
     new_potential = calculate_potential_at(growth_cone, substrate, new_position)
 
     # Step realization probability
     random_number = random.random()
+    # TODO: sigma?
     probability = calculate_probability(growth_cone.potential, new_potential)
 
     if random_number > probability:
@@ -58,22 +51,6 @@ def calculate_probability(old_potential, new_potential):
     return probability
 
 
-def calculate_potential_at(growth_cone, substrate, position, options):
-    pass
-
-
-def calculate_forward_potential(growth_cone, substrate):
-    pass
-
-
-def calculate_reverse_potential(growth_cone, substrate):
-    pass
-
-
-def calculate_ff_interaction(growth_cone, substrate):
-    pass
-
-
 class Simulation:
     def __init__(self, substrate, growth_cones, num_steps, config_dict):
         self.substrate = substrate
@@ -83,6 +60,11 @@ class Simulation:
         self.config_dict = config_dict  # Pass the configuration dictionary to the simulation
 
     def run(self):
+        for cone in self.growth_cones:
+            # potential initialization
+            cone.potential = calculate_potential_at(cone.receptor,cone.ligand,cone.position,cone.size,
+                                                    self.growth_cones,self.substrate,0)
+
         for step in range(self.num_steps):
             # Update growth cones
             for cone in self.growth_cones:
@@ -94,6 +76,7 @@ class Simulation:
         gc_count = self.config_dict.get("gc_count")
         for gc_id in range(gc_count):
             # Create a GrowthCone instance and initialize it
-            gc = growth_cone.GrowthCone((gc_id, 0), self.config_dict)
+            pos_y = random.randint(0, self.substrate.cols)
+            gc = growth_cone.GrowthCone((pos_y, 0), self.config_dict)
             growth_cones.append(gc)
         return growth_cones
