@@ -1,36 +1,37 @@
 CONTINUOUS_GRADIENTS = "continuous_gradients"
 WEDGES = "wedges"
 
+SUBSTRATE_TYPE = "substrate_type"
+MIN_VALUE = "min_value"
+MAX_VALUE = "max_value"
+ROWS = "row"
+COLS = "cols"
+ADAPTATION = "adaptation_enabled"
+GC_COUNT = "gc_count"
+GC_SIZE = "gc_size"
+STEP_SIZE = "step_size"
+STEP_AMOUNT = "step_amount"
+X_STEP_POSSIBILITY = "x_step_possibility"
+Y_STEP_POSSIBILITY = "y_step_possibility"
+SIGMA = "sigma"
+
 # Default configuration values
 DEFAULT_CONFIG = {
-    "substrate_type": WEDGES,
-    "min_value": 2,
-    "max_value": 40,
-    "adaptation_enabled": False,
-    "gc_count": 10,
-    "gc_size": 10,
-    "step_size": 5,
-    "step_amount": 3000,
-    "x_step_possibility": 0.33,
-    "y_step_possibility": 0.25,
-    "sigma": 1.0
+    SUBSTRATE_TYPE: WEDGES,
+    MIN_VALUE: 2,
+    MAX_VALUE: 40,
+    ROWS: 50,
+    COLS: 100,
+    ADAPTATION: False,
+    GC_COUNT: 10,
+    GC_SIZE: 10,
+    STEP_SIZE: 5,
+    STEP_AMOUNT: 3000,
+    X_STEP_POSSIBILITY: 0.33,
+    Y_STEP_POSSIBILITY: 0.25,
+    SIGMA: 1.0
 }
 
+# Current configuration settings
+config = DEFAULT_CONFIG
 
-# Function to read configuration from a file (e.g., JSON, YAML)
-def read_config(filename):
-    # Implement reading from a file and return a dictionary
-    pass
-
-
-# Function to write configuration to a file
-def write_config(filename, config):
-    # Implement writing to a file
-    pass
-
-
-# Function to merge user-provided configuration with defaults
-def merge_config(user_config):
-    config = DEFAULT_CONFIG.copy()
-    config.update(user_config)
-    return config

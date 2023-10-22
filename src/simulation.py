@@ -1,7 +1,8 @@
-import random
-
-from src import growth_cone
 from src.potential_calculation import calculate_potential_at
+from src.growth_cone import initialize_growth_cones
+from src.substrate import Substrate
+import src.config as cfg
+import random
 
 
 def clamp_to_boundaries(position, substrate, xt_direction, yt_direction):
@@ -15,34 +16,6 @@ def clamp_to_boundaries(position, substrate, xt_direction, yt_direction):
     return new_x, new_y
 
 
-def step_decision(growth_cone, substrate, step_size):
-    # Step probabilities
-    x_step_probability = 0.2
-    y_step_probability = 0.3
-
-    # TODO: check if matlab does it this way too.
-    # Randomly step in xt and yt directions -1, 0, +1
-    xt_direction = \
-        random.choices([-1, 0, 1], weights=[(1 - x_step_probability) / 3, 1 / 3, x_step_probability / 3])[0]
-    yt_direction = \
-        random.choices([-1, 0, 1], weights=[(1 - y_step_probability) / 3, 1 / 3, y_step_probability / 3])[0]
-
-    xt_direction, yt_direction = xt_direction * step_size, yt_direction * step_size
-
-    # Calculate new potential
-    new_position = clamp_to_boundaries(growth_cone, substrate, xt_direction, yt_direction)
-    new_potential = calculate_potential_at(growth_cone, substrate, new_position)
-
-    # Step realization probability
-    random_number = random.random()
-    # TODO: sigma?
-    probability = calculate_probability(growth_cone.potential, new_potential)
-
-    if random_number > probability:
-        growth_cone.potential = new_potential
-        growth_cone.position = new_position
-
-
 def calculate_probability(old_potential, new_potential):
     if old_potential + new_potential == 0:
         probability = 0.5
@@ -52,31 +25,48 @@ def calculate_probability(old_potential, new_potential):
 
 
 class Simulation:
-    def __init__(self, substrate, growth_cones, num_steps, config_dict):
-        self.substrate = substrate
-        self.growth_cones = self.initialize_growth_cones()
-        self.num_steps = num_steps
-        self.step_size = config_dict.get("step_size")
-        self.config_dict = config_dict  # Pass the configuration dictionary to the simulation
+    def __init__(self, config):
+        self.substrate = Substrate(config)
+        self.growth_cones = initialize_growth_cones(config)
+        self.adaptation = config.get(cfg.ADAPTATION)
+        self.step_size = config.get(cfg.STEP_SIZE)
+        self.num_steps = config.get(cfg.STEP_AMOUNT)
+        self.x_step_probability = config.get(cfg.X_STEP_POSSIBILITY)
+        self.y_step_probability = config.get(cfg.Y_STEP_POSSIBILITY)
+        self.sigma = config.get(cfg.SIGMA)
 
     def run(self):
-        for cone in self.growth_cones:
+        for gc in self.growth_cones:
             # potential initialization
-            cone.potential = calculate_potential_at(cone.receptor,cone.ligand,cone.position,cone.size,
-                                                    self.growth_cones,self.substrate,0)
+            gc.potential = calculate_potential_at(gc, self.growth_cones, self.substrate, 0)
 
         for step in range(self.num_steps):
             # Update growth cones
-            for cone in self.growth_cones:
-                step_decision(cone, self.substrate)
+            for gc in self.growth_cones:
+                self.step_decision(gc, step)
 
-    def initialize_growth_cones(self):
-        # TODO: position and signal protein configuration
-        growth_cones = []
-        gc_count = self.config_dict.get("gc_count")
-        for gc_id in range(gc_count):
-            # Create a GrowthCone instance and initialize it
-            pos_y = random.randint(0, self.substrate.cols)
-            gc = growth_cone.GrowthCone((pos_y, 0), self.config_dict)
-            growth_cones.append(gc)
-        return growth_cones
+    def step_decision(self, gc, step):
+        # TODO: check if matlab does it this way too.
+
+        # Randomly step in xt and yt directions -1, 0, +1
+        xt_direction = random.choices([-1, 0, 1],
+                                      weights=[(1 - self.x_step_probability) / 3, 1 / 3, self.x_step_probability / 3])[
+            0]
+        yt_direction = random.choices([-1, 0, 1],
+                                      weights=[(1 - self.y_step_probability) / 3, 1 / 3, self.y_step_probability / 3])[
+            0]
+
+        xt_direction, yt_direction = xt_direction * self.step_size, yt_direction * self.step_size
+
+        # Calculate new potential
+        new_position = clamp_to_boundaries(gc, self.substrate, xt_direction, yt_direction)
+        new_potential = calculate_potential_at(gc, self.substrate, new_position,step)
+
+        # Step realization probability
+        random_number = random.random()
+        # TODO: sigma?
+        probability = calculate_probability(gc.potential, new_potential)
+
+        if random_number > probability:
+            gc.potential = new_potential
+            gc.position = new_position
