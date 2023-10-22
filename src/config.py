@@ -17,7 +17,7 @@ SIGMA = "sigma"
 
 # Default configuration values
 DEFAULT_CONFIG = {
-    SUBSTRATE_TYPE: WEDGES,
+    SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     MIN_VALUE: 2,
     MAX_VALUE: 40,
     ROWS: 50,
