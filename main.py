@@ -10,5 +10,6 @@ def run():
     result = simulation.run()
     visualize_result(result)
 
+
 if __name__ == '__main__':
     run()

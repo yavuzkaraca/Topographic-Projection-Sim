@@ -5,29 +5,31 @@ def bounding_box(gc, substrate):
     # TODO: make circle
     # Calculate the bounds of the bounding box
     x_min = max(0, int(gc.position[0] - gc.size))
-    x_max = min(substrate.cols - 1, int(gc.position[0] + gc.size))
+    x_max = min(substrate.rows - 1, int(gc.position[0] + gc.size))
     y_min = max(0, int(gc.position[1] - gc.size))
-    y_max = min(substrate.rows - 1, int(gc.position[1] + gc.size))
+    y_max = min(substrate.cols - 1, int(gc.position[1] + gc.size))
 
     return x_min, x_max, y_min, y_max
 
 
 def calculate_potential_at(gc, gcs, substrate, step):
-    ft_ligands, ft_receptors = fiber_target_interaction(gc.pos, gc.size, substrate)
-    ff_ligands, ff_receptors = ff_interaction(gc.pos, gc.size, gcs, substrate)
+    # TODO: take position as a parameter
+    ft_ligands, ft_receptors = fiber_target_interaction(gc, substrate)
+    ff_ligands, ff_receptors = ff_interaction(gc, gcs)
 
     forward_sig = gc.receptor * (ft_ligands + (step * ff_ligands))
     reverse_sig = gc.ligand * (ft_receptors + (step * ff_receptors))
 
-    return abs(math.log(reverse_sig / forward_sig))
+    return abs(math.log(reverse_sig or 1) - math.log(forward_sig or 1))
 
 
 def fiber_target_interaction(gc, substrate):
     borders = bounding_box(gc, substrate)
     sum_ligands = 0
     sum_receptors = 0
+
     for i in range(borders[0], borders[1]):
-        for j in range(borders[2], borders[3]):
+        for j in range(borders[0], borders[1]):
             # TODO: ensure circle box by skipping with a condition here
             sum_ligands += substrate.ligands[i, j]
             sum_receptors += substrate.receptors[i, j]
@@ -47,11 +49,11 @@ def ff_interaction(gc1, gcs):
     # TODO: eliminate self from the gcs list, otherwise always a match
 
     for gc2 in gcs:
-        d = euclidean_distance(gc2, gc1.position)
+        d = euclidean_distance(gc2.position, gc1.position)
         if d <= gc1.size:
             area = ff_intersection(gc1.size, gc1.position, gc2.position)
-            sum_ligands += area * gc2.ligands
-            sum_receptors += area * gc2.receptors
+            sum_ligands += area * gc2.ligand
+            sum_receptors += area * gc2.receptor
 
     return sum_ligands, sum_receptors
 

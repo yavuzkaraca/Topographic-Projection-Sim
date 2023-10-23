@@ -16,6 +16,6 @@ def visualize_result(result):
     x_values, y_values = result.get_2d_result()
 
     fig = plt.figure()
-    plt.plot(x_values,y_values, '-')
+    plt.plot(x_values,y_values, '*')
     plt.title("Result")
     plt.show()

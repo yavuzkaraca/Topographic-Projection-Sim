@@ -46,6 +46,7 @@ class Simulation:
             # Update growth cones
             for gc in self.growth_cones:
                 self.step_decision(gc, step)
+                print(step)
 
         for gc in self.growth_cones:
             # Fetch final positions
@@ -69,9 +70,13 @@ class Simulation:
 
         xt_direction, yt_direction = xt_direction * self.step_size, yt_direction * self.step_size
 
+        old_position = gc.position
+        old_potential = gc.potential
+
         # Calculate new potential
-        new_position = clamp_to_boundaries(gc, self.substrate, xt_direction, yt_direction)
-        new_potential = calculate_potential_at(gc, self.substrate, new_position, step)
+        new_position = clamp_to_boundaries(gc.position, self.substrate, xt_direction, yt_direction)
+        gc.position = new_position
+        new_potential = calculate_potential_at(gc, self.growth_cones, self.substrate, step)
 
         # Step realization probability
         random_number = random.random()
@@ -79,5 +84,7 @@ class Simulation:
         probability = calculate_probability(gc.potential, new_potential)
 
         if random_number > probability:
+            # TODO: seperate decision logic from moving and implement calculation at given position
             gc.potential = new_potential
-            gc.position = new_position
+        else:
+            gc.position = old_position
