@@ -1,7 +1,8 @@
-from src.potential_calculation import calculate_potential_at
-from src.growth_cone import initialize_growth_cones
-from src.substrate import Substrate
-import src.config as cfg
+from result import Result
+from potential_calculation import calculate_potential_at
+from growth_cone import initialize_growth_cones
+from substrate import Substrate
+import config as cfg
 import random
 
 
@@ -36,6 +37,7 @@ class Simulation:
         self.sigma = config.get(cfg.SIGMA)
 
     def run(self):
+        final_positions = []
         for gc in self.growth_cones:
             # potential initialization
             gc.potential = calculate_potential_at(gc, self.growth_cones, self.substrate, 0)
@@ -45,8 +47,17 @@ class Simulation:
             for gc in self.growth_cones:
                 self.step_decision(gc, step)
 
+        for gc in self.growth_cones:
+            # Fetch final positions
+            final_positions.append(gc.position)
+
+        return Result(final_positions, self.substrate)
+
+    def reset_run(self):
+        self.growth_cones = initialize_growth_cones(cfg.config)
+
     def step_decision(self, gc, step):
-        # TODO: check if matlab does it this way too.
+        # TODO: check if matlab does it this way too, maybe split
 
         # Randomly step in xt and yt directions -1, 0, +1
         xt_direction = random.choices([-1, 0, 1],
@@ -60,7 +71,7 @@ class Simulation:
 
         # Calculate new potential
         new_position = clamp_to_boundaries(gc, self.substrate, xt_direction, yt_direction)
-        new_potential = calculate_potential_at(gc, self.substrate, new_position,step)
+        new_potential = calculate_potential_at(gc, self.substrate, new_position, step)
 
         # Step realization probability
         random_number = random.random()

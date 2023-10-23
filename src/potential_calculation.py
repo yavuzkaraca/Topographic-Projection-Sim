@@ -23,7 +23,7 @@ def calculate_potential_at(gc, gcs, substrate, step):
 
 
 def fiber_target_interaction(gc, substrate):
-    borders = bounding_box(gc.size, gc.position, substrate)
+    borders = bounding_box(gc, substrate)
     sum_ligands = 0
     sum_receptors = 0
     for i in range(borders[0], borders[1]):

@@ -13,4 +13,9 @@ def visualize_substrate(substrate):
 
 
 def visualize_result(result):
-    pass
+    x_values, y_values = result.get_2d_result()
+
+    fig = plt.figure()
+    plt.plot(x_values,y_values, '-')
+    plt.title("Result")
+    plt.show()

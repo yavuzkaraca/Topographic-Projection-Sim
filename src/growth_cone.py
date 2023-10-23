@@ -1,6 +1,6 @@
 import random
 import numpy as np
-import src.config as cfg
+import config as cfg
 
 
 def initialize_growth_cones(config):
@@ -15,12 +15,12 @@ def initialize_growth_cones(config):
     ligands = np.linspace(0.0, 1.0, gc_count)
 
     # Create an array of evenly distributed x-positions for the growth cones
-    x_positions = np.linspace(0, rows - 1, gc_count, dtype=int)
+    y_positions = np.linspace(0, rows - 1, gc_count, dtype=int)
 
     for i in range(gc_count):
         # Create a GrowthCone instance and initialize it
-        pos_x = x_positions[i]
-        gc = GrowthCone((pos_x, 0), size, receptors[i], ligands[i])
+        pos_y = y_positions[i]
+        gc = GrowthCone((0, pos_y), size, receptors[i], ligands[i])
         growth_cones.append(gc)
 
     return growth_cones
