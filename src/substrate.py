@@ -11,6 +11,7 @@ class Substrate:
         self.max_value = config.get(cfg.MAX_VALUE)
 
         # Initialize the grid with 3D array to store ligand and receptor values
+        # TODO: figure out the shape vs rows cols definition
         self.ligands = np.zeros((self.rows, self.cols), dtype=float)
         self.receptors = np.zeros((self.rows, self.cols), dtype=float)
 
