@@ -4,7 +4,7 @@ WEDGES = "wedges"
 SUBSTRATE_TYPE = "substrate_type"
 MIN_VALUE = "min_value"
 MAX_VALUE = "max_value"
-ROWS = "row"
+ROWS = "rows"
 COLS = "cols"
 ADAPTATION = "adaptation_enabled"
 GC_COUNT = "gc_count"
@@ -20,18 +20,17 @@ DEFAULT_CONFIG = {
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     MIN_VALUE: 2,
     MAX_VALUE: 40,
-    ROWS: 50,
-    COLS: 50,
+    ROWS: 50,  # number of rows = max value along y-axis
+    COLS: 100,  # number of cols = max value along x-axis
     ADAPTATION: False,
-    GC_COUNT: 5,
+    GC_COUNT: 40,
     GC_SIZE: 10,
     STEP_SIZE: 5,
-    STEP_AMOUNT: 40000,
-    X_STEP_POSSIBILITY: 0.45,
-    Y_STEP_POSSIBILITY: 0.35,
+    STEP_AMOUNT: 50000,
+    X_STEP_POSSIBILITY: 0.50,
+    Y_STEP_POSSIBILITY: 0.30,
     SIGMA: 1.0
 }
 
 # Current configuration settings
 config = DEFAULT_CONFIG
-

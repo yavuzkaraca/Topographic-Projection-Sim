@@ -1,5 +1,5 @@
 from result import Result
-from potential_calculation import calculate_potential_at
+from potential_calculation import calculate_potential
 from growth_cone import initialize_growth_cones
 from substrate import Substrate
 import config as cfg
@@ -11,10 +11,10 @@ def clamp_to_boundaries(position, substrate, xt_direction, yt_direction):
     new_y = position[1] + yt_direction
 
     # Clamp the new positions to stay within the substrate boundaries
-    new_x = max(0, min(new_x, substrate.cols - 1))
-    new_y = max(0, min(new_y, substrate.rows - 1))
+    new_x_clamped = max(0, min(new_x, substrate.cols - 1))
+    new_y_clamped = max(0, min(new_y, substrate.rows - 1))
 
-    return new_x, new_y
+    return new_x_clamped, new_y_clamped
 
 
 def calculate_probability(old_potential, new_potential):
@@ -40,16 +40,20 @@ class Simulation:
         final_positions = []
         for gc in self.growth_cones:
             # potential initialization
-            gc.potential = calculate_potential_at(gc, self.growth_cones, self.substrate, 0)
+            gc.potential = calculate_potential(gc, self.growth_cones, self.substrate, 0)
+            print(gc)
 
         for step in range(self.num_steps):
+            if step % 1000 == 0:
+                print(step)
             # Update growth cones
             for gc in self.growth_cones:
                 self.step_decision(gc, step)
-                # print(gc.__str__(), step)
+                # print(gc)
 
         for gc in self.growth_cones:
             # Fetch final positions
+            print(gc)
             final_positions.append(gc.position)
 
         return Result(final_positions, self.substrate)
@@ -58,33 +62,45 @@ class Simulation:
         self.growth_cones = initialize_growth_cones(cfg.config)
 
     def step_decision(self, gc, step):
+        # print("\nNEW STEP DECISION")
+
+        # print(gc)
+
         # TODO: check if matlab does it this way too, maybe split
+        step_ratio = (step / self.num_steps) * 5
 
-        # Randomly step in xt and yt directions -1, 0, +1
-        xt_direction = random.choices([-1, 0, 1],
-                                      weights=[(1 - self.x_step_probability) / 3, 1 / 3, self.x_step_probability / 3])[
-            0]
-        yt_direction = random.choices([-1, 0, 1],
-                                      weights=[(1 - self.y_step_probability) / 3, 1 / 3, self.y_step_probability / 3])[
-            0]
-
-        xt_direction, yt_direction = xt_direction * self.step_size, yt_direction * self.step_size
+        xt_direction, yt_direction = self.gen_random_step()
 
         old_position = gc.position
         old_potential = gc.potential
 
         # Calculate new potential
         new_position = clamp_to_boundaries(gc.position, self.substrate, xt_direction, yt_direction)
+        # print(new_position)
         gc.position = new_position
-        new_potential = calculate_potential_at(gc, self.growth_cones, self.substrate, step)
+        new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
 
         # Step realization probability
         random_number = random.random()
         # TODO: sigma?
         probability = calculate_probability(gc.potential, new_potential)
+        # print(f"random number: {random_number}, probability: {probability}, old_potential: {old_potential}, new_potential: {new_potential} ")
 
-        if random_number > probability:
-            # TODO: seperate decision logic from moving and implement calculation at given position
+        if random_number < probability:
+            # TODO: separate decision logic from moving and implement calculation at given position
             gc.potential = new_potential
         else:
             gc.position = old_position
+
+        # print(gc)
+
+    def gen_random_step(self):
+        # Initialization
+        x_prob = self.x_step_probability
+        y_prob = self.y_step_probability
+
+        # Randomly step in xt and yt directions -1, 0, +1
+        xt_direction = random.choices([-1, 0, 1], weights=[(1 - x_prob), (1 - x_prob), x_prob])[0]
+        yt_direction = random.choices([-1, 0, 1], weights=[y_prob, (1 - y_prob), y_prob])[0]
+
+        return xt_direction * self.step_size, yt_direction * self.step_size

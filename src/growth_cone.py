@@ -14,7 +14,7 @@ def initialize_growth_cones(config):
     receptors = np.linspace(1.0, 0.0, gc_count)
     ligands = np.linspace(0.0, 1.0, gc_count)
 
-    # Create an array of evenly distributed x-positions for the growth cones
+    # Create an array of evenly distributed y-positions for the growth cones
     y_positions = np.linspace(0, rows - 1, gc_count, dtype=int)
 
     for i in range(gc_count):
@@ -29,6 +29,8 @@ def initialize_growth_cones(config):
 class GrowthCone:
     def __init__(self, position, size=10, ligand=1.0, receptor=1.0):
         self.position = position  # Center point of the circular modeled GC, as x,y
+        # TODO: new position?
+        self.new_position = position  # new position for potential calculation
         self.size = size  # Radius of the circle
         self.ligand = ligand
         self.receptor = receptor
