@@ -46,7 +46,7 @@ class Simulation:
             # Update growth cones
             for gc in self.growth_cones:
                 self.step_decision(gc, step)
-                print(gc.__str__())
+                # print(gc.__str__(), step)
 
         for gc in self.growth_cones:
             # Fetch final positions

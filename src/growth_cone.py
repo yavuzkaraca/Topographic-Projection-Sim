@@ -35,4 +35,4 @@ class GrowthCone:
         self.potential = 0
 
     def __str__(self):
-        return self.receptor, self.ligand, self.position, self.potential
+        return f"Receptor: {self.receptor}, Ligand: {self.ligand}, Position: {self.position}, Potential: {self.potential}"
