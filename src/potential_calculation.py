@@ -13,17 +13,30 @@ def bounding_box(gc, substrate):
 
 
 def calculate_potential(gc, gcs, substrate, step):
+    # TODO:
+    # Settings init
+    forward_on = True
+    reverse_on = True
+    ff_inter_on = True
+    ft_inter_on = True
+
     # TODO: take position as a parameter
     ft_ligands, ft_receptors = fiber_target_interaction(gc, substrate)
     ff_ligands, ff_receptors = ff_interaction(gc, gcs)
 
+    if not ff_inter_on: ff_ligands, ff_receptors = 0, 0
+    if not ft_inter_on: ft_ligands, ft_receptors = 0, 0
+
     forward_sig = gc.receptor * (ft_ligands + (step * ff_ligands))
     reverse_sig = gc.ligand * (ft_receptors + (step * ff_receptors))
+
+    if not forward_on: forward_sig = 0
+    if not reverse_on: reverse_sig = 0
 
     # print(f"forward_sig: {forward_sig}, reverse_sig: {reverse_sig}")
     # print(f"ft_ligands: {ft_ligands}, ft_receptors: {ft_receptors}, ff_ligands: {ff_ligands}, ff_receptors: {ff_receptors}")
 
-    return abs(math.log(reverse_sig or 1) - math.log(forward_sig or 1))
+    return (abs(math.log(reverse_sig or 1) - math.log(forward_sig or 1))) ** 2
 
 
 def fiber_target_interaction(gc, substrate):
@@ -54,7 +67,7 @@ def ff_interaction(gc1, gcs):
 
     for gc2 in gcs:
         if gc1 == gc2:
-            # TODO: eliminate self from the gcs list, otherwise always a match
+            # Eliminate self from the gcs list, otherwise always a match
             continue
         d = euclidean_distance(gc2.position, gc1.position)
         if d <= gc1.size:

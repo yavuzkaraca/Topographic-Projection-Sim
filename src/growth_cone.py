@@ -11,30 +11,31 @@ def initialize_growth_cones(config):
     rows = config.get(cfg.ROWS)
 
     # Create an array of evenly distributed receptor and ligand values
-    receptors = np.linspace(1.0, 0.0, gc_count)
-    ligands = np.linspace(0.0, 1.0, gc_count)
+    receptors = np.linspace(9.99, 0.01, gc_count)
+    ligands = np.linspace(0.01, 9.99, gc_count)
 
     # Create an array of evenly distributed y-positions for the growth cones
-    y_positions = np.linspace(0, rows - 1, gc_count, dtype=int)
+    y_positions = np.linspace(0, rows - 1 - size, gc_count, dtype=int)
 
     for i in range(gc_count):
         # Create a GrowthCone instance and initialize it
         pos_y = y_positions[i]
-        gc = GrowthCone((0, pos_y), size, receptors[i], ligands[i])
+        gc = GrowthCone((size, pos_y + size), size, receptors[i], ligands[i])
         growth_cones.append(gc)
 
     return growth_cones
 
 
 class GrowthCone:
-    def __init__(self, position, size=10, ligand=1.0, receptor=1.0):
+    def __init__(self, position, size, ligand, receptor):
+        self.start_position = position
         self.position = position  # Center point of the circular modeled GC, as x,y
         # TODO: new position?
-        self.new_position = position  # new position for potential calculation
         self.size = size  # Radius of the circle
         self.ligand = ligand
         self.receptor = receptor
         self.potential = 0
 
     def __str__(self):
-        return f"Receptor: {self.receptor}, Ligand: {self.ligand}, Position: {self.position}, Potential: {self.potential}"
+        return (f"Receptor: {self.receptor}, Ligand: {self.ligand}, Position: {self.position}, "
+                f"Start Position: {self.start_position}, Potential: {self.potential}")

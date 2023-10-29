@@ -23,12 +23,12 @@ DEFAULT_CONFIG = {
     ROWS: 50,  # number of rows = max value along y-axis
     COLS: 100,  # number of cols = max value along x-axis
     ADAPTATION: False,
-    GC_COUNT: 40,
-    GC_SIZE: 10,
+    GC_COUNT: 50,
+    GC_SIZE: 5,
     STEP_SIZE: 5,
-    STEP_AMOUNT: 50000,
+    STEP_AMOUNT: 30000,
     X_STEP_POSSIBILITY: 0.50,
-    Y_STEP_POSSIBILITY: 0.30,
+    Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 1.0
 }
 

@@ -56,7 +56,7 @@ class Simulation:
             print(gc)
             final_positions.append(gc.position)
 
-        return Result(final_positions, self.substrate)
+        return Result(self.growth_cones, self.substrate)
 
     def reset_run(self):
         self.growth_cones = initialize_growth_cones(cfg.config)
@@ -67,7 +67,7 @@ class Simulation:
         # print(gc)
 
         # TODO: check if matlab does it this way too, maybe split
-        step_ratio = (step / self.num_steps) * 5
+        step_ratio = (step / self.num_steps) * 2
 
         xt_direction, yt_direction = self.gen_random_step()
 

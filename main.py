@@ -9,7 +9,7 @@ def run():
     simulation = Simulation(cfg.config)
     result = simulation.run()
     visualize_result(result)
-    print(result)
+    # print(result)
 
 
 if __name__ == '__main__':

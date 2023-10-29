@@ -13,9 +13,17 @@ def visualize_substrate(substrate):
 
 
 def visualize_result(result):
-    x_values, y_values = result.get_2d_result()
+    x_values, y_values = result.get_projection_repr()
 
-    fig = plt.figure()
+    # fig = plt.figure()
     plt.plot(x_values, y_values, '*')
-    plt.title("Result")
+    plt.title("Projection Mapping")
     plt.show()
+
+    x_values, y_values = result.get_final_positioning()
+
+    # fig = plt.figure()
+    plt.plot(x_values, y_values, '*')
+    plt.title("Tectum End-positions")
+    plt.show()
+
