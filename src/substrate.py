@@ -20,9 +20,9 @@ class Substrate:
     def initialize_substrate(self):
         substrate_type = self.type
 
-        if substrate_type == "continuous_gradients":
+        if substrate_type == cfg.CONTINUOUS_GRADIENTS:
             self.initialize_continuous_gradients()
-        elif substrate_type == "wedges":
+        elif substrate_type == cfg.WEDGES:
             self.initialize_wedges()
         else:
             raise ValueError("Invalid substrate type specified in the configuration dictionary.")
