@@ -7,7 +7,6 @@ class Substrate:
     def __init__(self, config):
         self.rows = config.get(cfg.ROWS) + 2 * config.get(cfg.GC_SIZE)
         self.cols = config.get(cfg.COLS) + 2 * config.get(cfg.GC_SIZE)
-        print(self.rows,self.cols)
         self.type = config.get(cfg.SUBSTRATE_TYPE)
         self.min_value = config.get(cfg.MIN_VALUE)
         self.max_value = config.get(cfg.MAX_VALUE)
@@ -32,8 +31,8 @@ class Substrate:
 
     def initialize_continuous_gradients(self):
         # Calculate the ligand and receptor gradients
-        ligand_gradient = np.linspace(0.0, 1.0, self.cols)
-        receptor_gradient = np.linspace(1.0, 0.0, self.cols)
+        ligand_gradient = np.linspace(0.01, 0.99, self.cols)
+        receptor_gradient = np.linspace(0.99, 0.01, self.cols)
 
         for row in range(self.rows):
             # Set the ligand and receptor values in each cell based on the gradients

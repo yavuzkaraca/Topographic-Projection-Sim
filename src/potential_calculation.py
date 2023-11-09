@@ -4,7 +4,6 @@ import numpy as np
 
 
 def bounding_box(gc, substrate):
-    # TODO: make circle
     # Calculate the bounds of the bounding box
     x_min = max(0, int(gc.position[0] - gc.size))
     x_max = min(substrate.cols - 1, int(gc.position[0] + gc.size))
@@ -14,6 +13,7 @@ def bounding_box(gc, substrate):
     return x_min, x_max, y_min, y_max
 
 
+'''
 def subset_substrate(x_min, x_max, y_min, y_max, substrate):
     return substrate[y_min:y_max, x_min:x_max]
 
@@ -21,12 +21,13 @@ def subset_substrate(x_min, x_max, y_min, y_max, substrate):
 def create_circle_mask(edge_length):
     center_x, center_y = edge_length // 2
     radius = edge_length // 2
-    mask = np.fromfunction(lambda i, j: (i - center_y)**2 + (j - center_x)**2 <= radius**2, (edge_length, edge_length), dtype=bool)
+    mask = np.fromfunction(lambda i, j: 
+    (i - center_y)**2 + (j - center_x)**2 <= radius**2, (edge_length, edge_length), dtype=bool)
     return mask
+'''
 
 
 def calculate_potential(gc, gcs, substrate, step):
-    # TODO:
     # Settings init
     forward_on = True
     reverse_on = True
@@ -54,6 +55,8 @@ def calculate_potential(gc, gcs, substrate, step):
 
 def fiber_target_interaction(gc, substrate):
     borders = bounding_box(gc, substrate)
+    edge_length = abs(borders[2] - borders[3])
+    center = (borders[2] + borders[3]) / 2, (borders[0] + borders[1]) / 2
 
     sum_ligands = 0
     sum_receptors = 0
@@ -61,7 +64,9 @@ def fiber_target_interaction(gc, substrate):
     # print(f"border: {borders[0]},{borders[1]}, {borders[2]}, {borders[3]}")
     for i in range(borders[2], borders[3]):
         for j in range(borders[0], borders[1]):
-            # TODO: ensure circle box by skipping with a condition here
+            d = euclidean_distance(center, (i, j))
+            if d > edge_length / 2:
+                continue
             sum_ligands += substrate.ligands[i, j]
             sum_receptors += substrate.receptors[i, j]
 
@@ -84,7 +89,7 @@ def ff_interaction(gc1, gcs):
             # Eliminate self from the gcs list, otherwise always a match
             continue
         d = euclidean_distance(gc2.position, gc1.position)
-        if d <= gc1.size:
+        if d <= gc1.size * 2:
             area = intersection_area(gc1.position, gc2.position, gc1.size)
             sum_ligands += area * gc2.ligand
             sum_receptors += area * gc2.receptor
@@ -97,7 +102,7 @@ def intersection_area(gc1_pos, gc2_pos, radius):
 
     if d == 0:
         return radius * radius * math.pi
-    elif d > radius:
+    elif d > radius * 2:
         return 0
     else:
         # Partial overlap of two circles

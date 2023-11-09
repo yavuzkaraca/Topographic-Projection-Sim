@@ -65,7 +65,7 @@ class Simulation:
         # print("\nNEW STEP DECISION")
         # print(gc)
 
-        # TODO: check if matlab does it this way too, maybe split
+        # TODO: Split
         step_ratio = (step / self.num_steps) * 2
 
         xt_direction, yt_direction = self.gen_random_step()
