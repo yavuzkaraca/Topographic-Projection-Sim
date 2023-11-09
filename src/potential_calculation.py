@@ -1,5 +1,7 @@
 import math
 
+import numpy as np
+
 
 def bounding_box(gc, substrate):
     # TODO: make circle
@@ -10,6 +12,17 @@ def bounding_box(gc, substrate):
     y_max = min(substrate.rows - 1, int(gc.position[1] + gc.size))
 
     return x_min, x_max, y_min, y_max
+
+
+def subset_substrate(x_min, x_max, y_min, y_max, substrate):
+    return substrate[y_min:y_max, x_min:x_max]
+
+
+def create_circle_mask(edge_length):
+    center_x, center_y = edge_length // 2
+    radius = edge_length // 2
+    mask = np.fromfunction(lambda i, j: (i - center_y)**2 + (j - center_x)**2 <= radius**2, (edge_length, edge_length), dtype=bool)
+    return mask
 
 
 def calculate_potential(gc, gcs, substrate, step):
@@ -41,6 +54,7 @@ def calculate_potential(gc, gcs, substrate, step):
 
 def fiber_target_interaction(gc, substrate):
     borders = bounding_box(gc, substrate)
+
     sum_ligands = 0
     sum_receptors = 0
 

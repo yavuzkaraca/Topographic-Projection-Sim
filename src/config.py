@@ -20,14 +20,14 @@ DEFAULT_CONFIG = {
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     MIN_VALUE: 2,
     MAX_VALUE: 40,
-    ROWS: 50,  # number of rows = max value along y-axis
+    ROWS: 100,  # number of rows = max value along y-axis
     COLS: 100,  # number of cols = max value along x-axis
     ADAPTATION: False,
     GC_COUNT: 10,
     GC_SIZE: 5,
     STEP_SIZE: 5,
     STEP_AMOUNT: 20000,
-    X_STEP_POSSIBILITY: 0.50,
+    X_STEP_POSSIBILITY: 0.52,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 1.0
 }

@@ -15,12 +15,12 @@ def initialize_growth_cones(config):
     ligands = np.linspace(0.01, 0.99, gc_count)
 
     # Create an array of evenly distributed y-positions for the growth cones
-    y_positions = np.linspace(0, rows - 1 - size, gc_count, dtype=int)
+    y_positions = np.linspace(size, rows - 1 + size, gc_count, dtype=int)
 
     for i in range(gc_count):
         # Create a GrowthCone instance and initialize it
         pos_y = y_positions[i]
-        gc = GrowthCone((size, pos_y + size), size, receptors[i], ligands[i])
+        gc = GrowthCone((size, pos_y), size, receptors[i], ligands[i])
         growth_cones.append(gc)
 
     return growth_cones

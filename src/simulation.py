@@ -6,13 +6,13 @@ import config as cfg
 import random
 
 
-def clamp_to_boundaries(position, substrate, xt_direction, yt_direction):
+def clamp_to_boundaries(position, substrate, size, xt_direction, yt_direction):
     new_x = position[0] + xt_direction
     new_y = position[1] + yt_direction
 
     # Clamp the new positions to stay within the substrate boundaries
-    new_x_clamped = max(0, min(new_x, substrate.cols - 1))
-    new_y_clamped = max(0, min(new_y, substrate.rows - 1))
+    new_x_clamped = max(size, min(new_x, substrate.cols - 1 - size))
+    new_y_clamped = max(size, min(new_y, substrate.rows - 1 - size))
 
     return new_x_clamped, new_y_clamped
 
@@ -63,7 +63,6 @@ class Simulation:
 
     def step_decision(self, gc, step):
         # print("\nNEW STEP DECISION")
-
         # print(gc)
 
         # TODO: check if matlab does it this way too, maybe split
@@ -75,7 +74,7 @@ class Simulation:
         old_potential = gc.potential
 
         # Calculate new potential
-        new_position = clamp_to_boundaries(gc.position, self.substrate, xt_direction, yt_direction)
+        new_position = clamp_to_boundaries(gc.position, self.substrate, gc.size, xt_direction, yt_direction)
         # print(new_position)
         gc.position = new_position
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)

@@ -5,8 +5,9 @@ from visualization import visualize_substrate
 
 class Substrate:
     def __init__(self, config):
-        self.rows = config.get(cfg.ROWS)
-        self.cols = config.get(cfg.COLS)
+        self.rows = config.get(cfg.ROWS) + 2 * config.get(cfg.GC_SIZE)
+        self.cols = config.get(cfg.COLS) + 2 * config.get(cfg.GC_SIZE)
+        print(self.rows,self.cols)
         self.type = config.get(cfg.SUBSTRATE_TYPE)
         self.min_value = config.get(cfg.MIN_VALUE)
         self.max_value = config.get(cfg.MAX_VALUE)

@@ -1,13 +1,16 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+cmap_custom = plt.get_cmap('coolwarm')
+cmap_custom = cmap_custom.reversed()
+
 
 def visualize_substrate(substrate):
-    plt.imshow(substrate.ligands, cmap='viridis')
+    plt.imshow(substrate.ligands, cmap=cmap_custom)
     plt.title("Ligands")
     plt.show()
 
-    plt.imshow(substrate.receptors, cmap='viridis')
+    plt.imshow(substrate.receptors, cmap=cmap_custom)
     plt.title("Receptors")
     plt.show()
 
@@ -26,4 +29,3 @@ def visualize_result(result):
     plt.plot(x_values, y_values, '*')
     plt.title("Tectum End-positions")
     plt.show()
-
