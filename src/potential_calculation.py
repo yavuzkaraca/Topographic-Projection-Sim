@@ -13,21 +13,8 @@ def bounding_box(gc, substrate):
     return x_min, x_max, y_min, y_max
 
 
-'''
-def subset_substrate(x_min, x_max, y_min, y_max, substrate):
-    return substrate[y_min:y_max, x_min:x_max]
-
-
-def create_circle_mask(edge_length):
-    center_x, center_y = edge_length // 2
-    radius = edge_length // 2
-    mask = np.fromfunction(lambda i, j: 
-    (i - center_y)**2 + (j - center_x)**2 <= radius**2, (edge_length, edge_length), dtype=bool)
-    return mask
-'''
-
-
 def calculate_potential(gc, gcs, substrate, step):
+    # TODO: make configurable
     # Settings init
     forward_on = True
     reverse_on = True
@@ -47,9 +34,7 @@ def calculate_potential(gc, gcs, substrate, step):
     if not forward_on: forward_sig = 0
     if not reverse_on: reverse_sig = 0
 
-    # print(f"forward_sig: {forward_sig}, reverse_sig: {reverse_sig}")
-    # print(f"ft_ligands: {ft_ligands}, ft_receptors: {ft_receptors}, ff_ligands: {ff_ligands}, ff_receptors: {ff_receptors}")
-
+    # TODO: carry this square to density
     return (abs(math.log(reverse_sig or 1) - math.log(forward_sig or 1))) ** 2
 
 
@@ -61,7 +46,6 @@ def fiber_target_interaction(gc, substrate):
     sum_ligands = 0
     sum_receptors = 0
 
-    # print(f"border: {borders[0]},{borders[1]}, {borders[2]}, {borders[3]}")
     for i in range(borders[2], borders[3]):
         for j in range(borders[0], borders[1]):
             d = euclidean_distance(center, (i, j))
@@ -70,7 +54,6 @@ def fiber_target_interaction(gc, substrate):
             sum_ligands += substrate.ligands[i, j]
             sum_receptors += substrate.receptors[i, j]
 
-    # print(f"sum_ligands: {sum_ligands}, sum_receptors: {sum_receptors}")
     return sum_ligands, sum_receptors
 
 

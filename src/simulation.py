@@ -1,3 +1,5 @@
+import math
+
 from result import Result
 from potential_calculation import calculate_potential
 from growth_cone import initialize_growth_cones
@@ -17,11 +19,17 @@ def clamp_to_boundaries(position, substrate, size, xt_direction, yt_direction):
     return new_x_clamped, new_y_clamped
 
 
-def calculate_probability(old_potential, new_potential):
-    if old_potential + new_potential == 0:
+def probabilistic_density(potential, sigma):
+    # Probability density function for normal distribution
+    y = math.exp(-(potential - 0) ** 2 / (2 * sigma ** 2)) / (math.sqrt(2 * math.pi) * sigma)
+    return y
+
+
+def calculate_probability(old_prob, new_prob):
+    if old_prob + new_prob == 0:
         probability = 0.5
     else:
-        probability = old_potential / (old_potential + new_potential)
+        probability = old_prob / (old_prob + new_prob)
     return probability
 
 
@@ -62,36 +70,29 @@ class Simulation:
         self.growth_cones = initialize_growth_cones(cfg.config)
 
     def step_decision(self, gc, step):
-        # print("\nNEW STEP DECISION")
-        # print(gc)
-
         # TODO: Split
         step_ratio = (step / self.num_steps) * 2
-
         xt_direction, yt_direction = self.gen_random_step()
-
         old_position = gc.position
         old_potential = gc.potential
 
         # Calculate new potential
         new_position = clamp_to_boundaries(gc.position, self.substrate, gc.size, xt_direction, yt_direction)
-        # print(new_position)
         gc.position = new_position
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
 
         # Step realization probability
+        old_density = probabilistic_density(old_potential,self.sigma)
+        new_density = probabilistic_density(new_potential, self.sigma)
+
         random_number = random.random()
         # TODO: sigma?
-        probability = calculate_probability(gc.potential, new_potential)
-        # print(f"random number: {random_number}, probability: {probability}, old_potential: {old_potential}, new_potential: {new_potential} ")
-
-        if random_number < probability:
+        probability = calculate_probability(old_density, new_density)
+        if random_number > probability:
             # TODO: separate decision logic from moving and implement calculation at given position
             gc.potential = new_potential
         else:
             gc.position = old_position
-
-        # print(gc)
 
     def gen_random_step(self):
         # Initialization
