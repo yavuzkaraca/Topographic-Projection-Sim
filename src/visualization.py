@@ -1,16 +1,13 @@
 import matplotlib.pyplot as plt
-import numpy as np
-
-cmap_custom = plt.get_cmap('coolwarm')
-cmap_custom = cmap_custom.reversed()
 
 
 def visualize_substrate(substrate):
-    plt.imshow(substrate.ligands, cmap=cmap_custom)
+    # TODO: visualize both substrate onto each other
+    plt.imshow(substrate.ligands, cmap='Reds')
     plt.title("Ligands")
     plt.show()
 
-    plt.imshow(substrate.receptors, cmap=cmap_custom)
+    plt.imshow(substrate.receptors, cmap='Blues')
     plt.title("Receptors")
     plt.show()
 
