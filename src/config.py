@@ -6,6 +6,7 @@ MIN_VALUE = "min_value"
 MAX_VALUE = "max_value"
 ROWS = "rows"
 COLS = "cols"
+OFFSET = "offset"
 ADAPTATION = "adaptation_enabled"
 GC_COUNT = "gc_count"
 GC_SIZE = "gc_size"
@@ -20,16 +21,17 @@ DEFAULT_CONFIG = {
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     MIN_VALUE: 2,
     MAX_VALUE: 40,
-    ROWS: 100,  # number of rows = max value along y-axis
+    ROWS: 50,  # number of rows = max value along y-axis
     COLS: 100,  # number of cols = max value along x-axis
+    OFFSET: 20,  # should equal gc_size * 2
     ADAPTATION: False,
-    GC_COUNT: 20,
-    GC_SIZE: 5,
-    STEP_SIZE: 5,
-    STEP_AMOUNT: 30000,
+    GC_COUNT: 50,
+    GC_SIZE: 10,
+    STEP_SIZE: 1,
+    STEP_AMOUNT: 40000,
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
-    SIGMA: 0.12
+    SIGMA: 0.18
 }
 
 # Current configuration settings

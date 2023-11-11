@@ -3,24 +3,26 @@ import config as cfg
 from visualization import visualize_substrate
 
 
-def initialize_substrate(config):
+def build_substrate(config):
     # Fetch parameters from config
 
-    rows = config.get(cfg.ROWS) + 2 * config.get(cfg.GC_SIZE)
-    cols = config.get(cfg.COLS) + 2 * config.get(cfg.GC_SIZE)
+    rows = config.get(cfg.ROWS)
+    cols = config.get(cfg.COLS)
+    offset = config.get(cfg.OFFSET)
     substrate_type = config.get(cfg.SUBSTRATE_TYPE)
     min_value = config.get(cfg.MIN_VALUE)
     max_value = config.get(cfg.MAX_VALUE)
 
-    substrate = Substrate(rows, cols, substrate_type, min_value, max_value)
+    substrate = Substrate(rows, cols, offset, substrate_type, min_value, max_value)
 
     return substrate
 
 
 class Substrate:
-    def __init__(self, rows, cols, substrate_type, min_value, max_value):
-        self.rows = rows
-        self.cols = cols
+    def __init__(self, rows, cols, offset, substrate_type, min_value, max_value):
+        self.rows = rows + offset
+        self.cols = cols + offset
+        self.offset = offset
         self.substrate_type = substrate_type
         self.min_value = min_value
         self.max_value = max_value

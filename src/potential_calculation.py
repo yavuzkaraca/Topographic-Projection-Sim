@@ -1,16 +1,6 @@
 import math
 
 
-def bounding_box(gc, substrate):
-    # Calculate the bounds of the bounding box
-    x_min = max(0, int(gc.position[0] - gc.size))
-    x_max = min(substrate.cols - 1, int(gc.position[0] + gc.size))
-    y_min = max(0, int(gc.position[1] - gc.size))
-    y_max = min(substrate.rows - 1, int(gc.position[1] + gc.size))
-
-    return x_min, x_max, y_min, y_max
-
-
 def calculate_potential(gc, gcs, substrate, step):
     # TODO: make configurable
     # Settings init
@@ -19,7 +9,6 @@ def calculate_potential(gc, gcs, substrate, step):
     ff_inter_on = True
     ft_inter_on = True
 
-    # TODO: take position as a parameter
     ft_ligands, ft_receptors = fiber_target_interaction(gc, substrate)
     ff_ligands, ff_receptors = ff_interaction(gc, gcs)
 
@@ -32,8 +21,7 @@ def calculate_potential(gc, gcs, substrate, step):
     if not forward_on: forward_sig = 0
     if not reverse_on: reverse_sig = 0
 
-    # TODO: carry this square to density
-    return (abs(math.log(reverse_sig or 1) - math.log(forward_sig or 1))) ** 2
+    return abs(math.log(reverse_sig or 1) - math.log(forward_sig or 1))
 
 
 def fiber_target_interaction(gc, substrate):
@@ -55,12 +43,6 @@ def fiber_target_interaction(gc, substrate):
     return sum_ligands, sum_receptors
 
 
-def euclidean_distance(point1, point2):
-    x1, y1 = point1
-    x2, y2 = point2
-    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-
-
 def ff_interaction(gc1, gcs):
     sum_ligands = 0
     sum_receptors = 0
@@ -76,6 +58,29 @@ def ff_interaction(gc1, gcs):
             sum_receptors += area * gc2.receptor
 
     return sum_ligands, sum_receptors
+
+
+def bounding_box(gc, substrate):
+    """
+    Calculates the bounding box of growth cone which is relevant for fiber-target-interaction
+
+    :param gc: Growth Cone Object
+    :param substrate: Substrate Object
+    :return: boundary values of the square matrix
+    """
+    # Calculate the bounds of the bounding box
+    x_min = max(0, int(gc.position[0] - gc.size))
+    x_max = min(substrate.cols - 1, int(gc.position[0] + gc.size))
+    y_min = max(0, int(gc.position[1] - gc.size))
+    y_max = min(substrate.rows - 1, int(gc.position[1] + gc.size))
+
+    return x_min, x_max, y_min, y_max
+
+
+def euclidean_distance(point1, point2):
+    x1, y1 = point1
+    x2, y2 = point2
+    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 
 
 def intersection_area(gc1_pos, gc2_pos, radius):
