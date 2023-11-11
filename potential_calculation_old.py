@@ -1,5 +1,7 @@
 import math
 
+import numpy as np
+
 
 def bounding_box(gc, substrate):
     # Calculate the bounds of the bounding box

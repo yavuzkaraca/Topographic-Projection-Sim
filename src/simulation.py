@@ -3,7 +3,7 @@ import math
 from result import Result
 from potential_calculation import calculate_potential
 from growth_cone import initialize_growth_cones
-from substrate import Substrate
+from substrate import Substrate, initialize_substrate
 import config as cfg
 import random
 
@@ -35,7 +35,7 @@ def calculate_probability(old_prob, new_prob):
 
 class Simulation:
     def __init__(self, config):
-        self.substrate = Substrate(config)
+        self.substrate = initialize_substrate(config)
         self.growth_cones = initialize_growth_cones(config)
         self.adaptation = config.get(cfg.ADAPTATION)
         self.step_size = config.get(cfg.STEP_SIZE)
@@ -86,7 +86,6 @@ class Simulation:
         new_density = probabilistic_density(new_potential, self.sigma)
 
         random_number = random.random()
-        # TODO: sigma?
         probability = calculate_probability(old_density, new_density)
         if random_number > probability:
             # TODO: separate decision logic from moving and implement calculation at given position

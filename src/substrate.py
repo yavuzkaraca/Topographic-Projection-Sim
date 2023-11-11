@@ -3,13 +3,27 @@ import config as cfg
 from visualization import visualize_substrate
 
 
+def initialize_substrate(config):
+    # Fetch parameters from config
+
+    rows = config.get(cfg.ROWS) + 2 * config.get(cfg.GC_SIZE)
+    cols = config.get(cfg.COLS) + 2 * config.get(cfg.GC_SIZE)
+    substrate_type = config.get(cfg.SUBSTRATE_TYPE)
+    min_value = config.get(cfg.MIN_VALUE)
+    max_value = config.get(cfg.MAX_VALUE)
+
+    substrate = Substrate(rows, cols, substrate_type, min_value, max_value)
+
+    return substrate
+
+
 class Substrate:
-    def __init__(self, config):
-        self.rows = config.get(cfg.ROWS) + 2 * config.get(cfg.GC_SIZE)
-        self.cols = config.get(cfg.COLS) + 2 * config.get(cfg.GC_SIZE)
-        self.type = config.get(cfg.SUBSTRATE_TYPE)
-        self.min_value = config.get(cfg.MIN_VALUE)
-        self.max_value = config.get(cfg.MAX_VALUE)
+    def __init__(self, rows, cols, substrate_type, min_value, max_value):
+        self.rows = rows
+        self.cols = cols
+        self.substrate_type = substrate_type
+        self.min_value = min_value
+        self.max_value = max_value
 
         # Initialize the grid with 3D array to store ligand and receptor values
         self.ligands = np.zeros((self.rows, self.cols), dtype=float)
@@ -18,7 +32,7 @@ class Substrate:
         self.initialize_substrate()  # Initialize substrate based on the initial configuration
 
     def initialize_substrate(self):
-        substrate_type = self.type
+        substrate_type = self.substrate_type
 
         if substrate_type == cfg.CONTINUOUS_GRADIENTS:
             self.initialize_continuous_gradients()
