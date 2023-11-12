@@ -6,7 +6,6 @@ import math
 
 
 def calculate_potential(gc, gcs, substrate, step):
-    # TODO: implement new
     """
     Calculate guidance potential for a growth cone (gc) in a simulation.
 
@@ -83,12 +82,9 @@ def ff_interaction(gc1, gcs):
             continue
         d = euclidean_distance(gc2.position, gc1.new_position)
         if d < gc1.size * 2:
-            # print(f"Distance: {d}")
             area = intersection_area(gc1.new_position, gc2.position, gc1.size)
             sum_ligands += area * gc2.ligand
             sum_receptors += area * gc2.receptor
-
-    # print(f"ff_interaction = {sum_ligands}, {sum_receptors}")
 
     return sum_ligands, sum_receptors
 
@@ -107,8 +103,6 @@ def bounding_box(gc_pos, gc_size, substrate):
     x_max = min(substrate.cols - 1, gc_pos[0] + gc_size)
     y_min = max(0, gc_pos[1] - gc_size)
     y_max = min(substrate.rows - 1, gc_pos[1] + gc_size)
-
-    # print(f"Borders: {x_min}, {x_max}, {y_min}, {y_max}")
 
     return x_min, x_max, y_min, y_max
 
@@ -141,6 +135,5 @@ def intersection_area(gc1_pos, gc2_pos, radius):
         z = x ** 2
         y = math.sqrt(radius ** 2 - z)
         area = radius ** 2 * math.acos(x / radius) - x * y
-        # print(f"Area: {area}")
         # TODO: clean-fix area calculation
         return area * 1.5  # magic number for quick dirty fix

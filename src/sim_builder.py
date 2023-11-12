@@ -13,7 +13,7 @@ def build_default():
     """
     Build a default simulation using the default configuration settings.
     """
-    build_simulation(cfg.DEFAULT_CONFIG)
+    return build_simulation(cfg.DEFAULT_CONFIG)
 
 
 def build_simulation(config):
