@@ -57,7 +57,7 @@ class Simulation:
             # Update growth cones
             for gc in self.growth_cones:
                 self.step_decision(gc, step)
-                # print(gc)
+                print(gc)
 
         for gc in self.growth_cones:
             # Fetch final positions
@@ -71,6 +71,10 @@ class Simulation:
 
     def step_decision(self, gc, step):
         # TODO: separate decision logic from moving and implement calculation at given position
+        print("\nNEW STEP DECISION")
+
+        print(gc)
+
         # Save current values
         old_position = gc.position
         old_potential = gc.potential
@@ -79,6 +83,8 @@ class Simulation:
         xt_direction, yt_direction = self.gen_random_step()
         new_position = clamp_to_boundaries(gc.position, self.substrate, gc.size, xt_direction, yt_direction)
         gc.position = new_position
+
+        print(f"new position: {new_position}")
 
         # Calculate new potential
         step_ratio = (step / self.num_steps) * 2
@@ -91,6 +97,9 @@ class Simulation:
         # Step Decision
         random_number = random.random()
         probability = calculate_probability(old_density, new_density)
+        print(f"random number: {random_number}, probability: {probability}, old_potential: {old_potential}, "
+              f"new_potential: {new_potential}, old_density = {old_density}, new_density = {new_density}")
+
         if random_number > probability:
             gc.potential = new_potential
         else:

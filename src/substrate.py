@@ -20,8 +20,8 @@ def build_substrate(config):
 
 class Substrate:
     def __init__(self, rows, cols, offset, substrate_type, min_value, max_value):
-        self.rows = rows + offset
-        self.cols = cols + offset
+        self.rows = rows + offset*2
+        self.cols = cols + offset*2
         self.offset = offset
         self.substrate_type = substrate_type
         self.min_value = min_value
@@ -36,9 +36,9 @@ class Substrate:
     def initialize_substrate(self):
         substrate_type = self.substrate_type
 
-        if substrate_type == cfg.CONTINUOUS_GRADIENTS:
+        if substrate_type == "continuous_gradients":
             self.initialize_continuous_gradients()
-        elif substrate_type == cfg.WEDGES:
+        elif substrate_type == "wedges":
             self.initialize_wedges()
         else:
             raise ValueError("Invalid substrate type specified in the configuration dictionary.")

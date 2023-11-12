@@ -52,10 +52,13 @@ def ff_interaction(gc1, gcs):
             # Eliminate self from the gcs list, otherwise always a match
             continue
         d = euclidean_distance(gc2.position, gc1.position)
-        if d <= gc1.size * 2:
+        if d < gc1.size * 2:
+            print(f"Distance: {d}")
             area = intersection_area(gc1.position, gc2.position, gc1.size)
             sum_ligands += area * gc2.ligand
             sum_receptors += area * gc2.receptor
+
+    print(f"ff_interaction = {sum_ligands}, {sum_receptors}")
 
     return sum_ligands, sum_receptors
 
@@ -69,10 +72,12 @@ def bounding_box(gc, substrate):
     :return: boundary values of the square matrix
     """
     # Calculate the bounds of the bounding box
-    x_min = max(0, int(gc.position[0] - gc.size))
-    x_max = min(substrate.cols - 1, int(gc.position[0] + gc.size))
-    y_min = max(0, int(gc.position[1] - gc.size))
-    y_max = min(substrate.rows - 1, int(gc.position[1] + gc.size))
+    x_min = max(0, gc.position[0] - gc.size)
+    x_max = min(substrate.cols - 1, gc.position[0] + gc.size)
+    y_min = max(0, gc.position[1] - gc.size)
+    y_max = min(substrate.rows - 1, gc.position[1] + gc.size)
+
+    print(f"Borders: {x_min}, {x_max}, {y_min}, {y_max}")
 
     return x_min, x_max, y_min, y_max
 
@@ -80,7 +85,8 @@ def bounding_box(gc, substrate):
 def euclidean_distance(point1, point2):
     x1, y1 = point1
     x2, y2 = point2
-    return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    distance = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    return distance
 
 
 def intersection_area(gc1_pos, gc2_pos, radius):
@@ -95,4 +101,7 @@ def intersection_area(gc1_pos, gc2_pos, radius):
         x = (d ** 2) / (2 * d)
         z = x ** 2
         y = math.sqrt(radius ** 2 - z)
-        return radius ** 2 * math.acos(x / radius) - x * y
+        area = radius ** 2 * math.acos(x / radius) - x * y
+        print(f"Area: {area}")
+        # TODO: fix area
+        return area * 1.5 # magic number for quick dirty fix
