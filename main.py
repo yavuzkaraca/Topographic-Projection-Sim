@@ -1,12 +1,9 @@
-from src.substrate import Substrate  # Import the Substrate class from your substrate module
-from src.visualization import visualize_substrate, visualize_result
-
-from src.simulation import Simulation
-import src.config as cfg
+import sim_builder
+from src.visualization import visualize_result
 
 
 def run():
-    simulation = Simulation(cfg.config)
+    simulation = sim_builder.build_default()
     result = simulation.run()
     visualize_result(result)
     # print(result)

@@ -1,27 +1,26 @@
+"""
+Module providing the Substrate class for substrate representation and initialization.
+"""
+
 import numpy as np
-import config as cfg
 from visualization import visualize_substrate
-
-
-def build_substrate(config):
-    # Fetch parameters from config
-
-    rows = config.get(cfg.ROWS)
-    cols = config.get(cfg.COLS)
-    offset = config.get(cfg.OFFSET)
-    substrate_type = config.get(cfg.SUBSTRATE_TYPE)
-    min_value = config.get(cfg.MIN_VALUE)
-    max_value = config.get(cfg.MAX_VALUE)
-
-    substrate = Substrate(rows, cols, offset, substrate_type, min_value, max_value)
-
-    return substrate
 
 
 class Substrate:
     def __init__(self, rows, cols, offset, substrate_type, min_value, max_value):
-        self.rows = rows + offset*2
-        self.cols = cols + offset*2
+        """
+        Initialize the Substrate object with the specified parameters.
+
+        :param rows: Number of rows in the substrate grid.
+        :param cols: Number of columns in the substrate grid.
+        :param offset: Offset value used to calculate the substrate boundaries.
+        :param substrate_type: Type of substrate initialization - continuous_gradients or wedges.
+        :param min_value: Minimum value for substrate initialization.
+        :param max_value: Maximum value for substrate initialization.
+        """
+
+        self.rows = rows + offset * 2
+        self.cols = cols + offset * 2
         self.offset = offset
         self.substrate_type = substrate_type
         self.min_value = min_value
@@ -34,6 +33,10 @@ class Substrate:
         self.initialize_substrate()  # Initialize substrate based on the initial configuration
 
     def initialize_substrate(self):
+        """
+        Initialize the substrate based on the specified substrate type.
+        """
+
         substrate_type = self.substrate_type
 
         if substrate_type == "continuous_gradients":
@@ -46,6 +49,10 @@ class Substrate:
         visualize_substrate(self)
 
     def initialize_continuous_gradients(self):
+        """
+        Initialize the substrate using continuous gradients of ligand and receptor values.
+        """
+
         # Calculate the ligand and receptor gradients
         ligand_gradient = np.linspace(0.01, 0.99, self.cols)
         receptor_gradient = np.linspace(0.99, 0.01, self.cols)
@@ -56,6 +63,9 @@ class Substrate:
             self.receptors[row, :] = receptor_gradient
 
     def initialize_wedges(self):
+        """
+        Initialize the substrate using wedge-shaped patterns of ligand and receptor values.
+        """
 
         # Set for readability
         rows, cols, = self.ligands.shape
@@ -99,6 +109,10 @@ class Substrate:
         self.receptors, self.ligands = receptors, ligands
 
     def __str__(self):
+        """
+        Return a string representation of the ligand and receptor grids in the substrate.
+        """
+
         # Create a string representation of the substrate
         result = "Ligands:\n"
         result += str(self.ligands) + "\n\n"

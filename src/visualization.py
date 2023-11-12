@@ -1,7 +1,17 @@
+"""
+Module for visualizing substrate and simulation results.
+"""
+
 import matplotlib.pyplot as plt
 
 
 def visualize_substrate(substrate):
+    """
+    Visualize the ligands and receptors in the substrate as separate plots.
+
+    :param substrate: The Substrate object containing ligand and receptor values.
+    """
+
     # TODO: visualize both substrate onto each other
     plt.imshow(substrate.ligands, cmap='Reds')
     plt.title("Ligands")
@@ -13,6 +23,12 @@ def visualize_substrate(substrate):
 
 
 def visualize_result(result):
+    """
+    Generate plots for the projection mapping and tectum end-positions.
+
+    :param result: Result object containing growth cone positions and details.
+    """
+
     x_values, y_values = result.get_projection_repr()
 
     # fig = plt.figure()

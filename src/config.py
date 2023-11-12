@@ -1,3 +1,8 @@
+"""
+Module providing configuration settings for a retinotectal projection simulation.
+"""
+
+# Configuration keys
 CONTINUOUS_GRADIENTS = "continuous_gradients"
 WEDGES = "wedges"
 
@@ -21,17 +26,17 @@ DEFAULT_CONFIG = {
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     MIN_VALUE: 2,
     MAX_VALUE: 40,
-    ROWS: 5,  # number of rows = max value along y-axis
-    COLS: 40,  # number of cols = max value along x-axis
+    ROWS: 100,  # number of rows = max value along y-axis
+    COLS: 100,  # number of cols = max value along x-axis
     OFFSET: 5,  # should equal gc_size
     ADAPTATION: False,
-    GC_COUNT: 5,
+    GC_COUNT: 20,
     GC_SIZE: 5,
-    STEP_SIZE: 5,
-    STEP_AMOUNT: 100,
+    STEP_SIZE: 1,
+    STEP_AMOUNT: 20000,
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
-    SIGMA: 0.18
+    SIGMA: 0.12
 }
 
 # Current configuration settings

@@ -1,14 +1,25 @@
-import math
+"""
+Module for conducting a simulation.
+"""
 
+import math
 from result import Result
 from potential_calculation import calculate_potential
-from growth_cone import initialize_growth_cones
-from substrate import Substrate, build_substrate
-import config as cfg
 import random
 
 
 def clamp_to_boundaries(position, substrate, size, xt_direction, yt_direction):
+    """
+    Clamp the growth cone's new positions within the substrate boundaries.
+
+    :param position: Current position of the growth cone.
+    :param substrate: Substrate object defining the simulation area.
+    :param size: Size of the growth cone.
+    :param xt_direction: The change in x-direction.
+    :param yt_direction: The change in y-direction.
+    :return: The clamped new position of the growth cone within the substrate boundaries.
+    """
+
     new_x = position[0] + xt_direction
     new_y = position[1] + yt_direction
 
@@ -20,12 +31,28 @@ def clamp_to_boundaries(position, substrate, size, xt_direction, yt_direction):
 
 
 def probabilistic_density(potential, sigma):
+    """
+    Calculate the probability density function for a gaussian distribution.
+
+    :param potential: The potential of a growth cone.
+    :param sigma: The standard deviation of the distribution.
+    :return: The probability density at the given potential value.
+    """
+
     # Probability density function for normal distribution
     y = math.exp(-potential ** 2 / (2 * sigma ** 2)) / (math.sqrt(2 * math.pi) * sigma)
     return y
 
 
 def calculate_probability(old_prob, new_prob):
+    """
+    Calculate the probability of a growth cone taking a step based on potential differences.
+
+    :param old_prob: Old probability based on the previous potential.
+    :param new_prob: New probability based on the current potential.
+    :return: Probability of the growth cone taking a step.
+    """
+
     if old_prob + new_prob == 0:
         probability = 0.5
     else:
@@ -34,17 +61,53 @@ def calculate_probability(old_prob, new_prob):
 
 
 class Simulation:
-    def __init__(self, config):
-        self.substrate = build_substrate(config)
-        self.growth_cones = initialize_growth_cones(config)
-        self.adaptation = config.get(cfg.ADAPTATION)
-        self.step_size = config.get(cfg.STEP_SIZE)
-        self.num_steps = config.get(cfg.STEP_AMOUNT)
-        self.x_step_probability = config.get(cfg.X_STEP_POSSIBILITY)
-        self.y_step_probability = config.get(cfg.Y_STEP_POSSIBILITY)
-        self.sigma = config.get(cfg.SIGMA)
+    """
+    Class managing the simulation process for growth cones.
+
+    Attributes:
+        substrate: Substrate object representing the simulation area.
+        growth_cones: List of Growth Cone instances.
+        adaptation: Boolean indicating adaptation feature.
+        step_size: Size of step movement for growth cones.
+        num_steps: Total number of steps for the simulation.
+        x_step_p: Probability of a growth cone stepping in the x-direction.
+        y_step_p: Probability of a growth cone stepping in the y-direction.
+        sigma: Standard deviation for the potential calculation.
+
+    Methods:
+        run(): Runs the simulation and gathers final growth cone positions.
+        step_decision(gc, step): Makes a decision for a growth cone to step or not.
+        gen_random_step(): Generates a random step in the x and y directions.
+    """
+
+    def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigma):
+        """
+        Initialize the Simulation class with necessary parameters.
+
+        :param substrate: Substrate object defining the simulation area.
+        :param growth_cones: List of Growth Cone instances participating in the simulation.
+        :param adaptation: Boolean value indicating whether adaptation is enabled or not.
+        :param step_size: Size of the step movement for the growth cones.
+        :param num_steps: Total number of steps for the simulation.
+        :param x_step_p: Probability of a growth cone stepping in the x-direction.
+        :param y_step_p: Probability of a growth cone stepping in the y-direction.
+        :param sigma: Standard deviation for potential calculations.
+        """
+        self.substrate = substrate
+        self.growth_cones = growth_cones
+        self.adaptation = adaptation
+        self.step_size = step_size
+        self.num_steps = num_steps
+        self.x_step_p = x_step_p
+        self.y_step_p = y_step_p
+        self.sigma = sigma
 
     def run(self):
+        """
+        Execute the simulation for the defined number of steps.
+
+        :return: Result object containing final growth cone positions and details.
+        """
         final_positions = []
         for gc in self.growth_cones:
             # potential initialization
@@ -66,49 +129,53 @@ class Simulation:
 
         return Result(self.growth_cones, self.substrate)
 
-    def reset_run(self):
-        self.growth_cones = initialize_growth_cones(cfg.config)
-
     def step_decision(self, gc, step):
-        # TODO: separate decision logic from moving and implement calculation at given position
-        print("\nNEW STEP DECISION")
+        """
+        Make a decision for a growth cone to step or not based on potential and probabilities of it's new position.
 
-        print(gc)
+        :param gc: A Growth Cone instance.
+        :param step: Current step in the simulation.
+        """
 
-        # Save current values
-        old_position = gc.position
-        old_potential = gc.potential
+        # print("\nNEW STEP DECISION")
 
-        # Move gc to a new position
+        # print(gc)
+
+        # Choose a new position
         xt_direction, yt_direction = self.gen_random_step()
-        new_position = clamp_to_boundaries(gc.position, self.substrate, gc.size, xt_direction, yt_direction)
-        gc.position = new_position
+        gc.new_position = clamp_to_boundaries(gc.position, self.substrate, gc.size, xt_direction, yt_direction)
 
-        print(f"new position: {new_position}")
+        # print(f"new position: {gc.new_position}")
 
         # Calculate new potential
-        step_ratio = (step / self.num_steps) * 2
+        step_ratio = (step / self.num_steps) * 4  # TODO: clarify this step ratio by talking to professor
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
 
-        # Step realization probability
-        old_density = probabilistic_density(old_potential, self.sigma)
+        # Calculate Step realization probabilities
+        old_density = probabilistic_density(gc.potential, self.sigma)
         new_density = probabilistic_density(new_potential, self.sigma)
 
         # Step Decision
         random_number = random.random()
         probability = calculate_probability(old_density, new_density)
-        print(f"random number: {random_number}, probability: {probability}, old_potential: {old_potential}, "
-              f"new_potential: {new_potential}, old_density = {old_density}, new_density = {new_density}")
+        # print(f"random number: {random_number}, probability: {probability}, old_potential: {gc.potential}, "
+        #      f"new_potential: {new_potential}, old_density = {old_density}, new_density = {new_density}")
 
         if random_number > probability:
+            # Take the step
+            gc.position = gc.new_position
             gc.potential = new_potential
-        else:
-            gc.position = old_position
 
     def gen_random_step(self):
+        """
+        Generate a random step in the x and y directions.
+
+        :return: Tuple of x and y directional steps.
+        """
+
         # Initialization
-        x_prob = self.x_step_probability
-        y_prob = self.y_step_probability
+        x_prob = self.x_step_p
+        y_prob = self.y_step_p
 
         # Randomly step in xt and yt directions -1, 0, +1
         xt_direction = random.choices([-1, 0, 1], weights=[(1 - x_prob), (1 - x_prob), x_prob])[0]

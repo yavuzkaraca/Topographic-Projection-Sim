@@ -5,7 +5,7 @@ Module providing all methods needed for guidance potential calculation
 import math
 
 
-def calculate_potential(gc, gcs, substrate, step, new):
+def calculate_potential(gc, gcs, substrate, step):
     # TODO: implement new
     """
     Calculate guidance potential for a growth cone (gc) in a simulation.
@@ -14,7 +14,6 @@ def calculate_potential(gc, gcs, substrate, step, new):
     :param gcs: List of other growth cones (for fiber-fiber interaction).
     :param substrate: Substrate object (for fiber-target interaction).
     :param step: The iteration step of the simulation (used for fiber-fiber interaction).
-    :param new: True if new_position of the growth cone should be used, False implies old_position
     :return: The guidance potential as a floating-point number.
     """
     # TODO: make configurable
@@ -49,7 +48,7 @@ def ft_interaction(gc, substrate):
     :param substrate: Substrate object where the interaction occurs.
     :return: A tuple containing the sum of ligands and receptors from the substrate area covered
     """
-    borders = bounding_box(gc, substrate)
+    borders = bounding_box(gc.new_position, gc.size, substrate)
     edge_length = abs(borders[2] - borders[3])
     center = (borders[2] + borders[3]) / 2, (borders[0] + borders[1]) / 2
 
@@ -82,33 +81,34 @@ def ff_interaction(gc1, gcs):
         if gc1 == gc2:
             # Eliminate self from the gcs list, as self-comparison always matches
             continue
-        d = euclidean_distance(gc2.position, gc1.position)
+        d = euclidean_distance(gc2.position, gc1.new_position)
         if d < gc1.size * 2:
-            print(f"Distance: {d}")
-            area = intersection_area(gc1.position, gc2.position, gc1.size)
+            # print(f"Distance: {d}")
+            area = intersection_area(gc1.new_position, gc2.position, gc1.size)
             sum_ligands += area * gc2.ligand
             sum_receptors += area * gc2.receptor
 
-    print(f"ff_interaction = {sum_ligands}, {sum_receptors}")
+    # print(f"ff_interaction = {sum_ligands}, {sum_receptors}")
 
     return sum_ligands, sum_receptors
 
 
-def bounding_box(gc, substrate):
+def bounding_box(gc_pos, gc_size, substrate):
     """
     Calculate the boundaries of the bounding box for a growth cone (used in fiber-target interaction).
 
-    :param gc: Growth Cone Object for which the bounding box is calculated.
+    :param gc_pos: position of Growth Cone.
+    :param gc_size: size of Growth Cone.
     :param substrate: Substrate Object defining the area for interaction.
     :return: Tuple representing the boundary values of the square matrix (x_min, x_max, y_min, y_max).
     """
     # Calculate the bounds of the bounding box
-    x_min = max(0, gc.position[0] - gc.size)
-    x_max = min(substrate.cols - 1, gc.position[0] + gc.size)
-    y_min = max(0, gc.position[1] - gc.size)
-    y_max = min(substrate.rows - 1, gc.position[1] + gc.size)
+    x_min = max(0, gc_pos[0] - gc_size)
+    x_max = min(substrate.cols - 1, gc_pos[0] + gc_size)
+    y_min = max(0, gc_pos[1] - gc_size)
+    y_max = min(substrate.rows - 1, gc_pos[1] + gc_size)
 
-    print(f"Borders: {x_min}, {x_max}, {y_min}, {y_max}")
+    # print(f"Borders: {x_min}, {x_max}, {y_min}, {y_max}")
 
     return x_min, x_max, y_min, y_max
 
@@ -141,6 +141,6 @@ def intersection_area(gc1_pos, gc2_pos, radius):
         z = x ** 2
         y = math.sqrt(radius ** 2 - z)
         area = radius ** 2 * math.acos(x / radius) - x * y
-        print(f"Area: {area}")
+        # print(f"Area: {area}")
         # TODO: clean-fix area calculation
         return area * 1.5  # magic number for quick dirty fix
