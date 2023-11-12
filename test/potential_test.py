@@ -1,5 +1,5 @@
 from growth_cone import GrowthCone
-from potential_calculation import euclidean_distance, fiber_target_interaction
+from potential_calculation import euclidean_distance, ft_interaction
 from substrate import Substrate
 
 gc_left = GrowthCone((10, 10), 5, 0.01, 0.99)
@@ -26,6 +26,6 @@ def test_ft_interaction():
     gc_top = GrowthCone((30, 54), 5, 0.5, 0.5)
     gc_mid = GrowthCone((30, 30), 5, 0.5, 0.5)
     gc_bottom = GrowthCone((30, 5), 5, 0.5, 0.5)
-    fiber_target_interaction(gc_top, substrate)
-    fiber_target_interaction(gc_mid, substrate)
-    fiber_target_interaction(gc_bottom, substrate)
+    ft_interaction(gc_top, substrate)
+    ft_interaction(gc_mid, substrate)
+    ft_interaction(gc_bottom, substrate)

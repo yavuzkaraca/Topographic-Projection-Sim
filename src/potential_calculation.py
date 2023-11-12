@@ -1,7 +1,22 @@
+"""
+Module providing all methods needed for guidance potential calculation
+"""
+
 import math
 
 
-def calculate_potential(gc, gcs, substrate, step):
+def calculate_potential(gc, gcs, substrate, step, new):
+    # TODO: implement new
+    """
+    Calculate guidance potential for a growth cone (gc) in a simulation.
+
+    :param gc: Growth Cone object representing the cone for which potential is calculated.
+    :param gcs: List of other growth cones (for fiber-fiber interaction).
+    :param substrate: Substrate object (for fiber-target interaction).
+    :param step: The iteration step of the simulation (used for fiber-fiber interaction).
+    :param new: True if new_position of the growth cone should be used, False implies old_position
+    :return: The guidance potential as a floating-point number.
+    """
     # TODO: make configurable
     # Settings init
     forward_on = True
@@ -9,12 +24,14 @@ def calculate_potential(gc, gcs, substrate, step):
     ff_inter_on = True
     ft_inter_on = True
 
-    ft_ligands, ft_receptors = fiber_target_interaction(gc, substrate)
+    # Calculate the number of receptors and ligands growth cone is exposed to
+    ft_ligands, ft_receptors = ft_interaction(gc, substrate)
     ff_ligands, ff_receptors = ff_interaction(gc, gcs)
 
     if not ff_inter_on: ff_ligands, ff_receptors = 0, 0
     if not ft_inter_on: ft_ligands, ft_receptors = 0, 0
 
+    # Calculate the forward and reverse signals
     forward_sig = gc.receptor * (ft_ligands + (step * ff_ligands))
     reverse_sig = gc.ligand * (ft_receptors + (step * ff_receptors))
 
@@ -24,7 +41,14 @@ def calculate_potential(gc, gcs, substrate, step):
     return abs(math.log(reverse_sig or 1) - math.log(forward_sig or 1))
 
 
-def fiber_target_interaction(gc, substrate):
+def ft_interaction(gc, substrate):
+    """
+    Calculate fiber-target interaction between a growth cone and a substrate.
+
+    :param gc: Growth Cone object representing the cone for interaction.
+    :param substrate: Substrate object where the interaction occurs.
+    :return: A tuple containing the sum of ligands and receptors from the substrate area covered
+    """
     borders = bounding_box(gc, substrate)
     edge_length = abs(borders[2] - borders[3])
     center = (borders[2] + borders[3]) / 2, (borders[0] + borders[1]) / 2
@@ -44,12 +68,19 @@ def fiber_target_interaction(gc, substrate):
 
 
 def ff_interaction(gc1, gcs):
+    """
+    Calculate the fiber-fiber interaction between a growth cone (gc1) and a list of other growth cones (gcs).
+
+    :param gc1: The primary Growth Cone object for which interaction is being calculated.
+    :param gcs: A list of other Growth Cone objects for potential interactions with gc1.
+    :return: A tuple containing the sum of ligands and receptors involved in the ff interaction.
+    """
     sum_ligands = 0
     sum_receptors = 0
 
     for gc2 in gcs:
         if gc1 == gc2:
-            # Eliminate self from the gcs list, otherwise always a match
+            # Eliminate self from the gcs list, as self-comparison always matches
             continue
         d = euclidean_distance(gc2.position, gc1.position)
         if d < gc1.size * 2:
@@ -65,11 +96,11 @@ def ff_interaction(gc1, gcs):
 
 def bounding_box(gc, substrate):
     """
-    Calculates the bounding box of growth cone which is relevant for fiber-target-interaction
+    Calculate the boundaries of the bounding box for a growth cone (used in fiber-target interaction).
 
-    :param gc: Growth Cone Object
-    :param substrate: Substrate Object
-    :return: boundary values of the square matrix
+    :param gc: Growth Cone Object for which the bounding box is calculated.
+    :param substrate: Substrate Object defining the area for interaction.
+    :return: Tuple representing the boundary values of the square matrix (x_min, x_max, y_min, y_max).
     """
     # Calculate the bounds of the bounding box
     x_min = max(0, gc.position[0] - gc.size)
@@ -83,6 +114,9 @@ def bounding_box(gc, substrate):
 
 
 def euclidean_distance(point1, point2):
+    """
+    Calculate the Euclidean distance between two points in a 2-dimensional space.
+    """
     x1, y1 = point1
     x2, y2 = point2
     distance = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
@@ -90,18 +124,23 @@ def euclidean_distance(point1, point2):
 
 
 def intersection_area(gc1_pos, gc2_pos, radius):
+    """
+    Calculate the area of intersection between two circles (circumscribed around growth cones).
+    """
     d = euclidean_distance(gc1_pos, gc2_pos)  # Distance between the centers of the circles
 
     if d == 0:
+        # Total overlap
         return radius * radius * math.pi
     elif d > radius * 2:
+        # No overlap
         return 0
     else:
-        # Partial overlap of two circles
+        # Partial overlap
         x = (d ** 2) / (2 * d)
         z = x ** 2
         y = math.sqrt(radius ** 2 - z)
         area = radius ** 2 * math.acos(x / radius) - x * y
         print(f"Area: {area}")
-        # TODO: fix area
-        return area * 1.5 # magic number for quick dirty fix
+        # TODO: clean-fix area calculation
+        return area * 1.5  # magic number for quick dirty fix

@@ -91,7 +91,7 @@ class Simulation:
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
 
         # Step realization probability
-        old_density = probabilistic_density(old_potential,self.sigma)
+        old_density = probabilistic_density(old_potential, self.sigma)
         new_density = probabilistic_density(new_potential, self.sigma)
 
         # Step Decision

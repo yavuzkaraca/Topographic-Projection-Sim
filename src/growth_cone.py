@@ -1,4 +1,7 @@
-import random
+"""
+Module providing Growth Cone class for growth cone representation and it's initialization depending on the substrate
+"""
+
 import numpy as np
 import config as cfg
 
@@ -30,7 +33,7 @@ class GrowthCone:
     def __init__(self, position, size, ligand, receptor):
         self.start_position = position
         self.position = position  # Center point of the circular modeled GC, as x,y
-        # TODO: new position?
+        self.new_position = position  # Possible new position (used for step decision)
         self.size = size  # Radius of the circle
         self.ligand = ligand
         self.receptor = receptor
