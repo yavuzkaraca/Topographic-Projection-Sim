@@ -1,8 +1,6 @@
 import tkinter as tk
 from tkinter import Label, Entry
-
 import numpy as np
-
 from src.substrate import Substrate  # Import the Substrate class from your substrate module
 from src.visualization import visualize_substrate
 from src.potential_calculation import intersection_area

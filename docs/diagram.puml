@@ -1,0 +1,38 @@
+@startuml
+package config.py{
+
+}
+package growth_cone.py{
+    class GrowthCone
+}
+package potential_calculation.py{
+    
+}
+package result.py{
+    class Result
+}
+package sim_builder.py{
+    
+}
+package simulation.py{
+    class Simulation
+}
+package substrate.py{
+    class Substrate
+}
+package visualization.py{
+
+}
+
+config.py <-- sim_builder.py :  uses 
+sim_builder.py --> GrowthCone : creates 
+sim_builder.py --> Substrate : creates 
+sim_builder.py -> Simulation : creates
+Simulation --> potential_calculation.py : uses 
+Simulation ---> Result : creates 
+Result <-- visualization.py : visualizes
+
+Simulation *--- Substrate 
+Simulation *--- GrowthCone
+@enduml
+

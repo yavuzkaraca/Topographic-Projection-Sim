@@ -47,7 +47,10 @@ def ft_interaction(gc, substrate):
     :param substrate: Substrate object where the interaction occurs.
     :return: A tuple containing the sum of ligands and receptors from the substrate area covered
     """
+
     borders = bounding_box(gc.new_position, gc.size, substrate)
+
+    # Needed to ensure the circular modelling of growth cones
     edge_length = abs(borders[2] - borders[3])
     center = (borders[2] + borders[3]) / 2, (borders[0] + borders[1]) / 2
 
@@ -58,6 +61,7 @@ def ft_interaction(gc, substrate):
         for j in range(borders[0], borders[1]):
             d = euclidean_distance(center, (i, j))
             if d > edge_length / 2:
+                # Eliminate cells outside of the circle, as borders define a square matrix
                 continue
             sum_ligands += substrate.ligands[i, j]
             sum_receptors += substrate.receptors[i, j]
