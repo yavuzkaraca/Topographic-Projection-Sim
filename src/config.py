@@ -23,7 +23,7 @@ SIGMA = "sigma"
 
 # Default configuration values
 DEFAULT_CONFIG = {
-    SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
+    SUBSTRATE_TYPE: WEDGES,
     MIN_VALUE: 1,
     MAX_VALUE: 12,
     ROWS: 82,  # number of rows = max value along y-axis
@@ -33,9 +33,9 @@ DEFAULT_CONFIG = {
     GC_COUNT: 20,
     GC_SIZE: 10,
     STEP_SIZE: 3,
-    STEP_AMOUNT: 300,
+    STEP_AMOUNT: 3000,
     X_STEP_POSSIBILITY: 0.50,
-    Y_STEP_POSSIBILITY: 0.50,
+    Y_STEP_POSSIBILITY: 0,
     SIGMA: 0.12
 }
 

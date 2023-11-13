@@ -63,21 +63,26 @@ def visualize_result(result):
     plt.show()
 
 
-def visualize_substrate_and_positions(substrate, result):
+def visualize_results_on_substrate(result, substrate):
     """
-    Visualize tectum end-positions over the ligands in the substrate.
+    Visualize tectum end-positions on top of the color-mixed substrate.
 
-    :param substrate: The Substrate object containing ligand and receptor values.
     :param result: Result object containing tectum end-positions.
+    :param substrate: The Substrate object containing ligand and receptor values.
     """
     fig, ax = plt.subplots(figsize=(8, 8))  # Create a single plot
 
-    ax.imshow(substrate.ligands, cmap='Reds')  # Plot ligands
+    # Blend the colors of ligands and receptors
+    blended_colors = np.zeros(substrate.ligands.shape + (3,))
+    blended_colors[..., 0] = substrate.ligands  # Red channel for ligands
+    blended_colors[..., 2] = substrate.receptors  # Blue channel for receptors
+
+    ax.imshow(blended_colors)  # Display the color-mixed substrate
 
     x_values, y_values = result.get_final_positioning()
-    ax.plot(x_values, y_values, '*', color='blue', label='Tectum End-positions')  # Plot tectum end-positions
+    ax.plot(x_values, y_values, '*', color='yellow', label='Tectum End-positions')  # Plot tectum end-positions
 
-    ax.set_title("Tectum End-positions Over Ligands")
+    ax.set_title("Tectum End-positions on Color-Mixed Substrate")
     ax.legend()  # Show legend
 
     plt.show()

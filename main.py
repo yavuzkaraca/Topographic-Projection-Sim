@@ -6,7 +6,7 @@ def run():
     simulation = object_factory.build_default()
     result = simulation.run()
     vz.visualize_result(result)
-    vz.visualize_substrate_and_positions(simulation.substrate, result)
+    vz.visualize_results_on_substrate(result, simulation.substrate)
 
 
 if __name__ == '__main__':
