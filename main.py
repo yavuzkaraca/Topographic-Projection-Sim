@@ -1,4 +1,4 @@
-import sim_builder
+import object_factory
 from src.visualization import visualize_result
 
 

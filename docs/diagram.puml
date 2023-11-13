@@ -11,7 +11,7 @@ package potential_calculation.py{
 package result.py{
     class Result
 }
-package sim_builder.py{
+package object_factory.py{
     
 }
 package simulation.py{
@@ -24,13 +24,14 @@ package visualization.py{
 
 }
 
-config.py <-- sim_builder.py :  uses 
-sim_builder.py --> GrowthCone : creates 
-sim_builder.py --> Substrate : creates 
-sim_builder.py -> Simulation : creates
+config.py <-- object_factory.py :  uses 
+object_factory.py --> GrowthCone : creates 
+object_factory.py --> Substrate : creates 
+object_factory.py -> Simulation : creates
 Simulation --> potential_calculation.py : uses 
 Simulation ---> Result : creates 
 Result <-- visualization.py : visualizes
+Substrate <-- visualization.py : visualizes
 
 Simulation *--- Substrate 
 Simulation *--- GrowthCone
