@@ -68,14 +68,14 @@ class Substrate:
         """
 
         # Set for readability
-        rows, cols, = self.ligands.shape
+        rows, cols, = self.rows, self.cols
         min_edge_length = self.min_value
         max_edge_length = self.max_value
         receptors = np.zeros((rows, cols), dtype=float)
         ligands = np.ones((rows, cols), dtype=float)
 
         # Calculate the number of wedges that fit in the substrate along the x-axis
-        num_wedges_x = cols // (max_edge_length + min_edge_length + 2)
+        num_wedges_x = rows // (max_edge_length + min_edge_length)
 
         # Slope of upper and lower triangle hypotenuse
         ratio = (cols / max_edge_length) * 2
