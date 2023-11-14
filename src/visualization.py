@@ -1,8 +1,4 @@
 import matplotlib.pyplot as plt
-
-import matplotlib.pyplot as plt
-
-import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -19,7 +15,7 @@ def visualize_substrate(substrate):
     blended_colors[..., 0] = substrate.ligands  # Red channel for ligands
     blended_colors[..., 2] = substrate.receptors  # Blue channel for receptors
 
-    ax.imshow(blended_colors)  # Display the blended colors
+    ax.imshow(blended_colors, cmap='RdBu')  # Use RdBu colormap for blending
 
     ax.set_title("Combined Ligands and Receptors")
 
@@ -50,7 +46,7 @@ def visualize_result(result):
 
     :param result: Result object containing growth cone positions and details.
     """
-    fig, axes = plt.subplots(1, 2, figsize=(10, 5))  # Create a single figure with two subplots
+    fig, axes = plt.subplots(1, 2, figsize=(12, 6))  # Create a single figure with two subplots
 
     x_values, y_values = result.get_projection_repr()
     axes[0].plot(x_values, y_values, '*')  # Plot projection mapping in the first subplot

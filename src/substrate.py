@@ -3,7 +3,6 @@ Module providing the Substrate class for substrate representation and initializa
 """
 
 import numpy as np
-from visualization import visualize_substrate
 
 
 class Substrate:
@@ -46,7 +45,6 @@ class Substrate:
         else:
             raise ValueError("Invalid substrate type specified in the configuration dictionary.")
 
-        visualize_substrate(self)
 
     def initialize_continuous_gradients(self):
         """
