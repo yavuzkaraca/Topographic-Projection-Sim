@@ -30,12 +30,12 @@ DEFAULT_CONFIG = {
     COLS: 100,  # number of cols = max value along x-axis
     OFFSET: 5,  # should equal gc_size
     ADAPTATION: False,
-    GC_COUNT: 20,
-    GC_SIZE: 10,
-    STEP_SIZE: 2,
-    STEP_AMOUNT: 20000,
-    X_STEP_POSSIBILITY: 0.50,
-    Y_STEP_POSSIBILITY: 0,
+    GC_COUNT: 10,
+    GC_SIZE: 5,
+    STEP_SIZE: 3,
+    STEP_AMOUNT: 10000,
+    X_STEP_POSSIBILITY: 0.55,
+    Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12
 }
 

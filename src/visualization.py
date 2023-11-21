@@ -51,10 +51,14 @@ def visualize_result(result):
     x_values, y_values = result.get_projection_repr()
     axes[0].plot(x_values, y_values, '*')  # Plot projection mapping in the first subplot
     axes[0].set_title("Projection Mapping")
+    axes[0].set_xlabel("% n-t Axis of Retina")
+    axes[0].set_ylabel("% a-p Axis of Target")
 
     x_values, y_values = result.get_final_positioning()
     axes[1].plot(x_values, y_values, '*')  # Plot tectum end-positions in the second subplot
     axes[1].set_title("Tectum End-positions")
+    axes[1].set_xlabel("X Coordinate")
+    axes[1].set_ylabel("Y Coordinate")
 
     plt.show()
 
