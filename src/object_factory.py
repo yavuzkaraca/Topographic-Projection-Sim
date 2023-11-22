@@ -5,8 +5,9 @@ Module for setting up and initializing a growth cone simulation.
 import numpy as np
 import config as cfg  # Importing the configuration module
 from growth_cone import GrowthCone  # Importing the Growth Cone class
-from substrate import Substrate  # Importing the Substrate class
 from simulation import Simulation  # Importing the Simulation class
+# Importing the Substrate classes
+from substrate import ContinuousGradientSubstrate, WedgeSubstrate
 
 
 def build_default():
@@ -52,7 +53,20 @@ def build_substrate(config):
     min_value = config.get(cfg.MIN_VALUE)
     max_value = config.get(cfg.MAX_VALUE)
 
-    substrate = Substrate(rows, cols, offset, substrate_type, min_value, max_value)
+    if substrate_type == cfg.CONTINUOUS_GRADIENTS:
+        substrate = ContinuousGradientSubstrate(rows, cols, offset, min_value, max_value)
+    elif substrate_type == cfg.WEDGES:
+        substrate = WedgeSubstrate(rows, cols, offset, min_value, max_value)
+    elif substrate_type == cfg.STRIPE_FWD:
+        substrate = ContinuousGradientSubstrate(rows, cols, offset, min_value, max_value)
+    elif substrate_type == cfg.STRIPE_REW:
+        substrate = ContinuousGradientSubstrate(rows, cols, offset, min_value, max_value)
+    elif substrate_type == cfg.STRIPE_DUO:
+        substrate = ContinuousGradientSubstrate(rows, cols, offset, min_value, max_value)
+    else:
+        raise ValueError("SubstrateType unknown")
+
+    substrate.initialize_substrate()
     return substrate
 
 
