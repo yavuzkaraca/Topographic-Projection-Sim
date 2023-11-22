@@ -8,7 +8,7 @@ def run():
     vz.visualize_substrate(simulation.substrate)
 
     result = simulation.run()
-    vz.visualize_result(result)
+    vz.visualize_result(result, simulation.substrate)
     vz.visualize_results_on_substrate(result, simulation.substrate)
 
 
