@@ -105,11 +105,3 @@ class WedgeSubstrate(BaseSubstrate):
 
         self.receptors, self.ligands = receptors, ligands
 
-
-# Example Usage
-substrate = ContinuousGradientSubstrate(rows=10, cols=10, offset=2, min_value=0, max_value=1)
-substrate.initialize_substrate()
-
-wedge_substrate = WedgeSubstrate(rows=10, cols=10, offset=2, min_value=0, max_value=1)
-wedge_substrate.initialize_substrate()
-

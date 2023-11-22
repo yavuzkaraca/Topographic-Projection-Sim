@@ -26,16 +26,16 @@ SIGMA = "sigma"
 
 # Default configuration values
 DEFAULT_CONFIG = {
-    SUBSTRATE_TYPE: WEDGES,
+    SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     MIN_VALUE: 1,
-    MAX_VALUE: 24,
-    ROWS: 200,  # number of rows = max value along y-axis
-    COLS: 200,  # number of cols = max value along x-axis
-    OFFSET: 10,  # should equal gc_size
+    MAX_VALUE: 12,
+    ROWS: 100,  # number of rows = max value along y-axis
+    COLS: 100,  # number of cols = max value along x-axis
+    OFFSET: 5,  # should equal gc_size
     ADAPTATION: False,
-    GC_COUNT: 30,
-    GC_SIZE: 10,
-    STEP_SIZE: 2,
+    GC_COUNT: 100,
+    GC_SIZE: 5,
+    STEP_SIZE: 1,
     STEP_AMOUNT: 30000,
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,

@@ -107,8 +107,9 @@ def visualize_result(result, substrate):
 
     # Get projection mapping data and normalize
     x_values, y_values = result.get_projection_repr()
+
     x_values_normalized = normalize_values(x_values, substrate.offset, substrate.cols - substrate.offset)
-    y_values_normalized = normalize_values(y_values, substrate.offset, substrate.rows - substrate.offset)
+    y_values_normalized = normalize_values(y_values, substrate.offset, substrate.rows - substrate.offset - 1)
 
     slope, intercept, r_value, _, _ = linregress(x_values_normalized, y_values_normalized)
     regression_line = slope * x_values_normalized + intercept
@@ -116,7 +117,7 @@ def visualize_result(result, substrate):
     null_point_x = -intercept / slope if slope != 0 else None
     null_point_y = intercept
 
-    axes[0].plot(x_values_normalized, y_values_normalized, '*', label='Data Points')
+    axes[0].plot(x_values_normalized, y_values_normalized, '*', label='Growth Cones')
     axes[0].plot(x_values_normalized, regression_line, 'r-',
                  label=f'Linear Regression\nSlope: {slope:.2f}\nR^2: {correlation:.2f}'
                        f'\nNull Point X: {null_point_x:.2f}\nNull Point Y: {null_point_y:.2f}')
