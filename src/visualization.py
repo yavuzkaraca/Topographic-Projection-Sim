@@ -95,6 +95,35 @@ def visualize_results_on_substrate(result, substrate):
     plt.show()
 
 
+def visualize_trajectory_on_substrate(result, substrate, growth_cones):
+    """
+    Visualize tectum end-positions and growth cone trajectories on top of the substrate.
+
+    :param result: Result object containing tectum end-positions.
+    :param substrate: The Substrate object containing ligand and receptor values.
+    :param growth_cones: List of GrowthCone objects with trajectory data.
+    """
+    fig, ax = plt.subplots(figsize=(8, 8))
+
+    # Create blended colors for the substrate
+    blended_colors = create_blended_colors(substrate.ligands, substrate.receptors)
+    ax.imshow(blended_colors)
+
+    # Plot tectum end-positions
+    x_values, y_values = result.get_final_positioning()
+    ax.plot(x_values, y_values, '*', color='yellow', label='Tectum End-positions')
+
+    # Plot growth cone trajectories
+    for growth_cone in growth_cones:
+        trajectory_x, trajectory_y = zip(*growth_cone.trajectory)
+        ax.plot(trajectory_x, trajectory_y, label=f'Growth Cone {growth_cones.index(growth_cone)}')
+
+    ax.set_title("Tectum End-positions and Growth Cone Trajectories on Substrate")
+    ax.legend()
+    ax.set_ylim(ax.get_ylim()[::-1])  # Flip the y-axis
+    plt.show()
+
+
 def visualize_result(result, substrate):
     """
     Generate plots for the projection mapping and tectum end-positions, including linear regression for the
@@ -103,7 +132,7 @@ def visualize_result(result, substrate):
     :param substrate: The Substrate object containing dimensions. (for normalization)
     :param result: Result object containing growth cone positions and details.
     """
-    fig, axes = plt.subplots(1, 2, figsize=(12, 6))  # Create a single figure with two subplots
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))  # Create a single figure with two subplots
 
     # Get projection mapping data and normalize
     x_values, y_values = result.get_projection_repr()
@@ -143,3 +172,21 @@ def normalize_values(values, min_val, max_val):
     Normalize the given values to a range between 0 and 100.
     """
     return (values - min_val) / (max_val - min_val) * 100
+
+
+def visualize_trajectories(growth_cones):
+    """
+    Visualize the trajectories of growth cones.
+
+    :param growth_cones: List of GrowthCone objects.
+    """
+    plt.figure()
+    for growth_cone in growth_cones:
+        x_values, y_values = zip(*growth_cone.trajectory)  # Unpack the trajectory points
+        plt.plot(x_values, y_values, label=f'Growth Cone {growth_cones.index(growth_cone)}')
+
+    plt.xlabel('X Coordinate')
+    plt.ylabel('Y Coordinate')
+    plt.title('Growth Cone Trajectories')
+    plt.legend()
+    plt.show()

@@ -32,6 +32,7 @@ class GrowthCone:
         self.start_position = position
         self.position = position
         self.new_position = position
+        self.trajectory = []
         self.size = size
         self.ligand = ligand
         self.receptor = receptor
@@ -43,3 +44,10 @@ class GrowthCone:
         """
         return (f"Receptor: {self.receptor}, Ligand: {self.ligand}, Position: {self.position}, "
                 f"Start Position: {self.start_position}, Potential: {self.potential}")
+
+    def take_step(self, new_potential):
+        self.potential = new_potential
+        self.position = self.new_position
+
+    def update_trajectory(self):
+        self.trajectory.append(self.new_position)

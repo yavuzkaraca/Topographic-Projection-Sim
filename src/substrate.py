@@ -105,3 +105,15 @@ class WedgeSubstrate(BaseSubstrate):
 
         self.receptors, self.ligands = receptors, ligands
 
+    class StripeFwdSubstrate(BaseSubstrate):
+        # TODO: refactor all stripe substrates
+        def initialize_substrate(self):
+            pass
+
+    class StripeRewSubstrate(BaseSubstrate):
+        def initialize_substrate(self):
+            pass
+
+    class StripeDuoSubstrate(BaseSubstrate):
+        def initialize_substrate(self):
+            pass

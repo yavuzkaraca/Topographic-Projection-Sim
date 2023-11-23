@@ -130,7 +130,7 @@ class Simulation:
 
     def step_decision(self, gc, step):
         """
-        Make a decision for a growth cone to step or not based on potential and probabilities of it's new position.
+        Make a decision for a growth cone to step or not based on potential and probabilities of its new position.
 
         :param gc: A Growth Cone instance.
         :param step: Current step in the simulation.
@@ -152,10 +152,14 @@ class Simulation:
         random_number = random.random()
         probability = calculate_probability(old_density, new_density)
 
+        # Trajectory Saving
+        # TODO: Make configurable, maybe rename to Trace?
+        if step % 100 == 0:
+            gc.update_trajectory()
+
         if random_number > probability:
             # Take the step
-            gc.position = gc.new_position
-            gc.potential = new_potential
+            gc.take_step(new_potential)
 
     def gen_random_step(self):
         """

@@ -10,6 +10,8 @@ def run():
     result = simulation.run()
     vz.visualize_result(result, simulation.substrate)
     vz.visualize_results_on_substrate(result, simulation.substrate)
+    vz.visualize_trajectories(simulation.growth_cones)
+    vz.visualize_trajectory_on_substrate(result,simulation.substrate,simulation.growth_cones)
 
 
 if __name__ == '__main__':
