@@ -154,7 +154,7 @@ class Simulation:
 
         # Trajectory Saving
         # TODO: Make configurable, maybe rename to Trace?
-        if step % 100 == 0:
+        if step % 50 == 0:
             gc.update_trajectory()
 
         if random_number > probability:

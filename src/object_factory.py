@@ -7,7 +7,8 @@ import config as cfg  # Importing the configuration module
 from growth_cone import GrowthCone  # Importing the Growth Cone class
 from simulation import Simulation  # Importing the Simulation class
 # Importing the Substrate classes
-from substrate import ContinuousGradientSubstrate, WedgeSubstrate
+from substrate import (ContinuousGradientSubstrate, WedgeSubstrate, StripeFwdSubstrate,
+                       StripeRewSubstrate, StripeDuoSubstrate)
 
 
 def build_default():
@@ -58,11 +59,11 @@ def build_substrate(config):
     elif substrate_type == cfg.WEDGES:
         substrate = WedgeSubstrate(rows, cols, offset, min_value, max_value)
     elif substrate_type == cfg.STRIPE_FWD:
-        substrate = ContinuousGradientSubstrate(rows, cols, offset, min_value, max_value)
+        substrate = StripeFwdSubstrate(rows, cols, offset, min_value, max_value)
     elif substrate_type == cfg.STRIPE_REW:
-        substrate = ContinuousGradientSubstrate(rows, cols, offset, min_value, max_value)
+        substrate = StripeRewSubstrate(rows, cols, offset, min_value, max_value)
     elif substrate_type == cfg.STRIPE_DUO:
-        substrate = ContinuousGradientSubstrate(rows, cols, offset, min_value, max_value)
+        substrate = StripeDuoSubstrate(rows, cols, offset, min_value, max_value)
     else:
         raise ValueError("SubstrateType unknown")
 

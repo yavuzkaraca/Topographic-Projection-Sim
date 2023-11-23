@@ -105,15 +105,54 @@ class WedgeSubstrate(BaseSubstrate):
 
         self.receptors, self.ligands = receptors, ligands
 
-    class StripeFwdSubstrate(BaseSubstrate):
-        # TODO: refactor all stripe substrates
-        def initialize_substrate(self):
-            pass
 
-    class StripeRewSubstrate(BaseSubstrate):
-        def initialize_substrate(self):
-            pass
+class StripeFwdSubstrate(BaseSubstrate):
+    # TODO: refactor all stripe substrates
+    def initialize_substrate(self):
+        """
+        Initialize the substrate with alternating stripes of ligands and receptors.
+        Each stripe is 'self.max_value' rows thick.
+        """
+        for row in range(self.rows):
+            self.receptors[row, :] = np.zeros(self.cols)
+            if (row // self.max_value) % 2 == 0:
+                # Even stripe: Set ligands and clear receptors
+                self.ligands[row, :] = np.ones(self.cols)
 
-    class StripeDuoSubstrate(BaseSubstrate):
-        def initialize_substrate(self):
-            pass
+            else:
+                # Odd stripe: Clear ligands and set receptors
+                self.ligands[row, :] = np.zeros(self.cols)
+
+
+class StripeRewSubstrate(BaseSubstrate):
+    def initialize_substrate(self):
+        """
+        Initialize the substrate with alternating stripes of ligands and receptors.
+        Each stripe is 'self.max_value' rows thick.
+        """
+        for row in range(self.rows):
+            self.ligands[row, :] = np.zeros(self.cols)
+            if (row // self.max_value) % 2 == 0:
+                # Even stripe: Set ligands and clear receptors
+                self.receptors[row, :] = np.zeros(self.cols)
+            else:
+                # Odd stripe: Clear ligands and set receptors
+                self.receptors[row, :] = np.ones(self.cols)
+
+
+class StripeDuoSubstrate(BaseSubstrate):
+    def initialize_substrate(self):
+        """
+        Initialize the substrate with alternating stripes of ligands and receptors.
+        Each stripe is 'self.max_value' rows thick.
+        """
+        for row in range(self.rows):
+            if (row // self.max_value) % 2 == 0:
+                # Even stripe: Set ligands and clear receptors
+                self.ligands[row, :] = np.ones(self.cols)
+                self.receptors[row, :] = np.zeros(self.cols)
+            else:
+                # Odd stripe: Clear ligands and set receptors
+                self.ligands[row, :] = np.zeros(self.cols)
+                self.receptors[row, :] = np.ones(self.cols)
+
