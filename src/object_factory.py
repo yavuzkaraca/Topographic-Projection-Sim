@@ -8,14 +8,14 @@ from growth_cone import GrowthCone  # Importing the Growth Cone class
 from simulation import Simulation  # Importing the Simulation class
 # Importing the Substrate classes
 from substrate import (ContinuousGradientSubstrate, WedgeSubstrate, StripeFwdSubstrate,
-                       StripeRewSubstrate, StripeDuoSubstrate)
+                       StripeRewSubstrate, StripeDuoSubstrate, GapSubstrate)
 
 
 def build_default():
     """
     Build a default simulation using the default configuration settings.
     """
-    return build_simulation(cfg.DEFAULT_CONFIG)
+    return build_simulation(cfg.config)
 
 
 def build_simulation(config):
@@ -28,14 +28,20 @@ def build_simulation(config):
     # Extract attributes from the configuration
     substrate = build_substrate(config)
     growth_cones = initialize_growth_cones(config)
-    adaptation = config.get(cfg.ADAPTATION)
     step_size = config.get(cfg.STEP_SIZE)
     num_steps = config.get(cfg.STEP_AMOUNT)
     x_step_p = config.get(cfg.X_STEP_POSSIBILITY)
     y_step_p = config.get(cfg.Y_STEP_POSSIBILITY)
     sigma = config.get(cfg.SIGMA)
 
-    simulation = Simulation(substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigma)
+    # Extract adaptation parameters
+    adaptation = config.get(cfg.ADAPTATION_ENABLED)
+    mu = config.get(cfg.ADAPTATION_MU)
+    lambda_ = config.get(cfg.ADAPTATION_LAMBDA)
+    history_length = config.get(cfg.ADAPTATION_HISTORY)
+
+    # Initialize the Simulation object with the new parameters
+    simulation = Simulation(substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigma, mu, lambda_, history_length)
     return simulation
 
 
@@ -64,6 +70,8 @@ def build_substrate(config):
         substrate = StripeRewSubstrate(rows, cols, offset, min_value, max_value)
     elif substrate_type == cfg.STRIPE_DUO:
         substrate = StripeDuoSubstrate(rows, cols, offset, min_value, max_value)
+    elif substrate_type == cfg.GAP:
+        substrate = GapSubstrate(rows, cols, offset, min_value, max_value)
     else:
         raise ValueError("SubstrateType unknown")
 

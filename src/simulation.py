@@ -80,7 +80,8 @@ class Simulation:
         gen_random_step(): Generates a random step in the x and y directions.
     """
 
-    def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigma):
+    def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigma, mu,
+                 lambda_, history_length):
         """
         Initialize the Simulation class with necessary parameters.
 
@@ -92,6 +93,9 @@ class Simulation:
         :param x_step_p: Probability of a growth cone stepping in the x-direction.
         :param y_step_p: Probability of a growth cone stepping in the y-direction.
         :param sigma: Standard deviation for potential calculations.
+        :param mu: Parameter for adaptation coefficient calculation.
+        :param lambda_: Parameter for resetting force calculation.
+        :param history_length: Number of historical steps to consider for adaptation.
         """
         self.substrate = substrate
         self.growth_cones = growth_cones
@@ -101,6 +105,9 @@ class Simulation:
         self.x_step_p = x_step_p
         self.y_step_p = y_step_p
         self.sigma = sigma
+        self.mu = mu
+        self.lambda_ = lambda_
+        self.history_length = history_length
 
     def run(self):
         """
@@ -119,6 +126,8 @@ class Simulation:
                 print(step)
             # Update growth cones
             for gc in self.growth_cones:
+                if self.adaptation:
+                    self.adapt_growth_cone(gc)
                 self.step_decision(gc, step)
 
         for gc in self.growth_cones:
@@ -177,3 +186,16 @@ class Simulation:
         yt_direction = random.choices([-1, 0, 1], weights=[y_prob, (1 - y_prob), y_prob])[0]
 
         return xt_direction * self.step_size, yt_direction * self.step_size
+
+    def adapt_growth_cone(self, gc):
+        """
+        Adapt the growth cone properties based on the simulation's adaptation configuration.
+
+        :param gc: A Growth Cone instance.
+        """
+        gc.calculate_adaptation(self.mu, self.lambda_, self.history_length)
+        gc.apply_adaptation()
+
+        # Maintain the history length
+        while len(gc.history) > self.history_length:
+            gc.history.pop(0)  # Remove the oldest entry in the history
