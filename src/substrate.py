@@ -163,20 +163,36 @@ class GapSubstrate(BaseSubstrate):
         Initialize the substrate with three different sections, each taking up a third of the total rows.
         The first third is filled with ligands, the second third is empty, and the third is filled with receptors.
         """
-        third = self.rows // self.min_value
-        second_third = self.max_value * third
+        first_part = int(self.cols * self.min_value)  # last column of the first part
+        second_part = first_part + int(self.cols * self.max_value)  # last column of the second part
 
-        # First third: Filled with ligands
-        for col in range(third):
-            self.ligands[:, col] = np.ones(self.rows)
-            self.receptors[:, col] = np.zeros(self.rows)
+        # TODO: make configurable from outside
+        start_red = False
+        end_red = False
+
+        # First third: Filled with sensors
+        for col in range(first_part):
+            if start_red:
+                self.set_ligand(col)
+            else:
+                self.set_receptor(col)
 
         # Second third: Empty
-        for col in range(third, second_third):
+        for col in range(first_part, second_part):
             self.ligands[:, col] = np.zeros(self.rows)
             self.receptors[:, col] = np.zeros(self.rows)
 
-        # Final third: Filled with receptors
-        for col in range(second_third, self.cols):
-            self.ligands[:, col] = np.zeros(self.rows)
-            self.receptors[:, col] = np.ones(self.rows)
+        # Final third: Filled with sensors
+        for col in range(second_part, self.cols):
+            if end_red:
+                self.set_ligand(col)
+            else:
+                self.set_receptor(col)
+
+    def set_ligand(self, col):
+        self.ligands[:, col] = np.ones(self.rows)
+        self.receptors[:, col] = np.zeros(self.rows)
+
+    def set_receptor(self, col):
+        self.ligands[:, col] = np.zeros(self.rows)
+        self.receptors[:, col] = np.ones(self.rows)

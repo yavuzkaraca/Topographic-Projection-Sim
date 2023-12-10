@@ -78,16 +78,16 @@ WEDGES_CONFIG = {
 
 GAP_ASSAY_CONFIG = {
     SUBSTRATE_TYPE: GAP,
-    MIN_VALUE: 3,
-    MAX_VALUE: 2,
+    MIN_VALUE: 0.4,
+    MAX_VALUE: 0.2,
     ROWS: 96,  # number of rows = max value along y-axis
     COLS: 96,  # number of cols = max value along x-axis
     OFFSET: 5,  # should equal gc_size
     GC_COUNT: 5,
-    GC_SIZE: 10,
+    GC_SIZE: 5,
     STEP_SIZE: 2,
     STEP_AMOUNT: 20000,
-    X_STEP_POSSIBILITY: 0.50,
+    X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
     TRAJECTORY: 100,
