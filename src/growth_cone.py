@@ -35,11 +35,13 @@ class GrowthCone:
         self.new_position = position
         self.trajectory = []
         self.size = size
+        self.start_ligand = ligand
+        self.start_receptor = receptor
         self.ligand = ligand
         self.receptor = receptor
         self.potential = 0
         self.adap_coeff = 1  # Adaptation coefficient starts at 1
-        self.reset_force = 0  # Resetting force starts at 0
+        self.reset_force = 0  # Resetting force starts at 0, first element is ligand, second element is receptor
         self.history = []  # History of guidance potential values
 
     def __str__(self):
@@ -66,18 +68,18 @@ class GrowthCone:
         :param h: The number of historical steps to consider for adaptation.
         """
         # Ensure we have enough history to calculate adaptation
+        if len(self.history) >= h:
+            recent_history = self.history[-h:]  # Get the last h elements from the history
 
-        recent_history = self.history[-h:]  # Get the last h elements from the history
+            # Calculate the adaptation coefficient using the formula from the paper
+            self.adap_coeff = 1 / math.log(
+                1 + mu * sum(k * abs(potential_diff) for k, potential_diff in enumerate(recent_history, 1)) / sum(
+                    range(1, h + 1)))
 
-        # Calculate the adaptation coefficient using the formula from the paper
-        self.adap_coeff = 1 + math.log(
-            1 + mu * sum(k * abs(potential_diff) for k, potential_diff in enumerate(recent_history, 1)) / sum(
-                range(1, h + 1)))
-
-        # Calculate the resetting force
-        reset_force_vector = (lambda_ * (self.start_position[0] - self.position[0]),
-                              lambda_ * (self.start_position[1] - self.position[1]))
-        self.reset_force = math.sqrt(reset_force_vector[0] ** 2 + reset_force_vector[1] ** 2)
+            # Calculate the resetting force
+            ligand_diff = abs(self.start_ligand - self.ligand)
+            receptor_diff = abs(self.start_receptor - self.receptor)
+            self.reset_force = lambda_ * (ligand_diff + receptor_diff) / 2
 
     def apply_adaptation(self):
         """
@@ -85,7 +87,13 @@ class GrowthCone:
         """
         self.ligand *= self.adap_coeff
         self.receptor *= self.adap_coeff
-        self.ligand += self.reset_force
-        self.receptor += self.reset_force
+        self.ligand -= self.reset_force
+        self.receptor -= self.reset_force
+
+        # Normalize to be within the range [0, 1]
+        self.ligand = min(max(self.ligand, 0), 1)
+        self.receptor = min(max(self.receptor, 0), 1)
+
+
 
 

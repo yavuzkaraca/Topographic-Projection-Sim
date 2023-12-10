@@ -115,11 +115,12 @@ class Simulation:
 
         :return: Result object containing final growth cone positions and details.
         """
-        final_positions = []
         for gc in self.growth_cones:
             # potential initialization
             gc.potential = calculate_potential(gc, self.growth_cones, self.substrate, 0)
             print(gc)
+
+        print(f"\nInitialization completed.\nIteration starts, {self.num_steps} many steps will be taken\n")
 
         for step in range(self.num_steps):
             if step % 1000 == 0:
@@ -128,12 +129,14 @@ class Simulation:
             for gc in self.growth_cones:
                 if self.adaptation:
                     self.adapt_growth_cone(gc)
+                    print(gc)
                 self.step_decision(gc, step)
+
+        print("\nIteration completed\n")
 
         for gc in self.growth_cones:
             # Fetch final positions
             print(gc)
-            final_positions.append(gc.position)
 
         return Result(self.growth_cones, self.substrate)
 
@@ -150,7 +153,7 @@ class Simulation:
         gc.new_position = clamp_to_boundaries(gc.position, self.substrate, gc.size, xt_direction, yt_direction)
 
         # Calculate new potential
-        step_ratio = (step / self.num_steps) * 4  # TODO: clarify this step ratio by talking to professor
+        step_ratio = (step / self.num_steps) * 4  # TODO: clarify this step ratio by talking to Franco
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
 
         # Calculate Step realization probabilities
