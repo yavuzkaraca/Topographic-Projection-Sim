@@ -20,6 +20,7 @@ def clamp_to_boundaries(position, substrate, size, xt_direction, yt_direction):
     :return: The clamped new position of the growth cone within the substrate boundaries.
     """
 
+    # TODO: move this into step decision
     new_x = position[0] + xt_direction
     new_y = position[1] + yt_direction
 
@@ -39,7 +40,6 @@ def probabilistic_density(potential, sigma):
     :return: The probability density at the given potential value.
     """
 
-    # Probability density function for normal distribution
     y = math.exp(-potential ** 2 / (2 * sigma ** 2)) / (math.sqrt(2 * math.pi) * sigma)
     return y
 
@@ -159,10 +159,10 @@ class Simulation:
         # Calculate Step realization probabilities
         old_density = probabilistic_density(gc.potential, self.sigma)
         new_density = probabilistic_density(new_potential, self.sigma)
+        probability = calculate_probability(old_density, new_density)
 
         # Step Decision
         random_number = random.random()
-        probability = calculate_probability(old_density, new_density)
 
         # Trajectory Saving
         # TODO: Make configurable, maybe rename to Trace?

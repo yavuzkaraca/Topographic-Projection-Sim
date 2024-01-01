@@ -8,8 +8,8 @@ import src.config as cfg
 
 test_config = {
     cfg.SUBSTRATE_TYPE: cfg.CONTINUOUS_GRADIENTS,
-    cfg.MIN_VALUE: 2,
-    cfg.MAX_VALUE: 40,
+    cfg.CUSTOM_FIRST: 2,
+    cfg.CUSTOM_SECOND: 40,
     cfg.ROWS: 50,
     cfg.COLS: 100,
     cfg.ADAPTATION: False,

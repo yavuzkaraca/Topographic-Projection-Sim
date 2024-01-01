@@ -7,8 +7,9 @@ import config as cfg  # Importing the configuration module
 from growth_cone import GrowthCone  # Importing the Growth Cone class
 from simulation import Simulation  # Importing the Simulation class
 # Importing the Substrate classes
-from substrate import (ContinuousGradientSubstrate, WedgeSubstrate, StripeFwdSubstrate,
-                       StripeRewSubstrate, StripeDuoSubstrate, GapSubstrate)
+from substrate import (ContinuousGradientSubstrate, WedgeSubstrate,
+                       StripeFwdSubstrate, StripeRewSubstrate, StripeDuoSubstrate,
+                       GapSubstrateRR, GapSubstrateRB, GapSubstrateBR,GapSubstrateBB)
 
 
 def build_default():
@@ -57,8 +58,8 @@ def build_substrate(config):
     cols = config.get(cfg.COLS)
     offset = config.get(cfg.OFFSET)
     substrate_type = config.get(cfg.SUBSTRATE_TYPE)
-    min_value = config.get(cfg.MIN_VALUE)
-    max_value = config.get(cfg.MAX_VALUE)
+    min_value = config.get(cfg.CUSTOM_FIRST)
+    max_value = config.get(cfg.CUSTOM_SECOND)
 
     if substrate_type == cfg.CONTINUOUS_GRADIENTS:
         substrate = ContinuousGradientSubstrate(rows, cols, offset, min_value, max_value)
@@ -70,8 +71,14 @@ def build_substrate(config):
         substrate = StripeRewSubstrate(rows, cols, offset, min_value, max_value)
     elif substrate_type == cfg.STRIPE_DUO:
         substrate = StripeDuoSubstrate(rows, cols, offset, min_value, max_value)
-    elif substrate_type == cfg.GAP:
-        substrate = GapSubstrate(rows, cols, offset, min_value, max_value)
+    elif substrate_type == cfg.GAP_RR:
+        substrate = GapSubstrateRR(rows, cols, offset, min_value, max_value)
+    elif substrate_type == cfg.GAP_RB:
+        substrate = GapSubstrateRB(rows, cols, offset, min_value, max_value)
+    elif substrate_type == cfg.GAP_BR:
+        substrate = GapSubstrateBR(rows, cols, offset, min_value, max_value)
+    elif substrate_type == cfg.GAP_BB:
+        substrate = GapSubstrateBB(rows, cols, offset, min_value, max_value)
     else:
         raise ValueError("SubstrateType unknown")
 

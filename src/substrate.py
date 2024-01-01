@@ -20,8 +20,9 @@ class BaseSubstrate:
         self.rows = rows + offset * 2
         self.cols = cols + offset * 2
         self.offset = offset
-        self.min_value = min_value
-        self.max_value = max_value
+        # TODO: process offset more elegantly
+        self.custom_first = min_value  # min_value
+        self.custom_second = max_value  # max_value
 
         self.ligands = np.zeros((self.rows, self.cols), dtype=float)
         self.receptors = np.zeros((self.rows, self.cols), dtype=float)
@@ -45,6 +46,30 @@ class BaseSubstrate:
         result += str(self.receptors)
         return result
 
+    def set_col_ligand_only(self, col):
+        self.ligands[:, col] = np.ones(self.rows)
+        self.receptors[:, col] = np.zeros(self.rows)
+
+    def set_col_receptor_only(self, col):
+        self.ligands[:, col] = np.zeros(self.rows)
+        self.receptors[:, col] = np.ones(self.rows)
+
+    def set_col_empty(self, col):
+        self.ligands[:, col] = np.zeros(self.rows)
+        self.receptors[:, col] = np.zeros(self.rows)
+
+    def set_row_ligand_only(self, row):
+        self.ligands[row, :] = np.ones(self.cols)
+        self.receptors[row, :] = np.zeros(self.cols)
+
+    def set_row_receptor_only(self, row):
+        self.ligands[row, :] = np.zeros(self.cols)
+        self.receptors[row, :] = np.ones(self.cols)
+
+    def set_row_empty(self, row):
+        self.ligands[row, :] = np.zeros(self.cols)
+        self.receptors[row, :] = np.zeros(self.cols)
+
 
 class ContinuousGradientSubstrate(BaseSubstrate):
     def initialize_substrate(self):
@@ -66,8 +91,8 @@ class WedgeSubstrate(BaseSubstrate):
         """
         # Set for readability
         rows, cols, = self.rows, self.cols
-        min_edge_length = self.min_value
-        max_edge_length = self.max_value
+        min_edge_length = self.custom_first
+        max_edge_length = self.custom_second
         receptors = np.zeros((rows, cols), dtype=float)
         ligands = np.ones((rows, cols), dtype=float)
 
@@ -106,93 +131,90 @@ class WedgeSubstrate(BaseSubstrate):
         self.receptors, self.ligands = receptors, ligands
 
 
-class StripeFwdSubstrate(BaseSubstrate):
-    # TODO: refactor all stripe substrates
+class BaseStripeSubstrate(BaseSubstrate):
     def initialize_substrate(self):
-        """
-        Initialize the substrate with alternating stripes of ligands and receptors.
-        Each stripe is 'self.max_value' rows thick.
-        """
-        for row in range(self.rows):
-            self.receptors[row, :] = np.zeros(self.cols)
-            if (row // self.max_value) % 2 == 0:
-                # Even stripe: Set ligands and clear receptors
-                self.ligands[row, :] = np.ones(self.cols)
+        raise NotImplementedError("Subclasses should implement this method.")
 
+    def initialize_stripe(self, forward, reverse):
+        for row in range(self.rows):
+            if (row // self.custom_second) % 2 == 0:
+                # Even stripe: Set ligands and clear receptors
+                if forward:
+                    self.set_col_ligand_only(row)
             else:
                 # Odd stripe: Clear ligands and set receptors
-                self.ligands[row, :] = np.zeros(self.cols)
+                if reverse:
+                    self.set_row_receptor_only(row)
 
 
-class StripeRewSubstrate(BaseSubstrate):
+class StripeFwdSubstrate(BaseStripeSubstrate):
     def initialize_substrate(self):
-        """
-        Initialize the substrate with alternating stripes of ligands and receptors.
-        Each stripe is 'self.max_value' rows thick.
-        """
-        for row in range(self.rows):
-            self.ligands[row, :] = np.zeros(self.cols)
-            if (row // self.max_value) % 2 == 0:
-                # Even stripe: Set ligands and clear receptors
-                self.receptors[row, :] = np.zeros(self.cols)
-            else:
-                # Odd stripe: Clear ligands and set receptors
-                self.receptors[row, :] = np.ones(self.cols)
+        self.initialize_stripe(True, True)
 
 
-class StripeDuoSubstrate(BaseSubstrate):
+class StripeRewSubstrate(BaseStripeSubstrate):
     def initialize_substrate(self):
-        """
-        Initialize the substrate with alternating stripes of ligands and receptors.
-        Each stripe is 'self.max_value' rows thick.
-        """
-        for row in range(self.rows):
-            if (row // self.max_value) % 2 == 0:
-                # Even stripe: Set ligands and clear receptors
-                self.ligands[row, :] = np.ones(self.cols)
-                self.receptors[row, :] = np.zeros(self.cols)
-            else:
-                # Odd stripe: Clear ligands and set receptors
-                self.ligands[row, :] = np.zeros(self.cols)
-                self.receptors[row, :] = np.ones(self.cols)
+        self.initialize_stripe(False, True)
 
 
-class GapSubstrate(BaseSubstrate):
+class StripeDuoSubstrate(BaseStripeSubstrate):
     def initialize_substrate(self):
+        self.initialize_stripe(True, True)
+
+
+class BaseGapSubstrate(BaseSubstrate):
+    @property
+    def parts(self):
+        first_part = int(self.cols * self.custom_first)  # last column of the first part
+        second_part = first_part + int(self.cols * self.custom_second)  # last column of the second part
+        # TODO: make gap distance configurable
+        return first_part, second_part
+
+    def initialize_substrate(self):
+        raise NotImplementedError("Subclasses should implement this method.")
+
+    def initialize_gap(self, start_red, end_red):
         """
         Initialize the substrate with three different sections, each taking up a third of the total rows.
         The first third is filled with ligands, the second third is empty, and the third is filled with receptors.
         """
-        first_part = int(self.cols * self.min_value)  # last column of the first part
-        second_part = first_part + int(self.cols * self.max_value)  # last column of the second part
 
-        # TODO: make configurable from outside
-        start_red = False
-        end_red = False
+        first_part, second_part = self.parts
 
-        # First third: Filled with sensors
+        # First third: Filled with Signals
         for col in range(first_part):
             if start_red:
-                self.set_ligand(col)
+                self.set_col_ligand_only(col)
             else:
-                self.set_receptor(col)
+                self.set_col_receptor_only(col)
 
         # Second third: Empty
         for col in range(first_part, second_part):
-            self.ligands[:, col] = np.zeros(self.rows)
-            self.receptors[:, col] = np.zeros(self.rows)
+            self.set_col_empty(col)
 
-        # Final third: Filled with sensors
+        # Final third: Filled with Signals
         for col in range(second_part, self.cols):
             if end_red:
-                self.set_ligand(col)
+                self.set_col_ligand_only(col)
             else:
-                self.set_receptor(col)
+                self.set_col_receptor_only(col)
 
-    def set_ligand(self, col):
-        self.ligands[:, col] = np.ones(self.rows)
-        self.receptors[:, col] = np.zeros(self.rows)
 
-    def set_receptor(self, col):
-        self.ligands[:, col] = np.zeros(self.rows)
-        self.receptors[:, col] = np.ones(self.rows)
+class GapSubstrateRR(BaseGapSubstrate):
+    def initialize_substrate(self):
+        self.initialize_gap(True, True)
+
+
+class GapSubstrateRB(BaseGapSubstrate):
+    def initialize_substrate(self):
+        self.initialize_gap(True, False)
+
+
+class GapSubstrateBR(BaseGapSubstrate):
+    def initialize_substrate(self):
+        self.initialize_gap(False, True)
+
+
+class GapSubstrateBB(BaseGapSubstrate):
+    def initialize_substrate(self):
+        self.initialize_gap(False, False)

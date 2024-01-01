@@ -8,12 +8,19 @@ WEDGES = "wedges"
 STRIPE_FWD = "stripe_fwd"
 STRIPE_REW = "stripe_rew"
 STRIPE_DUO = "stripe_duo"
-GAP = "gap"
+GAP_RR = "gap_rr"
+GAP_RB = "gap_rb"
+GAP_BR = "gap_br"
+GAP_BB = "gap_bb"
 
 # Simulation Parameters
 SUBSTRATE_TYPE = "substrate_type"
-MIN_VALUE = "min_value"
-MAX_VALUE = "max_value"
+
+# small edge length ; - ; last column of first part
+CUSTOM_FIRST = "custom_first"
+# big edge length ; stripe width ; first column of last part
+CUSTOM_SECOND = "custom_second"
+
 ROWS = "rows"
 COLS = "cols"
 OFFSET = "offset"
@@ -35,8 +42,8 @@ ADAPTATION_HISTORY = "adaptation_history"
 # Stipe Assay configuration values
 STRIPE_ASSAY_CONFIG = {
     SUBSTRATE_TYPE: STRIPE_DUO,
-    MIN_VALUE: 1,
-    MAX_VALUE: 12,
+    CUSTOM_FIRST: 1,
+    CUSTOM_SECOND: 12,
     ROWS: 150,  # number of rows = max value along y-axis
     COLS: 150,  # number of cols = max value along x-axis
     OFFSET: 5,  # should equal gc_size
@@ -57,8 +64,8 @@ STRIPE_ASSAY_CONFIG = {
 # Default configuration values
 WEDGES_CONFIG = {
     SUBSTRATE_TYPE: WEDGES,
-    MIN_VALUE: 1,
-    MAX_VALUE: 12,
+    CUSTOM_FIRST: 1,
+    CUSTOM_SECOND: 12,
     ROWS: 96,  # number of rows = max value along y-axis
     COLS: 96,  # number of cols = max value along x-axis
     OFFSET: 10,  # should equal gc_size
@@ -77,9 +84,9 @@ WEDGES_CONFIG = {
 }
 
 GAP_ASSAY_CONFIG = {
-    SUBSTRATE_TYPE: GAP,
-    MIN_VALUE: 0.4,
-    MAX_VALUE: 0.2,
+    SUBSTRATE_TYPE: GAP_RB,
+    CUSTOM_FIRST: 0.45,
+    CUSTOM_SECOND: 0.1,
     ROWS: 96,  # number of rows = max value along y-axis
     COLS: 96,  # number of cols = max value along x-axis
     OFFSET: 5,  # should equal gc_size
@@ -101,12 +108,12 @@ GAP_ASSAY_CONFIG = {
 # Default configuration values
 DEFAULT_CONFIG = {
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
-    MIN_VALUE: 0,
-    MAX_VALUE: 0,
+    CUSTOM_FIRST: 0,
+    CUSTOM_SECOND: 0,
     ROWS: 100,  # number of rows = max value along y-axis
     COLS: 100,  # number of cols = max value along x-axis
     OFFSET: 10,  # should equal gc_size
-    GC_COUNT: 5,
+    GC_COUNT: 10,
     GC_SIZE: 10,
     STEP_SIZE: 1,
     STEP_AMOUNT: 20000,
@@ -121,4 +128,4 @@ DEFAULT_CONFIG = {
 }
 
 # Current configuration settings
-config = GAP_ASSAY_CONFIG
+config = DEFAULT_CONFIG
