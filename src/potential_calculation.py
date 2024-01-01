@@ -29,8 +29,6 @@ def calculate_potential(gc, gcs, substrate, step):
     if not ff_inter_on: ff_ligands, ff_receptors = 0, 0
     if not ft_inter_on: ft_ligands, ft_receptors = 0, 0
 
-    # TODO: Cis signals
-
     # Calculate the forward and reverse signals
     forward_sig = gc.receptor * (ft_ligands + gc.ligand + (step * ff_ligands))
     reverse_sig = gc.ligand * (ft_receptors + gc.receptor + (step * ff_receptors))

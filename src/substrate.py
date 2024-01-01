@@ -167,7 +167,6 @@ class BaseGapSubstrate(BaseSubstrate):
     def parts(self):
         first_part = int(self.cols * self.custom_first)  # last column of the first part
         second_part = first_part + int(self.cols * self.custom_second)  # last column of the second part
-        # TODO: make gap distance configurable
         return first_part, second_part
 
     def initialize_substrate(self):
