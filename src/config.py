@@ -23,7 +23,6 @@ CUSTOM_SECOND = "custom_second"
 
 ROWS = "rows"
 COLS = "cols"
-OFFSET = "offset"
 GC_COUNT = "gc_count"
 GC_SIZE = "gc_size"
 STEP_SIZE = "step_size"
@@ -46,7 +45,6 @@ STRIPE_ASSAY_CONFIG = {
     CUSTOM_SECOND: 12,
     ROWS: 150,  # number of rows = max value along y-axis
     COLS: 150,  # number of cols = max value along x-axis
-    OFFSET: 5,  # should equal gc_size
     GC_COUNT: 10,
     GC_SIZE: 10,
     STEP_SIZE: 2,
@@ -68,7 +66,6 @@ WEDGES_CONFIG = {
     CUSTOM_SECOND: 12,
     ROWS: 96,  # number of rows = max value along y-axis
     COLS: 96,  # number of cols = max value along x-axis
-    OFFSET: 10,  # should equal gc_size
     GC_COUNT: 10,
     GC_SIZE: 10,
     STEP_SIZE: 1,
@@ -89,11 +86,10 @@ GAP_ASSAY_CONFIG = {
     CUSTOM_SECOND: 0.4,
     ROWS: 96,  # number of rows = max value along y-axis
     COLS: 96,  # number of cols = max value along x-axis
-    OFFSET: 5,  # should equal gc_size
     GC_COUNT: 5,
     GC_SIZE: 5,
     STEP_SIZE: 2,
-    STEP_AMOUNT: 20000,
+    STEP_AMOUNT: 8000,
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
@@ -112,7 +108,6 @@ DEFAULT_CONFIG = {
     CUSTOM_SECOND: 0,
     ROWS: 100,  # number of rows = max value along y-axis
     COLS: 100,  # number of cols = max value along x-axis
-    OFFSET: 10,  # should equal gc_size
     GC_COUNT: 10,
     GC_SIZE: 10,
     STEP_SIZE: 1,

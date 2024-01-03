@@ -56,7 +56,7 @@ def build_substrate(config):
     # Extract attributes from the configuration
     rows = config.get(cfg.ROWS)
     cols = config.get(cfg.COLS)
-    offset = config.get(cfg.OFFSET)
+    offset = config.get(cfg.GC_SIZE)
     substrate_type = config.get(cfg.SUBSTRATE_TYPE)
     min_value = config.get(cfg.CUSTOM_FIRST)
     max_value = config.get(cfg.CUSTOM_SECOND)
