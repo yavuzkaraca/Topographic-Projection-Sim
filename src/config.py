@@ -85,8 +85,8 @@ WEDGES_CONFIG = {
 
 GAP_ASSAY_CONFIG = {
     SUBSTRATE_TYPE: GAP_RB,
-    CUSTOM_FIRST: 0.45,
-    CUSTOM_SECOND: 0.1,
+    CUSTOM_FIRST: 0.3,
+    CUSTOM_SECOND: 0.4,
     ROWS: 96,  # number of rows = max value along y-axis
     COLS: 96,  # number of cols = max value along x-axis
     OFFSET: 5,  # should equal gc_size
@@ -128,4 +128,4 @@ DEFAULT_CONFIG = {
 }
 
 # Current configuration settings
-config = DEFAULT_CONFIG
+config = GAP_ASSAY_CONFIG

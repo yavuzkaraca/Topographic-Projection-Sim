@@ -37,6 +37,11 @@ def visualize_substrate(substrate):
     ax.imshow(blended_colors)
     ax.set_title("Combined Ligands and Receptors")
 
+    # Drawing the border to represent the offset
+    offset = substrate.offset
+    ax.add_patch(plt.Rectangle((offset - 0.5, offset - 0.5), substrate.cols - 2 * offset, substrate.rows - 2 * offset,
+                               fill=False, edgecolor='black', lw=2))
+
     # Flip the y-axis to have zero at the bottom
     ax.set_ylim(ax.get_ylim()[::-1])
 
@@ -89,6 +94,10 @@ def visualize_results_on_substrate(result, substrate):
     ax.set_title("Tectum End-positions on Color-Mixed Substrate")
     ax.legend()
 
+    # Drawing the border to represent the offset
+    offset = substrate.offset
+    ax.add_patch(plt.Rectangle((offset - 0.5, offset - 0.5), substrate.cols - 2 * offset, substrate.rows - 2 * offset,
+                               fill=False, edgecolor='black', lw=2))
     # Flip the y-axis to have zero at the bottom
     ax.set_ylim(ax.get_ylim()[::-1])
 
@@ -112,6 +121,11 @@ def visualize_trajectory_on_substrate(result, substrate, growth_cones):
     # Plot tectum end-positions
     x_values, y_values = result.get_final_positioning()
     ax.plot(x_values, y_values, '*', color='yellow', label='Tectum End-positions')
+
+    # Drawing the border to represent the offset
+    offset = substrate.offset
+    ax.add_patch(plt.Rectangle((offset - 0.5, offset - 0.5), substrate.cols - 2 * offset, substrate.rows - 2 * offset,
+                               fill=False, edgecolor='black', lw=2))
 
     # Plot growth cone trajectories
     for growth_cone in growth_cones:

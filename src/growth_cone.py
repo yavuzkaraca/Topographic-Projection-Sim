@@ -41,7 +41,8 @@ class GrowthCone:
         self.receptor = receptor
         self.potential = 0
         self.adap_coeff = 1  # Adaptation coefficient starts at 1
-        self.reset_force = 0  # Resetting force starts at 0, first element is ligand, second element is receptor
+        self.reset_force_receptor = 0  # Resetting forces start at 0
+        self.reset_force_ligand = 0
         self.history = []  # History of guidance potential values
 
     def __str__(self):
@@ -72,33 +73,26 @@ class GrowthCone:
             recent_history = self.history[-h:]  # Get the last h elements from the history
 
             # Calculate the adaptation coefficient using the formula from the paper
-            adap_coeff_prior = math.log(
+            adap_coeff_temp = math.log(
                 1 + mu * sum(k * abs(potential_diff) for k, potential_diff in enumerate(recent_history, 1)) / sum(
                     range(1, h + 1)))
 
-            if adap_coeff_prior == 0:
-                self.adap_coeff = 10
-            else:
-                self.adap_coeff = 1 / adap_coeff_prior
+            self.adap_coeff = float("{:.6f}".format(adap_coeff_temp))
 
             # Calculate the resetting force
-            ligand_diff = abs(self.start_ligand - self.ligand)
-            receptor_diff = abs(self.start_receptor - self.receptor)
-            self.reset_force = lambda_ * (ligand_diff + receptor_diff) / 2
+            self.reset_force_receptor = lambda_ * (self.start_receptor - self.receptor)
+            self.reset_force_ligand = lambda_ * (self.start_ligand - self.ligand)
 
     def apply_adaptation(self):
         """
         Apply the adaptation coefficient and resetting force to the ligand and receptor values.
         """
-        self.ligand *= self.adap_coeff
-        self.receptor *= self.adap_coeff
-        self.ligand -= self.reset_force
-        self.receptor -= self.reset_force
+        ligand_temp = self.ligand * self.adap_coeff
+        receptor_temp = self.receptor * self.adap_coeff
+        ligand_temp = max(0, ligand_temp - self.reset_force_ligand)
+        receptor_temp = max(0, receptor_temp - self.reset_force_receptor)
 
-        # Normalize to be within the range [0, 1]
-        self.ligand = min(max(self.ligand, 0), 1)
-        self.receptor = min(max(self.receptor, 0), 1)
-
-
+        self.ligand = float("{:.6f}".format(ligand_temp))
+        self.receptor = float("{:.6f}".format(receptor_temp))
 
 

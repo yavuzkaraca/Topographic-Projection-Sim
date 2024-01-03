@@ -36,6 +36,10 @@ def calculate_potential(gc, gcs, substrate, step):
     if not forward_on: forward_sig = 0
     if not reverse_on: reverse_sig = 0
 
+    # Round
+    forward_sig = float("{:.6f}".format(forward_sig))
+    reverse_sig = float("{:.6f}".format(reverse_sig))
+
     return abs(math.log(reverse_sig or 1) - math.log(forward_sig or 1))
 
 

@@ -19,8 +19,6 @@ def clamp_to_boundaries(position, substrate, size, xt_direction, yt_direction):
     :param yt_direction: The change in y-direction.
     :return: The clamped new position of the growth cone within the substrate boundaries.
     """
-
-    # TODO: move this into step decision
     new_x = position[0] + xt_direction
     new_y = position[1] + yt_direction
 
@@ -129,7 +127,7 @@ class Simulation:
             for gc in self.growth_cones:
                 if self.adaptation:
                     self.adapt_growth_cone(gc)
-                    # print(gc)
+                    print(gc)
                 self.step_decision(gc, step)
 
         print("\nIteration completed\n")
@@ -199,6 +197,3 @@ class Simulation:
         gc.calculate_adaptation(self.mu, self.lambda_, self.history_length)
         gc.apply_adaptation()
 
-        # Maintain the history length
-        while len(gc.history) > self.history_length:
-            gc.history.pop(0)  # Remove the oldest entry in the history
