@@ -109,7 +109,7 @@ def initialize_growth_cones(config):
     for i in range(gc_count):
         # Create a GrowthCone instance and initialize it
         pos_y = y_positions[i]
-        gc = GrowthCone((size, pos_y), size, receptors[i], ligands[i])
+        gc = GrowthCone((size, pos_y), size, receptors[i], ligands[i], i)
         growth_cones.append(gc)
 
     return growth_cones

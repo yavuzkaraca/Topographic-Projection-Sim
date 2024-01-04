@@ -19,7 +19,7 @@ def calculate_potential(gc, gcs, substrate, step):
     # Settings init
     forward_on = True
     reverse_on = True
-    ff_inter_on = True
+    ff_inter_on = False
     ft_inter_on = True
 
     # Calculate the number of receptors and ligands growth cone is exposed to

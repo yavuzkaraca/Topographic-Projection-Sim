@@ -21,7 +21,7 @@ class GrowthCone:
         __str__(): Provides a string representation of the growth cone instance.
     """
 
-    def __init__(self, position, size, ligand, receptor):
+    def __init__(self, position, size, ligand, receptor, id):
         """
         Initializes a GrowthCone object with position, size, ligand, and receptor values.
 
@@ -44,13 +44,16 @@ class GrowthCone:
         self.reset_force_receptor = 0  # Resetting forces start at 0
         self.reset_force_ligand = 0
         self.history = []  # History of guidance potential values
+        self.id = id
 
     def __str__(self):
         """
         Provides a string representation of the growth cone's attributes.
         """
         return (f"Receptor: {self.receptor}, Ligand: {self.ligand}, Position: {self.position}, "
-                f"Start Position: {self.start_position}, Potential: {self.potential}")
+                f"Start Position: {self.start_position}, Potential: {self.potential},"
+                f"ID: {self.id}, Adaptation Coefficient: {self.adap_coeff}, "
+                f"Reset Forces: {self.reset_force_ligand}, {self.reset_force_receptor}")
 
     def take_step(self, new_potential):
         self.history.append(new_potential)
@@ -73,7 +76,7 @@ class GrowthCone:
             recent_history = self.history[-h:]  # Get the last h elements from the history
 
             # Calculate the adaptation coefficient using the formula from the paper
-            adap_coeff_temp = math.log(
+            adap_coeff_temp = 1 + math.log(
                 1 + mu * sum(k * abs(potential_diff) for k, potential_diff in enumerate(recent_history, 1)) / sum(
                     range(1, h + 1)))
 
@@ -89,8 +92,8 @@ class GrowthCone:
         """
         ligand_temp = self.ligand * self.adap_coeff
         receptor_temp = self.receptor * self.adap_coeff
-        ligand_temp = max(0, ligand_temp - self.reset_force_ligand)
-        receptor_temp = max(0, receptor_temp - self.reset_force_receptor)
+        ligand_temp = max(0, ligand_temp + self.reset_force_ligand)
+        receptor_temp = max(0, receptor_temp + self.reset_force_receptor)
 
         self.ligand = float("{:.6f}".format(ligand_temp))
         self.receptor = float("{:.6f}".format(receptor_temp))

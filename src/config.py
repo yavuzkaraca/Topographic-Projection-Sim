@@ -82,24 +82,23 @@ WEDGES_CONFIG = {
 
 GAP_ASSAY_CONFIG = {
     SUBSTRATE_TYPE: GAP_RB,
-    CUSTOM_FIRST: 0.3,
-    CUSTOM_SECOND: 0.4,
+    CUSTOM_FIRST: 0.45,
+    CUSTOM_SECOND: 0.1,
     ROWS: 96,  # number of rows = max value along y-axis
     COLS: 96,  # number of cols = max value along x-axis
     GC_COUNT: 5,
     GC_SIZE: 5,
     STEP_SIZE: 2,
-    STEP_AMOUNT: 8000,
+    STEP_AMOUNT: 8000,  # 8000
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
     TRAJECTORY: 100,
     ADAPTATION_ENABLED: True,
-    ADAPTATION_MU: 0.006,
-    ADAPTATION_LAMBDA: 0.0045,
-    ADAPTATION_HISTORY: 10
+    ADAPTATION_MU: 0.06,  # 0.006
+    ADAPTATION_LAMBDA: 0.0045,  # 0.0045
+    ADAPTATION_HISTORY: 20
 }
-
 
 # Default configuration values
 DEFAULT_CONFIG = {

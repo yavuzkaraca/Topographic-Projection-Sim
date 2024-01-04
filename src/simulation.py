@@ -127,7 +127,7 @@ class Simulation:
             for gc in self.growth_cones:
                 if self.adaptation:
                     self.adapt_growth_cone(gc)
-                    print(gc)
+                    # print(gc)
                 self.step_decision(gc, step)
 
         print("\nIteration completed\n")
