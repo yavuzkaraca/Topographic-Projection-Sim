@@ -90,7 +90,7 @@ def visualize_results_on_substrate(result, substrate):
 
     # Plot tectum end-positions over the substrate
     x_values, y_values = result.get_final_positioning()
-    ax.plot(x_values, y_values, '*', color='yellow', label='Tectum End-positions')
+    ax.plot(x_values, y_values, '*', color='orange', label='Tectum End-positions')
     ax.set_title("Tectum End-positions on Color-Mixed Substrate")
     ax.legend()
 
@@ -120,7 +120,7 @@ def visualize_trajectory_on_substrate(result, substrate, growth_cones):
 
     # Plot tectum end-positions
     x_values, y_values = result.get_final_positioning()
-    ax.plot(x_values, y_values, '*', color='yellow', label='Tectum End-positions')
+    ax.plot(x_values, y_values, '*', color='orange', label='Tectum End-positions')
 
     # Drawing the border to represent the offset
     offset = substrate.offset
