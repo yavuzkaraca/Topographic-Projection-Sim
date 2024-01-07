@@ -1,4 +1,4 @@
-@startuml
+@startuml Overview
 package config.py{
 
 }
@@ -35,5 +35,41 @@ Substrate <-- visualization.py : visualizes
 
 Simulation *--- Substrate 
 Simulation *--- GrowthCone
+
 @enduml
 
+@startuml Substrate
+package substrate.py{
+    abstract class BaseSubstrate
+    abstract class BaseStripeSubstrate
+    abstract class BaseGapSubstrate
+    class ContinuousGradientSubstrate
+    class WedgeSubstrate
+    class StripeFwdSubstrate
+    class StripeRewSubstrate
+    class StripeDuoSubstrate
+    class GapSubstrateRR
+    class GapSubstrateRB
+    class GapSubstrateBR
+    class GapSubstrateBB
+}
+
+BaseStripeSubstrate --> StripeDuoSubstrate
+BaseStripeSubstrate --> StripeRewSubstrate
+BaseStripeSubstrate --> StripeFwdSubstrate
+
+BaseSubstrate --> BaseStripeSubstrate
+
+BaseSubstrate --> WedgeSubstrate
+BaseSubstrate --> ContinuousGradientSubstrate
+
+
+BaseGapSubstrate --> GapSubstrateBB
+BaseGapSubstrate --> GapSubstrateBR
+BaseGapSubstrate --> GapSubstrateRB
+BaseGapSubstrate --> GapSubstrateRR
+
+BaseSubstrate --> BaseGapSubstrate
+
+
+@enduml
