@@ -100,12 +100,8 @@ def initialize_growth_cones(config):
     rows = config.get(cfg.ROWS)
 
     # Create arrays for evenly distributed receptor and ligand values
-    """
     receptors = np.linspace(0.99, 0.01, gc_count)
     ligands = np.linspace(0.01, 0.99, gc_count)
-    """
-    receptors = np.linspace(100, 1, gc_count)
-    ligands = np.linspace(1, 100, gc_count)
 
     # Create an array of evenly distributed y-positions for the growth cones
     y_positions = np.linspace(size, rows - 1 + size, gc_count, dtype=int)

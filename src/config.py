@@ -47,17 +47,17 @@ CONTINUOUS_CONFIG = {
     ROWS: 100,  # number of rows = max value along y-axis
     COLS: 100,  # number of cols = max value along x-axis
     GC_COUNT: 10,
-    GC_SIZE: 10,
+    GC_SIZE: 5,
     STEP_SIZE: 1,
     STEP_AMOUNT: 12000,
-    X_STEP_POSSIBILITY: 0.50,
+    X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
     TRAJECTORY: 50,
     ADAPTATION_ENABLED: True,
-    ADAPTATION_MU: 0.006,  # 0.006
-    ADAPTATION_LAMBDA: 0.0045,  # 0.0045
-    ADAPTATION_HISTORY: 20
+    ADAPTATION_MU: 0.03,  # 0.006
+    ADAPTATION_LAMBDA: 0.01,  # 0.0045
+    ADAPTATION_HISTORY: 30
 }
 
 # Default configuration values
@@ -104,23 +104,23 @@ WEDGES_CONFIG = {
 
 # Default configuration values
 GAP_ASSAY_CONFIG = {
-    SUBSTRATE_TYPE: GAP_BB,
-    CUSTOM_FIRST: 0.45,
-    CUSTOM_SECOND: 0.05,
+    SUBSTRATE_TYPE: GAP_RR,
+    CUSTOM_FIRST: 0.4,
+    CUSTOM_SECOND: 0.03,
     ROWS: 96,  # number of rows = max value along y-axis
     COLS: 96,  # number of cols = max value along x-axis
     GC_COUNT: 5,
     GC_SIZE: 5,
     STEP_SIZE: 2,
-    STEP_AMOUNT: 8000,  # 8000
-    X_STEP_POSSIBILITY: 0.53,
+    STEP_AMOUNT: 15000,  # 8000
+    X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
     TRAJECTORY: 50,
     ADAPTATION_ENABLED: True,
-    ADAPTATION_MU: 0.006,  # 0.006
-    ADAPTATION_LAMBDA: 0.0045,  # 0.0045
-    ADAPTATION_HISTORY: 20
+    ADAPTATION_MU: 0.03,  # 0.006
+    ADAPTATION_LAMBDA: 0.01,  # 0.0045
+    ADAPTATION_HISTORY: 30
 }
 
 # Custom configuration values
@@ -139,8 +139,8 @@ CUSTOM_CONFIG = {
     SIGMA: 0.12,
     TRAJECTORY: 50,
     ADAPTATION_ENABLED: True,
-    ADAPTATION_MU: 0.006,  # 0.006
-    ADAPTATION_LAMBDA: 0.0045,  # 0.0045
+    ADAPTATION_MU: 0.01,  # 0.006
+    ADAPTATION_LAMBDA: 0.008,  # 0.0045
     ADAPTATION_HISTORY: 20
 }
 
