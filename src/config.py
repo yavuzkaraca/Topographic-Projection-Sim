@@ -30,7 +30,7 @@ STEP_AMOUNT = "step_amount"
 X_STEP_POSSIBILITY = "x_step_possibility"
 Y_STEP_POSSIBILITY = "y_step_possibility"
 SIGMA = "sigma"
-TRAJECTORY = "trajectory"
+TRAJECTORY = "trajectory"  # TODO: integrate into object factory
 
 # Adaptation
 ADAPTATION_ENABLED = "adaptation_enabled"
@@ -38,7 +38,29 @@ ADAPTATION_MU = "adaptation_mu"
 ADAPTATION_LAMBDA = "adaptation_lambda"
 ADAPTATION_HISTORY = "adaptation_history"
 
-# Stipe Assay configuration values
+
+# Default configuration values
+CONTINUOUS_CONFIG = {
+    SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
+    CUSTOM_FIRST: 0,
+    CUSTOM_SECOND: 0,
+    ROWS: 100,  # number of rows = max value along y-axis
+    COLS: 100,  # number of cols = max value along x-axis
+    GC_COUNT: 10,
+    GC_SIZE: 10,
+    STEP_SIZE: 1,
+    STEP_AMOUNT: 12000,
+    X_STEP_POSSIBILITY: 0.50,
+    Y_STEP_POSSIBILITY: 0.50,
+    SIGMA: 0.12,
+    TRAJECTORY: 50,
+    ADAPTATION_ENABLED: True,
+    ADAPTATION_MU: 0.006,  # 0.006
+    ADAPTATION_LAMBDA: 0.0045,  # 0.0045
+    ADAPTATION_HISTORY: 20
+}
+
+# Default configuration values
 STRIPE_ASSAY_CONFIG = {
     SUBSTRATE_TYPE: STRIPE_DUO,
     CUSTOM_FIRST: 1,
@@ -52,7 +74,7 @@ STRIPE_ASSAY_CONFIG = {
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY: 100,
+    TRAJECTORY: 50,
     ADAPTATION_ENABLED: False,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
@@ -73,17 +95,18 @@ WEDGES_CONFIG = {
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY: 100,
+    TRAJECTORY: 50,
     ADAPTATION_ENABLED: False,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
     ADAPTATION_HISTORY: 10
 }
 
+# Default configuration values
 GAP_ASSAY_CONFIG = {
     SUBSTRATE_TYPE: GAP_BB,
-    CUSTOM_FIRST: 0.47,
-    CUSTOM_SECOND: 0.03,
+    CUSTOM_FIRST: 0.45,
+    CUSTOM_SECOND: 0.05,
     ROWS: 96,  # number of rows = max value along y-axis
     COLS: 96,  # number of cols = max value along x-axis
     GC_COUNT: 5,
@@ -93,15 +116,15 @@ GAP_ASSAY_CONFIG = {
     X_STEP_POSSIBILITY: 0.53,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY: 100,
+    TRAJECTORY: 50,
     ADAPTATION_ENABLED: True,
-    ADAPTATION_MU: 0.02,  # 0.006
+    ADAPTATION_MU: 0.006,  # 0.006
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
     ADAPTATION_HISTORY: 20
 }
 
-# Default configuration values
-DEFAULT_CONFIG = {
+# Custom configuration values
+CUSTOM_CONFIG = {
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     CUSTOM_FIRST: 0,
     CUSTOM_SECOND: 0,
@@ -109,16 +132,16 @@ DEFAULT_CONFIG = {
     COLS: 100,  # number of cols = max value along x-axis
     GC_COUNT: 10,
     GC_SIZE: 10,
-    STEP_SIZE: 2,
-    STEP_AMOUNT: 8000,
+    STEP_SIZE: 1,
+    STEP_AMOUNT: 20000,
     X_STEP_POSSIBILITY: 0.53,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY: 100,
+    TRAJECTORY: 50,
     ADAPTATION_ENABLED: True,
-    ADAPTATION_MU: 0.02,
-    ADAPTATION_LAMBDA: 0.0045,
-    ADAPTATION_HISTORY: 10
+    ADAPTATION_MU: 0.006,  # 0.006
+    ADAPTATION_LAMBDA: 0.0045,  # 0.0045
+    ADAPTATION_HISTORY: 20
 }
 
 # Current configuration settings
