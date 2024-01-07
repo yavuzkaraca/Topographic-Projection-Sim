@@ -104,15 +104,15 @@ WEDGES_CONFIG = {
 
 # Default configuration values
 GAP_ASSAY_CONFIG = {
-    SUBSTRATE_TYPE: GAP_RR,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.03,
+    SUBSTRATE_TYPE: GAP_BB,
+    CUSTOM_FIRST: 0.5,
+    CUSTOM_SECOND: 0.03,  # 0.03
     ROWS: 96,  # number of rows = max value along y-axis
     COLS: 96,  # number of cols = max value along x-axis
     GC_COUNT: 5,
     GC_SIZE: 5,
     STEP_SIZE: 2,
-    STEP_AMOUNT: 15000,  # 8000
+    STEP_AMOUNT: 80000,  # 8000
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
