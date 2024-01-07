@@ -130,19 +130,19 @@ CUSTOM_CONFIG = {
     CUSTOM_SECOND: 0,
     ROWS: 100,  # number of rows = max value along y-axis
     COLS: 100,  # number of cols = max value along x-axis
-    GC_COUNT: 10,
-    GC_SIZE: 10,
+    GC_COUNT: 200,
+    GC_SIZE: 5,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 20000,
-    X_STEP_POSSIBILITY: 0.53,
+    STEP_AMOUNT: 22000,
+    X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
     TRAJECTORY: 50,
-    ADAPTATION_ENABLED: True,
-    ADAPTATION_MU: 0.01,  # 0.006
-    ADAPTATION_LAMBDA: 0.008,  # 0.0045
-    ADAPTATION_HISTORY: 20
+    ADAPTATION_ENABLED: False,
+    ADAPTATION_MU: 0.006,  # 0.006 , 0.03
+    ADAPTATION_LAMBDA: 0.0045,  # 0.0045 , 0.01
+    ADAPTATION_HISTORY: 30
 }
 
 # Current configuration settings
-config = GAP_ASSAY_CONFIG
+config = CUSTOM_CONFIG

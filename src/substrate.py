@@ -76,8 +76,14 @@ class ContinuousGradientSubstrate(BaseSubstrate):
         """
         Initialize the substrate using continuous gradients of ligand and receptor values.
         """
-        ligand_gradient = np.linspace(0.01, 0.99, self.cols)
-        receptor_gradient = np.linspace(0.99, 0.01, self.cols)
+        ligand_gradient = np.linspace(0.01, 0.99, self.cols - (2 * self.offset))
+        receptor_gradient = np.linspace(0.99, 0.01, self.cols - (2 * self.offset))
+
+        # Append 0.01 and 0.99 on both ends
+        low_end = np.full(self.offset, 0.01)  # Creates an array of 0.01 with length self.offset
+        high_end = np.full(self.offset, 0.99)  # Creates an array of 0.99 with length self.offset
+        ligand_gradient = np.concatenate([low_end, ligand_gradient, high_end])
+        receptor_gradient = np.concatenate([high_end, receptor_gradient, low_end])
 
         for row in range(self.rows):
             self.ligands[row, :] = ligand_gradient

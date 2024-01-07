@@ -151,7 +151,7 @@ class Simulation:
         gc.new_position = clamp_to_boundaries(gc.position, self.substrate, gc.size, xt_direction, yt_direction)
 
         # Calculate new potential
-        step_ratio = (step / self.num_steps) * 4  # TODO: clarify this step ratio by talking to Franco
+        step_ratio = (step / self.num_steps)  # TODO: clarify this step ratio by talking to Franco
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
 
         # Calculate Step realization probabilities
