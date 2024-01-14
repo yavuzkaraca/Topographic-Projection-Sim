@@ -1,5 +1,5 @@
 from growth_cone import GrowthCone
-from potential_calculation import euclidean_distance, ft_interaction
+from simulation.potential_calculation import euclidean_distance, ft_interaction
 from substrate import Substrate
 
 gc_left = GrowthCone((10, 10), 5, 0.01, 0.99)

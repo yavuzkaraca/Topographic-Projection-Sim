@@ -3,9 +3,9 @@ Module for setting up and initializing a growth cone simulation.
 """
 
 import numpy as np
-import config as cfg  # Importing the configuration module
-from growth_cone import GrowthCone  # Importing the Growth Cone class
-from simulation import Simulation  # Importing the Simulation class
+from build import config as cfg
+from growth_cone.growth_cone import GrowthCone  # Importing the Growth Cone class
+from simulation.simulation import Simulation  # Importing the Simulation class
 # Importing the Substrate classes
 from substrate import (ContinuousGradientSubstrate, WedgeSubstrate,
                        StripeFwdSubstrate, StripeRewSubstrate, StripeDuoSubstrate,

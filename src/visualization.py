@@ -129,7 +129,7 @@ def visualize_trajectory_on_substrate(result, substrate, growth_cones):
 
     # Plot growth cone trajectories
     for growth_cone in growth_cones:
-        trajectory_x, trajectory_y = zip(*growth_cone.trajectory)
+        trajectory_x, trajectory_y = zip(*growth_cone.history.position)
         ax.plot(trajectory_x, trajectory_y, label=f'Growth Cone {growth_cones.index(growth_cone)}')
 
     ax.set_title("Tectum End-positions and Growth Cone Trajectories on Substrate")

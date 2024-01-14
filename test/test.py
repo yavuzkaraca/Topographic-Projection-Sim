@@ -3,8 +3,8 @@ from tkinter import Label, Entry
 import numpy as np
 from src.substrate import Substrate  # Import the Substrate class from your substrate module
 from src.visualization import visualize_substrate
-from src.potential_calculation import intersection_area
-import src.config as cfg
+from simulation.potential_calculation import intersection_area
+import build.config as cfg
 
 test_config = {
     cfg.SUBSTRATE_TYPE: cfg.CONTINUOUS_GRADIENTS,
