@@ -148,7 +148,7 @@ class Simulation:
 
         # Choose a new position
         xt_direction, yt_direction = self.gen_random_step()
-        gc.new_position = clamp_to_boundaries(gc.position, self.substrate, gc.size, xt_direction, yt_direction)
+        gc.pos_new = clamp_to_boundaries(gc.pos_current, self.substrate, gc.size, xt_direction, yt_direction)
 
         # Calculate new potential
         step_ratio = (step / self.num_steps)  # TODO: clarify this step ratio by talking to Franco

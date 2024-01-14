@@ -13,7 +13,7 @@ def test_distance_zero():
     gc_1 = GrowthCone((10, 10), 5, 0, 0)
     gc_2 = GrowthCone((10, 10), 5, 0, 0)
 
-    assert euclidean_distance(gc_1.position, gc_2.position) == 0
+    assert euclidean_distance(gc_1.pos_current, gc_2.pos_current) == 0
 
 
 def test_intersection_area():

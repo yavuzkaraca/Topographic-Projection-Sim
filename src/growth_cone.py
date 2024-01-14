@@ -9,12 +9,12 @@ class GrowthCone:
     Represents a growth cone in the simulation environment.
 
     Attributes:
-        start_position (tuple): Initial position of the growth cone.
-        position (tuple): Center point of the circular modeled growth cone (x, y coordinates).
-        new_position (tuple): Potential new position for the growth cone (used for step decision).
+        pos_start (tuple): Initial position of the growth cone.
+        pos_current (tuple): Center point of the circular modeled growth cone (x, y coordinates).
+        pos_new (tuple): Potential new position for the growth cone (used for step decision).
         size (int): Radius of the growth cone.
-        ligand (float): Ligand value associated with the growth cone.
-        receptor (float): Receptor value associated with the growth cone.
+        ligand_current (float): Ligand value associated with the growth cone.
+        receptor_current (float): Receptor value associated with the growth cone.
         potential (int): Current potential of the growth cone.
 
     Methods:
@@ -30,15 +30,15 @@ class GrowthCone:
         :param ligand: Ligand value associated with the growth cone.
         :param receptor: Receptor value associated with the growth cone.
         """
-        self.start_position = position
-        self.position = position
-        self.new_position = position
+        self.pos_start = position
+        self.pos_current = position
+        self.pos_new = position
         self.trajectory = []
         self.size = size
-        self.start_ligand = ligand
-        self.start_receptor = receptor
-        self.ligand = ligand
-        self.receptor = receptor
+        self.ligand_start = ligand
+        self.receptor_start = receptor
+        self.ligand_current = ligand
+        self.receptor_current = receptor
         self.potential = 0
         self.adap_coeff = 1  # Adaptation coefficient starts at 1
         self.reset_force_receptor = 0  # Resetting forces start at 0
@@ -50,18 +50,18 @@ class GrowthCone:
         """
         Provides a string representation of the growth cone's attributes.
         """
-        return (f"Receptor: {self.receptor}, Ligand: {self.ligand}, Position: {self.position}, "
-                f"Start Position: {self.start_position}, Potential: {self.potential},"
+        return (f"Receptor: {self.receptor_current}, Ligand: {self.ligand_current}, Position: {self.pos_current}, "
+                f"Start Position: {self.pos_start}, Potential: {self.potential},"
                 f"ID: {self.id}, Adaptation Coefficient: {self.adap_coeff}, "
                 f"Reset Forces: {self.reset_force_ligand}, {self.reset_force_receptor}")
 
     def take_step(self, new_potential):
         self.history.append(new_potential)
         self.potential = new_potential
-        self.position = self.new_position
+        self.pos_current = self.pos_new
 
     def update_trajectory(self):
-        self.trajectory.append(self.new_position)
+        self.trajectory.append(self.pos_new)
 
     def calculate_adaptation(self, mu, lambda_, h):
         """
@@ -83,19 +83,19 @@ class GrowthCone:
             self.adap_coeff = float("{:.6f}".format(adap_coeff_temp))
 
             # Calculate the resetting force
-            self.reset_force_receptor = lambda_ * (self.start_receptor - self.receptor)
-            self.reset_force_ligand = lambda_ * (self.start_ligand - self.ligand)
+            self.reset_force_receptor = lambda_ * (self.receptor_start - self.receptor_current)
+            self.reset_force_ligand = lambda_ * (self.ligand_start - self.ligand_current)
 
     def apply_adaptation(self):
         """
         Apply the adaptation coefficient and resetting force to the ligand and receptor values.
         """
-        ligand_temp = self.ligand * self.adap_coeff
-        receptor_temp = self.receptor * self.adap_coeff
+        ligand_temp = self.ligand_current * self.adap_coeff
+        receptor_temp = self.receptor_current * self.adap_coeff
         ligand_temp = max(0, ligand_temp + self.reset_force_ligand)
         receptor_temp = max(0, receptor_temp + self.reset_force_receptor)
 
-        self.ligand = float("{:.6f}".format(ligand_temp))
-        self.receptor = float("{:.6f}".format(receptor_temp))
+        self.ligand_current = float("{:.6f}".format(ligand_temp))
+        self.receptor_current = float("{:.6f}".format(receptor_temp))
 
 

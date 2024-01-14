@@ -32,8 +32,8 @@ class Result:
         """
         Generates a projection mapping representation based on the initial positions of growth cones.
         """
-        x_values = np.array([gc.position[0] for gc in self.gcs])
-        y_values = np.array([gc.start_position[1] for gc in self.gcs])
+        x_values = np.array([gc.pos_current[0] for gc in self.gcs])
+        y_values = np.array([gc.pos_start[1] for gc in self.gcs])
 
         return x_values, y_values
 
@@ -41,8 +41,8 @@ class Result:
         """
         Retrieves the final positions of the growth cones after the simulation.
         """
-        x_values = np.array([gc.position[0] for gc in self.gcs])
-        y_values = np.array([gc.position[1] for gc in self.gcs])
+        x_values = np.array([gc.pos_current[0] for gc in self.gcs])
+        y_values = np.array([gc.pos_current[1] for gc in self.gcs])
 
         return x_values, y_values
 

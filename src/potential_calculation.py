@@ -30,8 +30,8 @@ def calculate_potential(gc, gcs, substrate, step):
     if not ft_inter_on: ft_ligands, ft_receptors = 0, 0
 
     # Calculate the forward and reverse signals
-    forward_sig = gc.receptor * (ft_ligands + gc.ligand + (step * ff_ligands))
-    reverse_sig = gc.ligand * (ft_receptors + gc.receptor + (step * ff_receptors))
+    forward_sig = gc.receptor_current * (ft_ligands + gc.ligand_current + (step * ff_ligands))
+    reverse_sig = gc.ligand_current * (ft_receptors + gc.receptor_current + (step * ff_receptors))
 
     if not forward_on: forward_sig = 0
     if not reverse_on: reverse_sig = 0
@@ -40,7 +40,8 @@ def calculate_potential(gc, gcs, substrate, step):
     forward_sig = float("{:.6f}".format(forward_sig))
     reverse_sig = float("{:.6f}".format(reverse_sig))
 
-    return abs(math.log(reverse_sig or 1) - math.log(forward_sig or 1))
+    # Magic number 0.0001 is the lowest signal value possible
+    return abs(math.log(reverse_sig or 0.0001) - math.log(forward_sig or 0.0001))
 
 
 def ft_interaction(gc, substrate):
@@ -52,7 +53,7 @@ def ft_interaction(gc, substrate):
     :return: A tuple containing the sum of ligands and receptors from the substrate area covered
     """
 
-    borders = bounding_box(gc.new_position, gc.size, substrate)
+    borders = bounding_box(gc.pos_new, gc.size, substrate)
 
     # Needed to ensure the circular modelling of growth cones
     edge_length = abs(borders[2] - borders[3])
@@ -88,11 +89,11 @@ def ff_interaction(gc1, gcs):
         if gc1 == gc2:
             # Eliminate self from the gcs list, as self-comparison always matches
             continue
-        d = euclidean_distance(gc2.position, gc1.new_position)
+        d = euclidean_distance(gc2.pos_current, gc1.pos_new)
         if d < gc1.size * 2:
-            area = intersection_area(gc1.new_position, gc2.position, gc1.size)
-            sum_ligands += area * gc2.ligand
-            sum_receptors += area * gc2.receptor
+            area = intersection_area(gc1.pos_new, gc2.pos_current, gc1.size)
+            sum_ligands += area * gc2.ligand_current
+            sum_receptors += area * gc2.receptor_current
 
     return sum_ligands, sum_receptors
 
