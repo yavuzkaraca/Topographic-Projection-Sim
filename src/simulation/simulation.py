@@ -3,7 +3,7 @@ Module for conducting a simulation.
 """
 
 import math
-from result import Result
+from simulation.result import Result
 from simulation.potential_calculation import calculate_potential
 import random
 
