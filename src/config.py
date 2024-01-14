@@ -46,18 +46,18 @@ CONTINUOUS_CONFIG = {
     CUSTOM_SECOND: 0,
     ROWS: 100,  # number of rows = max value along y-axis
     COLS: 100,  # number of cols = max value along x-axis
-    GC_COUNT: 10,
+    GC_COUNT: 20,
     GC_SIZE: 5,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 12000,
+    STEP_AMOUNT: 16000,
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
     TRAJECTORY: 50,
     ADAPTATION_ENABLED: True,
-    ADAPTATION_MU: 0.006,  # 0.006 , 0.03
-    ADAPTATION_LAMBDA: 0.002,  # 0.0045 , 0.01
-    ADAPTATION_HISTORY: 30
+    ADAPTATION_MU: 0.006,  # 0.006
+    ADAPTATION_LAMBDA: 0.0045,  # 0.0045
+    ADAPTATION_HISTORY: 50
 }
 
 # Default configuration values
@@ -133,7 +133,7 @@ CUSTOM_CONFIG = {
     GC_COUNT: 20,
     GC_SIZE: 5,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 22000,
+    STEP_AMOUNT: 16000, # 16k is enough
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
