@@ -62,15 +62,9 @@ class GrowthCone:
 
     def take_step(self, new_potential):
         self.history.update_potential(new_potential)
+        self.history.update_position(self.pos_new)
         self.potential = new_potential
         self.pos_current = self.pos_new
-
-    def update_trajectory(self):
-        """
-        Seperated from take_step so that frequency can be regulated
-        :return:
-        """
-        self.history.update_position(self.pos_new)
 
     def calculate_adaptation(self, mu, lambda_, h):
         """

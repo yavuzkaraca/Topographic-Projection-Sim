@@ -161,14 +161,7 @@ class Simulation:
 
         # Step Decision
         random_number = random.random()
-
-        # Trajectory Saving
-        # TODO: Make configurable, maybe rename to Trace?
-        if step % 50 == 0:
-            gc.update_trajectory()
-
         if random_number > probability:
-            # Take the step
             gc.take_step(new_potential)
 
     def gen_random_step(self):
