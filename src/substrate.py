@@ -20,7 +20,6 @@ class BaseSubstrate:
         self.rows = rows + offset * 2
         self.cols = cols + offset * 2
         self.offset = offset  # is equal to gc_size
-        # TODO: process offset more elegantly
         self.custom_first = min_value  # min_value
         self.custom_second = max_value  # max_value
 

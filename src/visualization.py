@@ -124,13 +124,13 @@ def visualize_trajectory_on_substrate(result, substrate, growth_cones, trajector
 
     # Drawing the border to represent the offset
     offset = substrate.offset
-    ax.add_patch(plt.Rectangle((offset - 0.5, offset - 0.5), substrate.cols - 2 * offset, substrate.rows - 2 * offset,
-                               fill=False, edgecolor='black', lw=2))
+    ax.add_patch(plt.Rectangle((offset - 0.5, offset - 0.5), substrate.cols - 2 * offset,
+                               substrate.rows - 2 * offset, fill=False, edgecolor='black', lw=2))
 
     # Plot growth cone trajectories
     for growth_cone in growth_cones:
 
-        trajectory_x, trajectory_y = zip(*growth_cone.history.position[::trajectory_freq])  # TODO make configurable
+        trajectory_x, trajectory_y = zip(*growth_cone.history.position[::trajectory_freq])
         ax.plot(trajectory_x, trajectory_y, label=f'Growth Cone {growth_cones.index(growth_cone)}')
 
     ax.set_title("Tectum End-positions and Growth Cone Trajectories on Substrate")
