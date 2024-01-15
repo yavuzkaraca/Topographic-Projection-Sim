@@ -223,3 +223,11 @@ class GapSubstrateBR(BaseGapSubstrate):
 class GapSubstrateBB(BaseGapSubstrate):
     def initialize_substrate(self):
         self.initialize_gap(False, False)
+
+
+class GapSubstrateInverted(BaseGapSubstrate):
+    def initialize_substrate(self):
+        first_part, second_part = self.parts
+        for col in range(first_part, second_part):
+            self.set_col_receptor_only(col)
+

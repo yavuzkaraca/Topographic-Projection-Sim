@@ -49,16 +49,17 @@ class GrowthCone:
         self.reset_force_ligand = 0
         self.id = id
 
-        self.history = History(self.potential, self.adap_co, self.pos_current, self.ligand_start, self.receptor_start)
+        self.history = History(self.potential, self.adap_co, self.pos_current, self.ligand_start, self.receptor_start,
+                               self.reset_force_receptor, self.reset_force_ligand)
 
     def __str__(self):
         """
         Provides a string representation of the growth cone's attributes.
         """
         return (f"Receptor: {self.receptor_current}, Ligand: {self.ligand_current}, Position: {self.pos_current}, "
-                f"Start Position: {self.pos_start}, Potential: {self.potential},"
+                f"Start Position: {self.pos_start}, Potential: {self.potential}, "
                 f"ID: {self.id}, Adaptation Coefficient: {self.adap_co}, "
-                f"Reset Forces: {self.reset_force_ligand}, {self.reset_force_receptor}")
+                f"Reset Forces: {self.reset_force_ligand}, {self.reset_force_receptor}") 
 
     def take_step(self, new_potential):
         self.history.update_potential(new_potential)
@@ -89,7 +90,7 @@ class GrowthCone:
             self.reset_force_receptor = lambda_ * (self.receptor_start - self.receptor_current)
             self.reset_force_ligand = lambda_ * (self.ligand_start - self.ligand_current)
 
-            self.history.update_adap_co(self.adap_co)
+        self.history.update_adap_co(self.adap_co)
 
     def apply_adaptation(self):
         """
@@ -105,3 +106,5 @@ class GrowthCone:
 
         self.history.update_ligand(self.ligand_current)
         self.history.update_receptor(self.receptor_current)
+        self.history.update_reset_force_receptor(self.reset_force_receptor)
+        self.history.update_reset_force_ligand(self.reset_force_ligand)

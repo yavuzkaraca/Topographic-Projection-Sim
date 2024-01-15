@@ -12,6 +12,7 @@ GAP_RR = "gap_rr"
 GAP_RB = "gap_rb"
 GAP_BR = "gap_br"
 GAP_BB = "gap_bb"
+GAP_INV = "gap_inv"
 
 # Simulation Parameters
 SUBSTRATE_TYPE = "substrate_type"
@@ -30,7 +31,7 @@ STEP_AMOUNT = "step_amount"
 X_STEP_POSSIBILITY = "x_step_possibility"
 Y_STEP_POSSIBILITY = "y_step_possibility"
 SIGMA = "sigma"
-TRAJECTORY = "trajectory"  # TODO: integrate into object factory
+TRAJECTORY_FRQ = "trajectory_freq"  # TODO: integrate into object factory
 
 # Adaptation
 ADAPTATION_ENABLED = "adaptation_enabled"
@@ -53,7 +54,7 @@ CONTINUOUS_CONFIG = {
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY: 50,
+    TRAJECTORY_FRQ: 50,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.006,  # 0.006
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
@@ -74,7 +75,7 @@ STRIPE_ASSAY_CONFIG = {
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY: 50,
+    TRAJECTORY_FRQ: 50,
     ADAPTATION_ENABLED: False,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
@@ -95,7 +96,7 @@ WEDGES_CONFIG = {
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY: 50,
+    TRAJECTORY_FRQ: 50,
     ADAPTATION_ENABLED: False,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
@@ -116,11 +117,71 @@ GAP_ASSAY_CONFIG = {
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY: 50,
+    TRAJECTORY_FRQ: 50,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.006
     ADAPTATION_LAMBDA: 0.002,  # 0.0045
     ADAPTATION_HISTORY: 50  # 10
+}
+
+GAP_INVERTED_CONFIG = {
+    SUBSTRATE_TYPE: GAP_INV,
+    CUSTOM_FIRST: 0.35,
+    CUSTOM_SECOND: 0.3,  # 0.3
+    ROWS: 96,  # number of rows = max value along y-axis
+    COLS: 96,  # number of cols = max value along x-axis
+    GC_COUNT: 1,
+    GC_SIZE: 5,
+    STEP_SIZE: 1,
+    STEP_AMOUNT: 140,  # 100
+    X_STEP_POSSIBILITY: 1,
+    Y_STEP_POSSIBILITY: 0.50,
+    SIGMA: 1,
+    TRAJECTORY_FRQ: 1,
+    ADAPTATION_ENABLED: True,
+    ADAPTATION_MU: 0.01,  # 0.01
+    ADAPTATION_LAMBDA: 0.0045,  # 0.0045
+    ADAPTATION_HISTORY: 20  # 30
+}
+
+GAP_INVERTED_CONFIG_HIGH_LAMBDA = {
+    SUBSTRATE_TYPE: GAP_INV,
+    CUSTOM_FIRST: 0.35,
+    CUSTOM_SECOND: 0.3,  # 0.3
+    ROWS: 96,  # number of rows = max value along y-axis
+    COLS: 96,  # number of cols = max value along x-axis
+    GC_COUNT: 1,
+    GC_SIZE: 5,
+    STEP_SIZE: 1,
+    STEP_AMOUNT: 140,  # 100
+    X_STEP_POSSIBILITY: 1,
+    Y_STEP_POSSIBILITY: 0.50,
+    SIGMA: 1,
+    TRAJECTORY_FRQ: 1,
+    ADAPTATION_ENABLED: True,
+    ADAPTATION_MU: 0.01,  # 0.01
+    ADAPTATION_LAMBDA: 0.06,  # 0.06
+    ADAPTATION_HISTORY: 20  # 30
+}
+
+GAP_INVERTED_CONFIG_HIGH_MU = {
+    SUBSTRATE_TYPE: GAP_INV,
+    CUSTOM_FIRST: 0.35,
+    CUSTOM_SECOND: 0.3,  # 0.3
+    ROWS: 96,  # number of rows = max value along y-axis
+    COLS: 96,  # number of cols = max value along x-axis
+    GC_COUNT: 1,
+    GC_SIZE: 5,
+    STEP_SIZE: 1,
+    STEP_AMOUNT: 140,  # 100
+    X_STEP_POSSIBILITY: 1,
+    Y_STEP_POSSIBILITY: 0.50,
+    SIGMA: 1,
+    TRAJECTORY_FRQ: 1,
+    ADAPTATION_ENABLED: True,
+    ADAPTATION_MU: 0.015,  # 0.015
+    ADAPTATION_LAMBDA: 0.0045,  # 0.0045
+    ADAPTATION_HISTORY: 20  # 30
 }
 
 # Custom configuration values
@@ -133,11 +194,11 @@ CUSTOM_CONFIG = {
     GC_COUNT: 20,
     GC_SIZE: 5,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 16000, # 16k is enough
+    STEP_AMOUNT: 16000,  # 16k is enough
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY: 50,
+    TRAJECTORY_FRQ: 50,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.006,  # 0.006 , 0.03
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045 , 0.01
@@ -145,4 +206,6 @@ CUSTOM_CONFIG = {
 }
 
 # Current configuration settings
-config = CUSTOM_CONFIG
+default_config = GAP_INVERTED_CONFIG
+
+

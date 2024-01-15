@@ -9,14 +9,14 @@ from simulation.simulation import Simulation  # Importing the Simulation class
 # Importing the Substrate classes
 from substrate import (ContinuousGradientSubstrate, WedgeSubstrate,
                        StripeFwdSubstrate, StripeRewSubstrate, StripeDuoSubstrate,
-                       GapSubstrateRR, GapSubstrateRB, GapSubstrateBR,GapSubstrateBB)
+                       GapSubstrateRR, GapSubstrateRB, GapSubstrateBR, GapSubstrateBB, GapSubstrateInverted)
 
 
 def build_default():
     """
     Build a default simulation using the default configuration settings.
     """
-    return build_simulation(cfg.config)
+    return build_simulation(cfg.default_config)
 
 
 def build_simulation(config):
@@ -79,6 +79,8 @@ def build_substrate(config):
         substrate = GapSubstrateBR(rows, cols, offset, min_value, max_value)
     elif substrate_type == cfg.GAP_BB:
         substrate = GapSubstrateBB(rows, cols, offset, min_value, max_value)
+    elif substrate_type == cfg.GAP_INV:
+        substrate = GapSubstrateInverted(rows, cols, offset, min_value, max_value)
     else:
         raise ValueError("SubstrateType unknown")
 

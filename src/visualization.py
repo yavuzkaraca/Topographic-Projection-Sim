@@ -104,7 +104,7 @@ def visualize_results_on_substrate(result, substrate):
     plt.show()
 
 
-def visualize_trajectory_on_substrate(result, substrate, growth_cones):
+def visualize_trajectory_on_substrate(result, substrate, growth_cones, trajectory_freq):
     """
     Visualize tectum end-positions and growth cone trajectories on top of the substrate.
 
@@ -130,7 +130,7 @@ def visualize_trajectory_on_substrate(result, substrate, growth_cones):
     # Plot growth cone trajectories
     for growth_cone in growth_cones:
 
-        trajectory_x, trajectory_y = zip(*growth_cone.history.position[::100])  # TODO make configurable
+        trajectory_x, trajectory_y = zip(*growth_cone.history.position[::trajectory_freq])  # TODO make configurable
         ax.plot(trajectory_x, trajectory_y, label=f'Growth Cone {growth_cones.index(growth_cone)}')
 
     ax.set_title("Tectum End-positions and Growth Cone Trajectories on Substrate")
@@ -204,4 +204,54 @@ def visualize_trajectories(growth_cones):
     plt.ylabel('Y Coordinate')
     plt.title('Growth Cone Trajectories')
     plt.legend()
+    plt.show()
+
+
+def visualize_adaptation(growth_cones):
+    # Create a figure with 2 rows and 2 columns of subplots
+    fig, axs = plt.subplots(2, 2, figsize=(12, 10))  # Adjust figsize as needed
+
+    # Determine the maximum number of steps across all growth cones
+    max_steps = max(len(gc.history.potential) for gc in growth_cones)
+
+    # Plotting potentials on the first subplot
+    for gc in growth_cones:
+        axs[0, 0].plot(gc.history.potential, label=gc.id)
+    axs[0, 0].set_xlabel('Step')
+    axs[0, 0].set_ylabel('Potential')
+    axs[0, 0].set_title('Guidance Potentials')
+    axs[0, 0].set_xlim(0, max_steps)
+    axs[0, 0].legend()
+
+    # Plotting adaptation coefficients on the second subplot
+    for gc in growth_cones:
+        axs[0, 1].plot(gc.history.adap_co, label=gc.id)
+    axs[0, 1].set_xlabel('Step')
+    axs[0, 1].set_ylabel('Adaptation Coefficient')
+    axs[0, 1].set_title('Adaptation Coefficients')
+    axs[0, 1].set_xlim(0, max_steps)
+    axs[0, 1].legend()
+
+    # Placeholder for third plot
+    # For example, plotting another metric here
+    for gc in growth_cones:
+        axs[1, 0].plot(gc.history.ligand, label=gc.id)
+    axs[1, 0].set_xlabel('Step')
+    axs[1, 0].set_ylabel('Ligand')
+    axs[1, 0].set_title('Ligand Value')
+    axs[1, 0].set_xlim(0, max_steps)
+    axs[1, 0].legend()
+
+    # Placeholder for fourth plot
+    # For example, plotting yet another metric here
+    for gc in growth_cones:
+        axs[1, 1].plot(gc.history.reset_force_ligand, label=gc.id)
+    axs[1, 1].set_xlabel('Step')
+    axs[1, 1].set_ylabel('Reset force')
+    axs[1, 1].set_title('Reset Force for Ligand')
+    axs[1, 1].set_xlim(0, max_steps)
+    axs[1, 1].legend()
+
+    # Adjust layout and show the figure
+    plt.tight_layout()
     plt.show()

@@ -3,6 +3,8 @@ Module for conducting a simulation.
 """
 
 import math
+import time
+
 from simulation.result import Result
 from simulation.potential_calculation import calculate_potential
 import random
@@ -127,7 +129,6 @@ class Simulation:
             for gc in self.growth_cones:
                 if self.adaptation:
                     self.adapt_growth_cone(gc)
-                    # print(gc)
                 self.step_decision(gc, step)
 
         print("\nIteration completed\n")
@@ -161,8 +162,11 @@ class Simulation:
 
         # Step Decision
         random_number = random.random()
+        """
         if random_number > probability:
             gc.take_step(new_potential)
+        """
+        gc.take_step(new_potential)
 
     def gen_random_step(self):
         """
