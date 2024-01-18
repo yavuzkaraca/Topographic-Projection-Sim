@@ -240,6 +240,7 @@ def visualize_adaptation(growth_cones):
     axs[1, 0].set_ylabel('Ligand')
     axs[1, 0].set_title('Ligand Value')
     axs[1, 0].set_xlim(0, max_steps)
+    axs[1, 0].set_yscale('log')  # Set the y-axis to logarithmic scale
     axs[1, 0].legend()
 
     # Placeholder for fourth plot
@@ -250,6 +251,8 @@ def visualize_adaptation(growth_cones):
     axs[1, 1].set_ylabel('Reset force')
     axs[1, 1].set_title('Reset Force for Ligand')
     axs[1, 1].set_xlim(0, max_steps)
+    axs[1, 1].set_ylim(top=0.05)
+    axs[1, 1].set_yscale('symlog')  # Set the y-axis to logarithmic scale
     axs[1, 1].legend()
 
     # Adjust layout and show the figure

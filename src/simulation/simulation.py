@@ -108,6 +108,7 @@ class Simulation:
         self.mu = mu
         self.lambda_ = lambda_
         self.history_length = history_length
+        self.force = True
 
     def run(self):
         """
@@ -129,7 +130,7 @@ class Simulation:
             for gc in self.growth_cones:
                 if self.adaptation:
                     self.adapt_growth_cone(gc)
-                self.step_decision(gc, step)
+                self.step_decision(gc, step, self.force)
 
         print("\nIteration completed\n")
 
@@ -139,10 +140,11 @@ class Simulation:
 
         return Result(self.growth_cones, self.substrate)
 
-    def step_decision(self, gc, step):
+    def step_decision(self, gc, step, force):
         """
         Make a decision for a growth cone to step or not based on potential and probabilities of its new position.
 
+        :param force:
         :param gc: A Growth Cone instance.
         :param step: Current step in the simulation.
         """
@@ -155,6 +157,10 @@ class Simulation:
         step_ratio = (step / self.num_steps)  # TODO: clarify this step ratio by talking to Franco
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
 
+        if force:
+            gc.take_step(new_potential)
+            return
+
         # Calculate Step realization probabilities
         old_density = probabilistic_density(gc.potential, self.sigma)
         new_density = probabilistic_density(new_potential, self.sigma)
@@ -162,11 +168,9 @@ class Simulation:
 
         # Step Decision
         random_number = random.random()
-        """
+
         if random_number > probability:
             gc.take_step(new_potential)
-        """
-        gc.take_step(new_potential)
 
     def gen_random_step(self):
         """

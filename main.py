@@ -1,28 +1,9 @@
+from adap_investigation.five_plots import (adaptation_comparison_lambda, adaptation_comparison_mu,
+                                           adaptation_comparison_history)
+
 from build import object_factory
 import src.visualization as vz
 import build.config as cfg
-
-
-def adaptation_comparison():
-    gc = []
-
-    simulation = object_factory.build_simulation(cfg.GAP_INVERTED_CONFIG)
-    simulation.run()
-    gc.extend(simulation.growth_cones)
-
-    simulation = object_factory.build_simulation(cfg.GAP_INVERTED_CONFIG_HIGH_LAMBDA)
-    simulation.run()
-    gc.extend(simulation.growth_cones)
-
-    simulation = object_factory.build_simulation(cfg.GAP_INVERTED_CONFIG_HIGH_MU)
-    simulation.run()
-    gc.extend(simulation.growth_cones)
-
-    gc[0].id = "Standard"
-    gc[1].id = "High Lambda"
-    gc[2].id = "High Mu"
-
-    vz.visualize_adaptation(gc)
 
 
 def run():
@@ -32,7 +13,7 @@ def run():
     result = simulation.run()
 
     # dirty fix
-    trajectory_freq = cfg.default_config.get(cfg.TRAJECTORY_FRQ)
+    trajectory_freq = cfg.default_config.get(cfg.TRAJECTORY_FRQ)  # TODO: Visualization Object
 
     vz.visualize_result(result, simulation.substrate)
     vz.visualize_results_on_substrate(result, simulation.substrate)
@@ -43,5 +24,7 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
-    adaptation_comparison()
+    # run()
+    adaptation_comparison_lambda()
+    adaptation_comparison_mu()
+    adaptation_comparison_history()
