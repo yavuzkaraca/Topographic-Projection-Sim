@@ -294,11 +294,11 @@ def adaptation_comparison_history():
     simulation.run()
     gc.extend(simulation.growth_cones)
 
-    gc[0].id = "Very Low History"
-    gc[1].id = "Low History"
+    gc[0].id = "Very Short History"
+    gc[1].id = "Short History"
     gc[2].id = "Control"
-    gc[3].id = "High History"
-    gc[4].id = "Very High History"
+    gc[3].id = "Long History"
+    gc[4].id = "Very Long History"
 
     vz.visualize_adaptation(gc)
 
