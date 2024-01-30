@@ -1,5 +1,5 @@
-from adap_investigation.four_plots_comparison import (adaptation_comparison_lambda, adaptation_comparison_mu,
-                                                      adaptation_comparison_history)
+from experiments.adap_investigation.four_plots_comparison import (adaptation_comparison_lambda, adaptation_comparison_mu,
+                                                                  adaptation_comparison_history)
 
 from build import object_factory
 import src.visualization as vz

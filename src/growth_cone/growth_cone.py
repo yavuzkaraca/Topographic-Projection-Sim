@@ -91,6 +91,8 @@ class GrowthCone:
             self.reset_force_ligand = lambda_ * (self.ligand_start - self.ligand_current)
 
         self.history.update_adap_co(self.adap_co)
+        self.history.update_reset_force_receptor(self.reset_force_receptor)
+        self.history.update_reset_force_ligand(self.reset_force_ligand)
 
     def apply_adaptation(self):
         """
@@ -106,5 +108,3 @@ class GrowthCone:
 
         self.history.update_ligand(self.ligand_current)
         self.history.update_receptor(self.receptor_current)
-        self.history.update_reset_force_receptor(self.reset_force_receptor)
-        self.history.update_reset_force_ligand(self.reset_force_ligand)
