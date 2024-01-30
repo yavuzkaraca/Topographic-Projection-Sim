@@ -108,7 +108,7 @@ class Simulation:
         self.mu = mu
         self.lambda_ = lambda_
         self.history_length = history_length
-        self.force = True
+        self.force = True  # TODO: integrate into config
 
     def run(self):
         """
@@ -158,6 +158,7 @@ class Simulation:
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
 
         if force:
+            # Force gc to take the random generated step, neglecting ques from guidance potential
             gc.take_step(new_potential)
             return
 

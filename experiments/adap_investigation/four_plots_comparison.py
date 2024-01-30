@@ -402,3 +402,13 @@ GAP_INVERTED_HISTORY_5 = {
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
     ADAPTATION_HISTORY: 60  # 30
 }
+
+
+def run():
+    adaptation_comparison_lambda()
+    adaptation_comparison_mu()
+    adaptation_comparison_history()
+
+
+if __name__ == '__main__':
+    run()

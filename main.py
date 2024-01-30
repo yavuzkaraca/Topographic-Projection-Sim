@@ -24,7 +24,4 @@ def run():
 
 
 if __name__ == '__main__':
-    # run()
-    adaptation_comparison_lambda()
-    adaptation_comparison_mu()
-    adaptation_comparison_history()
+    run()
