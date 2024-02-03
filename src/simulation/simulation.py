@@ -108,7 +108,7 @@ class Simulation:
         self.mu = mu
         self.lambda_ = lambda_
         self.history_length = history_length
-        self.force = True  # TODO: integrate into config
+        self.force = False  # TODO: integrate into config
 
     def run(self):
         """
@@ -154,7 +154,7 @@ class Simulation:
         gc.pos_new = clamp_to_boundaries(gc.pos_current, self.substrate, gc.size, xt_direction, yt_direction)
 
         # Calculate new potential
-        step_ratio = (step / self.num_steps)  # TODO: clarify this step ratio by talking to Franco
+        step_ratio = (step / self.num_steps) * 3  # TODO: clarify this step ratio by talking to Franco
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
 
         if force:

@@ -32,8 +32,10 @@ class Result:
         """
         Generates a projection mapping representation based on the initial positions of growth cones.
         """
+        # TODO: fix mapping for y values
         x_values = np.array([gc.pos_current[0] for gc in self.gcs])
-        y_values = np.array([gc.pos_start[1] for gc in self.gcs])
+        # y_values = np.array([gc.pos_start[1] for gc in self.gcs])
+        y_values = np.array([gc.id for gc in self.gcs])
 
         return x_values, y_values
 

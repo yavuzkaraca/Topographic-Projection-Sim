@@ -151,7 +151,6 @@ def visualize_result(result, substrate):
 
     # Get projection mapping data and normalize
     x_values, y_values = result.get_projection_repr()
-
     x_values_normalized = normalize_values(x_values, substrate.offset, substrate.cols - substrate.offset)
     y_values_normalized = normalize_values(y_values, substrate.offset, substrate.rows - substrate.offset - 1)
 
@@ -175,6 +174,60 @@ def visualize_result(result, substrate):
     # Tectum End-positions
     x_values, y_values = result.get_final_positioning()
     axes[1].plot(x_values, y_values, '*')  # Plot tectum end-positions in the second subplot
+    axes[1].set_title("Tectum End-positions")
+    axes[1].set_xlabel("X Coordinate")
+    axes[1].set_ylabel("Y Coordinate")
+
+    plt.show()
+
+
+def visualize_colored_result(result, substrate, mutated_indexes):
+    """
+    Generate plots for the projection mapping and tectum end-positions, including separate linear regression
+    for the projection mapping of non-mutated and mutated growth cones.
+
+    :param substrate: The Substrate object containing dimensions. (for normalization)
+    :param result: Result object containing growth cone positions and details.
+    :param mutated_indexes: List of indexes of mutated growth cones to be colored differently.
+    """
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    # Projection mapping data and normalization
+    x_values, y_values = result.get_projection_repr()
+    x_values_normalized = normalize_values(x_values, substrate.offset, substrate.cols - substrate.offset)
+    y_values_normalized = normalize_values(y_values, 0, 49)
+    # y_values_normalized = normalize_values(y_values, substrate.offset, substrate.rows - substrate.offset - 1)
+
+    # Segment data into mutated and non-mutated
+    mutated_x = [x for i, x in enumerate(x_values_normalized) if i in mutated_indexes]
+    mutated_y = [y for i, y in enumerate(y_values_normalized) if i in mutated_indexes]
+    non_mutated_x = [x for i, x in enumerate(x_values_normalized) if i not in mutated_indexes]
+    non_mutated_y = [y for i, y in enumerate(y_values_normalized) if i not in mutated_indexes]
+
+    # Linear regression for non-mutated
+    if non_mutated_x and non_mutated_y:  # Ensure non-empty
+        nm_slope, nm_intercept, _, _, _ = linregress(non_mutated_x, non_mutated_y)
+        nm_regression_line = nm_slope * np.array(non_mutated_x) + nm_intercept
+        axes[0].plot(non_mutated_x, non_mutated_y, 'b*', label='Non-mutated Growth Cones')
+        axes[0].plot(non_mutated_x, nm_regression_line, 'b-', label='Non-mutated Regression')
+
+    # Linear regression for mutated
+    if mutated_x and mutated_y:  # Ensure non-empty
+        m_slope, m_intercept, _, _, _ = linregress(mutated_x, mutated_y)
+        m_regression_line = m_slope * np.array(mutated_x) + m_intercept
+        axes[0].plot(mutated_x, mutated_y, 'r*', label='Mutated Growth Cones')
+        axes[0].plot(mutated_x, m_regression_line, 'r-', label='Mutated Regression')
+
+    axes[0].set_title("Projection Mapping")
+    axes[0].set_xlabel("% a-p Axis of Target")
+    axes[0].set_ylabel("% n-t Axis of Retina")
+    axes[0].set_xlim(0, 100)
+    axes[0].set_ylim(0, 100)
+    axes[0].legend()
+
+    # Tectum End-positions plotting remains unchanged
+    x_values, y_values = result.get_final_positioning()
+    axes[1].plot(x_values, y_values, '*')
     axes[1].set_title("Tectum End-positions")
     axes[1].set_xlabel("X Coordinate")
     axes[1].set_ylabel("Y Coordinate")
