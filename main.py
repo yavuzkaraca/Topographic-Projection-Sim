@@ -1,6 +1,5 @@
 from build import object_factory
 import src.visualization as vz
-import build.config as cfg
 
 
 def run():
@@ -9,12 +8,9 @@ def run():
 
     result = simulation.run()
 
-    # dirty fix
-    trajectory_freq = cfg.default_config.get(cfg.TRAJECTORY_FRQ)  # TODO: Visualization Object
-
     vz.visualize_result(result, simulation.substrate)
     vz.visualize_results_on_substrate(result, simulation.substrate)
-    vz.visualize_trajectory_on_substrate(result, simulation.substrate, simulation.growth_cones, trajectory_freq)
+    vz.visualize_trajectory_on_substrate(result, simulation.substrate, simulation.growth_cones)
 
     # vz.visualize_substrate_separately(simulation.substrate)
     # vz.visualize_trajectories(simulation.growth_cones)

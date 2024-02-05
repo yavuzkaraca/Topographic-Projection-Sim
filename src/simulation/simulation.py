@@ -80,7 +80,7 @@ class Simulation:
         gen_random_step(): Generates a random step in the x and y directions.
     """
 
-    def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigma, mu,
+    def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigma, force, mu,
                  lambda_, history_length):
         """
         Initialize the Simulation class with necessary parameters.
@@ -108,7 +108,7 @@ class Simulation:
         self.mu = mu
         self.lambda_ = lambda_
         self.history_length = history_length
-        self.force = False  # TODO: integrate into config
+        self.force = force
 
     def run(self):
         """

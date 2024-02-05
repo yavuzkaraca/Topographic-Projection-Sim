@@ -1,6 +1,6 @@
 from build.config import SUBSTRATE_TYPE, CONTINUOUS_GRADIENTS, CUSTOM_FIRST, CUSTOM_SECOND, ROWS, COLS, GC_COUNT, \
     GC_SIZE, STEP_SIZE, \
-    STEP_AMOUNT, X_STEP_POSSIBILITY, Y_STEP_POSSIBILITY, SIGMA, TRAJECTORY_FRQ, ADAPTATION_ENABLED, ADAPTATION_MU, \
+    STEP_AMOUNT, X_STEP_POSSIBILITY, Y_STEP_POSSIBILITY, SIGMA, FORCE, ADAPTATION_ENABLED, ADAPTATION_MU, \
     ADAPTATION_LAMBDA, ADAPTATION_HISTORY
 from build import object_factory
 import src.visualization as vz
@@ -28,7 +28,7 @@ KNOCK_IN_CONFIG = {
     CUSTOM_FIRST: 0,
     CUSTOM_SECOND: 0,
     ROWS: 3,  # number of rows = max value along y-axis
-    COLS: 96,  # number of cols = max value along x-axis
+    COLS: 76,  # number of cols = max value along x-axis
     GC_COUNT: 50,
     GC_SIZE: 5,
     STEP_SIZE: 1,
@@ -36,7 +36,7 @@ KNOCK_IN_CONFIG = {
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY_FRQ: 1,
+    FORCE: False,
     ADAPTATION_ENABLED: False,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045

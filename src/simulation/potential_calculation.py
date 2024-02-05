@@ -15,8 +15,7 @@ def calculate_potential(gc, gcs, substrate, step):
     :param step: The iteration step of the simulation (used for fiber-fiber interaction).
     :return: The guidance potential as a floating-point number.
     """
-    # TODO: make configurable
-    # Settings init
+    # Settings init TODO: make configurable
     forward_on = True
     reverse_on = True
     ff_inter_on = True

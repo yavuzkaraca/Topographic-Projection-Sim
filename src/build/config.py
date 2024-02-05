@@ -14,14 +14,15 @@ GAP_BR = "gap_br"
 GAP_BB = "gap_bb"
 GAP_INV = "gap_inv"
 
-# Simulation Parameters
+# Substrate Parameters
 SUBSTRATE_TYPE = "substrate_type"
-
 # small edge length ; - ; last column of first part
 CUSTOM_FIRST = "custom_first"
 # big edge length ; stripe width ; first column of last part
 CUSTOM_SECOND = "custom_second"
 
+
+# Simulation Parameters
 ROWS = "rows"
 COLS = "cols"
 GC_COUNT = "gc_count"
@@ -31,7 +32,8 @@ STEP_AMOUNT = "step_amount"
 X_STEP_POSSIBILITY = "x_step_possibility"
 Y_STEP_POSSIBILITY = "y_step_possibility"
 SIGMA = "sigma"
-TRAJECTORY_FRQ = "trajectory_freq"  # TODO: integrate into object factory
+FORCE = "force"
+
 
 # Adaptation
 ADAPTATION_ENABLED = "adaptation_enabled"
@@ -54,7 +56,7 @@ CONTINUOUS_CONFIG = {
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY_FRQ: 50,
+    FORCE: False,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.006,  # 0.006
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
@@ -75,7 +77,7 @@ STRIPE_ASSAY_CONFIG = {
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY_FRQ: 50,
+    FORCE: False,
     ADAPTATION_ENABLED: False,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
@@ -96,7 +98,7 @@ WEDGES_CONFIG = {
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY_FRQ: 50,
+    FORCE: False,
     ADAPTATION_ENABLED: False,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
@@ -117,7 +119,7 @@ GAP_ASSAY_CONFIG = {
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,
-    TRAJECTORY_FRQ: 50,
+    FORCE: False,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.006
     ADAPTATION_LAMBDA: 0.002,  # 0.0045

@@ -104,10 +104,11 @@ def visualize_results_on_substrate(result, substrate):
     plt.show()
 
 
-def visualize_trajectory_on_substrate(result, substrate, growth_cones, trajectory_freq):
+def visualize_trajectory_on_substrate(result, substrate, growth_cones, trajectory_freq=50):
     """
     Visualize tectum end-positions and growth cone trajectories on top of the substrate.
 
+    :param trajectory_freq:
     :param result: Result object containing tectum end-positions.
     :param substrate: The Substrate object containing ligand and receptor values.
     :param growth_cones: List of GrowthCone objects with trajectory data.
@@ -129,7 +130,6 @@ def visualize_trajectory_on_substrate(result, substrate, growth_cones, trajector
 
     # Plot growth cone trajectories
     for growth_cone in growth_cones:
-
         trajectory_x, trajectory_y = zip(*growth_cone.history.position[::trajectory_freq])
         ax.plot(trajectory_x, trajectory_y, label=f'Growth Cone {growth_cones.index(growth_cone)}')
 
@@ -193,7 +193,7 @@ def visualize_colored_result(result, substrate, mutated_indexes):
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
     # Projection mapping data and normalization
-    x_values, y_values = result.get_projection_repr()
+    x_values, y_values = result.get_projection_id()
     x_values_normalized = normalize_values(x_values, substrate.offset, substrate.cols - substrate.offset)
     y_values_normalized = normalize_values(y_values, 0, 49)
     # y_values_normalized = normalize_values(y_values, substrate.offset, substrate.rows - substrate.offset - 1)
