@@ -1,5 +1,5 @@
 import unittest
-from src.growth_cone.growth_cone import GrowthCone
+from simulation.growth_cone import GrowthCone
 
 
 class TestGrowthCone(unittest.TestCase):

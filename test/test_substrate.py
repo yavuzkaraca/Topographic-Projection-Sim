@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from src.substrate import BaseSubstrate, ContinuousGradientSubstrate  # Adjust imports as needed
+from simulation.substrate.substrate import BaseSubstrate  # Adjust imports as needed
 
 
 class TestBaseSubstrate(unittest.TestCase):

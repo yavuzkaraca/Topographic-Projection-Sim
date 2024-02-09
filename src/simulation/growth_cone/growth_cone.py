@@ -3,7 +3,7 @@ Module providing Growth Cone class for growth cone representation.
 """
 import math
 
-from growth_cone.history import History
+from simulation.growth_cone.history import History
 
 
 class GrowthCone:
