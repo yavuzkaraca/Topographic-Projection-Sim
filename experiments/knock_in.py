@@ -14,8 +14,9 @@ def knock_in():
     mutated_gc_indexes = np.random.choice(range(0, 49), size=25, replace=False)
     extra_receptor = 1.5
     for idx in mutated_gc_indexes:
+        simulation.growth_cones[idx].receptor_current *= 1.5
         simulation.growth_cones[idx].receptor_current += 1.5
-        simulation.growth_cones[idx].ligand_current *= 0.6
+        simulation.growth_cones[idx].ligand_current *= 0.4
 
     result = simulation.run()
 
