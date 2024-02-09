@@ -12,9 +12,10 @@ def knock_in():
 
     # mutate half of gcs
     mutated_gc_indexes = np.random.choice(range(0, 49), size=25, replace=False)
-    extra_receptor = 1.0
+    extra_receptor = 1.5
     for idx in mutated_gc_indexes:
-        simulation.growth_cones[idx].receptor_current += extra_receptor
+        simulation.growth_cones[idx].receptor_current += 1.5
+        simulation.growth_cones[idx].ligand_current *= 0.6
 
     result = simulation.run()
 
@@ -28,11 +29,11 @@ KNOCK_IN_CONFIG = {
     CUSTOM_FIRST: 0,
     CUSTOM_SECOND: 0,
     ROWS: 3,  # number of rows = max value along y-axis
-    COLS: 40,  # number of cols = max value along x-axis
+    COLS: 56,  # number of cols = max value along x-axis
     GC_COUNT: 50,
-    GC_SIZE: 5,
+    GC_SIZE: 8,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 15000,
+    STEP_AMOUNT: 10000,
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMA: 0.12,

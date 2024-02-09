@@ -5,6 +5,8 @@ Module for conducting a simulation.
 import math
 import time
 
+import numpy as np
+
 from simulation.result import Result
 from simulation.potential_calculation import calculate_potential
 import random
@@ -58,6 +60,21 @@ def calculate_probability(old_prob, new_prob):
     else:
         probability = old_prob / (old_prob + new_prob)
     return probability
+
+
+def calculate_step_ratio(step, num_steps):
+    def sigmoid(x):
+        return 1 / (1 + math.exp(-x))
+
+    # Adjust 'k' to control the transition's steepness. A larger 'k' will make the sigmoid steeper.
+    k = 8  # This value can be adjusted based on how smooth or steep you want the transition to be
+
+    # This scales and shifts the step value into the range [-k, k] around the midpoint of num_steps
+    mid_scaled_value = k * (2 * (step / num_steps) - 1)
+
+    # Sigmoid output scaled to range up to 4
+    step_ratio = sigmoid(mid_scaled_value) * 4
+    return step_ratio
 
 
 class Simulation:
@@ -154,7 +171,7 @@ class Simulation:
         gc.pos_new = clamp_to_boundaries(gc.pos_current, self.substrate, gc.size, xt_direction, yt_direction)
 
         # Calculate new potential
-        step_ratio = (step / self.num_steps) * 3  # TODO: clarify this step ratio by talking to Franco
+        step_ratio = calculate_step_ratio(step, self.num_steps)
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
 
         if force:
@@ -198,4 +215,3 @@ class Simulation:
         """
         gc.calculate_adaptation(self.mu, self.lambda_, self.history_length)
         gc.apply_adaptation()
-
