@@ -3,7 +3,7 @@ from build.config import SUBSTRATE_TYPE, CONTINUOUS_GRADIENTS, CUSTOM_FIRST, CUS
     STEP_AMOUNT, X_STEP_POSSIBILITY, Y_STEP_POSSIBILITY, SIGMA, FORCE, ADAPTATION_ENABLED, ADAPTATION_MU, \
     ADAPTATION_LAMBDA, ADAPTATION_HISTORY
 from build import object_factory
-import src.visualization as vz
+import visualization.visualization as vz
 import numpy as np
 
 
