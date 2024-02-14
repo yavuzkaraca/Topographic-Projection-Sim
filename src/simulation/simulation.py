@@ -73,7 +73,7 @@ def calculate_step_ratio(step, num_steps):
     mid_scaled_value = k * (2 * (step / num_steps) - 1)
 
     # Sigmoid output scaled to range up to 4
-    step_ratio = sigmoid(mid_scaled_value) * 4
+    step_ratio = sigmoid(mid_scaled_value)
     return step_ratio
 
 
@@ -171,6 +171,7 @@ class Simulation:
         gc.pos_new = clamp_to_boundaries(gc.pos_current, self.substrate, gc.size, xt_direction, yt_direction)
 
         # Calculate new potential
+        # TODO: refactor
         step_ratio = calculate_step_ratio(step, self.num_steps)
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
 

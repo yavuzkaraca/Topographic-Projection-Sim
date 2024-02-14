@@ -206,17 +206,17 @@ def visualize_colored_result(result, substrate, mutated_indexes):
 
     # Linear regression for non-mutated
     if non_mutated_x and non_mutated_y:  # Ensure non-empty
-        nm_slope, nm_intercept, _, _, _ = linregress(non_mutated_x, non_mutated_y)
-        nm_regression_line = nm_slope * np.array(non_mutated_x) + nm_intercept
+        # nm_slope, nm_intercept, _, _, _ = linregress(non_mutated_x, non_mutated_y)
+        # nm_regression_line = nm_slope * np.array(non_mutated_x) + nm_intercept
         axes[0].plot(non_mutated_x, non_mutated_y, 'b*', label='Non-mutated Growth Cones')
-        axes[0].plot(non_mutated_x, nm_regression_line, 'b-', label='Non-mutated Regression')
+        # axes[0].plot(non_mutated_x, nm_regression_line, 'b-')
 
     # Linear regression for mutated
     if mutated_x and mutated_y:  # Ensure non-empty
-        m_slope, m_intercept, _, _, _ = linregress(mutated_x, mutated_y)
-        m_regression_line = m_slope * np.array(mutated_x) + m_intercept
+        # m_slope, m_intercept, _, _, _ = linregress(mutated_x, mutated_y)
+        # m_regression_line = m_slope * np.array(mutated_x) + m_intercept
         axes[0].plot(mutated_x, mutated_y, 'r*', label='Mutated Growth Cones')
-        axes[0].plot(mutated_x, m_regression_line, 'r-', label='Mutated Regression')
+        # axes[0].plot(mutated_x, m_regression_line, 'r-')
 
     axes[0].set_title("Projection Mapping")
     axes[0].set_xlabel("% a-p Axis of Target")
