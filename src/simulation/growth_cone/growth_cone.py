@@ -59,7 +59,7 @@ class GrowthCone:
         return (f"Receptor: {self.receptor_current}, Ligand: {self.ligand_current}, Position: {self.pos_current}, "
                 f"Start Position: {self.pos_start}, Potential: {self.potential}, "
                 f"ID: {self.id}, Adaptation Coefficient: {self.adap_co}, "
-                f"Reset Forces: {self.reset_force_ligand}, {self.reset_force_receptor}") 
+                f"Reset Forces: {self.reset_force_ligand}, {self.reset_force_receptor}")
 
     def take_step(self, new_potential):
         self.history.update_potential(new_potential)
@@ -108,3 +108,7 @@ class GrowthCone:
 
         self.history.update_ligand(self.ligand_current)
         self.history.update_receptor(self.receptor_current)
+
+    def apply_knock_in_with_receptor(self, receptor_increase):
+        self.receptor_current += receptor_increase
+        # self.ligand_current = 1 + receptor_increase - self.receptor_current

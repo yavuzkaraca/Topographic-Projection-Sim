@@ -211,7 +211,7 @@ def visualize_colored_result(result, substrate, mutated_indexes):
 
     # Cubic polynomial fitting for non-mutated data
     if non_mutated_x and non_mutated_y:
-        nm_coeffs = np.polyfit(non_mutated_x, non_mutated_y, 5)
+        nm_coeffs = np.polyfit(non_mutated_x, non_mutated_y, 3)
         nm_poly = np.poly1d(nm_coeffs)
         nm_x_new = np.linspace(min(non_mutated_x), max(non_mutated_x), 300)
         nm_y_new = nm_poly(nm_x_new)
@@ -220,7 +220,7 @@ def visualize_colored_result(result, substrate, mutated_indexes):
 
     # Cubic polynomial fitting for mutated data
     if mutated_x and mutated_y:
-        m_coeffs = np.polyfit(mutated_x, mutated_y, 5)
+        m_coeffs = np.polyfit(mutated_x, mutated_y, 3)
         m_poly = np.poly1d(m_coeffs)
         m_x_new = np.linspace(min(mutated_x), max(mutated_x), 300)
         m_y_new = m_poly(m_x_new)

@@ -1,3 +1,5 @@
+from matplotlib import pyplot as plt
+
 from build.config import SUBSTRATE_TYPE, CONTINUOUS_GRADIENTS, CUSTOM_FIRST, CUSTOM_SECOND, ROWS, COLS, GC_COUNT, \
     GC_SIZE, STEP_SIZE, \
     STEP_AMOUNT, X_STEP_POSSIBILITY, Y_STEP_POSSIBILITY, SIGMA, FORCE, ADAPTATION_ENABLED, ADAPTATION_MU, \
@@ -11,9 +13,12 @@ def knock_in():
     simulation = object_factory.build_simulation(KNOCK_IN_CONFIG)
 
     # mutate half of gcs
+    mutation_factor = 1
     mutated_gc_indexes = np.random.choice(range(0, 49), size=25, replace=False)
-    for idx in mutated_gc_indexes:
-        simulation.growth_cones[idx].receptor_current += 8
+    for idx in mutated_gc_indexes:  # TODO: move the mutation to the simulation
+        simulation.growth_cones[idx].apply_knock_in_with_receptor(mutation_factor)
+
+    visualize_mutation(simulation.growth_cones)
 
     result = simulation.run()
 
@@ -41,6 +46,19 @@ KNOCK_IN_CONFIG = {
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
     ADAPTATION_HISTORY: 40  # 30
 }
+
+
+def visualize_mutation(gcs):
+    receptors = np.array([gc.receptor_current for gc in gcs])
+    ligands = np.array([gc.ligand_current for gc in gcs])
+    plt.figure(figsize=(10, 6))
+    plt.plot(receptors, 'o-', label='Receptors')
+    plt.plot(ligands, 'o-', color='red', label='Ligands')
+    plt.xlabel('Growth Cone ID (sorted along %n-t Axis of Retina)')
+    plt.ylabel('Signal Value')
+    plt.title('GCs after Mutation')
+    plt.legend()
+    plt.show()
 
 
 def run():

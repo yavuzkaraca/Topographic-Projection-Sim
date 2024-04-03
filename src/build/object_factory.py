@@ -3,6 +3,8 @@ Module for setting up and initializing a growth cone simulation.
 """
 
 import numpy as np
+from matplotlib import pyplot as plt
+
 from build import config as cfg
 from simulation.growth_cone.growth_cone import GrowthCone  # Importing the Growth Cone class
 from simulation.simulation import Simulation  # Importing the Simulation class
@@ -103,9 +105,22 @@ def initialize_growth_cones(config):
     size = config.get(cfg.GC_SIZE)
     rows = config.get(cfg.ROWS)
 
-    # Create arrays for evenly distributed receptor and ligand values
-    receptors = np.linspace(0.99, 0.01, gc_count)
-    ligands = np.linspace(0.01, 0.99, gc_count)
+    # Non-linear gradient for receptors, starting at 0.99 and decreasing to 0.01
+    receptor_gradient = np.linspace(0, 1, gc_count) ** 2
+    receptors = 0.01 + receptor_gradient * (0.99 - 0.01)
+    receptors = receptors[::-1]
+
+    # This is the inverse of the receptor gradient
+    ligands = 0.01 + receptor_gradient * (0.99 - 0.01)
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(receptors, 'o-', label='Receptors')
+    plt.plot(ligands, 'o-', color='red', label='Ligands')
+    plt.xlabel('Growth Cone ID (sorted along %n-t Axis of Retina)')
+    plt.ylabel('Signal Value')
+    plt.title('Growth Cone Initialization')
+    plt.legend()
+    plt.show()
 
     # Create an array of evenly distributed y-positions for the growth cones
     y_positions = np.linspace(size, rows - 1 + size, gc_count, dtype=int)
