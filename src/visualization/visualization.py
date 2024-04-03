@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import linregress
+from scipy.optimize import curve_fit
+
 
 
 def create_blended_colors(ligands, receptors):
@@ -204,19 +206,26 @@ def visualize_colored_result(result, substrate, mutated_indexes):
     non_mutated_x = [x for i, x in enumerate(x_values_normalized) if i not in mutated_indexes]
     non_mutated_y = [y for i, y in enumerate(y_values_normalized) if i not in mutated_indexes]
 
-    # Linear regression for non-mutated
-    if non_mutated_x and non_mutated_y:  # Ensure non-empty
-        # nm_slope, nm_intercept, _, _, _ = linregress(non_mutated_x, non_mutated_y)
-        # nm_regression_line = nm_slope * np.array(non_mutated_x) + nm_intercept
-        axes[0].plot(non_mutated_x, non_mutated_y, 'b*', label='Non-mutated Growth Cones')
-        # axes[0].plot(non_mutated_x, nm_regression_line, 'b-')
+    def sigmoid(x, a, b, c):
+        return a / (1 + np.exp(-b * (x - c)))
 
-    # Linear regression for mutated
-    if mutated_x and mutated_y:  # Ensure non-empty
-        # m_slope, m_intercept, _, _, _ = linregress(mutated_x, mutated_y)
-        # m_regression_line = m_slope * np.array(mutated_x) + m_intercept
+    # Cubic polynomial fitting for non-mutated data
+    if non_mutated_x and non_mutated_y:
+        nm_coeffs = np.polyfit(non_mutated_x, non_mutated_y, 5)
+        nm_poly = np.poly1d(nm_coeffs)
+        nm_x_new = np.linspace(min(non_mutated_x), max(non_mutated_x), 300)
+        nm_y_new = nm_poly(nm_x_new)
+        axes[0].plot(non_mutated_x, non_mutated_y, 'b*', label='Wildtype Growth Cones')
+        axes[0].plot(nm_x_new, nm_y_new, 'b-')
+
+    # Cubic polynomial fitting for mutated data
+    if mutated_x and mutated_y:
+        m_coeffs = np.polyfit(mutated_x, mutated_y, 5)
+        m_poly = np.poly1d(m_coeffs)
+        m_x_new = np.linspace(min(mutated_x), max(mutated_x), 300)
+        m_y_new = m_poly(m_x_new)
         axes[0].plot(mutated_x, mutated_y, 'r*', label='Mutated Growth Cones')
-        # axes[0].plot(mutated_x, m_regression_line, 'r-')
+        axes[0].plot(m_x_new, m_y_new, 'r-')
 
     axes[0].set_title("Projection Mapping")
     axes[0].set_xlabel("% a-p Axis of Target")

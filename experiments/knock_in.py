@@ -13,7 +13,7 @@ def knock_in():
     # mutate half of gcs
     mutated_gc_indexes = np.random.choice(range(0, 49), size=25, replace=False)
     for idx in mutated_gc_indexes:
-        simulation.growth_cones[idx].receptor_current += 1
+        simulation.growth_cones[idx].receptor_current += 8
 
     result = simulation.run()
 
