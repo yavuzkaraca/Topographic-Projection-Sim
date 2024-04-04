@@ -111,4 +111,4 @@ class GrowthCone:
 
     def apply_knock_in_with_receptor(self, receptor_increase):
         self.receptor_current += receptor_increase
-        # self.ligand_current = 1 + receptor_increase - self.receptor_current
+        # self.ligand_current = 0.33 / self.receptor_current
