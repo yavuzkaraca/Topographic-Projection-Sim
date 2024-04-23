@@ -66,6 +66,8 @@ def calculate_step_ratio(step, num_steps):
     def sigmoid(x):
         return 1 / (1 + math.exp(-x))
 
+    # TODO: make adjustable through config
+
     # Adjust 'k' to control the transition's steepness. A larger 'k' will make the sigmoid steeper.
     k = 8  # This value can be adjusted based on how smooth or steep you want the transition to be
 
@@ -161,7 +163,6 @@ class Simulation:
         """
         Make a decision for a growth cone to step or not based on potential and probabilities of its new position.
 
-        :param force:
         :param gc: A Growth Cone instance.
         :param step: Current step in the simulation.
         """
