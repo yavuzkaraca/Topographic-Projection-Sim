@@ -147,7 +147,7 @@ class Simulation:
             for gc in self.growth_cones:
                 if self.adaptation:
                     self.adapt_growth_cone(gc)
-                self.step_decision(gc, step, self.force)
+                self.step_decision(gc, step)
 
         print("\nIteration completed\n")
 
@@ -157,7 +157,7 @@ class Simulation:
 
         return Result(self.growth_cones, self.substrate)
 
-    def step_decision(self, gc, step, force):
+    def step_decision(self, gc, step):
         """
         Make a decision for a growth cone to step or not based on potential and probabilities of its new position.
 
@@ -175,7 +175,7 @@ class Simulation:
         step_ratio = calculate_step_ratio(step, self.num_steps)
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
 
-        if force:
+        if self.force:
             # Force gc to take the random generated step, neglecting ques from guidance potential
             gc.take_step(new_potential)
             return
