@@ -52,6 +52,7 @@ package substrate.py{
     class GapSubstrateRB
     class GapSubstrateBR
     class GapSubstrateBB
+    class GapSubstrateInverted
 }
 
 BaseStripeSubstrate --> StripeDuoSubstrate
@@ -68,6 +69,7 @@ BaseGapSubstrate --> GapSubstrateBB
 BaseGapSubstrate --> GapSubstrateBR
 BaseGapSubstrate --> GapSubstrateRB
 BaseGapSubstrate --> GapSubstrateRR
+BaseGapSubstrate --> GapSubstrateInverted
 
 BaseSubstrate --> BaseGapSubstrate
 
