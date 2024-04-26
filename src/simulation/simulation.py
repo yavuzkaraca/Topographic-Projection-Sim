@@ -67,7 +67,6 @@ def calculate_step_ratio(step, num_steps):
         return 1 / (1 + math.exp(-x))
 
     # TODO: make adjustable through config
-
     # Adjust 'k' to control the transition's steepness. A larger 'k' will make the sigmoid steeper.
     k = 8  # This value can be adjusted based on how smooth or steep you want the transition to be
 
