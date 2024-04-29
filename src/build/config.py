@@ -16,15 +16,14 @@ GAP_INV = "gap_inv"
 
 # Substrate Parameters
 SUBSTRATE_TYPE = "substrate_type"
+ROWS = "rows"
+COLS = "cols"
 # small edge length ; - ; last column of first part
 CUSTOM_FIRST = "custom_first"
 # big edge length ; stripe width ; first column of last part
 CUSTOM_SECOND = "custom_second"
 
-
 # Simulation Parameters
-ROWS = "rows"
-COLS = "cols"
 GC_COUNT = "gc_count"
 GC_SIZE = "gc_size"
 STEP_SIZE = "step_size"
@@ -33,7 +32,6 @@ X_STEP_POSSIBILITY = "x_step_possibility"
 Y_STEP_POSSIBILITY = "y_step_possibility"
 SIGMA = "sigma"
 FORCE = "force"
-
 
 # Adaptation
 ADAPTATION_ENABLED = "adaptation_enabled"

@@ -4,7 +4,6 @@ from scipy.stats import linregress
 from scipy.optimize import curve_fit
 
 
-
 def create_blended_colors(ligands, receptors):
     """
     Create blended colors for ligands and receptors with custom adjustments.

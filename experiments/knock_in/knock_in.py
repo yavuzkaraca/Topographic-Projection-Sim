@@ -13,7 +13,7 @@ def knock_in():
     simulation = object_factory.build_simulation(KNOCK_IN_CONFIG)
 
     # mutate half of gcs
-    mutation_factor = 1
+    mutation_factor = 2
     mutated_gc_indexes = np.random.choice(range(0, 49), size=25, replace=False)
     for idx in mutated_gc_indexes:  # TODO: move the mutation to the simulation
         simulation.growth_cones[idx].apply_knock_in_with_receptor(mutation_factor)
