@@ -182,6 +182,20 @@ def visualize_result(result, substrate):
     plt.show()
 
 
+def visualize_growth_cones(gcs):
+    receptors = np.array([gc.receptor_current for gc in gcs])
+    ligands = np.array([gc.ligand_current for gc in gcs])
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(receptors, 'o-', label='Receptors')
+    plt.plot(ligands, 'o-', color='red', label='Ligands')
+    plt.xlabel('Growth Cone ID (sorted along %n-t Axis of Retina)')
+    plt.ylabel('Signal Value')
+    plt.title('GCs after Mutation')
+    plt.legend()
+    plt.show()
+
+
 def visualize_colored_result(result, substrate, mutated_indexes):
     """
     Generate plots for the projection mapping and tectum end-positions, including separate linear regression

@@ -11,7 +11,8 @@ from simulation.simulation import Simulation  # Importing the Simulation class
 # Importing the Substrate classes
 from simulation.substrate.substrate import (ContinuousGradientSubstrate, WedgeSubstrate,
                                             StripeFwdSubstrate, StripeRewSubstrate, StripeDuoSubstrate,
-                                            GapSubstrateRR, GapSubstrateRB, GapSubstrateBR, GapSubstrateBB, GapSubstrateInverted)
+                                            GapSubstrateRR, GapSubstrateRB, GapSubstrateBR, GapSubstrateBB,
+                                            GapSubstrateInverted)
 
 
 def build_default():
@@ -106,21 +107,12 @@ def initialize_growth_cones(config):
     rows = config.get(cfg.ROWS)
 
     # Non-linear gradient for receptors, starting at 0.99 and decreasing to 0.01
-    receptor_gradient = np.linspace(0, 1, gc_count) ** 2
-    receptors = 0.31 + receptor_gradient * (2.99 - 0.01)
-    receptors = receptors[::-1]
+    receptor_gradient = np.linspace(0, 1, gc_count) ** 1.7
+    receptors = 0.01 + receptor_gradient * 0.99
 
     # This is the inverse of the receptor gradient
-    ligands = 0.31 + receptor_gradient * (2.99 - 0.01)
-
-    plt.figure(figsize=(10, 6))
-    plt.plot(receptors, 'o-', label='Receptors')
-    plt.plot(ligands, 'o-', color='red', label='Ligands')
-    plt.xlabel('Growth Cone ID (sorted along %n-t Axis of Retina)')
-    plt.ylabel('Signal Value')
-    plt.title('Growth Cone Initialization')
-    plt.legend()
-    plt.show()
+    ligands = 0.01 + receptor_gradient * 0.99
+    ligands = ligands[::-1]
 
     # Create an array of evenly distributed y-positions for the growth cones
     y_positions = np.linspace(size, rows - 1 + size, gc_count, dtype=int)
@@ -128,7 +120,7 @@ def initialize_growth_cones(config):
     for i in range(gc_count):
         # Create a GrowthCone instance and initialize it
         pos_y = y_positions[i]
-        gc = GrowthCone((size, pos_y), size, receptors[i], ligands[i], i)
+        gc = GrowthCone((size, pos_y), size, ligands[i], receptors[i], i)
         growth_cones.append(gc)
 
     return growth_cones
