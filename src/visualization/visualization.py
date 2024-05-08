@@ -198,29 +198,24 @@ def visualize_growth_cones(gcs):
 
 def visualize_colored_result(result, substrate, mutated_indexes):
     """
-    Generate plots for the projection mapping and tectum end-positions, including separate linear regression
-    for the projection mapping of non-mutated and mutated growth cones.
+    Generate a plot for the projection mapping of non-mutated and mutated growth cones.
 
     :param substrate: The Substrate object containing dimensions. (for normalization)
     :param result: Result object containing growth cone positions and details.
     :param mutated_indexes: List of indexes of mutated growth cones to be colored differently.
     """
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    plt.figure(figsize=(8, 8))  # Direct creation of a figure with specified size
 
     # Projection mapping data and normalization
     x_values, y_values = result.get_projection_id()
     x_values_normalized = normalize_values(x_values, substrate.offset, substrate.cols - substrate.offset)
     y_values_normalized = normalize_values(y_values, 0, 49)
-    # y_values_normalized = normalize_values(y_values, substrate.offset, substrate.rows - substrate.offset - 1)
 
     # Segment data into mutated and non-mutated
     mutated_x = [x for i, x in enumerate(x_values_normalized) if i in mutated_indexes]
-    mutated_y = [y for i, y in enumerate(y_values_normalized) if i in mutated_indexes]
+    mutated_y = [y for i, y in enumerate(y_values_normalized) if i not in mutated_indexes]
     non_mutated_x = [x for i, x in enumerate(x_values_normalized) if i not in mutated_indexes]
     non_mutated_y = [y for i, y in enumerate(y_values_normalized) if i not in mutated_indexes]
-
-    def sigmoid(x, a, b, c):
-        return a / (1 + np.exp(-b * (x - c)))
 
     # Cubic polynomial fitting for non-mutated data
     if non_mutated_x and non_mutated_y:
@@ -228,8 +223,8 @@ def visualize_colored_result(result, substrate, mutated_indexes):
         nm_poly = np.poly1d(nm_coeffs)
         nm_x_new = np.linspace(min(non_mutated_x), max(non_mutated_x), 300)
         nm_y_new = nm_poly(nm_x_new)
-        axes[0].plot(non_mutated_x, non_mutated_y, 'b*', label='Wildtype Growth Cones')
-        axes[0].plot(nm_x_new, nm_y_new, 'b-')
+        plt.plot(non_mutated_x, non_mutated_y, 'b*', label='Wildtype Growth Cones')
+        plt.plot(nm_x_new, nm_y_new, 'b-')
 
     # Cubic polynomial fitting for mutated data
     if mutated_x and mutated_y:
@@ -237,22 +232,15 @@ def visualize_colored_result(result, substrate, mutated_indexes):
         m_poly = np.poly1d(m_coeffs)
         m_x_new = np.linspace(min(mutated_x), max(mutated_x), 300)
         m_y_new = m_poly(m_x_new)
-        axes[0].plot(mutated_x, mutated_y, 'r*', label='Mutated Growth Cones')
-        axes[0].plot(m_x_new, m_y_new, 'r-')
+        plt.plot(mutated_x, mutated_y, 'r*', label='Mutated Growth Cones')
+        plt.plot(m_x_new, m_y_new, 'r-')
 
-    axes[0].set_title("Projection Mapping")
-    axes[0].set_xlabel("% a-p Axis of Target")
-    axes[0].set_ylabel("% n-t Axis of Retina")
-    axes[0].set_xlim(0, 100)
-    axes[0].set_ylim(0, 100)
-    axes[0].legend()
-
-    # Tectum End-positions plotting remains unchanged
-    x_values, y_values = result.get_final_positioning()
-    axes[1].plot(x_values, y_values, '*')
-    axes[1].set_title("Tectum End-positions")
-    axes[1].set_xlabel("X Coordinate")
-    axes[1].set_ylabel("Y Coordinate")
+    plt.title("Projection Mapping")
+    plt.xlabel("% a-p Axis of Target")
+    plt.ylabel("% n-t Axis of Retina")
+    plt.xlim(0, 100)
+    plt.ylim(0, 100)
+    plt.legend()
 
     plt.show()
 
@@ -264,7 +252,7 @@ def normalize_values(values, min_val, max_val):
     return (values - min_val) / (max_val - min_val) * 100
 
 
-def visualize_trajectories(growth_cones):
+def visualize_trajectories(growth_cones, trajectory_freq=50):
     """
     Visualize the trajectories of growth cones.
 
@@ -272,8 +260,8 @@ def visualize_trajectories(growth_cones):
     """
     plt.figure()
     for growth_cone in growth_cones:
-        x_values, y_values = zip(*growth_cone.trajectory)  # Unpack the trajectory points
-        plt.plot(x_values, y_values, label=f'Growth Cone {growth_cones.index(growth_cone)}')
+        trajectory_x, trajectory_y = zip(*growth_cone.history.position[::trajectory_freq])
+        plt.plot(trajectory_x, trajectory_y, label=f'Growth Cone {growth_cones.index(growth_cone)}')
 
     plt.xlabel('X Coordinate')
     plt.ylabel('Y Coordinate')

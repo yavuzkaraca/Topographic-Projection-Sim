@@ -62,16 +62,21 @@ def calculate_probability(old_prob, new_prob):
     return probability
 
 
-def calculate_step_ratio(step, num_steps):
+def calculate_step_ratio(step, num_steps, sigmoid_gain):
+    """
+    Calculate the ratio of steps taken by the growth cone relative to total number of steps. Allows fiber-fiber
+    interactions to be activated after a certain number of steps. A larger gain will make the sigmoid steeper.
+
+    :param step: The number of steps taken by the growth cone.
+    :param num_steps: The total number of steps taken by the growth cone.
+    :return: The ratio of steps taken by the growth cone relative to total number of steps.
+    """
+
     def sigmoid(x):
         return 1 / (1 + math.exp(-x))
 
-    # TODO: make adjustable through config
-    # Adjust 'k' to control the transition's steepness. A larger 'k' will make the sigmoid steeper.
-    k = 8  # This value can be adjusted based on how smooth or steep you want the transition to be
-
     # This scales and shifts the step value into the range [-k, k] around the midpoint of num_steps
-    mid_scaled_value = k * (2 * (step / num_steps) - 1)
+    mid_scaled_value = sigmoid_gain * (2 * (step / num_steps) - 1)
 
     # Sigmoid output scaled to range up to 4
     step_ratio = sigmoid(mid_scaled_value)
@@ -98,8 +103,8 @@ class Simulation:
         gen_random_step(): Generates a random step in the x and y directions.
     """
 
-    def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigma, force, mu,
-                 lambda_, history_length):
+    def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigmoid_gain,
+                 sigma, force, mu, lambda_, history_length):
         """
         Initialize the Simulation class with necessary parameters.
 
@@ -115,6 +120,7 @@ class Simulation:
         :param lambda_: Parameter for resetting force calculation.
         :param history_length: Number of historical steps to consider for adaptation.
         """
+        self.sigmoid_gain = sigmoid_gain
         self.substrate = substrate
         self.growth_cones = growth_cones
         self.adaptation = adaptation
@@ -148,7 +154,7 @@ class Simulation:
             for gc in self.growth_cones:
                 if self.adaptation:
                     self.adapt_growth_cone(gc)
-                self.step_decision(gc, step)
+                self.step_decision(gc, step_ratio=calculate_step_ratio(step, self.num_steps, self.sigmoid_gain))
 
         print("\nIteration completed\n")
 
@@ -158,10 +164,11 @@ class Simulation:
 
         return Result(self.growth_cones, self.substrate)
 
-    def step_decision(self, gc, step):
+    def step_decision(self, gc, step_ratio):
         """
         Make a decision for a growth cone to step or not based on potential and probabilities of its new position.
 
+        :param step_ratio:
         :param gc: A Growth Cone instance.
         :param step: Current step in the simulation.
         """
@@ -171,8 +178,6 @@ class Simulation:
         gc.pos_new = clamp_to_boundaries(gc.pos_current, self.substrate, gc.size, xt_direction, yt_direction)
 
         # Calculate new potential
-        # TODO: refactor
-        step_ratio = calculate_step_ratio(step, self.num_steps)
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
 
         if self.force:

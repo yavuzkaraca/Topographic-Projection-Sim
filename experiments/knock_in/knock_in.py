@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from build.config import SUBSTRATE_TYPE, CONTINUOUS_GRADIENTS, CUSTOM_FIRST, CUSTOM_SECOND, ROWS, COLS, GC_COUNT, \
     GC_SIZE, STEP_SIZE, \
     STEP_AMOUNT, X_STEP_POSSIBILITY, Y_STEP_POSSIBILITY, SIGMA, FORCE, ADAPTATION_ENABLED, ADAPTATION_MU, \
-    ADAPTATION_LAMBDA, ADAPTATION_HISTORY
+    ADAPTATION_LAMBDA, ADAPTATION_HISTORY, SIGMOID_GAIN
 from build import object_factory
 import visualization.visualization as vz
 import numpy as np
@@ -17,9 +17,9 @@ def knock_in():
     vz.visualize_growth_cones(gcs)
 
     # mutate half of gcs
-    mutation_factor = 1.5
+    mutation_factor = 1.2
     mutated_gc_indexes = np.random.choice(range(0, 49), size=25, replace=False)
-    for idx in mutated_gc_indexes:  # TODO: move the mutation to the simulation
+    for idx in mutated_gc_indexes:
         gcs[idx].mutate(mutation_factor)
 
     vz.visualize_growth_cones(gcs)
@@ -43,6 +43,7 @@ KNOCK_IN_CONFIG = {
     STEP_AMOUNT: 10000,
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
+    SIGMOID_GAIN: 8,
     SIGMA: 0.12,
     FORCE: False,
     ADAPTATION_ENABLED: False,
