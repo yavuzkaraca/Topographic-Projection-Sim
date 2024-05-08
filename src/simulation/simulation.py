@@ -120,7 +120,6 @@ class Simulation:
         :param lambda_: Parameter for resetting force calculation.
         :param history_length: Number of historical steps to consider for adaptation.
         """
-        self.sigmoid_gain = sigmoid_gain
         self.substrate = substrate
         self.growth_cones = growth_cones
         self.adaptation = adaptation
@@ -128,6 +127,7 @@ class Simulation:
         self.num_steps = num_steps
         self.x_step_p = x_step_p
         self.y_step_p = y_step_p
+        self.sigmoid_gain = sigmoid_gain
         self.sigma = sigma
         self.mu = mu
         self.lambda_ = lambda_

@@ -109,10 +109,10 @@ def initialize_growth_cones(config):
 
     # Non-linear gradient for receptors, starting at 0.99 and decreasing to 0.01
     receptor_gradient = np.linspace(0, 1, gc_count) ** 1.7
-    receptors = 0.01 + receptor_gradient * 0.99
+    receptors = 0.01 + receptor_gradient * 2.99
 
     # This is the inverse of the receptor gradient
-    ligands = 0.01 + receptor_gradient * 0.99
+    ligands = 0.01 + receptor_gradient * 2.99
     ligands = ligands[::-1]
 
     # Create an array of evenly distributed y-positions for the growth cones
