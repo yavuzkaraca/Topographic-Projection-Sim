@@ -33,6 +33,10 @@ Y_STEP_POSSIBILITY = "y_step_possibility"
 SIGMOID_GAIN = "sigmoid_gain"
 SIGMA = "sigma"
 FORCE = "force"
+FORWARD_SIG = "forward_sig"
+REVERSE_SIG = "reverse_sig"
+FF_INTER = "ff_inter"
+FT_INTER = "ft_inter"
 
 # Adaptation
 ADAPTATION_ENABLED = "adaptation_enabled"
@@ -57,6 +61,10 @@ CONTINUOUS_CONFIG = {
     SIGMOID_GAIN: 8,
     SIGMA: 0.12,
     FORCE: False,
+    FORWARD_SIG: True,
+    REVERSE_SIG: True,
+    FF_INTER: True,
+    FT_INTER: True,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.006,  # 0.006
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
@@ -79,6 +87,10 @@ STRIPE_ASSAY_CONFIG = {
     SIGMOID_GAIN: 8,
     SIGMA: 0.12,
     FORCE: False,
+    FORWARD_SIG: True,
+    REVERSE_SIG: True,
+    FF_INTER: True,
+    FT_INTER: True,
     ADAPTATION_ENABLED: False,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
@@ -101,6 +113,10 @@ WEDGES_CONFIG = {
     SIGMOID_GAIN: 8,
     SIGMA: 0.12,
     FORCE: False,
+    FORWARD_SIG: True,
+    REVERSE_SIG: True,
+    FF_INTER: True,
+    FT_INTER: True,
     ADAPTATION_ENABLED: False,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
@@ -123,6 +139,10 @@ GAP_ASSAY_CONFIG = {
     SIGMOID_GAIN: 8,
     SIGMA: 0.12,
     FORCE: False,
+    FORWARD_SIG: True,
+    REVERSE_SIG: True,
+    FF_INTER: True,
+    FT_INTER: True,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.006
     ADAPTATION_LAMBDA: 0.002,  # 0.0045

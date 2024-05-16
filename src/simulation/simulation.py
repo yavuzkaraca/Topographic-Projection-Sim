@@ -104,7 +104,7 @@ class Simulation:
     """
 
     def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigmoid_gain,
-                 sigma, force, mu, lambda_, history_length):
+                 sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter, mu, lambda_, history_length):
         """
         Initialize the Simulation class with necessary parameters.
 
@@ -120,6 +120,10 @@ class Simulation:
         :param lambda_: Parameter for resetting force calculation.
         :param history_length: Number of historical steps to consider for adaptation.
         """
+        self.forward_sig = forward_sig
+        self.reverse_sig = reverse_sig
+        self.ff_inter = ff_inter
+        self.ft_inter = ft_inter
         self.substrate = substrate
         self.growth_cones = growth_cones
         self.adaptation = adaptation
