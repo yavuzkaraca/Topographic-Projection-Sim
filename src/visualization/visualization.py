@@ -191,12 +191,12 @@ def visualize_growth_cones(gcs):
     plt.plot(ligands, 'o-', color='red', label='Ligands')
     plt.xlabel('Growth Cone ID (sorted along %n-t Axis of Retina)')
     plt.ylabel('Signal Value')
-    plt.title('GCs after Mutation')
+    plt.title('GCs')
     plt.legend()
     plt.show()
 
 
-def visualize_colored_result(result, substrate, mutated_indexes):
+def visualize_projection_disjunctsets(result, substrate, mutated_indexes):
     """
     Generate a plot for the projection mapping of non-mutated and mutated growth cones.
 

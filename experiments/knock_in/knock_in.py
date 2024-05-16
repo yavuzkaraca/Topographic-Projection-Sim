@@ -27,7 +27,7 @@ def knock_in():
     result = simulation.run()
 
     vz.visualize_results_on_substrate(result, simulation.substrate)
-    vz.visualize_colored_result(result, simulation.substrate, mutated_gc_indexes)
+    vz.visualize_projection_disjunctsets(result, simulation.substrate, mutated_gc_indexes)
 
 
 #  Config

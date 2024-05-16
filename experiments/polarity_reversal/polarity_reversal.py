@@ -11,13 +11,14 @@ def polarity_reversal():
     # Fist Phase
     simulation = object_factory.build_simulation(POLARITY_REV_1_CONFIG)
     gc_first = simulation.growth_cones[0:25]
+    length = len(gc_first)
     vz.visualize_growth_cones(gc_first)
 
     simulation.growth_cones = gc_first
     result1 = simulation.run()
 
     vz.visualize_results_on_substrate(result1, simulation.substrate)
-    vz.visualize_colored_result(result1, simulation.substrate, [])
+    vz.visualize_projection_disjunctsets(result1, simulation.substrate, np.arange(length - 1 / 2))
 
     # Stabilize gc_first
     for gc in gc_first:
@@ -33,7 +34,7 @@ def polarity_reversal():
     result2 = simulation.run()
 
     vz.visualize_results_on_substrate(result2, simulation.substrate)
-    vz.visualize_colored_result(result2, simulation.substrate, [])
+    vz.visualize_projection_disjunctsets(result2, simulation.substrate, np.arange(length - 1 / 2))
 
 
 #  Config
