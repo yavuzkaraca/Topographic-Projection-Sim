@@ -81,24 +81,24 @@ def linear_regression(ax, x_values, y_values):
     ax.plot(x_values, regression_line, 'r-', label=f'Linear Regression R^2={r_value ** 2:.2f}')
 
 
-def curve_fitting(x_values, y_values, color='b-'):
+def curve_fitting(ax, x_values, y_values, color='b-'):
     nm_coeffs = np.polyfit(x_values, y_values, 3)
     nm_poly = np.poly1d(nm_coeffs)
     nm_x_new = np.linspace(min(x_values), max(y_values), 300)
     nm_y_new = nm_poly(nm_x_new)
-    plt.plot(nm_x_new, nm_y_new, color)
+    ax.plot(nm_x_new, nm_y_new, color)
 
 
 def plot_projection_mapping(ax, result, substrate):
     """
     Plot the projection mapping on the provided axes.
     """
-    x_values, y_values = result.get_projection_id()
+    x_values, y_values = result.get_projection_signature()
     max_val = len(y_values) - 1
     x_values_normalized = percentualize_values(x_values, substrate.offset, substrate.cols - substrate.offset)
     y_values_normalized = percentualize_values(y_values, 0, max_val)
     ax.plot(x_values_normalized, y_values_normalized, '*', color='blue')
-    curve_fitting(x_values_normalized, y_values_normalized)
+    curve_fitting(ax, x_values_normalized, y_values_normalized)
 
 
 def plot_disjunct_projection_sets(ax, result, substrate, marked_indexes):
@@ -116,17 +116,14 @@ def plot_disjunct_projection_sets(ax, result, substrate, marked_indexes):
     second_group_x = [x for i, x in enumerate(x_values_normalized) if i not in marked_indexes]
     second_group_y = [y for i, y in enumerate(y_values_normalized) if i not in marked_indexes]
 
-    ax.scatter(first_group_x, first_group_y, color='blue')
-    ax.scatter(second_group_x, second_group_y, color='red')
-
     # Cubic polynomial fitting for non-mutated data
     if first_group_x and first_group_y:
-        curve_fitting(first_group_x, first_group_y)
+        curve_fitting(ax, first_group_x, first_group_y)
         ax.plot(first_group_x, first_group_y, 'b*', label='Wildtype Growth Cones')
 
     # Cubic polynomial fitting for mutated data
     if second_group_x and second_group_y:
-        curve_fitting(second_group_x, second_group_y, 'r-')
+        curve_fitting(ax, second_group_x, second_group_y, 'r-')
         ax.plot(second_group_x, second_group_y, 'r*', label='Mutated Growth Cones')
 
 

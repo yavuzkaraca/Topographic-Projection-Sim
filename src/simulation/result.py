@@ -28,7 +28,7 @@ class Result:
         self.gcs = gcs
         self.frame = substrate.rows, substrate.cols
 
-    def get_projection_repr(self):
+    def get_projection_ypos(self):
         """
         Generates a projection mapping representation based on the initial positions of growth cones.
         """
@@ -46,6 +46,15 @@ class Result:
 
         return x_values, y_values
 
+    def get_projection_signature(self):
+        """
+        Generates a projection mapping representation based on the ids of growth cones.
+        """
+        x_values = np.array([gc.pos_current[0] for gc in self.gcs])
+        y_values = np.array([gc.id / 2 for gc in self.gcs])
+
+        return x_values, y_values
+
     def get_final_positioning(self):
         """
         Retrieves the final positions of the growth cones after the simulation.
@@ -59,5 +68,5 @@ class Result:
         """
         Returns a string representation of the projection representation.
         """
-        x_values, y_values = self.get_projection_repr()
+        x_values, y_values = self.get_projection_ypos()
         return x_values.__str__(), y_values.__str__()
