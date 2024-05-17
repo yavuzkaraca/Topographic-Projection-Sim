@@ -1,161 +1,107 @@
-# visualization.py
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import linregress
+from scipy.optimize import curve_fit
 
 
 def create_blended_colors(ligands, receptors):
     """
     Create blended colors for ligands and receptors with custom adjustments.
+    Initializes a white background and adjusts the color channels based on ligand and receptor values.
+
+    :param ligands: Array of ligand values.
+    :param receptors: Array of receptor values.
+    :return: Array of blended colors.
     """
+    # Initialize with a white background
     blended_colors = np.ones(ligands.shape + (3,))
-    blended_colors[..., 0] -= ligands * 0.1 + receptors * 0.9
-    blended_colors[..., 1] -= ligands * 0.9 + receptors * 0.6
-    blended_colors[..., 2] -= ligands * 0.6 + receptors * 0.1
+
+    # Custom color adjustments for ligands and receptors
+    blended_colors[..., 0] -= ligands * 0.1 + receptors * 0.9  # Adjust Red channel
+    blended_colors[..., 1] -= ligands * 0.9 + receptors * 0.6  # Adjust Green channel
+    blended_colors[..., 2] -= ligands * 0.6 + receptors * 0.1  # Adjust Blue channel
+
     return blended_colors
 
 
-def visualize_substrate_combined(ax, substrate):
+def visualize_substrate(substrate):
     """
-    Core visualization for the substrate combined.
-    """
-    blended_colors = create_blended_colors(substrate.ligands, substrate.receptors)
-    ax.imshow(blended_colors)
-    ax.set_ylim(ax.get_ylim()[::-1])  # Flip the y-axis to have zero at the bottom
-    return ax
+    Visualize the substrate with ligands and receptors.
+    Uses the create_blended_colors function to generate the color representation.
 
-
-def visualize_substrate_separately(axes, substrate):
-    """
-    Core visualization for ligands and receptors separately.
-    """
-    ligand_colors = create_blended_colors(substrate.ligands, np.zeros_like(substrate.ligands))
-    receptor_colors = create_blended_colors(np.zeros_like(substrate.receptors), substrate.receptors)
-    axes[0].imshow(ligand_colors)
-    axes[0].set_ylim(axes[0].get_ylim()[::-1])  # Flip the y-axis
-    axes[1].imshow(receptor_colors)
-    axes[1].set_ylim(axes[1].get_ylim()[::-1])  # Flip the y-axis
-    return axes
-
-
-def plot_tectum_end_positions(ax, result):
-    """
-    Plot tectum end-positions on the provided axes.
-    """
-    x_values, y_values = result.get_final_positioning()
-    ax.plot(x_values, y_values, '*', color='orange', label='Tectum End-positions')
-
-
-def visualize_results_on_substrate(ax, result, substrate):
-    """
-    Core function to visualize tectum end-positions on a color-mixed substrate.
-
-    :param ax: The matplotlib axis to plot on.
-    :param result: Result object containing tectum end-positions.
     :param substrate: The Substrate object containing ligand and receptor values.
     """
+    fig, ax = plt.subplots(figsize=(8, 8))
     blended_colors = create_blended_colors(substrate.ligands, substrate.receptors)
-    ax.imshow(blended_colors)
 
-    # Plot tectum end-positions over the substrate
-    plot_tectum_end_positions(ax,result)
+    # Display the color-mixed substrate
+    ax.imshow(blended_colors)
+    ax.set_title("Combined Ligands and Receptors")
 
     # Drawing the border to represent the offset
     offset = substrate.offset
     ax.add_patch(plt.Rectangle((offset - 0.5, offset - 0.5), substrate.cols - 2 * offset, substrate.rows - 2 * offset,
                                fill=False, edgecolor='black', lw=2))
-    ax.set_ylim(ax.get_ylim()[::-1])  # Flip the y-axis to have zero at the bottom
-    return ax
 
+    # Flip the y-axis to have zero at the bottom
+    ax.set_ylim(ax.get_ylim()[::-1])
 
-def percentualize_values(values, min_val, max_val):
-    """
-    Normalize the given values to a range between 0 and 100.
-    """
-    return (values - min_val) / (max_val - min_val) * 100
-
-
-def linear_regression(ax, x_values, y_values):
-    slope, intercept, r_value, _, _ = linregress(x_values, y_values)
-    regression_line = slope * x_values + intercept
-    ax.plot(x_values, regression_line, 'r-', label=f'Linear Regression R^2={r_value ** 2:.2f}')
-
-
-def curve_fitting(ax, x_values, y_values, color='b-'):
-    nm_coeffs = np.polyfit(x_values, y_values, 3)
-    nm_poly = np.poly1d(nm_coeffs)
-    nm_x_new = np.linspace(min(x_values), max(y_values), 300)
-    nm_y_new = nm_poly(nm_x_new)
-    ax.plot(nm_x_new, nm_y_new, color)
-
-
-def plot_projection_mapping(ax, result, substrate):
-    """
-    Plot the projection mapping on the provided axes.
-    """
-    x_values, y_values = result.get_projection_signature()
-    max_val = len(y_values) - 1
-    x_values_normalized = percentualize_values(x_values, substrate.offset, substrate.cols - substrate.offset)
-    y_values_normalized = percentualize_values(y_values, 0, max_val)
-    ax.plot(x_values_normalized, y_values_normalized, '*', color='blue')
-    curve_fitting(ax, x_values_normalized, y_values_normalized)
-
-
-def plot_disjunct_projection_sets(ax, result, substrate, marked_indexes):
-    """
-    Plot projection mapping of two data sets differentiated by indexes.
-    """
-    x_values, y_values = result.get_projection_id()
-    x_values_normalized = percentualize_values(x_values, substrate.offset, substrate.cols - substrate.offset)
-    max_val = len(y_values) - 1
-    y_values_normalized = percentualize_values(y_values, 0, max_val)
-
-    # Segment data into mutated and non-mutated
-    first_group_x = [x for i, x in enumerate(x_values_normalized) if i in marked_indexes]
-    first_group_y = [y for i, y in enumerate(y_values_normalized) if i not in marked_indexes]
-    second_group_x = [x for i, x in enumerate(x_values_normalized) if i not in marked_indexes]
-    second_group_y = [y for i, y in enumerate(y_values_normalized) if i not in marked_indexes]
-
-    # Cubic polynomial fitting for non-mutated data
-    if first_group_x and first_group_y:
-        curve_fitting(ax, first_group_x, first_group_y)
-        ax.plot(first_group_x, first_group_y, 'b*', label='Wildtype Growth Cones')
-
-    # Cubic polynomial fitting for mutated data
-    if second_group_x and second_group_y:
-        curve_fitting(ax, second_group_x, second_group_y, 'r-')
-        ax.plot(second_group_x, second_group_y, 'r*', label='Mutated Growth Cones')
-
-
-def visualize_growth_cones(gcs):
-    receptors = np.array([gc.receptor_current for gc in gcs])
-    ligands = np.array([gc.ligand_current for gc in gcs])
-
-    plt.figure(figsize=(10, 6))
-    plt.plot(receptors, 'o-', label='Receptors')
-    plt.plot(ligands, 'o-', color='red', label='Ligands')
-    plt.xlabel('Growth Cone ID (sorted along %n-t Axis of Retina)')
-    plt.ylabel('Signal Value')
-    plt.title('GCs')
-    plt.legend()
     plt.show()
 
 
-def visualize_trajectories(growth_cones, trajectory_freq=50):
+def visualize_substrate_separately(substrate):
     """
-    Visualize the trajectories of growth cones.
+    Visualize the ligands and receptors in separate subplots with custom colors.
+    Applies color blending to ligands and receptors separately.
 
-    :param growth_cones: List of GrowthCone objects.
+    :param substrate: The Substrate object containing ligand and receptor values.
     """
-    plt.figure()
-    for growth_cone in growth_cones:
-        trajectory_x, trajectory_y = zip(*growth_cone.history.position[::trajectory_freq])
-        plt.plot(trajectory_x, trajectory_y, label=f'Growth Cone {growth_cones.index(growth_cone)}')
+    fig, axes = plt.subplots(1, 2, figsize=(10, 5))
 
-    plt.xlabel('X Coordinate')
-    plt.ylabel('Y Coordinate')
-    plt.title('Growth Cone Trajectories')
-    plt.legend()
+    # Create colored images for ligands and receptors separately
+    ligand_colors = create_blended_colors(substrate.ligands, np.zeros_like(substrate.ligands))
+    receptor_colors = create_blended_colors(np.zeros_like(substrate.receptors), substrate.receptors)
+
+    # Display ligands with custom colors
+    axes[0].imshow(ligand_colors)
+    axes[0].set_title("Ligands")
+    axes[0].set_ylim(axes[0].get_ylim()[::-1])  # Flip the y-axis
+
+    # Display receptors with custom colors
+    axes[1].imshow(receptor_colors)
+    axes[1].set_title("Receptors")
+    axes[1].set_ylim(axes[1].get_ylim()[::-1])  # Flip the y-axis
+
+    plt.show()
+
+
+def visualize_results_on_substrate(result, substrate):
+    """
+    Visualize tectum end-positions on top of the substrate.
+    Overlays the results of tectum end-positions onto the color-mixed substrate.
+
+    :param result: Result object containing tectum end-positions.
+    :param substrate: The Substrate object containing ligand and receptor values.
+    """
+    fig, ax = plt.subplots(figsize=(8, 8))
+    blended_colors = create_blended_colors(substrate.ligands, substrate.receptors)
+
+    # Display the color-mixed substrate
+    ax.imshow(blended_colors)
+
+    # Plot tectum end-positions over the substrate
+    x_values, y_values = result.get_final_positioning()
+    ax.plot(x_values, y_values, '*', color='orange', label='Tectum End-positions')
+    ax.set_title("Tectum End-positions on Color-Mixed Substrate")
+    ax.legend()
+
+    # Drawing the border to represent the offset
+    offset = substrate.offset
+    ax.add_patch(plt.Rectangle((offset - 0.5, offset - 0.5), substrate.cols - 2 * offset, substrate.rows - 2 * offset,
+                               fill=False, edgecolor='black', lw=2))
+    # Flip the y-axis to have zero at the bottom
+    ax.set_ylim(ax.get_ylim()[::-1])
+
     plt.show()
 
 
