@@ -18,7 +18,7 @@ def polarity_reversal():
     result1 = simulation.run()
 
     vz.visualize_results_on_substrate(result1, simulation.substrate)
-    vz.visualize_projection(result1, simulation.substrate, "First Wave of Growth Cones")
+    vz.visualize_projection(result1, simulation.substrate, "First Wave of Growth Cones", True)
 
     # Stabilize gc_first
     for gc in gc_first:

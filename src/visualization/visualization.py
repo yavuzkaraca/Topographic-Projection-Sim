@@ -196,20 +196,27 @@ def visualize_growth_cones(gcs):
     plt.show()
 
 
-def visualize_projection(result, substrate, label="Growth Cones"):
+def visualize_projection(result, substrate, label="Growth Cones", halved=False):
     """
     Generate a plot for the projection mapping of growth cones.
 
+    :param halved:
     :param label: Label for the data plotted, defaulting to "Growth Cones".
     :param substrate: The Substrate object containing dimensions for normalization.
     :param result: Result object containing growth cone positions and details.
     """
-    plt.figure(figsize=(8, 8))  # Direct creation of a figure with specified size
+    plt.figure(figsize=(10, 10))  # Direct creation of a figure with specified size
 
     # Projection mapping data and normalization
     x_values, y_values = result.get_projection_id()
+
+    if halved:
+        x_values, y_values = result.get_projection_halved()
+
     x_values_normalized = normalize_values(x_values, substrate.offset, substrate.cols - substrate.offset)
-    y_values_normalized = normalize_values(y_values, 0, 49)
+
+    max_val = len(y_values) - 1
+    y_values_normalized = normalize_values(y_values, 0, max_val)
 
     # Cubic polynomial fitting for the data
     coeffs = np.polyfit(x_values_normalized, y_values_normalized, 3)
@@ -245,7 +252,8 @@ def visualize_projection_disjunctsets(result, substrate, mutated_indexes,
     # Projection mapping data and normalization
     x_values, y_values = result.get_projection_id()
     x_values_normalized = normalize_values(x_values, substrate.offset, substrate.cols - substrate.offset)
-    y_values_normalized = normalize_values(y_values, 0, 49)
+    max_val = len(y_values) - 1
+    y_values_normalized = normalize_values(y_values, 0, max_val)
 
     # Segment data into mutated and non-mutated
     mutated_x = [x for i, x in enumerate(x_values_normalized) if i in mutated_indexes]
