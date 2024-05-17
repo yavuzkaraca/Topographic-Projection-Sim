@@ -10,15 +10,15 @@ import numpy as np
 def polarity_reversal():
     # Fist Phase
     simulation = object_factory.build_simulation(POLARITY_REV_1_CONFIG)
-    gc_first = simulation.growth_cones[0:25]
-    length = len(gc_first)
+    gc_len = int(len(simulation.growth_cones) / 2)
+    gc_first = simulation.growth_cones[0:gc_len]
     vz.visualize_growth_cones(gc_first)
 
     simulation.growth_cones = gc_first
     result1 = simulation.run()
 
     vz.visualize_results_on_substrate(result1, simulation.substrate)
-    vz.visualize_projection_disjunctsets(result1, simulation.substrate, np.arange(length - 1 / 2))
+    vz.visualize_projection(result1, simulation.substrate, "First Wave of Growth Cones")
 
     # Stabilize gc_first
     for gc in gc_first:
@@ -26,7 +26,7 @@ def polarity_reversal():
 
     # Second Phase
     simulation = object_factory.build_simulation(POLARITY_REV_2_CONFIG)
-    gc_second = simulation.growth_cones[0:25]
+    gc_second = simulation.growth_cones[0:gc_len]
     gcs = gc_first + gc_second
     vz.visualize_growth_cones(gcs)
 
@@ -34,7 +34,8 @@ def polarity_reversal():
     result2 = simulation.run()
 
     vz.visualize_results_on_substrate(result2, simulation.substrate)
-    vz.visualize_projection_disjunctsets(result2, simulation.substrate, np.arange(length - 1 / 2))
+    vz.visualize_projection_disjunctsets(result2, simulation.substrate, np.arange(gc_len - 1 / 2),
+                                         "First Wave", "Second Wave")
 
 
 #  Config
@@ -43,12 +44,12 @@ POLARITY_REV_1_CONFIG = {
     CUSTOM_FIRST: 0,
     CUSTOM_SECOND: 0,
     ROWS: 3,  # number of rows = max value along y-axis
-    COLS: 56,  # number of cols = max value along x-axis
-    GC_COUNT: 50,
-    GC_SIZE: 5,
+    COLS: 20,  # number of cols = max value along x-axis
+    GC_COUNT: 60,
+    GC_SIZE: 2,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 10000,
-    X_STEP_POSSIBILITY: 0.50,
+    STEP_AMOUNT: 2000,
+    X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_GAIN: 8,
     SIGMA: 0.12,
@@ -68,20 +69,20 @@ POLARITY_REV_2_CONFIG = {
     CUSTOM_FIRST: 0,
     CUSTOM_SECOND: 0,
     ROWS: 3,  # number of rows = max value along y-axis
-    COLS: 56,  # number of cols = max value along x-axis
-    GC_COUNT: 50,
-    GC_SIZE: 5,
+    COLS: 20,  # number of cols = max value along x-axis
+    GC_COUNT: 60,
+    GC_SIZE: 2,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 10000,
+    STEP_AMOUNT: 2000,
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_GAIN: 100,
-    SIGMA: 0.12,
+    SIGMA: 0.001,
     FORCE: False,
     FORWARD_SIG: True,
     REVERSE_SIG: True,
     FF_INTER: True,
-    FT_INTER: True,
+    FT_INTER: False,
     ADAPTATION_ENABLED: False,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
