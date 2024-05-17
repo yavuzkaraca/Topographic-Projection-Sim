@@ -18,8 +18,8 @@ def polarity_reversal():
     simulation.growth_cones = gc_first
     result1 = simulation.run()
 
-    wrapper.visualize_results_on_substrate(result1, simulation.substrate)
-    wrapper.visualize_projection(result1, simulation.substrate)
+    vz.visualize_results_on_substrate(result1, simulation.substrate)
+    vz.visualize_projection(result1, simulation.substrate, "First Wave of Growth Cones", True)
 
     # Stabilize gc_first
     for gc in gc_first:
@@ -34,8 +34,9 @@ def polarity_reversal():
     simulation.growth_cones = gcs
     result2 = simulation.run()
 
-    wrapper.visualize_results_on_substrate(result2, simulation.substrate)
-    wrapper.visualize_projection_disjunctsets(result2, simulation.substrate, np.arange(gc_len - 1 / 2))
+    vz.visualize_results_on_substrate(result2, simulation.substrate)
+    vz.visualize_projection_disjunctsets(result2, simulation.substrate, np.arange(gc_len - 1 / 2),
+                                         "First Wave", "Second Wave")
 
 
 #  Config
@@ -48,7 +49,7 @@ POLARITY_REV_1_CONFIG = {
     GC_COUNT: 60,
     GC_SIZE: 2,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 5000,
+    STEP_AMOUNT: 2000,
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_GAIN: 8,
@@ -73,7 +74,7 @@ POLARITY_REV_2_CONFIG = {
     GC_COUNT: 60,
     GC_SIZE: 2,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 5000,
+    STEP_AMOUNT: 2000,
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_GAIN: 100,

@@ -46,14 +46,15 @@ class Result:
 
         return x_values, y_values
 
-    def get_projection_signature(self):
+    def get_projection_halved(self):
         """
         Generates a projection mapping representation based on the ids of growth cones.
         """
         x_values = np.array([gc.pos_current[0] for gc in self.gcs])
-        y_values = np.array([gc.id / 2 for gc in self.gcs])
+        y_values = np.array([gc.id/2 for gc in self.gcs])
 
         return x_values, y_values
+
 
     def get_final_positioning(self):
         """
