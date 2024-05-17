@@ -158,7 +158,8 @@ class Simulation:
             for gc in self.growth_cones:
                 if self.adaptation:
                     self.adapt_growth_cone(gc)
-                self.step_decision(gc, step_ratio=calculate_step_ratio(step, self.num_steps, self.sigmoid_gain))
+                if not gc.marked:
+                    self.step_decision(gc, step_ratio=calculate_step_ratio(step, self.num_steps, self.sigmoid_gain))
 
         print("\nIteration completed\n")
 
@@ -182,7 +183,8 @@ class Simulation:
         gc.pos_new = clamp_to_boundaries(gc.pos_current, self.substrate, gc.size, xt_direction, yt_direction)
 
         # Calculate new potential
-        new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio)
+        new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio,
+                                            self.forward_sig,self.reverse_sig,self.ff_inter,self.ft_inter)
 
         if self.force:
             # Force gc to take the random generated step, neglecting ques from guidance potential

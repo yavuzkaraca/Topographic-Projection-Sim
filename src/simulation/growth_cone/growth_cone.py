@@ -23,7 +23,7 @@ class GrowthCone:
         __str__(): Provides a string representation of the growth cone instance.
     """
 
-    def __init__(self, position, size, ligand, receptor, id):
+    def __init__(self, position, size, ligand, receptor, id, marked=False):
         """
         Initializes a GrowthCone object with position, size, ligand, and receptor values.
 
@@ -48,6 +48,7 @@ class GrowthCone:
         self.reset_force_receptor = 0  # Resetting forces start at 0
         self.reset_force_ligand = 0
         self.id = id
+        self.marked = marked
 
         self.history = History(self.potential, self.adap_co, self.pos_current, self.ligand_start, self.receptor_start,
                                self.reset_force_receptor, self.reset_force_ligand)

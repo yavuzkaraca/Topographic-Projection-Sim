@@ -5,10 +5,14 @@ Module providing all methods needed for guidance potential calculation
 import math
 
 
-def calculate_potential(gc, gcs, substrate, step):
+def calculate_potential(gc, gcs, substrate, step, forward_on=True, reverse_on=True, ff_inter_on=True, ft_inter_on=True):
     """
     Calculate guidance potential for a growth cone (gc) in a simulation.
 
+    :param forward_on:
+    :param reverse_on:
+    :param ft_inter_on:
+    :param ff_inter_on:
     :param gc: Growth Cone object representing the cone for which potential is calculated.
     :param gcs: List of other growth cones (for fiber-fiber interaction).
     :param substrate: Substrate object (for fiber-target interaction).
@@ -16,10 +20,6 @@ def calculate_potential(gc, gcs, substrate, step):
     :return: The guidance potential as a floating-point number.
     """
     # Settings init TODO: make configurable
-    forward_on = True
-    reverse_on = True
-    ff_inter_on = True
-    ft_inter_on = True
 
     # Calculate the number of receptors and ligands growth cone is exposed to
     ft_ligands, ft_receptors = ft_interaction(gc, substrate)

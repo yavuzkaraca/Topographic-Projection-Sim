@@ -247,7 +247,7 @@ def visualize_projection_disjunctsets(result, substrate, mutated_indexes,
     :param result: Result object containing growth cone positions and details.
     :param mutated_indexes: List of indexes of mutated growth cones to be colored differently.
     """
-    plt.figure(figsize=(8, 8))  # Direct creation of a figure with specified size
+    plt.figure(figsize=(10, 10))  # Direct creation of a figure with specified size
 
     # Projection mapping data and normalization
     x_values, y_values = result.get_projection_id()
@@ -267,8 +267,8 @@ def visualize_projection_disjunctsets(result, substrate, mutated_indexes,
         nm_poly = np.poly1d(nm_coeffs)
         nm_x_new = np.linspace(min(non_mutated_x), max(non_mutated_x), 300)
         nm_y_new = nm_poly(nm_x_new)
-        plt.plot(non_mutated_x, non_mutated_y, 'b*', label=label_first)
-        plt.plot(nm_x_new, nm_y_new, 'b-')
+        plt.plot(non_mutated_x, non_mutated_y, 'r*', label=label_first)
+        plt.plot(nm_x_new, nm_y_new, 'r-')
 
     # Cubic polynomial fitting for mutated data
     if mutated_x and mutated_y:
@@ -276,8 +276,8 @@ def visualize_projection_disjunctsets(result, substrate, mutated_indexes,
         m_poly = np.poly1d(m_coeffs)
         m_x_new = np.linspace(min(mutated_x), max(mutated_x), 300)
         m_y_new = m_poly(m_x_new)
-        plt.plot(mutated_x, mutated_y, 'r*', label=label_second)
-        plt.plot(m_x_new, m_y_new, 'r-')
+        plt.plot(mutated_x, mutated_y, 'b*', label=label_second)
+        plt.plot(m_x_new, m_y_new, 'b-')
 
     plt.title("Projection Mapping")
     plt.xlabel("% a-p Axis of Target")
