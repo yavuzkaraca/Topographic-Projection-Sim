@@ -62,23 +62,26 @@ def calculate_probability(old_prob, new_prob):
     return probability
 
 
-def calculate_step_ratio(step, num_steps, sigmoid_gain):
+def calculate_step_ratio(step, num_steps, sigmoid_gain, push_left=0.9):
     """
-    Calculate the ratio of steps taken by the growth cone relative to total number of steps. Allows fiber-fiber
-    interactions to be activated after a certain number of steps. A larger gain will make the sigmoid steeper.
+    Calculate the ratio of steps taken by the growth cone relative to total number of steps.
+    This function also allows scaling the output range of the sigmoid function.
 
+    :param push_left:
     :param step: The number of steps taken by the growth cone.
     :param num_steps: The total number of steps taken by the growth cone.
-    :return: The ratio of steps taken by the growth cone relative to total number of steps.
+    :param sigmoid_gain: Controls the steepness of the sigmoid function.
+    :return: The sigmoid function output, scaled to the desired range.
     """
 
     def sigmoid(x):
         return 1 / (1 + math.exp(-x))
 
-    # This scales and shifts the step value into the range [-k, k] around the midpoint of num_steps
-    mid_scaled_value = sigmoid_gain * (2 * (step / num_steps) - 1)
+    # Calculate the adjusted input to the sigmoid function
+    adjusted_step = step + push_left * num_steps  # Moves the midpoint left
+    mid_scaled_value = sigmoid_gain * (2 * (adjusted_step / num_steps))
 
-    # Sigmoid output scaled to range up to 4
+    # Calculate the output of the sigmoid function and scale it
     step_ratio = sigmoid(mid_scaled_value)
     return step_ratio
 
@@ -175,7 +178,6 @@ class Simulation:
 
         :param step_ratio:
         :param gc: A Growth Cone instance.
-        :param step: Current step in the simulation.
         """
 
         # Choose a new position
@@ -184,7 +186,7 @@ class Simulation:
 
         # Calculate new potential
         new_potential = calculate_potential(gc, self.growth_cones, self.substrate, step_ratio,
-                                            self.forward_sig,self.reverse_sig,self.ff_inter,self.ft_inter)
+                                            self.forward_sig, self.reverse_sig, self.ff_inter, self.ft_inter)
 
         if self.force:
             # Force gc to take the random generated step, neglecting ques from guidance potential

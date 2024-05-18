@@ -19,7 +19,6 @@ def calculate_potential(gc, gcs, substrate, step, forward_on=True, reverse_on=Tr
     :param step: The iteration step of the simulation (used for fiber-fiber interaction).
     :return: The guidance potential as a floating-point number.
     """
-    # Settings init TODO: make configurable
 
     # Calculate the number of receptors and ligands growth cone is exposed to
     ft_ligands, ft_receptors = ft_interaction(gc, substrate)

@@ -44,15 +44,15 @@ POLARITY_REV_1_CONFIG = {
     CUSTOM_FIRST: 0,
     CUSTOM_SECOND: 0,
     ROWS: 3,  # number of rows = max value along y-axis
-    COLS: 12,  # number of cols = max value along x-axis
+    COLS: 10,  # number of cols = max value along x-axis
     GC_COUNT: 80,
-    GC_SIZE: 1,
+    GC_SIZE: 2,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 4000,
+    STEP_AMOUNT: 1000,
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_GAIN: 8,
-    SIGMA: 0.1,
+    SIGMOID_GAIN: 12,
+    SIGMA: 0.05,
     FORCE: False,
     FORWARD_SIG: True,
     REVERSE_SIG: True,
@@ -69,20 +69,20 @@ POLARITY_REV_2_CONFIG = {
     CUSTOM_FIRST: 0,
     CUSTOM_SECOND: 0,
     ROWS: 3,  # number of rows = max value along y-axis
-    COLS: 12,  # number of cols = max value along x-axis
+    COLS: 10,  # number of cols = max value along x-axis
     GC_COUNT: 80,
-    GC_SIZE: 1,
+    GC_SIZE: 2,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 4000,
+    STEP_AMOUNT: 1000,
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_GAIN: 8,
-    SIGMA: 0.1,
+    SIGMOID_GAIN: 30,
+    SIGMA: 0.05,
     FORCE: False,
     FORWARD_SIG: True,
     REVERSE_SIG: True,
     FF_INTER: True,
-    FT_INTER: False,
+    FT_INTER: True,
     ADAPTATION_ENABLED: False,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
