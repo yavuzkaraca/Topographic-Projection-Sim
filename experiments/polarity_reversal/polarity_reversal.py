@@ -6,38 +6,6 @@ from build import object_factory
 import visualization.visualization as vz
 import numpy as np
 
-
-def polarity_reversal():
-    # Fist Phase
-    simulation = object_factory.build_simulation(POLARITY_REV_1_CONFIG)
-    gc_len = int(len(simulation.growth_cones) / 2)
-    gc_first = simulation.growth_cones[0:gc_len]
-    # vz.visualize_growth_cones(gc_first)
-
-    simulation.growth_cones = gc_first
-    result1 = simulation.run()
-
-    vz.visualize_results_on_substrate(result1, simulation.substrate)
-    vz.visualize_projection(result1, simulation.substrate, "First Wave of Growth Cones", True)
-
-    # Stabilize gc_first
-    for gc in gc_first:
-        gc.marked = True
-
-    # Second Phase
-    simulation = object_factory.build_simulation(POLARITY_REV_2_CONFIG)
-    gc_second = simulation.growth_cones[0:gc_len]
-    gcs = gc_first + gc_second
-    # vz.visualize_growth_cones(gcs)
-
-    simulation.growth_cones = gcs
-    result2 = simulation.run()
-
-    vz.visualize_results_on_substrate(result2, simulation.substrate)
-    vz.visualize_projection_disjunctsets(result2, simulation.substrate, np.arange(gc_len - 1 / 2),
-                                         "Second Wave", "First Wave")
-
-
 #  Config
 POLARITY_REV_1_CONFIG = {
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
@@ -76,7 +44,7 @@ POLARITY_REV_2_CONFIG = {
     STEP_AMOUNT: 1000,
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_GAIN: 30,
+    SIGMOID_GAIN: 100,
     SIGMA: 0.05,
     FORCE: False,
     FORWARD_SIG: True,
@@ -90,8 +58,43 @@ POLARITY_REV_2_CONFIG = {
 }
 
 
+def polarity_reversal_two_halves():
+    """
+    Polarity reversal experiment with two nasal populations as waves that grow onto substrate in sequential order.
+    :return:
+    """
+    # Fist Phase
+    simulation = object_factory.build_simulation(POLARITY_REV_1_CONFIG)
+    gc_len = int(len(simulation.growth_cones) / 2)
+    gc_first = simulation.growth_cones[0:gc_len]
+    # vz.visualize_growth_cones(gc_first)
+
+    simulation.growth_cones = gc_first
+    result1 = simulation.run()
+
+    vz.visualize_results_on_substrate(result1, simulation.substrate)
+    vz.visualize_projection(result1, simulation.substrate, "First Wave of Growth Cones", True)
+
+    # Stabilize gc_first
+    for gc in gc_first:
+        gc.marked = True
+
+    # Second Phase
+    simulation = object_factory.build_simulation(POLARITY_REV_2_CONFIG)
+    gc_second = simulation.growth_cones[0:gc_len]
+    gcs = gc_first + gc_second
+    # vz.visualize_growth_cones(gcs)
+
+    simulation.growth_cones = gcs
+    result2 = simulation.run()
+
+    vz.visualize_results_on_substrate(result2, simulation.substrate)
+    vz.visualize_projection_disjunctsets(result2, simulation.substrate, np.arange(gc_len - 1 / 2),
+                                         "Second Wave", "First Wave")
+
+
 def run():
-    polarity_reversal()
+    polarity_reversal_two_halves()
 
 
 if __name__ == '__main__':

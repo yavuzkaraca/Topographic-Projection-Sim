@@ -62,26 +62,33 @@ def calculate_probability(old_prob, new_prob):
     return probability
 
 
-def calculate_step_ratio(step, num_steps, sigmoid_gain, push_left=0.9):
+def calculate_step_ratio(step, num_steps, sigmoid_gain, sigmoid_push=0.05):
     """
-    Calculate the ratio of steps taken by the growth cone relative to total number of steps.
-    This function also allows scaling the output range of the sigmoid function.
+    Calculate the ratio of steps taken using a sigmoid function, scaled by sigmoid_gain.
 
-    :param push_left:
-    :param step: The number of steps taken by the growth cone.
-    :param num_steps: The total number of steps taken by the growth cone.
-    :param sigmoid_gain: Controls the steepness of the sigmoid function.
-    :return: The sigmoid function output, scaled to the desired range.
+    :param step: The current step number of the growth cone.
+    :param num_steps: The total steps possible for the growth cone.
+    :param sigmoid_gain: The factor that controls the steepness of the sigmoid curve.
+    :param sigmoid_push: The factor to adjust the midpoint of the sigmoid, defaults to 0.1.
+    :return: The scaled output of the sigmoid function, representing the step ratio.
     """
 
     def sigmoid(x):
+        """
+        The sigmoid function that returns a value between 0 and 1.
+
+        :param x: The input value to the sigmoid function.
+        :return: The output of the sigmoid function.
+        """
         return 1 / (1 + math.exp(-x))
 
-    # Calculate the adjusted input to the sigmoid function
-    adjusted_step = step + push_left * num_steps  # Moves the midpoint left
+    # Adjust the step input by adding a fraction of the total steps to shift the sigmoid midpoint to the left
+    adjusted_step = step + sigmoid_push * num_steps
+
+    # Scale the adjusted step value to control the steepness and midpoint of the sigmoid curve
     mid_scaled_value = sigmoid_gain * (2 * (adjusted_step / num_steps))
 
-    # Calculate the output of the sigmoid function and scale it
+    # Compute the sigmoid output using the scaled value and return it
     step_ratio = sigmoid(mid_scaled_value)
     return step_ratio
 
@@ -156,7 +163,7 @@ class Simulation:
 
         for step in range(self.num_steps):
             if step % 1000 == 0:
-                print(step)
+                print(f"Current Step: {step}")
             # Update growth cones
             for gc in self.growth_cones:
                 if self.adaptation:
