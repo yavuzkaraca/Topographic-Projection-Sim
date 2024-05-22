@@ -102,7 +102,7 @@ class Simulation:
         growth_cones: List of Growth Cone instances.
         adaptation: Boolean indicating adaptation feature.
         step_size: Size of step movement for growth cones.
-        num_steps: Total number of steps for the simulation.
+        steps_total: Total number of steps for the simulation.
         x_step_p: Probability of a growth cone stepping in the x-direction.
         y_step_p: Probability of a growth cone stepping in the y-direction.
         sigma: Standard deviation for the potential calculation.
@@ -138,7 +138,7 @@ class Simulation:
         self.growth_cones = growth_cones
         self.adaptation = adaptation
         self.step_size = step_size
-        self.num_steps = num_steps
+        self.steps_total = num_steps
         self.x_step_p = x_step_p
         self.y_step_p = y_step_p
         self.sigmoid_gain = sigmoid_gain
@@ -159,17 +159,18 @@ class Simulation:
             gc.potential = calculate_potential(gc, self.growth_cones, self.substrate, 0)
             print(gc)
 
-        print(f"\nInitialization completed.\nIteration starts, {self.num_steps} many steps will be taken\n")
+        print(f"\nInitialization completed.\nIteration starts, {self.steps_total} many steps will be taken\n")
 
-        for step in range(self.num_steps):
-            if step % 1000 == 0:
-                print(f"Current Step: {step}")
+        for step_current in range(self.steps_total):
+            if step_current % 1000 == 0:
+                print(f"Current Step: {step_current}")
             # Update growth cones
             for gc in self.growth_cones:
                 if self.adaptation:
                     self.adapt_growth_cone(gc)
                 if not gc.marked:
-                    self.step_decision(gc, step_ratio=calculate_step_ratio(step, self.num_steps, self.sigmoid_gain))
+                    self.step_decision(gc, step_ratio=calculate_step_ratio(step_current, self.steps_total,
+                                                                           self.sigmoid_gain))
 
         print("\nIteration completed\n")
 
