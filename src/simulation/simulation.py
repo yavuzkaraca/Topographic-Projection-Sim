@@ -62,14 +62,14 @@ def calculate_probability(old_prob, new_prob):
     return probability
 
 
-def calculate_step_ratio(step, num_steps, sigmoid_gain, sigmoid_push=0.05):
+def calculate_step_ratio(step, num_steps, sigmoid_gain, sigmoid_shift=0.05):
     """
     Calculate the ratio of steps taken using a sigmoid function, scaled by sigmoid_gain.
 
     :param step: The current step number of the growth cone.
     :param num_steps: The total steps possible for the growth cone.
     :param sigmoid_gain: The factor that controls the steepness of the sigmoid curve.
-    :param sigmoid_push: The factor to adjust the midpoint of the sigmoid, defaults to 0.1.
+    :param sigmoid_shift: The factor to adjust the midpoint of the sigmoid; defaults to 0.05.
     :return: The scaled output of the sigmoid function, representing the step ratio.
     """
 
@@ -83,7 +83,7 @@ def calculate_step_ratio(step, num_steps, sigmoid_gain, sigmoid_push=0.05):
         return 1 / (1 + math.exp(-x))
 
     # Adjust the step input by adding a fraction of the total steps to shift the sigmoid midpoint to the left
-    adjusted_step = step + sigmoid_push * num_steps
+    adjusted_step = step + sigmoid_shift * num_steps
 
     # Scale the adjusted step value to control the steepness and midpoint of the sigmoid curve
     mid_scaled_value = sigmoid_gain * (2 * (adjusted_step / num_steps))
