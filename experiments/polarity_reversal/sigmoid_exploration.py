@@ -6,7 +6,9 @@ configs = [
     {'sigmoid_gain': 2, 'sigmoid_shift': 0},
     {'sigmoid_gain': 2, 'sigmoid_shift': 0.3},
     {'sigmoid_gain': 2, 'sigmoid_shift': -0.3},
+    {'sigmoid_gain': 8, 'sigmoid_shift': -0.4},
     {'sigmoid_gain': 10, 'sigmoid_shift': 0}
+
 ]
 
 num_steps = 1000

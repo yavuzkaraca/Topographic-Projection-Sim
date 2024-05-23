@@ -1,7 +1,7 @@
 from build.config import SUBSTRATE_TYPE, CONTINUOUS_GRADIENTS, CUSTOM_FIRST, CUSTOM_SECOND, ROWS, COLS, GC_COUNT, \
     GC_SIZE, STEP_SIZE, \
     STEP_AMOUNT, X_STEP_POSSIBILITY, Y_STEP_POSSIBILITY, SIGMA, FORCE, ADAPTATION_ENABLED, ADAPTATION_MU, \
-    ADAPTATION_LAMBDA, ADAPTATION_HISTORY, SIGMOID_GAIN, FORWARD_SIG, REVERSE_SIG, FF_INTER, FT_INTER
+    ADAPTATION_LAMBDA, ADAPTATION_HISTORY, SIGMOID_GAIN, FORWARD_SIG, REVERSE_SIG, FF_INTER, FT_INTER, SIGMOID_SHIFT
 from build import object_factory
 import visualization.visualization as vz
 import numpy as np
@@ -12,14 +12,15 @@ POLARITY_REV_1_CONFIG = {
     CUSTOM_FIRST: 0,
     CUSTOM_SECOND: 0,
     ROWS: 3,  # number of rows = max value along y-axis
-    COLS: 10,  # number of cols = max value along x-axis
-    GC_COUNT: 80,
-    GC_SIZE: 2,
+    COLS: 16,  # number of cols = max value along x-axis
+    GC_COUNT: 100,
+    GC_SIZE: 3,
     STEP_SIZE: 1,
     STEP_AMOUNT: 1000,
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_GAIN: 12,
+    SIGMOID_GAIN: 8,
+    SIGMOID_SHIFT: 0,
     SIGMA: 0.05,
     FORCE: False,
     FORWARD_SIG: True,
@@ -37,14 +38,68 @@ POLARITY_REV_2_CONFIG = {
     CUSTOM_FIRST: 0,
     CUSTOM_SECOND: 0,
     ROWS: 3,  # number of rows = max value along y-axis
-    COLS: 10,  # number of cols = max value along x-axis
-    GC_COUNT: 80,
-    GC_SIZE: 2,
+    COLS: 16,  # number of cols = max value along x-axis
+    GC_COUNT: 100,
+    GC_SIZE: 3,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 1000,
-    X_STEP_POSSIBILITY: 0.50,
+    STEP_AMOUNT: 3000,
+    X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_GAIN: 200,
+    SIGMOID_GAIN: 12,
+    SIGMOID_SHIFT: 0.05,
+    SIGMA: 0.05,
+    FORCE: False,
+    FORWARD_SIG: True,
+    REVERSE_SIG: True,
+    FF_INTER: True,
+    FT_INTER: True,
+    ADAPTATION_ENABLED: False,
+    ADAPTATION_MU: 0.01,  # 0.01
+    ADAPTATION_LAMBDA: 0.0045,  # 0.0045
+    ADAPTATION_HISTORY: 40  # 30
+}
+
+#  Config
+POLARITY_REV_3_CONFIG = {
+    SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
+    CUSTOM_FIRST: 0,
+    CUSTOM_SECOND: 0,
+    ROWS: 3,  # number of rows = max value along y-axis
+    COLS: 12,  # number of cols = max value along x-axis
+    GC_COUNT: 200,
+    GC_SIZE: 1,
+    STEP_SIZE: 1,
+    STEP_AMOUNT: 2000,
+    X_STEP_POSSIBILITY: 0.55,
+    Y_STEP_POSSIBILITY: 0.50,
+    SIGMOID_GAIN: 8,
+    SIGMOID_SHIFT: 0,
+    SIGMA: 0.05,
+    FORCE: False,
+    FORWARD_SIG: True,
+    REVERSE_SIG: True,
+    FF_INTER: False,
+    FT_INTER: True,
+    ADAPTATION_ENABLED: False,
+    ADAPTATION_MU: 0.01,  # 0.01
+    ADAPTATION_LAMBDA: 0.0045,  # 0.0045
+    ADAPTATION_HISTORY: 40  # 30
+}
+
+POLARITY_REV_4_CONFIG = {
+    SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
+    CUSTOM_FIRST: 0,
+    CUSTOM_SECOND: 0,
+    ROWS: 3,  # number of rows = max value along y-axis
+    COLS: 12,  # number of cols = max value along x-axis
+    GC_COUNT: 200,
+    GC_SIZE: 1,
+    STEP_SIZE: 1,
+    STEP_AMOUNT: 2000,
+    X_STEP_POSSIBILITY: 0.55,
+    Y_STEP_POSSIBILITY: 0.50,
+    SIGMOID_GAIN: 100,
+    SIGMOID_SHIFT: 0,
     SIGMA: 0.05,
     FORCE: False,
     FORWARD_SIG: True,

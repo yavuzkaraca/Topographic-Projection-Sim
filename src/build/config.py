@@ -31,6 +31,7 @@ STEP_AMOUNT = "step_amount"
 X_STEP_POSSIBILITY = "x_step_possibility"
 Y_STEP_POSSIBILITY = "y_step_possibility"
 SIGMOID_GAIN = "sigmoid_gain"
+SIGMOID_SHIFT = "sigmoid_shift"
 SIGMA = "sigma"
 FORCE = "force"
 FORWARD_SIG = "forward_sig"
@@ -59,6 +60,7 @@ CONTINUOUS_CONFIG = {
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_GAIN: 8,
+    SIGMOID_SHIFT: -4,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
@@ -85,6 +87,7 @@ STRIPE_ASSAY_CONFIG = {
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_GAIN: 8,
+    SIGMOID_SHIFT: -4,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
@@ -111,6 +114,7 @@ WEDGES_CONFIG = {
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_GAIN: 8,
+    SIGMOID_SHIFT: -4,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
@@ -137,6 +141,7 @@ GAP_ASSAY_CONFIG = {
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_GAIN: 8,
+    SIGMOID_SHIFT: -4,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,

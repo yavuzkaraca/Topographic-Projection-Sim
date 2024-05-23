@@ -37,6 +37,7 @@ def build_simulation(config):
     x_step_p = config.get(cfg.X_STEP_POSSIBILITY)
     y_step_p = config.get(cfg.Y_STEP_POSSIBILITY)
     sigmoid_gain = config.get(cfg.SIGMOID_GAIN)
+    sigmoid_shift = config.get(cfg.SIGMOID_SHIFT)
     sigma = config.get(cfg.SIGMA)
     force = config.get(cfg.FORCE)
     forward_sig = config.get(cfg.FORWARD_SIG)
@@ -52,7 +53,8 @@ def build_simulation(config):
 
     # Initialize the Simulation object with the new parameters
     simulation = Simulation(substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p,
-                            sigmoid_gain, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter, mu, lambda_, history_length)
+                            sigmoid_gain, sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter,
+                            mu, lambda_,history_length)
     return simulation
 
 
