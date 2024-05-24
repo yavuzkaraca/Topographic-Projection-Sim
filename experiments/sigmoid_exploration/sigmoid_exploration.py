@@ -1,5 +1,5 @@
 from matplotlib import pyplot as plt
-from simulation.simulation import calculate_step_ratio
+from simulation.simulation import calculate_ff_coef
 
 # Configuration for the scenarios
 configs = [
@@ -18,7 +18,7 @@ steps = range(num_steps)  # Creating a range for the step numbers
 plt.figure(figsize=(10, 8))
 for config in configs:
     # Calculating step ratios for each configuration
-    step_ratios = [calculate_step_ratio(step, num_steps, config['sigmoid_gain'], config['sigmoid_shift'])
+    step_ratios = [calculate_ff_coef(step, num_steps, config['sigmoid_gain'], config['sigmoid_shift'])
                    for step in steps]
     plt.plot(steps, step_ratios, label=f"Gain (k): {config['sigmoid_gain']}, Shift: {config['sigmoid_shift']}")
 

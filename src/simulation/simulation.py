@@ -62,36 +62,23 @@ def calculate_probability(old_prob, new_prob):
     return probability
 
 
-def calculate_step_ratio(step, num_steps, sigmoid_gain, sigmoid_shift=0.05):
+def calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid_height=1):
     """
     Calculate the ratio of steps taken using a sigmoid function, scaled by sigmoid_gain.
 
+    :param sigmoid_height:
     :param step: The current step number of the growth cone.
     :param num_steps: The total steps possible for the growth cone.
-    :param sigmoid_gain: The factor that controls the steepness of the sigmoid curve.
+    :param sigmoid_steepness: The factor that controls the steepness of the sigmoid curve.
     :param sigmoid_shift: The factor to adjust the midpoint of the sigmoid; defaults to 0.05.
     :return: The scaled output of the sigmoid function, representing the step ratio.
     """
 
-    def sigmoid(x):
-        """
-        The sigmoid function that returns a value between 0 and 1.
+    step_ratio = step / num_steps
+    sigmoid_adjustment = (step_ratio * sigmoid_shift) ** sigmoid_steepness
+    safe_sigmoid = np.clip(sigmoid_adjustment, a_min=1e-10, a_max=None)  # Prevent log(0) which results in -inf
 
-        :param x: The input value to the sigmoid function.
-        :return: The output of the sigmoid function.
-        """
-        return 1 / (1 + math.exp(-x))
-
-    # Adjust the step input by adding a fraction of the total steps to shift the sigmoid midpoint to the left
-    adjusted_step = step + sigmoid_shift * num_steps
-
-    # Scale the adjusted step value to control the steepness and midpoint of the sigmoid curve
-    mid_scaled_value = sigmoid_gain * (2 * (adjusted_step / num_steps))
-
-    # Compute the sigmoid output using the scaled value and return it
-    step_ratio = sigmoid(mid_scaled_value)
-    return step_ratio
-
+    return (-np.exp(-safe_sigmoid) + 1) * sigmoid_height
 
 class Simulation:
     """
@@ -171,8 +158,8 @@ class Simulation:
                 if self.adaptation:
                     self.adapt_growth_cone(gc)
                 if not gc.marked:
-                    self.step_decision(gc, step_ratio=calculate_step_ratio(step_current, self.steps_total,
-                                                                           self.sigmoid_gain, self.sigmoid_shift))
+                    self.step_decision(gc, step_ratio=calculate_ff_coef(step_current, self.steps_total,
+                                                                        self.sigmoid_gain, self.sigmoid_shift))
 
         print("\nIteration completed\n")
 
