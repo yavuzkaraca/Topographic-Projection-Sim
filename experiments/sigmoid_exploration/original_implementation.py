@@ -19,7 +19,7 @@ def simplified_formula(ii, steps, ffConstant=1):
     return ffConstant * (-np.exp(-ratio) + 1)
 
 
-def calculate_ff_coef(step, num_steps, sigmoid_steepness=3, sigmoid_shift=2, sigmoid_height=2):
+def calculate_ff_coef(step, num_steps, sigmoid_steepness=3, sigmoid_shift=2, sigmoid_height=1):
     """
     Calculate the ratio of steps taken using a sigmoid function, scaled by sigmoid_gain.
 

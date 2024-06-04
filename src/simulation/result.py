@@ -11,7 +11,6 @@ class Result:
 
     Attributes:
         gcs (list): List of Growth Cone objects involved in the simulation.
-        frame (tuple): Tuple representing the dimensions of the substrate grid (rows, columns).
 
     Methods:
         get_projection_repr(): Generates a projection representation based on the initial positions of growth cones.
@@ -51,10 +50,9 @@ class Result:
         Generates a projection mapping representation based on the ids of growth cones.
         """
         x_values = np.array([gc.pos_current[0] for gc in self.gcs])
-        y_values = np.array([gc.id/2 for gc in self.gcs])
+        y_values = np.array([gc.id / 2 for gc in self.gcs])
 
         return x_values, y_values
-
 
     def get_final_positioning(self):
         """

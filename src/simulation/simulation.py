@@ -74,6 +74,7 @@ def calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid
     :return: The scaled output of the sigmoid function, representing the step ratio.
     """
 
+    step += (num_steps * 0.01)
     step_ratio = step / num_steps
     sigmoid_adjustment = (step_ratio * sigmoid_shift) ** sigmoid_steepness
     safe_sigmoid = np.clip(sigmoid_adjustment, a_min=1e-10, a_max=None)  # Prevent log(0) which results in -inf
