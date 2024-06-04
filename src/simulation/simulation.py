@@ -81,6 +81,7 @@ def calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid
 
     return (-np.exp(-safe_sigmoid) + 1) * sigmoid_height
 
+
 class Simulation:
     """
     Class managing the simulation process for growth cones.
@@ -102,7 +103,8 @@ class Simulation:
     """
 
     def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigmoid_gain,
-                 sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter, mu, lambda_, history_length):
+                 sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter, mu, lambda_,
+                 history_length):
         """
         Initialize the Simulation class with necessary parameters.
 

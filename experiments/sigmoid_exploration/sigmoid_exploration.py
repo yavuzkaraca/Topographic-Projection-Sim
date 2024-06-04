@@ -5,7 +5,8 @@ from simulation.simulation import calculate_ff_coef
 configs = [
     {'sigmoid_gain': 4, 'sigmoid_shift': 2},
     {'sigmoid_gain': 2, 'sigmoid_shift': 2},
-    {'sigmoid_gain': 4, 'sigmoid_shift': 100}
+    {'sigmoid_gain': 4, 'sigmoid_shift': 100},
+    {'sigmoid_gain': 3, 'sigmoid_shift': 8}
 ]
 
 num_steps = 1000

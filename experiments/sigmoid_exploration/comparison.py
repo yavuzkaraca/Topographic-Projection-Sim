@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Define the range for the input values
-ratio_values = np.linspace(0, 1, 1000)
+ratio_values = np.linspace(-1, 2, 1000)
 
 # Sigmoid function using the ratio as input
 sigmoid = 1 / (1 + np.exp(-ratio_values))

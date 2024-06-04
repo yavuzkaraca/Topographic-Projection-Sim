@@ -37,6 +37,7 @@ def calculate_ff_coef(step, num_steps, sigmoid_steepness=3, sigmoid_shift=2, sig
 
     return (-np.exp(-safe_sigmoid) + 1) * sigmoid_height
 
+
 def ratio(ii, steps):
     # Adjust to avoid negative values in the logarithm
     ratio = (ii / (steps / shift)) ** steepness
