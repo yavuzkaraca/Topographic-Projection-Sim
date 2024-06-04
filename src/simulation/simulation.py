@@ -1,7 +1,7 @@
 """
 Module for conducting a simulation.
 """
-
+import concurrent.futures
 import math
 import time
 
@@ -137,34 +137,40 @@ class Simulation:
         self.history_length = history_length
         self.force = force
 
+        self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+
     def run(self):
         """
-        Execute the simulation for the defined number of steps.
-
-        :return: Result object containing final growth cone positions and details.
+        Execute the simulation for the defined number of steps using multi-threading.
         """
         for gc in self.growth_cones:
-            # potential initialization
+            # Potential initialization
             gc.potential = calculate_potential(gc, self.growth_cones, self.substrate, 0)
-            print(gc)
 
         print(f"\nInitialization completed.\nIteration starts, {self.steps_total} many steps will be taken\n")
 
         for step_current in range(self.steps_total):
             if step_current % 250 == 0:
                 print(f"Current Step: {step_current}")
-            # Update growth cones
+
+            # Create a list of futures for the thread pool
+            futures = []
             for gc in self.growth_cones:
                 if self.adaptation:
                     self.adapt_growth_cone(gc)
                 if not gc.marked:
-                    self.step_decision(gc, step_ratio=calculate_ff_coef(step_current, self.steps_total,
-                                                                        self.sigmoid_gain, self.sigmoid_shift))
+                    # Submit update tasks to the executor
+                    futures.append(
+                        self.executor.submit(self.step_decision, gc, calculate_ff_coef(step_current, self.steps_total,
+                                                                                       self.sigmoid_gain,
+                                                                                       self.sigmoid_shift)))
+
+            # Wait for all threads to complete before moving to the next step
+            concurrent.futures.wait(futures)
 
         print("\nIteration completed\n")
 
         for gc in self.growth_cones:
-            # Fetch final positions
             print(gc)
 
         return Result(self.growth_cones, self.substrate)
