@@ -51,7 +51,7 @@ CONTINUOUS_CONFIG = {
     CUSTOM_SECOND: 0,
     ROWS: 100,  # number of rows = max value along y-axis
     COLS: 100,  # number of cols = max value along x-axis
-    GC_COUNT: 100,
+    GC_COUNT: 750,
     GC_SIZE: 3,
     STEP_SIZE: 1,
     STEP_AMOUNT: 5000,
