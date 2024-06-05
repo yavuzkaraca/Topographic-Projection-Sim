@@ -22,7 +22,7 @@ pip install numpy matplotlib scipy
 ### Installation
 Clone this repository to your local machine using:
 ```bash
-git clone https://github.com/your-username/Retinotectal-Projection-Sim.git
+git clone https://github.com/yavuzkaraca/Retinotectal-Projection-Sim.git
 ```
 
 ### Configuring Simulations
