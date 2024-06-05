@@ -96,6 +96,26 @@ def ff_interaction(gc1, gcs):
     return sum_ligands, sum_receptors
 
 
+def calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid_height=1):
+    """
+    Calculate the ratio of steps taken using a sigmoid function, scaled by sigmoid_gain.
+
+    :param sigmoid_height:
+    :param step: The current step number of the growth cone.
+    :param num_steps: The total steps possible for the growth cone.
+    :param sigmoid_steepness: The factor that controls the steepness of the sigmoid curve.
+    :param sigmoid_shift: The factor to adjust the midpoint of the sigmoid; defaults to 0.05.
+    :return: The scaled output of the sigmoid function, representing the step ratio.
+    """
+
+    step += (num_steps * 0.01)  # such that with shift = 100 immediate activation
+    step_ratio = step / num_steps
+    sigmoid_adjustment = (step_ratio * sigmoid_shift) ** sigmoid_steepness
+    safe_sigmoid = np.clip(sigmoid_adjustment, a_min=1e-10, a_max=None)  # Prevent log(0) which results in -inf
+
+    return (-np.exp(-safe_sigmoid) + 1) * sigmoid_height
+
+
 def bounding_box(gc_pos, gc_size, substrate):
     """
     Calculate the boundaries of the bounding box for a growth cone (used in fiber-target interaction).

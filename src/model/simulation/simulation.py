@@ -3,10 +3,9 @@ Module for conducting a model.
 """
 import time
 from model.result import Result
-from model.simulation.potential_calculation import calculate_potential
+from model.simulation.potential_calculation import calculate_potential, calculate_ff_coef
 import random
-from model.simulation.step_decision import clamp_to_boundaries, probabilistic_density, calculate_probability, \
-    calculate_ff_coef
+from model.simulation.step_decision import clamp_to_boundaries, probabilistic_density, calculate_probability
 
 
 class Simulation:
