@@ -1,5 +1,5 @@
 import unittest
-from simulation.growth_cone import History
+from model.growth_cone import History
 
 
 class TestHistory(unittest.TestCase):
