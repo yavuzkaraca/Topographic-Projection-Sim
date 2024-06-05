@@ -1,32 +1,32 @@
 """
-Module for setting up and initializing a growth cone simulation.
+Module for setting up and initializing a growth cone model.
 """
 
 import numpy as np
 from matplotlib import pyplot as plt
 
 from build import config as cfg
-from simulation.growth_cone.growth_cone import GrowthCone  # Importing the Growth Cone class
-from simulation.simulation import Simulation  # Importing the Simulation class
+from model.growth_cone.growth_cone import GrowthCone  # Importing the Growth Cone class
+from model.simulation.simulation import Simulation  # Importing the Simulation class
 # Importing the Substrate classes
-from simulation.substrate.substrate import (ContinuousGradientSubstrate, WedgeSubstrate,
-                                            StripeFwdSubstrate, StripeRewSubstrate, StripeDuoSubstrate,
-                                            GapSubstrateRR, GapSubstrateRB, GapSubstrateBR, GapSubstrateBB,
-                                            GapSubstrateInverted)
+from model.substrate.substrate import (ContinuousGradientSubstrate, WedgeSubstrate,
+                                       StripeFwdSubstrate, StripeRewSubstrate, StripeDuoSubstrate,
+                                       GapSubstrateRR, GapSubstrateRB, GapSubstrateBR, GapSubstrateBB,
+                                       GapSubstrateInverted)
 
 
 def build_default():
     """
-    Build a default simulation using the default configuration settings.
+    Build a default model using the default configuration settings.
     """
     return build_simulation(cfg.default_config)
 
 
 def build_simulation(config):
     """
-    Build a simulation instance using the provided configuration.
+    Build a model instance using the provided configuration.
 
-    :param config: Configuration dictionary with simulation settings.
+    :param config: Configuration dictionary with model settings.
     :return: A Simulation object initialized with the provided settings.
     """
     # Extract attributes from the configuration
@@ -36,7 +36,7 @@ def build_simulation(config):
     num_steps = config.get(cfg.STEP_AMOUNT)
     x_step_p = config.get(cfg.X_STEP_POSSIBILITY)
     y_step_p = config.get(cfg.Y_STEP_POSSIBILITY)
-    sigmoid_gain = config.get(cfg.SIGMOID_GAIN)
+    sigmoid_gain = config.get(cfg.SIGMOID_STEEPNESS)
     sigmoid_shift = config.get(cfg.SIGMOID_SHIFT)
     sigma = config.get(cfg.SIGMA)
     force = config.get(cfg.FORCE)
@@ -54,7 +54,7 @@ def build_simulation(config):
     # Initialize the Simulation object with the new parameters
     simulation = Simulation(substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p,
                             sigmoid_gain, sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter,
-                            mu, lambda_,history_length)
+                            mu, lambda_, history_length)
     return simulation
 
 

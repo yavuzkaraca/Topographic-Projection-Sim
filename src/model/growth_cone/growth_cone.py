@@ -3,12 +3,12 @@ Module providing Growth Cone class for growth cone representation.
 """
 import math
 
-from simulation.growth_cone.history import History
+from model.growth_cone.history import History
 
 
 class GrowthCone:
     """
-    Represents a growth cone in the simulation environment.
+    Represents a growth cone in the model environment.
 
     Attributes:
         pos_start (tuple): Initial position of the growth cone.

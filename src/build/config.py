@@ -1,5 +1,5 @@
 """
-Module providing configuration settings for a retinotectal projection simulation.
+Module providing configuration settings for a retinotectal projection model.
 """
 
 # Substrate Types
@@ -30,7 +30,7 @@ STEP_SIZE = "step_size"
 STEP_AMOUNT = "step_amount"
 X_STEP_POSSIBILITY = "x_step_possibility"
 Y_STEP_POSSIBILITY = "y_step_possibility"
-SIGMOID_GAIN = "sigmoid_gain"
+SIGMOID_STEEPNESS = "sigmoid_gain"
 SIGMOID_SHIFT = "sigmoid_shift"
 SIGMA = "sigma"
 FORCE = "force"
@@ -53,13 +53,13 @@ CONTINUOUS_CONFIG = {
     CUSTOM_SECOND: 0,
     ROWS: 100,  # number of rows = max value along y-axis
     COLS: 100,  # number of cols = max value along x-axis
-    GC_COUNT: 300,
+    GC_COUNT: 100,
     GC_SIZE: 3,
     STEP_SIZE: 1,
     STEP_AMOUNT: 5000,
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_GAIN: 4,
+    SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
     SIGMA: 0.12,
     FORCE: False,
@@ -86,7 +86,7 @@ STRIPE_ASSAY_CONFIG = {
     STEP_AMOUNT: 5000,
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_GAIN: 4,
+    SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
     SIGMA: 0.12,
     FORCE: False,
@@ -113,7 +113,7 @@ WEDGES_CONFIG = {
     STEP_AMOUNT: 20000,
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_GAIN: 4,
+    SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
     SIGMA: 0.12,
     FORCE: False,
@@ -140,7 +140,7 @@ GAP_ASSAY_CONFIG = {
     STEP_AMOUNT: 15000,  # 8000
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_GAIN: 4,
+    SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
     SIGMA: 0.12,
     FORCE: False,

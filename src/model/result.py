@@ -1,5 +1,5 @@
 """
-Module providing Result class for result representation of a simulation.
+Module providing Result class for result representation of a model.
 """
 
 import numpy as np
@@ -7,10 +7,10 @@ import numpy as np
 
 class Result:
     """
-    Represents the results of a growth cone simulation.
+    Represents the results of a growth cone model.
 
     Attributes:
-        gcs (list): List of Growth Cone objects involved in the simulation.
+        gcs (list): List of Growth Cone objects involved in the model.
 
     Methods:
         get_projection_repr(): Generates a projection representation based on the initial positions of growth cones.
@@ -21,8 +21,8 @@ class Result:
         """
         Initializes a Result object with growth cones and substrate information.
 
-        :param gcs: List of Growth Cone objects participating in the simulation.
-        :param substrate: Substrate object providing the simulation environment.
+        :param gcs: List of Growth Cone objects participating in the model.
+        :param substrate: Substrate object providing the model environment.
         """
         self.gcs = gcs
         self.frame = substrate.rows, substrate.cols
@@ -56,7 +56,7 @@ class Result:
 
     def get_final_positioning(self):
         """
-        Retrieves the final positions of the growth cones after the simulation.
+        Retrieves the final positions of the growth cones after the model.
         """
         x_values = np.array([gc.pos_current[0] for gc in self.gcs])
         y_values = np.array([gc.pos_current[1] for gc in self.gcs])

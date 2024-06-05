@@ -7,7 +7,7 @@ import math
 
 def calculate_potential(gc, gcs, substrate, step, forward_on=True, reverse_on=True, ff_inter_on=True, ft_inter_on=True):
     """
-    Calculate guidance potential for a growth cone (gc) in a simulation.
+    Calculate guidance potential for a growth cone (gc) in a model.
 
     :param forward_on:
     :param reverse_on:
@@ -16,7 +16,7 @@ def calculate_potential(gc, gcs, substrate, step, forward_on=True, reverse_on=Tr
     :param gc: Growth Cone object representing the cone for which potential is calculated.
     :param gcs: List of other growth cones (for fiber-fiber interaction).
     :param substrate: Substrate object (for fiber-target interaction).
-    :param step: The iteration step of the simulation (used for fiber-fiber interaction).
+    :param step: The iteration step of the model (used for fiber-fiber interaction).
     :return: The guidance potential as a floating-point number.
     """
 
