@@ -79,7 +79,7 @@ def polarity_reversal_two_halves():
 
     # Stabilize gc_first
     for gc in gc_first:
-        gc.marked = True
+        gc.freeze = True
 
     # Second Phase
     simulation = object_factory.build_simulation(POLARITY_REV_2_CONFIG)

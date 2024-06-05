@@ -4,6 +4,7 @@ import visualization.visualization as vz
 
 def run():
     simulation = object_factory.build_default()
+    vz.visualize_growth_cones(simulation.growth_cones)
     vz.visualize_substrate(simulation.substrate)
     vz.visualize_substrate_separately(simulation.substrate)
 

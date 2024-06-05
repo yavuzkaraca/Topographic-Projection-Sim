@@ -1,5 +1,5 @@
 """
-Module for setting up and initializing a growth cone model.
+Module for setting up all the objects in the model.
 """
 
 import numpy as np
@@ -17,26 +17,25 @@ from model.substrate.substrate import (ContinuousGradientSubstrate, WedgeSubstra
 
 def build_default():
     """
-    Build a default model using the default configuration settings.
+    Build a default model.
     """
     return build_simulation(cfg.default_config)
 
 
 def build_simulation(config):
     """
-    Build a model instance using the provided configuration.
-
-    :param config: Configuration dictionary with model settings.
-    :return: A Simulation object initialized with the provided settings.
+    Build substrate object and growth cone list to then build the simulation instance.
     """
-    # Extract attributes from the configuration
+    # Build other parts
     substrate = build_substrate(config)
     growth_cones = initialize_growth_cones(config)
+
+    # Extract attributes from the configuration
     step_size = config.get(cfg.STEP_SIZE)
     num_steps = config.get(cfg.STEP_AMOUNT)
     x_step_p = config.get(cfg.X_STEP_POSSIBILITY)
     y_step_p = config.get(cfg.Y_STEP_POSSIBILITY)
-    sigmoid_gain = config.get(cfg.SIGMOID_STEEPNESS)
+    sigmoid_steepness = config.get(cfg.SIGMOID_STEEPNESS)
     sigmoid_shift = config.get(cfg.SIGMOID_SHIFT)
     sigma = config.get(cfg.SIGMA)
     force = config.get(cfg.FORCE)
@@ -44,8 +43,6 @@ def build_simulation(config):
     reverse_sig = config.get(cfg.REVERSE_SIG)
     ff_inter = config.get(cfg.FF_INTER)
     ft_inter = config.get(cfg.FT_INTER)
-
-    # Extract adaptation parameters
     adaptation = config.get(cfg.ADAPTATION_ENABLED)
     mu = config.get(cfg.ADAPTATION_MU)
     lambda_ = config.get(cfg.ADAPTATION_LAMBDA)
@@ -53,17 +50,14 @@ def build_simulation(config):
 
     # Initialize the Simulation object with the new parameters
     simulation = Simulation(substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p,
-                            sigmoid_gain, sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter,
+                            sigmoid_steepness, sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter,
                             mu, lambda_, history_length)
     return simulation
 
 
 def build_substrate(config):
     """
-    Build a Substrate instance based on the configuration settings.
-
-    :param config: Configuration dictionary with substrate settings.
-    :return: A Substrate object initialized with the provided settings.
+    Build a Substrate instance.
     """
     # Extract attributes from the configuration
     rows = config.get(cfg.ROWS)
@@ -102,10 +96,7 @@ def build_substrate(config):
 
 def initialize_growth_cones(config):
     """
-    Initialize and configure growth cones based on the provided settings.
-
-    :param config: Configuration dictionary with growth cone settings.
-    :return: A list of initialized Growth Cone objects.
+    Initialize and configure growth cones.
     """
     # Extract parameters from the configuration
     growth_cones = []

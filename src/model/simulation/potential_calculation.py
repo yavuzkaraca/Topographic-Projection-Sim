@@ -4,51 +4,51 @@ Module providing all methods needed for guidance potential calculation
 
 import math
 
+import numpy as np
 
-def calculate_potential(gc, gcs, substrate, step, forward_on=True, reverse_on=True, ff_inter_on=True, ft_inter_on=True):
+
+def calculate_potential(gc, gcs, substrate, ff_coef, forward_on=True, reverse_on=True, ff_inter_on=True,
+                        ft_inter_on=True):
     """
     Calculate guidance potential for a growth cone (gc) in a model.
 
-    :param forward_on:
-    :param reverse_on:
-    :param ft_inter_on:
-    :param ff_inter_on:
     :param gc: Growth Cone object representing the cone for which potential is calculated.
     :param gcs: List of other growth cones (for fiber-fiber interaction).
     :param substrate: Substrate object (for fiber-target interaction).
-    :param step: The iteration step of the model (used for fiber-fiber interaction).
+    :param ff_coef: The iteration of the simulation processed by a sigmoid function (used for fiber-fiber interaction).
     :return: The guidance potential as a floating-point number.
     """
 
-    # Calculate the number of receptors and ligands growth cone is exposed to
-    ft_ligands, ft_receptors = ft_interaction(gc, substrate)
-    ff_ligands, ff_receptors = ff_interaction(gc, gcs)
+    # Initialize interaction values
+    ft_ligands, ft_receptors = (0, 0)
+    ff_ligands, ff_receptors = (0, 0)
 
-    if not ff_inter_on: ff_ligands, ff_receptors = 0, 0
-    if not ft_inter_on: ft_ligands, ft_receptors = 0, 0
+    # Compute interactions only if needed
+    if ft_inter_on:
+        ft_ligands, ft_receptors = ft_interaction(gc, substrate)
+    if ff_inter_on:
+        ff_ligands, ff_receptors = ff_interaction(gc, gcs)
 
-    # Calculate the forward and reverse signals
-    forward_sig = gc.receptor_current * (ft_ligands + gc.ligand_current + (step * ff_ligands))
-    reverse_sig = gc.ligand_current * (ft_receptors + gc.receptor_current + (step * ff_receptors))
+    # Calculate the forward and reverse signals based on flags
+    forward_sig = reverse_sig = 0
+    if forward_on:
+        forward_sig = gc.receptor_current * (ft_ligands + gc.ligand_current + (ff_coef * ff_ligands))
+    if reverse_on:
+        reverse_sig = gc.ligand_current * (ft_receptors + gc.receptor_current + (ff_coef * ff_receptors))
 
-    if not forward_on: forward_sig = 0
-    if not reverse_on: reverse_sig = 0
-
-    # Round
+    # Round and calculate the potential
     forward_sig = float("{:.6f}".format(forward_sig))
     reverse_sig = float("{:.6f}".format(reverse_sig))
 
-    # Magic number 0.0001 is the lowest signal value possible
+    # Return calculated log difference or handle case when both signals are zero
+    if forward_sig == 0 and reverse_sig == 0:
+        return 0  # Both signals zero would lead to log(0), handle this case as zero potential difference
     return abs(math.log(reverse_sig or 0.0001) - math.log(forward_sig or 0.0001))
 
 
 def ft_interaction(gc, substrate):
     """
     Calculate fiber-target interaction between a growth cone and a substrate.
-
-    :param gc: Growth Cone object representing the cone for interaction.
-    :param substrate: Substrate object where the interaction occurs.
-    :return: A tuple containing the sum of ligands and receptors from the substrate area covered
     """
 
     borders = bounding_box(gc.pos_new, gc.size, substrate)
@@ -75,10 +75,6 @@ def ft_interaction(gc, substrate):
 def ff_interaction(gc1, gcs):
     """
     Calculate the fiber-fiber interaction between a growth cone (gc1) and a list of other growth cones (gcs).
-
-    :param gc1: The primary Growth Cone object for which interaction is being calculated.
-    :param gcs: A list of other Growth Cone objects for potential interactions with gc1.
-    :return: A tuple containing the sum of ligands and receptors involved in the ff interaction.
     """
     sum_ligands = 0
     sum_receptors = 0
@@ -100,11 +96,11 @@ def calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid
     """
     Calculate the ratio of steps taken using a sigmoid function, scaled by sigmoid_gain.
 
-    :param sigmoid_height:
+    :param sigmoid_height: The factor to set the strongest point of fiber-fiber interaction.
     :param step: The current step number of the growth cone.
     :param num_steps: The total steps possible for the growth cone.
     :param sigmoid_steepness: The factor that controls the steepness of the sigmoid curve.
-    :param sigmoid_shift: The factor to adjust the midpoint of the sigmoid; defaults to 0.05.
+    :param sigmoid_shift: The factor to adjust the midpoint of the sigmoid; defaults to 0.01.
     :return: The scaled output of the sigmoid function, representing the step ratio.
     """
 
@@ -119,11 +115,6 @@ def calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid
 def bounding_box(gc_pos, gc_size, substrate):
     """
     Calculate the boundaries of the bounding box for a growth cone (used in fiber-target interaction).
-
-    :param gc_pos: position of Growth Cone.
-    :param gc_size: size of Growth Cone.
-    :param substrate: Substrate Object defining the area for interaction.
-    :return: Tuple representing the boundary values of the square matrix (x_min, x_max, y_min, y_max).
     """
     # Calculate the bounds of the bounding box
     x_min = max(0, gc_pos[0] - gc_size)

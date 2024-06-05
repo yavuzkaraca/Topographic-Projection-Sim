@@ -6,22 +6,25 @@ import numpy as np
 
 
 class BaseSubstrate:
-    def __init__(self, rows, cols, offset, min_value, max_value):
+    def __init__(self, rows, cols, offset, custom_first, custom_second):
         """
         Initialize the base Substrate object with common parameters.
 
         :param rows: Number of rows in the substrate grid.
         :param cols: Number of columns in the substrate grid.
         :param offset: Offset value used to calculate the substrate boundaries.
-        :param min_value: Minimum value for substrate initialization.
-        :param max_value: Maximum value for substrate initialization.
-        """
 
+        :param custom_first: Has different roles based on the substrate type
+        WEDGE: small edge length ; STRIPE: - ; GAP: last column of first part
+
+        :param custom_second: Has different roles based on the substrate type
+        WEDGE: big edge length ; STRIPE: stripe width ; GAP: first column of last part
+        """
         self.rows = rows + offset * 2
         self.cols = cols + offset * 2
         self.offset = offset  # is equal to gc_size
-        self.custom_first = min_value  # min_value
-        self.custom_second = max_value  # max_value
+        self.custom_first = custom_first  # min_value
+        self.custom_second = custom_second  # max_value
 
         self.ligands = np.zeros((self.rows, self.cols), dtype=float)
         self.receptors = np.zeros((self.rows, self.cols), dtype=float)
@@ -37,7 +40,6 @@ class BaseSubstrate:
         """
         Return a string representation of the ligand and receptor grids in the substrate.
         """
-
         # Create a string representation of the substrate
         result = "Ligands:\n"
         result += str(self.ligands) + "\n\n"
@@ -178,11 +180,6 @@ class BaseGapSubstrate(BaseSubstrate):
         raise NotImplementedError("Subclasses should implement this method.")
 
     def initialize_gap(self, start_red, end_red):
-        """
-        Initialize the substrate with three different sections, each taking up a third of the total rows.
-        The first third is filled with ligands, the second third is empty, and the third is filled with receptors.
-        """
-
         first_part, second_part = self.parts
 
         # First third: Filled with Signals

@@ -1,28 +1,14 @@
 """
-Module providing Result class for result representation of a model.
+Module providing Result class for result representation.
 """
 
 import numpy as np
 
 
 class Result:
-    """
-    Represents the results of a growth cone model.
-
-    Attributes:
-        gcs (list): List of Growth Cone objects involved in the model.
-
-    Methods:
-        get_projection_repr(): Generates a projection representation based on the initial positions of growth cones.
-        get_final_positioning(): Retrieves the final positions of the growth cones.
-    """
-
     def __init__(self, gcs, substrate):
         """
-        Initializes a Result object with growth cones and substrate information.
-
-        :param gcs: List of Growth Cone objects participating in the model.
-        :param substrate: Substrate object providing the model environment.
+        Initializes a Result object
         """
         self.gcs = gcs
         self.frame = substrate.rows, substrate.cols
@@ -67,5 +53,5 @@ class Result:
         """
         Returns a string representation of the projection representation.
         """
-        x_values, y_values = self.get_projection_ypos()
+        x_values, y_values = self.get_projection_id()
         return x_values.__str__(), y_values.__str__()

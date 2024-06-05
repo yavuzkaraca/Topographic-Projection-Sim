@@ -18,10 +18,8 @@ GAP_INV = "gap_inv"
 SUBSTRATE_TYPE = "substrate_type"
 ROWS = "rows"
 COLS = "cols"
-# small edge length ; - ; last column of first part
-CUSTOM_FIRST = "custom_first"
-# big edge length ; stripe width ; first column of last part
-CUSTOM_SECOND = "custom_second"
+CUSTOM_FIRST = "custom_first"  # WEDGE: small edge length ; STRIPE: - ; GAP: last column of first part
+CUSTOM_SECOND = "custom_second"  # WEDGE: big edge length ; STRIPE: stripe width ; GAP: first column of last part
 
 # Simulation Parameters
 GC_COUNT = "gc_count"

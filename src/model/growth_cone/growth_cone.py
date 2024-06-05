@@ -13,24 +13,19 @@ class GrowthCone:
     Attributes:
         pos_start (tuple): Initial position of the growth cone.
         pos_current (tuple): Center point of the circular modeled growth cone (x, y coordinates).
-        pos_new (tuple): Potential new position for the growth cone (used for step decision).
+        pos_new (tuple): New position proposal (used for step decision).
         size (int): Radius of the growth cone.
-        ligand_current (float): Ligand value associated with the growth cone.
-        receptor_current (float): Receptor value associated with the growth cone.
-        potential (int): Current potential of the growth cone.
-
-    Methods:
-        __str__(): Provides a string representation of the growth cone instance.
+        ligand_current (float): Ligand value of growth cone.
+        receptor_current (float): Receptor value of growth cone.
+        potential (float): Current potential of the growth cone.
     """
 
-    def __init__(self, position, size, ligand, receptor, id, marked=False):
+    def __init__(self, position, size, ligand, receptor, id, freeze=False):
         """
-        Initializes a GrowthCone object with position, size, ligand, and receptor values.
+        Initializes a GrowthCone with parameters defined above.
 
-        :param position: Initial position of the growth cone (x, y coordinates).
-        :param size: Radius of the circular modeled growth cone.
-        :param ligand: Ligand value associated with the growth cone.
-        :param receptor: Receptor value associated with the growth cone.
+        :param id: The unique identifier sorted along n-t axis of retina
+        :param freeze: The toggle to freeze growth cone during simulation
         """
         self.pos_start = position
         self.pos_current = position
@@ -48,7 +43,7 @@ class GrowthCone:
         self.reset_force_receptor = 0  # Resetting forces start at 0
         self.reset_force_ligand = 0
         self.id = id
-        self.marked = marked
+        self.freeze = freeze
 
         self.history = History(self.potential, self.adap_co, self.pos_current, self.ligand_start, self.receptor_start,
                                self.reset_force_receptor, self.reset_force_ligand)
@@ -65,6 +60,9 @@ class GrowthCone:
                 f"Reset Forces: {self.reset_force_ligand}, {self.reset_force_receptor}")
 
     def take_step(self, new_potential):
+        """
+        Actualize growth cone by moving it to its new position
+        """
         self.history.update_potential(new_potential)
         self.history.update_position(self.pos_new)
         self.potential = new_potential
@@ -113,5 +111,8 @@ class GrowthCone:
         self.history.update_receptor(self.receptor_current)
 
     def mutate(self, knock_in):
+        """
+        Mutate the growth cones. Used for knock-in experiment.
+        """
         self.receptor_current += knock_in
         self.ligand_current = 0.35 / self.receptor_current

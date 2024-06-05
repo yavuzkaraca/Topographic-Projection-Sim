@@ -315,6 +315,9 @@ def visualize_trajectories(growth_cones, trajectory_freq=50):
 
 
 def visualize_adaptation(growth_cones):
+    """
+    Used only in adaptation exploration experiment
+    """
     # Create a figure with 2 rows and 2 columns of subplots
     fig, axs = plt.subplots(2, 2, figsize=(12, 10))  # Adjust figsize as needed
 
