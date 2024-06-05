@@ -1,4 +1,4 @@
-# RetinotectalProjection-Simulation
+# Retinotectal-Projection-Sim
 
 ## Overview
 This repository contains a Python-based computational model for simulating retinotectal projections. It builds on the original MATLAB implementation by Fiederling et al., incorporating significant enhancements and extensions for increased flexibility and experimental utility. The model explores the molecular mechanisms of axon guidance, specifically focusing on the Ephrin-A/EphA interaction as described in the 2017 eLife paper by Fiederling et al.
@@ -9,7 +9,6 @@ This repository contains a Python-based computational model for simulating retin
 ## Features
 - **Reimplemented in Python**: Completely rewritten codebase from MATLAB to Python for better accessibility and integration with modern scientific libraries.
 - **Increased Configurability**: Enhanced parameter configurability allows for extensive experimentation and simulation under various conditions.
-- **Expanded Assays Compatibility**: Adapted to work with multiple assays, facilitating a broader range of experimental setups.
 - **Advanced Visualization Tools**: Integrated visualization tools to better observe and analyze the effects of parameter changes and simulation results.
 
 ## Getting Started
@@ -23,14 +22,14 @@ pip install numpy matplotlib scipy
 ### Installation
 Clone this repository to your local machine using:
 ```bash
-git clone https://github.com/your-username/RetinotectalProjection-Simulation.git
+git clone https://github.com/your-username/Retinotectal-Projection-Sim.git
 ```
 
 ### Configuring Simulations
 You can configure the simulation by modifying the configuration dictionary found in the `config.py` file. Navigate to the configuration file using the following path:
 
 ```bash
-cd RetinotectalProjection-Simulation/src/build/
+cd Retinotectal-Projection-Sim/src/build/
 ```
 
 ### Running Simulations
