@@ -73,12 +73,12 @@ CONTINUOUS_CONFIG = {
 
 # Default configuration values
 STRIPE_ASSAY_CONFIG = {
-    SUBSTRATE_TYPE: STRIPE_DUO,
+    SUBSTRATE_TYPE: STRIPE_FWD,
     CUSTOM_FIRST: 1,
-    CUSTOM_SECOND: 12,
+    CUSTOM_SECOND: 10,
     ROWS: 150,  # number of rows = max value along y-axis
     COLS: 150,  # number of cols = max value along x-axis
-    GC_COUNT: 10,
+    GC_COUNT: 20,
     GC_SIZE: 10,
     STEP_SIZE: 2,
     STEP_AMOUNT: 5000,
@@ -129,13 +129,13 @@ WEDGES_CONFIG = {
 GAP_ASSAY_CONFIG = {
     SUBSTRATE_TYPE: GAP_BB,
     CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.2,  # 0.03
+    CUSTOM_SECOND: 0.1,  # 0.03
     ROWS: 96,  # number of rows = max value along y-axis
     COLS: 96,  # number of cols = max value along x-axis
     GC_COUNT: 5,
     GC_SIZE: 5,
     STEP_SIZE: 2,
-    STEP_AMOUNT: 15000,  # 8000
+    STEP_AMOUNT: 8000,  # 8000
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
@@ -147,12 +147,11 @@ GAP_ASSAY_CONFIG = {
     FF_INTER: True,
     FT_INTER: True,
     ADAPTATION_ENABLED: True,
-    ADAPTATION_MU: 0.01,  # 0.006
-    ADAPTATION_LAMBDA: 0.002,  # 0.0045
-    ADAPTATION_HISTORY: 50  # 10
+    ADAPTATION_MU: 0.006,  # 0.006
+    ADAPTATION_LAMBDA: 0.045,  # 0.0045
+    ADAPTATION_HISTORY: 10  # 10
 }
 
 
 # Current configuration settings
-default_config = CONTINUOUS_CONFIG
-
+default_config = STRIPE_ASSAY_CONFIG

@@ -156,7 +156,7 @@ class BaseStripeSubstrate(BaseSubstrate):
 
 class StripeFwdSubstrate(BaseStripeSubstrate):
     def initialize_substrate(self):
-        self.initialize_stripe(True, True)
+        self.initialize_stripe(True, False)
 
 
 class StripeRewSubstrate(BaseStripeSubstrate):
