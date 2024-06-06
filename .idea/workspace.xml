@@ -1,0 +1,969 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="99fc88ca-0382-432a-871e-0fe62bcad875" name="Changes" comment="gitignore reverted" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="deploy" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;yavuzkaraca&quot;
+  }
+}</component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="master" />
+        <option value=".*" />
+        <option value="fynn" />
+      </list>
+    </option>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="7fdb39f3-f9ad-40ed-b573-7617cc139fda" />
+        <option name="url" value="https://github.com/yavuzkaraca/rtpSimulation.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2X2TqvopF1r4nMch89iwsaNADKn" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;ToolWindowTODO.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yavuz Karaca/PycharmProjects/rtpSimulation/experiments/runtime/runtime.png&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation\experiments\polarity_reversal\sigmoid_manipulation" />
+      <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation\src\model\simulation" />
+      <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation\src\simulation" />
+      <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation\experiments\sigmoid_exploration" />
+      <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation\experiments\polarity_reversal\finall" />
+      <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation\experiments\polarity_reversal" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.main">
+    <configuration default="true" type="DjangoTestsConfigurationType">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="TARGET" value="" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <option name="USE_OPTIONS" value="false" />
+      <option name="OPTIONS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="comparison" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rtpSimulation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/sigmoid_exploration" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/sigmoid_exploration/comparison.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="knock_in" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rtpSimulation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/knock_in" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/knock_in/knock_in.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rtpSimulation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="polarity_reversal" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rtpSimulation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/polarity_reversal" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/polarity_reversal/polarity_reversal.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="sigmoid_exploration" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rtpSimulation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/sigmoid_exploration" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/sigmoid_exploration/sigmoid_exploration.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Python.FlaskServer">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docs" factoryName="Docutils task">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="docutils_input_file" value="" />
+      <option name="docutils_output_file" value="" />
+      <option name="docutils_params" value="" />
+      <option name="docutils_task" value="" />
+      <option name="docutils_open_in_browser" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docs" factoryName="Sphinx task">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="docutils_input_file" value="" />
+      <option name="docutils_output_file" value="" />
+      <option name="docutils_params" value="" />
+      <option name="docutils_task" value="" />
+      <option name="docutils_open_in_browser" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="All UnitTests" type="tests" factoryName="Unittests">
+      <module name="rtpSimulation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation\venv\Scripts\python.exe" />
+      <option name="SDK_NAME" value="Python 3.9 (rtpSimulation)" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_pattern" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.knock_in" />
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.sigmoid_exploration" />
+      <item itemvalue="Python.comparison" />
+      <item itemvalue="Python.polarity_reversal" />
+      <item itemvalue="Python tests.All UnitTests" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.polarity_reversal" />
+        <item itemvalue="Python.comparison" />
+        <item itemvalue="Python.sigmoid_exploration" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.knock_in" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="99fc88ca-0382-432a-871e-0fe62bcad875" name="Changes" comment="" />
+      <created>1697826369279</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1697826369279</updated>
+      <workItem from="1697826371941" duration="4610000" />
+      <workItem from="1697831051117" duration="10229000" />
+      <workItem from="1697844793273" duration="1846000" />
+      <workItem from="1697859033382" duration="114000" />
+      <workItem from="1697915668472" duration="9525000" />
+      <workItem from="1697931912075" duration="6921000" />
+      <workItem from="1697939020601" duration="136000" />
+      <workItem from="1698025392273" duration="6522000" />
+      <workItem from="1698080477046" duration="81000" />
+      <workItem from="1698080568637" duration="1422000" />
+      <workItem from="1698230522523" duration="103000" />
+      <workItem from="1698277352401" duration="4314000" />
+      <workItem from="1698319997041" duration="15725000" />
+      <workItem from="1698358272294" duration="760000" />
+      <workItem from="1698498945327" duration="1048000" />
+      <workItem from="1698519615658" duration="548000" />
+      <workItem from="1698534228380" duration="1204000" />
+      <workItem from="1698545314509" duration="4633000" />
+      <workItem from="1699054443197" duration="599000" />
+      <workItem from="1699055250991" duration="626000" />
+      <workItem from="1699192205568" duration="603000" />
+      <workItem from="1699547788566" duration="5348000" />
+      <workItem from="1699715103985" duration="10112000" />
+      <workItem from="1699796677329" duration="5102000" />
+      <workItem from="1699812127365" duration="5232000" />
+      <workItem from="1699822734498" duration="5071000" />
+      <workItem from="1699837348673" duration="1014000" />
+      <workItem from="1699840386878" duration="5499000" />
+      <workItem from="1699882173048" duration="4629000" />
+      <workItem from="1699914930778" duration="658000" />
+      <workItem from="1699917370168" duration="1576000" />
+      <workItem from="1699957306403" duration="2691000" />
+      <workItem from="1700349420405" duration="567000" />
+      <workItem from="1700577824592" duration="6724000" />
+      <workItem from="1700648087251" duration="6323000" />
+      <workItem from="1700749169076" duration="8992000" />
+      <workItem from="1701772638964" duration="8613000" />
+      <workItem from="1702235557604" duration="8338000" />
+      <workItem from="1703999084299" duration="1075000" />
+      <workItem from="1704135234185" duration="6014000" />
+      <workItem from="1704254598615" duration="6158000" />
+      <workItem from="1704263949124" duration="13000" />
+      <workItem from="1704263975321" duration="181000" />
+      <workItem from="1704413549107" duration="4263000" />
+      <workItem from="1704664588785" duration="4174000" />
+      <workItem from="1705240700669" duration="5422000" />
+      <workItem from="1705261637799" duration="10855000" />
+      <workItem from="1705596531928" duration="7944000" />
+      <workItem from="1706457993983" duration="1628000" />
+      <workItem from="1706498123282" duration="1771000" />
+      <workItem from="1706568012970" duration="5665000" />
+      <workItem from="1706980254860" duration="9579000" />
+      <workItem from="1707001695062" duration="83000" />
+      <workItem from="1707008916065" duration="52000" />
+      <workItem from="1707090508928" duration="2773000" />
+      <workItem from="1707231824946" duration="1874000" />
+      <workItem from="1707482494059" duration="6108000" />
+      <workItem from="1707494250877" duration="856000" />
+      <workItem from="1707888803944" duration="7345000" />
+      <workItem from="1711744918505" duration="1047000" />
+      <workItem from="1712097000085" duration="2736000" />
+      <workItem from="1712103947383" duration="8548000" />
+      <workItem from="1712148110341" duration="3869000" />
+      <workItem from="1712197127337" duration="1000" />
+      <workItem from="1712199831398" duration="1239000" />
+      <workItem from="1713908050709" duration="934000" />
+      <workItem from="1714007500262" duration="1522000" />
+      <workItem from="1714335337407" duration="11539000" />
+      <workItem from="1715871545625" duration="2792000" />
+      <workItem from="1715899842609" duration="9227000" />
+      <workItem from="1715909846708" duration="4787000" />
+      <workItem from="1715914772594" duration="2819000" />
+      <workItem from="1715948006966" duration="6855000" />
+      <workItem from="1715955095410" duration="5426000" />
+      <workItem from="1715978838993" duration="9273000" />
+      <workItem from="1716004840053" duration="32000" />
+      <workItem from="1716135167019" duration="5042000" />
+      <workItem from="1716149028880" duration="11000" />
+      <workItem from="1716383625624" duration="2435000" />
+      <workItem from="1716398832779" duration="6588000" />
+      <workItem from="1716419517907" duration="9190000" />
+      <workItem from="1716469226443" duration="4207000" />
+      <workItem from="1716515274333" duration="1285000" />
+      <workItem from="1716548365011" duration="1423000" />
+      <workItem from="1716551729795" duration="1620000" />
+      <workItem from="1717535212663" duration="116000" />
+      <workItem from="1717539788128" duration="22214000" />
+      <workItem from="1717715401812" duration="51000" />
+      <workItem from="1717715462226" duration="257000" />
+      <workItem from="1717715729826" duration="212000" />
+      <workItem from="1717715973442" duration="68000" />
+    </task>
+    <task id="LOCAL-00045" summary="adaptation comparison completed">
+      <option name="closed" value="true" />
+      <created>1705280115973</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1705280115973</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Todo's deleted">
+      <option name="closed" value="true" />
+      <created>1705280203582</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1705280203582</updated>
+    </task>
+    <task id="LOCAL-00047" summary="adaptation comparison advanced">
+      <option name="closed" value="true" />
+      <created>1705612795671</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1705612795671</updated>
+    </task>
+    <task id="LOCAL-00048" summary="restructuring and tests">
+      <option name="closed" value="true" />
+      <created>1706572919065</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1706572919065</updated>
+    </task>
+    <task id="LOCAL-00049" summary="restructuring">
+      <option name="closed" value="true" />
+      <created>1706573205151</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1706573205151</updated>
+    </task>
+    <task id="LOCAL-00050" summary="knockin experiment completed">
+      <option name="closed" value="true" />
+      <created>1706989948615</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1706989948616</updated>
+    </task>
+    <task id="LOCAL-00051" summary="cleaned up config">
+      <option name="closed" value="true" />
+      <created>1707093392768</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1707093392768</updated>
+    </task>
+    <task id="LOCAL-00052" summary="knock-in updated">
+      <option name="closed" value="true" />
+      <created>1707233703928</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1707233703928</updated>
+    </task>
+    <task id="LOCAL-00053" summary="knock-in updated">
+      <option name="closed" value="true" />
+      <created>1707488690505</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1707488690505</updated>
+    </task>
+    <task id="LOCAL-00054" summary="knock-in updated">
+      <option name="closed" value="true" />
+      <created>1707494810438</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1707494810438</updated>
+    </task>
+    <task id="LOCAL-00055" summary="structure update">
+      <option name="closed" value="true" />
+      <created>1707494974074</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1707494974074</updated>
+    </task>
+    <task id="LOCAL-00056" summary="structure update">
+      <option name="closed" value="true" />
+      <created>1707495058181</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1707495058181</updated>
+    </task>
+    <task id="LOCAL-00057" summary="knock in completed">
+      <option name="closed" value="true" />
+      <created>1707903921471</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1707903921471</updated>
+    </task>
+    <task id="LOCAL-00058" summary="visualization of knock in updated">
+      <option name="closed" value="true" />
+      <created>1712104748143</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1712104748143</updated>
+    </task>
+    <task id="LOCAL-00059" summary="knock in trials">
+      <option name="closed" value="true" />
+      <created>1712159055406</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1712159055407</updated>
+    </task>
+    <task id="LOCAL-00060" summary="minor">
+      <option name="closed" value="true" />
+      <created>1712201198613</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1712201198620</updated>
+    </task>
+    <task id="LOCAL-00061" summary="diagram">
+      <option name="closed" value="true" />
+      <created>1714008316592</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1714008316593</updated>
+    </task>
+    <task id="LOCAL-00062" summary="knock in experiments">
+      <option name="closed" value="true" />
+      <created>1714353573926</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1714353573927</updated>
+    </task>
+    <task id="LOCAL-00063" summary="knock in experiments">
+      <option name="closed" value="true" />
+      <created>1715874487186</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1715874487187</updated>
+    </task>
+    <task id="LOCAL-00064" summary="wrapper started">
+      <option name="closed" value="true" />
+      <created>1715914742118</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1715914742118</updated>
+    </task>
+    <task id="LOCAL-00065" summary="wrapper continued">
+      <option name="closed" value="true" />
+      <created>1715917572119</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1715917572119</updated>
+    </task>
+    <task id="LOCAL-00066" summary="visualization changes cancelled">
+      <option name="closed" value="true" />
+      <created>1715952609370</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1715952609370</updated>
+    </task>
+    <task id="LOCAL-00067" summary="visualization fixed">
+      <option name="closed" value="true" />
+      <created>1715953067283</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1715953067283</updated>
+    </task>
+    <task id="LOCAL-00068" summary="visualization merged as single class">
+      <option name="closed" value="true" />
+      <created>1715954551952</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1715954551952</updated>
+    </task>
+    <task id="LOCAL-00069" summary="git is giving me nightmares">
+      <option name="closed" value="true" />
+      <created>1715955177814</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1715955177814</updated>
+    </task>
+    <task id="LOCAL-00070" summary="polarity reversal achieved">
+      <option name="closed" value="true" />
+      <created>1715961131798</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1715961131798</updated>
+    </task>
+    <task id="LOCAL-00071" summary="polarity reversal achieved">
+      <option name="closed" value="true" />
+      <created>1715961137748</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1715961137748</updated>
+    </task>
+    <task id="LOCAL-00072" summary="polarity reversal new experiment">
+      <option name="closed" value="true" />
+      <created>1716002036159</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1716002036159</updated>
+    </task>
+    <task id="LOCAL-00073" summary="polarity reversal finished">
+      <option name="closed" value="true" />
+      <created>1716140766443</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1716140766444</updated>
+    </task>
+    <task id="LOCAL-00074" summary="image added">
+      <option name="closed" value="true" />
+      <created>1716140810181</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1716140810181</updated>
+    </task>
+    <task id="LOCAL-00075" summary="sigmoid exploration">
+      <option name="closed" value="true" />
+      <created>1716385407603</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1716385407604</updated>
+    </task>
+    <task id="LOCAL-00076" summary="sigmoid exploration further explanations">
+      <option name="closed" value="true" />
+      <created>1716407215581</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1716407215581</updated>
+    </task>
+    <task id="LOCAL-00077" summary="sigmoid shift introduced">
+      <option name="closed" value="true" />
+      <created>1716434870788</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1716434870788</updated>
+    </task>
+    <task id="LOCAL-00078" summary="sigmoid exploration is the next big thing">
+      <option name="closed" value="true" />
+      <created>1716473445340</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1716473445340</updated>
+    </task>
+    <task id="LOCAL-00079" summary="mockup gui">
+      <option name="closed" value="true" />
+      <created>1716515952478</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1716515952478</updated>
+    </task>
+    <task id="LOCAL-00080" summary="sigmoid height added">
+      <option name="closed" value="true" />
+      <created>1716555615000</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1716555615001</updated>
+    </task>
+    <task id="LOCAL-00081" summary="refactoring continued">
+      <option name="closed" value="true" />
+      <created>1717540609428</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1717540609428</updated>
+    </task>
+    <task id="LOCAL-00082" summary="refactoring stabilized">
+      <option name="closed" value="true" />
+      <created>1717542845903</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1717542845903</updated>
+    </task>
+    <task id="LOCAL-00083" summary="refactoring all experiments working">
+      <option name="closed" value="true" />
+      <created>1717543864681</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1717543864681</updated>
+    </task>
+    <task id="LOCAL-00084" summary="refactoring minor changes">
+      <option name="closed" value="true" />
+      <created>1717547102174</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1717547102174</updated>
+    </task>
+    <task id="LOCAL-00085" summary="refactoring tests updated">
+      <option name="closed" value="true" />
+      <created>1717547156837</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1717547156837</updated>
+    </task>
+    <task id="LOCAL-00086" summary="refactoring simulation package">
+      <option name="closed" value="true" />
+      <created>1717547334052</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1717547334052</updated>
+    </task>
+    <task id="LOCAL-00087" summary="clean up completed">
+      <option name="closed" value="true" />
+      <created>1717588658357</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1717588658357</updated>
+    </task>
+    <task id="LOCAL-00088" summary="runtime">
+      <option name="closed" value="true" />
+      <created>1717592369801</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1717592369801</updated>
+    </task>
+    <task id="LOCAL-00089" summary="branches being corrected">
+      <option name="closed" value="true" />
+      <created>1717592715281</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1717592715281</updated>
+    </task>
+    <task id="LOCAL-00090" summary="readme updated">
+      <option name="closed" value="true" />
+      <created>1717594248882</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1717594248882</updated>
+    </task>
+    <task id="LOCAL-00091" summary="readme updated">
+      <option name="closed" value="true" />
+      <created>1717594472281</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1717594472281</updated>
+    </task>
+    <task id="LOCAL-00092" summary="gitignore reverted">
+      <option name="closed" value="true" />
+      <created>1717715917994</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1717715917994</updated>
+    </task>
+    <task id="LOCAL-00093" summary="gitignore reverted">
+      <option name="closed" value="true" />
+      <created>1717716024948</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1717716024948</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="cb50c86f-a9c6-4d53-91c8-e0f793983920" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="cb50c86f-a9c6-4d53-91c8-e0f793983920">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="visualization changes cancelled" />
+    <MESSAGE value="visualization fixed" />
+    <MESSAGE value="visualization merged as single class" />
+    <MESSAGE value="git is giving me nightmares" />
+    <MESSAGE value="polarity reversal achieved" />
+    <MESSAGE value="polarity reversal new experiment" />
+    <MESSAGE value="polarity reversal finished" />
+    <MESSAGE value="image added" />
+    <MESSAGE value="sigmoid exploration" />
+    <MESSAGE value="sigmoid exploration further explanations" />
+    <MESSAGE value="sigmoid shift introduced" />
+    <MESSAGE value="sigmoid exploration is the next big thing" />
+    <MESSAGE value="mockup gui" />
+    <MESSAGE value="sigmoid height added" />
+    <MESSAGE value="refactoring continued" />
+    <MESSAGE value="refactoring stabilized" />
+    <MESSAGE value="refactoring all experiments working" />
+    <MESSAGE value="refactoring minor changes" />
+    <MESSAGE value="refactoring tests updated" />
+    <MESSAGE value="refactoring simulation package" />
+    <MESSAGE value="clean up completed" />
+    <MESSAGE value="runtime" />
+    <MESSAGE value="branches being corrected" />
+    <MESSAGE value="readme updated" />
+    <MESSAGE value="gitignore reverted" />
+    <option name="LAST_COMMIT_MESSAGE" value="gitignore reverted" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/rtpSimulation$kura.coverage" NAME="kura Coverage Results" MODIFIED="1706458351775" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/adap_investigation" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$runtime.coverage" NAME="runtime Coverage Results" MODIFIED="1717590759327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/runtime" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$sigmoid__1_.coverage" NAME="sigmoid (1) Coverage Results" MODIFIED="1716384928164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/polarity_reversal" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$All_UnitTests.coverage" NAME="All UnitTests Coverage Results" MODIFIED="1706571903596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$run_tests.coverage" NAME="run_tests Coverage Results" MODIFIED="1707494835922" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$comparison.coverage" NAME="comparison Coverage Results" MODIFIED="1717543726494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/sigmoid_exploration" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$four_plots_comparison.coverage" NAME="four_plots_comparison Coverage Results" MODIFIED="1717539796743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/adaptation_exploration" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$original_implementation.coverage" NAME="original_implementation Coverage Results" MODIFIED="1717542169970" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/sigmoid_exploration" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$sigmoid_exploration.coverage" NAME="sigmoid_exploration Coverage Results" MODIFIED="1717543750482" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/sigmoid_exploration" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$sigmoid.coverage" NAME="sigmoid Coverage Results" MODIFIED="1716384308614" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/sigmoid_exploration" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$initial_comparison.coverage" NAME="initial_comparison Coverage Results" MODIFIED="1717539829222" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/adaptation_exploration" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$sigmoid_exploration__1_.coverage" NAME="sigmoid_exploration (1) Coverage Results" MODIFIED="1717535240326" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/sigmoid_exploration" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$matlab_gc_init.coverage" NAME="matlab_gc_init Coverage Results" MODIFIED="1717539888796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/knock_in" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$four_plots_comparison__1_.coverage" NAME="four_plots_comparison (1) Coverage Results" MODIFIED="1707091891713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$.coverage" NAME=" Coverage Results" MODIFIED="1706572508444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$polarity_reversal.coverage" NAME="polarity_reversal Coverage Results" MODIFIED="1717588529263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/polarity_reversal" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$gui.coverage" NAME="gui Coverage Results" MODIFIED="1716548373600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mockup_gui" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$knock_in.coverage" NAME="knock_in Coverage Results" MODIFIED="1717588453075" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/knock_in" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$main.coverage" NAME="main Coverage Results" MODIFIED="1717715536557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$knock_in__1_.coverage" NAME="knock_in (1) Coverage Results" MODIFIED="1714347924681" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/knock_in" />
+  </component>
+</project>

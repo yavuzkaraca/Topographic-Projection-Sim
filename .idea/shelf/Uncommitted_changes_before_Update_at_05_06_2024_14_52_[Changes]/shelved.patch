@@ -1,0 +1,65 @@
+Index: src/build/config.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\"\"\"\r\nModule providing configuration settings for a retinotectal projection model.\r\n\"\"\"\r\n\r\n# Substrate Types\r\nCONTINUOUS_GRADIENTS = \"continuous_gradients\"\r\nWEDGES = \"wedges\"\r\nSTRIPE_FWD = \"stripe_fwd\"\r\nSTRIPE_REW = \"stripe_rew\"\r\nSTRIPE_DUO = \"stripe_duo\"\r\nGAP_RR = \"gap_rr\"\r\nGAP_RB = \"gap_rb\"\r\nGAP_BR = \"gap_br\"\r\nGAP_BB = \"gap_bb\"\r\nGAP_INV = \"gap_inv\"\r\n\r\n# Substrate Parameters\r\nSUBSTRATE_TYPE = \"substrate_type\"\r\nROWS = \"rows\"\r\nCOLS = \"cols\"\r\nCUSTOM_FIRST = \"custom_first\"  # WEDGE: small edge length ; STRIPE: - ; GAP: last column of first part\r\nCUSTOM_SECOND = \"custom_second\"  # WEDGE: big edge length ; STRIPE: stripe width ; GAP: first column of last part\r\n\r\n# Simulation Parameters\r\nGC_COUNT = \"gc_count\"\r\nGC_SIZE = \"gc_size\"\r\nSTEP_SIZE = \"step_size\"\r\nSTEP_AMOUNT = \"step_amount\"\r\nX_STEP_POSSIBILITY = \"x_step_possibility\"\r\nY_STEP_POSSIBILITY = \"y_step_possibility\"\r\nSIGMOID_STEEPNESS = \"sigmoid_gain\"\r\nSIGMOID_SHIFT = \"sigmoid_shift\"\r\nSIGMA = \"sigma\"\r\nFORCE = \"force\"\r\nFORWARD_SIG = \"forward_sig\"\r\nREVERSE_SIG = \"reverse_sig\"\r\nFF_INTER = \"ff_inter\"\r\nFT_INTER = \"ft_inter\"\r\n\r\n# Adaptation\r\nADAPTATION_ENABLED = \"adaptation_enabled\"\r\nADAPTATION_MU = \"adaptation_mu\"\r\nADAPTATION_LAMBDA = \"adaptation_lambda\"\r\nADAPTATION_HISTORY = \"adaptation_history\"\r\n\r\n\r\n# Default configuration values\r\nCONTINUOUS_CONFIG = {\r\n    SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,\r\n    CUSTOM_FIRST: 0,\r\n    CUSTOM_SECOND: 0,\r\n    ROWS: 100,  # number of rows = max value along y-axis\r\n    COLS: 100,  # number of cols = max value along x-axis\r\n    GC_COUNT: 100,\r\n    GC_SIZE: 3,\r\n    STEP_SIZE: 1,\r\n    STEP_AMOUNT: 5000,\r\n    X_STEP_POSSIBILITY: 0.55,\r\n    Y_STEP_POSSIBILITY: 0.50,\r\n    SIGMOID_STEEPNESS: 4,\r\n    SIGMOID_SHIFT: 3,\r\n    SIGMA: 0.12,\r\n    FORCE: False,\r\n    FORWARD_SIG: True,\r\n    REVERSE_SIG: True,\r\n    FF_INTER: True,\r\n    FT_INTER: True,\r\n    ADAPTATION_ENABLED: True,\r\n    ADAPTATION_MU: 0.006,  # 0.006\r\n    ADAPTATION_LAMBDA: 0.0045,  # 0.0045\r\n    ADAPTATION_HISTORY: 50\r\n}\r\n\r\n# Default configuration values\r\nSTRIPE_ASSAY_CONFIG = {\r\n    SUBSTRATE_TYPE: STRIPE_DUO,\r\n    CUSTOM_FIRST: 1,\r\n    CUSTOM_SECOND: 12,\r\n    ROWS: 150,  # number of rows = max value along y-axis\r\n    COLS: 150,  # number of cols = max value along x-axis\r\n    GC_COUNT: 10,\r\n    GC_SIZE: 10,\r\n    STEP_SIZE: 2,\r\n    STEP_AMOUNT: 5000,\r\n    X_STEP_POSSIBILITY: 0.50,\r\n    Y_STEP_POSSIBILITY: 0.50,\r\n    SIGMOID_STEEPNESS: 4,\r\n    SIGMOID_SHIFT: 3,\r\n    SIGMA: 0.12,\r\n    FORCE: False,\r\n    FORWARD_SIG: True,\r\n    REVERSE_SIG: True,\r\n    FF_INTER: True,\r\n    FT_INTER: True,\r\n    ADAPTATION_ENABLED: False,\r\n    ADAPTATION_MU: 0.006,\r\n    ADAPTATION_LAMBDA: 0.0045,\r\n    ADAPTATION_HISTORY: 10\r\n}\r\n\r\n# Default configuration values\r\nWEDGES_CONFIG = {\r\n    SUBSTRATE_TYPE: WEDGES,\r\n    CUSTOM_FIRST: 1,\r\n    CUSTOM_SECOND: 12,\r\n    ROWS: 96,  # number of rows = max value along y-axis\r\n    COLS: 96,  # number of cols = max value along x-axis\r\n    GC_COUNT: 10,\r\n    GC_SIZE: 10,\r\n    STEP_SIZE: 1,\r\n    STEP_AMOUNT: 20000,\r\n    X_STEP_POSSIBILITY: 0.50,\r\n    Y_STEP_POSSIBILITY: 0.50,\r\n    SIGMOID_STEEPNESS: 4,\r\n    SIGMOID_SHIFT: 3,\r\n    SIGMA: 0.12,\r\n    FORCE: False,\r\n    FORWARD_SIG: True,\r\n    REVERSE_SIG: True,\r\n    FF_INTER: True,\r\n    FT_INTER: True,\r\n    ADAPTATION_ENABLED: False,\r\n    ADAPTATION_MU: 0.006,\r\n    ADAPTATION_LAMBDA: 0.0045,\r\n    ADAPTATION_HISTORY: 10\r\n}\r\n\r\n# Default configuration values\r\nGAP_ASSAY_CONFIG = {\r\n    SUBSTRATE_TYPE: GAP_BB,\r\n    CUSTOM_FIRST: 0.4,\r\n    CUSTOM_SECOND: 0.2,  # 0.03\r\n    ROWS: 96,  # number of rows = max value along y-axis\r\n    COLS: 96,  # number of cols = max value along x-axis\r\n    GC_COUNT: 5,\r\n    GC_SIZE: 5,\r\n    STEP_SIZE: 2,\r\n    STEP_AMOUNT: 15000,  # 8000\r\n    X_STEP_POSSIBILITY: 0.55,\r\n    Y_STEP_POSSIBILITY: 0.50,\r\n    SIGMOID_STEEPNESS: 4,\r\n    SIGMOID_SHIFT: 3,\r\n    SIGMA: 0.12,\r\n    FORCE: False,\r\n    FORWARD_SIG: True,\r\n    REVERSE_SIG: True,\r\n    FF_INTER: True,\r\n    FT_INTER: True,\r\n    ADAPTATION_ENABLED: True,\r\n    ADAPTATION_MU: 0.01,  # 0.006\r\n    ADAPTATION_LAMBDA: 0.002,  # 0.0045\r\n    ADAPTATION_HISTORY: 50  # 10\r\n}\r\n\r\n\r\n# Current configuration settings\r\ndefault_config = CONTINUOUS_CONFIG\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/build/config.py b/src/build/config.py
+--- a/src/build/config.py	(revision 29680ebd5d92dee926ca571c68b6bc9093b6451a)
++++ b/src/build/config.py	(date 1717590389494)
+@@ -51,7 +51,7 @@
+     CUSTOM_SECOND: 0,
+     ROWS: 100,  # number of rows = max value along y-axis
+     COLS: 100,  # number of cols = max value along x-axis
+-    GC_COUNT: 100,
++    GC_COUNT: 750,
+     GC_SIZE: 3,
+     STEP_SIZE: 1,
+     STEP_AMOUNT: 5000,
+Index: experiments/runtime/runtime.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/experiments/runtime/runtime.py b/experiments/runtime/runtime.py
+new file mode 100644
+--- /dev/null	(date 1717590759320)
++++ b/experiments/runtime/runtime.py	(date 1717590759320)
+@@ -0,0 +1,36 @@
++# Import necessary libraries
++import numpy as np
++import matplotlib.pyplot as plt
++from scipy.optimize import curve_fit
++
++# Function for the model (using a second-degree polynomial for fitting)
++def model(x, a, b, c):
++    return a * x**2 + b * x + c
++
++def main():
++    # Data: Number of growth cones and corresponding runtimes
++    growth_cone_counts = np.array([10, 50, 100, 200, 300, 500, 750, 1000])
++    runtimes = np.array([0.05, 0.26, 0.8, 2.5, 5, 12, 26, 45])
++
++    # Scatter plot of the data
++    plt.figure(figsize=(10, 7))
++    plt.scatter(growth_cone_counts, runtimes, color='blue', label='Data Points')
++    plt.xlabel('Number of Growth Cones')
++    plt.ylabel('Runtime (minutes)')
++    plt.title('Simulation Runtime in terms of Number of Growth Cones')
++    plt.grid(True)
++
++    # Curve fitting
++    popt, _ = curve_fit(model, growth_cone_counts, runtimes)
++
++    # Generate values for the fitted curve
++    x_line = np.arange(min(growth_cone_counts), max(growth_cone_counts), 1)
++    y_line = model(x_line, *popt)
++
++    # Plot the fitted curve
++    plt.plot(x_line, y_line, '--', color='red', label='Fit: ax² + bx + c')
++    plt.legend()
++    plt.show()
++
++if __name__ == '__main__':
++    main()
