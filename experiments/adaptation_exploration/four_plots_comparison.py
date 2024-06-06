@@ -9,6 +9,8 @@ def adaptation_comparison_lambda():
     gc = []
 
     simulation = object_factory.build_simulation(GAP_INVERTED_LAMBDA_1)
+
+    vz.visualize_substrate(simulation.substrate)
     simulation.run()
     gc.extend(simulation.growth_cones)
 

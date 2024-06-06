@@ -154,5 +154,5 @@ GAP_ASSAY_CONFIG = {
 
 
 # Current configuration settings
-default_config = CONTINUOUS_CONFIG
+default_config = STRIPE_ASSAY_CONFIG
 
