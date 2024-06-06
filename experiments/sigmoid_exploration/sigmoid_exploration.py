@@ -1,5 +1,5 @@
 from matplotlib import pyplot as plt
-from simulation.simulation import calculate_ff_coef
+from model.simulation.simulation import calculate_ff_coef
 
 # Configuration for the scenarios
 configs = [
