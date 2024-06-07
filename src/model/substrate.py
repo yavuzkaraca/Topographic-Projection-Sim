@@ -184,7 +184,7 @@ class GapSubstrate(BaseSubstrate):
         super().__init__(rows, cols, offset, **kwargs)
         self.begin = kwargs.get('begin')
         self.end = kwargs.get('end')
-        self.first_block = kwargs.get('first_block')  # TODO: implement concentration
+        self.first_block = kwargs.get('first_block')
         self.second_block = kwargs.get('second_block')
 
     def initialize_substrate(self):
