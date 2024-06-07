@@ -4,9 +4,11 @@ Module providing the Substrate class for substrate representation and initializa
 
 import numpy as np
 
+from build import config
+
 
 class BaseSubstrate:
-    def __init__(self, rows, cols, offset, custom_first, custom_second):
+    def __init__(self, rows, cols, offset, **kwargs):
         """
         Initialize the base Substrate object with common parameters.
 
@@ -23,8 +25,10 @@ class BaseSubstrate:
         self.rows = rows + offset * 2
         self.cols = cols + offset * 2
         self.offset = offset  # is equal to gc_size
-        self.custom_first = custom_first  # min_value
-        self.custom_second = custom_second  # max_value
+
+        # Set extra attributes from kwargs
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
         self.ligands = np.zeros((self.rows, self.cols), dtype=float)
         self.receptors = np.zeros((self.rows, self.cols), dtype=float)
@@ -73,16 +77,25 @@ class BaseSubstrate:
 
 
 class ContinuousGradientSubstrate(BaseSubstrate):
+    def __init__(self, rows, cols, offset, **kwargs):
+        # Initialize the superclass with all given keyword arguments
+        super().__init__(rows, cols, offset, **kwargs)
+        self.signal_start = kwargs.get('signal_start')
+        self.signal_end = kwargs.get('signal_end')
+
     def initialize_substrate(self):
         """
         Initialize the substrate using continuous gradients of ligand and receptor values.
         """
-        ligand_gradient = np.linspace(0.01, 0.99, self.cols - (2 * self.offset))
-        receptor_gradient = np.linspace(0.99, 0.01, self.cols - (2 * self.offset))
 
-        # Append 0.01 and 0.99 on both ends
-        low_end = np.full(self.offset, 0.01)  # Creates an array of 0.01 with length self.offset
-        high_end = np.full(self.offset, 0.99)  # Creates an array of 0.99 with length self.offset
+        ligand_gradient = np.linspace(self.signal_start, self.signal_end,
+                                      self.cols - (2 * self.offset))
+        receptor_gradient = np.linspace(self.signal_end, self.signal_start,
+                                        self.cols - (2 * self.offset))
+
+        # Append offset on both ends
+        low_end = np.full(self.offset, self.signal_start)  # Creates an array of 0.01 with length self.offset
+        high_end = np.full(self.offset, self.signal_end)  # Creates an array of 0.99 with length self.offset
         ligand_gradient = np.concatenate([low_end, ligand_gradient, high_end])
         receptor_gradient = np.concatenate([high_end, receptor_gradient, low_end])
 
@@ -92,14 +105,20 @@ class ContinuousGradientSubstrate(BaseSubstrate):
 
 
 class WedgeSubstrate(BaseSubstrate):
+    def __init__(self, rows, cols, offset, **kwargs):
+        # Initialize the superclass with all given keyword arguments
+        super().__init__(rows, cols, offset, **kwargs)
+        self.narrow_edge = kwargs.get('narrow_edge')
+        self.wide_edge = kwargs.get('wide_edge')
+
     def initialize_substrate(self):
         """
         Initialize the substrate using wedge-shaped patterns of ligand and receptor values.
         """
         # Set for readability
         rows, cols, = self.rows, self.cols
-        min_edge_length = self.custom_first
-        max_edge_length = self.custom_second
+        min_edge_length = self.narrow_edge
+        max_edge_length = self.wide_edge
         receptors = np.zeros((rows, cols), dtype=float)
         ligands = np.ones((rows, cols), dtype=float)
 
@@ -138,53 +157,43 @@ class WedgeSubstrate(BaseSubstrate):
         self.receptors, self.ligands = receptors, ligands
 
 
-class BaseStripeSubstrate(BaseSubstrate):
-    def initialize_substrate(self):
-        raise NotImplementedError("Subclasses should implement this method.")
+class StripeSubstrate(BaseSubstrate):
+    def __init__(self, rows, cols, offset, **kwargs):
+        # Initialize the superclass with all given keyword arguments
+        super().__init__(rows, cols, offset, **kwargs)
+        self.fwd = kwargs.get('fwd')
+        self.rew = kwargs.get('rew')
+        self.conc = kwargs.get('conc')  # TODO: implement concentration
+        self.width = kwargs.get('width')
 
-    def initialize_stripe(self, forward, reverse):
+    def initialize_substrate(self):
         for row in range(self.rows):
-            if (row // self.custom_second) % 2 == 0:
+            if (row // self.width) % 2 == 0:
                 # Even stripe: Set ligands and clear receptors
-                if forward:
+                if self.fwd:
                     self.set_row_ligand_only(row)
             else:
                 # Odd stripe: Clear ligands and set receptors
-                if reverse:
+                if self.rew:
                     self.set_row_receptor_only(row)
 
 
-class StripeFwdSubstrate(BaseStripeSubstrate):
-    def initialize_substrate(self):
-        self.initialize_stripe(True, False)
-
-
-class StripeRewSubstrate(BaseStripeSubstrate):
-    def initialize_substrate(self):
-        self.initialize_stripe(False, True)
-
-
-class StripeDuoSubstrate(BaseStripeSubstrate):
-    def initialize_substrate(self):
-        self.initialize_stripe(True, True)
-
-
-class BaseGapSubstrate(BaseSubstrate):
-    @property
-    def parts(self):
-        first_part = int(self.cols * self.custom_first)  # last column of the first part
-        second_part = first_part + int(self.cols * self.custom_second)  # last column of the second part
-        return first_part, second_part
+class GapSubstrate(BaseSubstrate):
+    def __init__(self, rows, cols, offset, **kwargs):
+        # Initialize the superclass with all given keyword arguments
+        super().__init__(rows, cols, offset, **kwargs)
+        self.begin = kwargs.get('begin')
+        self.end = kwargs.get('end')
+        self.first_block = kwargs.get('first_block')  # TODO: implement concentration
+        self.second_block = kwargs.get('second_block')
 
     def initialize_substrate(self):
-        raise NotImplementedError("Subclasses should implement this method.")
-
-    def initialize_gap(self, start_red, end_red):
-        first_part, second_part = self.parts
+        first_part = int(self.cols * self.begin)
+        second_part = first_part + int(self.cols * self.end)
 
         # First third: Filled with Signals
         for col in range(first_part):
-            if start_red:
+            if self.first_block == config.LIGAND:
                 self.set_col_ligand_only(col)
             else:
                 self.set_col_receptor_only(col)
@@ -195,35 +204,14 @@ class BaseGapSubstrate(BaseSubstrate):
 
         # Final third: Filled with Signals
         for col in range(second_part, self.cols):
-            if end_red:
+            if self.second_block == config.LIGAND:
                 self.set_col_ligand_only(col)
             else:
                 self.set_col_receptor_only(col)
 
 
-class GapSubstrateRR(BaseGapSubstrate):
-    def initialize_substrate(self):
-        self.initialize_gap(True, True)
-
-
-class GapSubstrateRB(BaseGapSubstrate):
-    def initialize_substrate(self):
-        self.initialize_gap(True, False)
-
-
-class GapSubstrateBR(BaseGapSubstrate):
-    def initialize_substrate(self):
-        self.initialize_gap(False, True)
-
-
-class GapSubstrateBB(BaseGapSubstrate):
-    def initialize_substrate(self):
-        self.initialize_gap(False, False)
-
-
-class GapSubstrateInverted(BaseGapSubstrate):
+class GapSubstrateInverted(GapSubstrate):
     def initialize_substrate(self):
         first_part, second_part = self.parts
         for col in range(first_part, second_part):
             self.set_col_receptor_only(col)
-
