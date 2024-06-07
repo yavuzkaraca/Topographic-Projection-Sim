@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from model.substrate.substrate import BaseSubstrate  # Adjust imports as needed
+from model.substrate import BaseSubstrate  # Adjust imports as needed
 
 
 class TestBaseSubstrate(unittest.TestCase):

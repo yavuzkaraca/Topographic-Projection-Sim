@@ -34,7 +34,7 @@ plt.show()
 
 
 # Define the range for the input values
-ratio_values = np.linspace(-1, 2, 1000)
+ratio_values = np.linspace(-1, 2, 50)
 
 # Sigmoid function using the ratio as input
 sigmoid = 1 / (1 + np.exp(-ratio_values))

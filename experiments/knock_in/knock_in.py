@@ -1,11 +1,9 @@
-from matplotlib import pyplot as plt
-
 from build.config import SUBSTRATE_TYPE, CONTINUOUS_GRADIENTS, CUSTOM_FIRST, CUSTOM_SECOND, ROWS, COLS, GC_COUNT, \
     GC_SIZE, STEP_SIZE, \
     STEP_AMOUNT, X_STEP_POSSIBILITY, Y_STEP_POSSIBILITY, SIGMA, FORCE, ADAPTATION_ENABLED, ADAPTATION_MU, \
     ADAPTATION_LAMBDA, ADAPTATION_HISTORY, SIGMOID_STEEPNESS, FORWARD_SIG, REVERSE_SIG, FF_INTER, FT_INTER, SIGMOID_SHIFT
 from build import object_factory
-import visualization.visualization as vz
+import visualization as vz
 import numpy as np
 
 

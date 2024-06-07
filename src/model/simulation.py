@@ -4,7 +4,7 @@ Main module which executes simulation logic
 import math
 import time
 from model.result import Result
-from model.simulation.potential_calculation import calculate_potential, calculate_ff_coef
+from model.potential_calculation import calculate_potential, calculate_ff_coef
 import random
 
 

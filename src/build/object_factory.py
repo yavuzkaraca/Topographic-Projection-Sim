@@ -3,16 +3,15 @@ Module for setting up all the objects in the model.
 """
 
 import numpy as np
-from matplotlib import pyplot as plt
 
 from build import config as cfg
-from model.growth_cone.growth_cone import GrowthCone  # Importing the Growth Cone class
-from model.simulation.simulation import Simulation  # Importing the Simulation class
+from model.growth_cone import GrowthCone  # Importing the Growth Cone class
+from model.simulation import Simulation  # Importing the Simulation class
 # Importing the Substrate classes
-from model.substrate.substrate import (ContinuousGradientSubstrate, WedgeSubstrate,
-                                       StripeFwdSubstrate, StripeRewSubstrate, StripeDuoSubstrate,
-                                       GapSubstrateRR, GapSubstrateRB, GapSubstrateBR, GapSubstrateBB,
-                                       GapSubstrateInverted)
+from model.substrate import (ContinuousGradientSubstrate, WedgeSubstrate,
+                             StripeFwdSubstrate, StripeRewSubstrate, StripeDuoSubstrate,
+                             GapSubstrateRR, GapSubstrateRB, GapSubstrateBR, GapSubstrateBB,
+                             GapSubstrateInverted)
 
 
 def build_default():
@@ -33,6 +32,7 @@ def build_simulation(config):
     # Extract attributes from the configuration
     step_size = config.get(cfg.STEP_SIZE)
     num_steps = config.get(cfg.STEP_AMOUNT)
+
     x_step_p = config.get(cfg.X_STEP_POSSIBILITY)
     y_step_p = config.get(cfg.Y_STEP_POSSIBILITY)
     sigmoid_steepness = config.get(cfg.SIGMOID_STEEPNESS)
@@ -43,10 +43,16 @@ def build_simulation(config):
     reverse_sig = config.get(cfg.REVERSE_SIG)
     ff_inter = config.get(cfg.FF_INTER)
     ft_inter = config.get(cfg.FT_INTER)
+
     adaptation = config.get(cfg.ADAPTATION_ENABLED)
-    mu = config.get(cfg.ADAPTATION_MU)
-    lambda_ = config.get(cfg.ADAPTATION_LAMBDA)
-    history_length = config.get(cfg.ADAPTATION_HISTORY)
+    mu = 0
+    lambda_ = 0
+    history_length = 0
+
+    if adaptation:
+        mu = config.get(cfg.ADAPTATION_MU)
+        lambda_ = config.get(cfg.ADAPTATION_LAMBDA)
+        history_length = config.get(cfg.ADAPTATION_HISTORY)
 
     # Initialize the Simulation object with the new parameters
     simulation = Simulation(substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p,
@@ -107,7 +113,7 @@ def initialize_growth_cones(config):
     rows = config.get(cfg.ROWS)
 
     # Non-linear gradient for receptors, starting at 0.99 and decreasing to 0.01
-    receptor_gradient = np.linspace(0, 1, gc_count) ** 1.2
+    receptor_gradient = np.linspace(0, 1, gc_count) ** 1.4
     receptors = 0.01 + receptor_gradient * 0.99
 
     # This is the inverse of the receptor gradient
