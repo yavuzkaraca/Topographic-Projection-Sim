@@ -66,7 +66,10 @@ class Simulation:
         start_time = time.time()  # Start timing the model
 
         self.prepare_gcs()
-        print(f"\nInitialization completed.")
+        print(f"\nInitialization completed.\n")
+
+        for gc in self.growth_cones:
+            print(gc)
 
         print(f"\nIteration starts, {self.steps_total} many steps will be taken\n")
         self.iterate_simulation()
@@ -97,9 +100,9 @@ class Simulation:
                 print(f"Current Step: {step_current}")
 
             for gc in self.growth_cones:
-                if self.adaptation:
-                    self.adapt_growth_cone(gc)
-                if not gc.freeze:
+                if not gc.freeze:  # Check if the growth cone is not frozen
+                    if self.adaptation:
+                        self.adapt_growth_cone(gc)
                     self.gen_random_step(gc)
                     ff_coef = calculate_ff_coef(step_current, self.steps_total, self.sigmoid_steepness,
                                                 self.sigmoid_shift)
@@ -107,7 +110,7 @@ class Simulation:
 
     def adapt_growth_cone(self, gc):
         """
-        Adapt the growth cones. Check adaptation_exploration experiment for more details on the parameters.
+        Adapt the growth cones. Check parameter_exploration experiment for more details on the parameters.
         """
         gc.calculate_adaptation(self.mu, self.lambda_, self.history_length)
         gc.apply_adaptation()

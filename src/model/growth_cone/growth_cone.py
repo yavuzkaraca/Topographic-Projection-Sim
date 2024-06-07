@@ -48,8 +48,6 @@ class GrowthCone:
         self.history = History(self.potential, self.adap_co, self.pos_current, self.ligand_start, self.receptor_start,
                                self.reset_force_receptor, self.reset_force_ligand)
 
-        self.mark = False
-
     def __str__(self):
         """
         Provides a string representation of the growth cone's attributes.
