@@ -82,6 +82,7 @@ STRIPE_ASSAY_CONFIG = {
     GC_SIZE: 10,
     STEP_SIZE: 2,
     STEP_AMOUNT: 5000,
+
     X_STEP_POSSIBILITY: 0.50,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
@@ -92,6 +93,7 @@ STRIPE_ASSAY_CONFIG = {
     REVERSE_SIG: True,
     FF_INTER: True,
     FT_INTER: True,
+
     ADAPTATION_ENABLED: False,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
@@ -154,5 +156,5 @@ GAP_ASSAY_CONFIG = {
 
 
 # Current configuration settings
-default_config = CONTINUOUS_CONFIG
+default_config = STRIPE_ASSAY_CONFIG
 

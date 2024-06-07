@@ -1,5 +1,5 @@
 from build import object_factory
-import visualization.visualization as vz
+import visualization as vz
 
 
 def run():

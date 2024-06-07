@@ -147,7 +147,7 @@ class BaseStripeSubstrate(BaseSubstrate):
             if (row // self.custom_second) % 2 == 0:
                 # Even stripe: Set ligands and clear receptors
                 if forward:
-                    self.set_col_ligand_only(row)
+                    self.set_row_ligand_only(row)
             else:
                 # Odd stripe: Clear ligands and set receptors
                 if reverse:
@@ -156,7 +156,7 @@ class BaseStripeSubstrate(BaseSubstrate):
 
 class StripeFwdSubstrate(BaseStripeSubstrate):
     def initialize_substrate(self):
-        self.initialize_stripe(True, True)
+        self.initialize_stripe(True, False)
 
 
 class StripeRewSubstrate(BaseStripeSubstrate):
