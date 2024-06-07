@@ -5,7 +5,6 @@
       <entry url="file://$PROJECT_DIR$">
         <entryData>
           <resourceRoots>
-            <path value="file://$PROJECT_DIR$/old_models" />
             <path value="file://$PROJECT_DIR$/docs" />
           </resourceRoots>
         </entryData>

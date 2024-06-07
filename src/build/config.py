@@ -73,7 +73,7 @@ CONTINUOUS_CONFIG = {
 
 # Default configuration values
 STRIPE_ASSAY_CONFIG = {
-    SUBSTRATE_TYPE: STRIPE_REW,
+    SUBSTRATE_TYPE: STRIPE_DUO,
     CUSTOM_FIRST: 1,
     CUSTOM_SECOND: 12,
     ROWS: 150,  # number of rows = max value along y-axis
