@@ -4,7 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99fc88ca-0382-432a-871e-0fe62bcad875" name="Changes" comment="gitignore reverted" />
+    <list default="true" id="99fc88ca-0382-432a-871e-0fe62bcad875" name="Changes" comment="gitignore reverted">
+      <change afterPath="$PROJECT_DIR$/src/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/adaptation_exploration/four_plots_comparison.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/parameter_exploration/adaptation_exploration.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/adaptation_exploration/results/history_comparison.png" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/parameter_exploration/results/history_comparison.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/adaptation_exploration/results/lamba_comparison.png" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/parameter_exploration/results/lamba_comparison.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/adaptation_exploration/results/mu_comparison.png" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/parameter_exploration/results/mu_comparison.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/linear_plot_variations/linear_continous_200.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/linear_plot_variations/linear_continous_200_adap.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/linear_plot_variations/linear_continous_50_adap.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/runtime/runtime.png" beforeDir="false" afterPath="$PROJECT_DIR$/docs/runtime.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/runtime/runtime.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiments/sigmoid_exploration/original_implementation.py" beforeDir="false" afterPath="$PROJECT_DIR$/experiments/sigmoid_exploration/original_implementation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/build/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/build/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/build/config_new.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/build/config_new.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/build/object_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/build/object_factory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/growth_cone/growth_cone.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/growth_cone/growth_cone.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/simulation/simulation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/simulation/simulation.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -88,14 +107,14 @@
       <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation\docs" />
       <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation\src\model\simulation" />
       <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation\src\simulation" />
       <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation\experiments\sigmoid_exploration" />
       <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation\experiments\polarity_reversal\finall" />
-      <recent name="C:\Users\Yavuz Karaca\PycharmProjects\rtpSimulation\experiments\polarity_reversal" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.original_implementation">
     <configuration default="true" type="DjangoTestsConfigurationType">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -173,28 +192,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="knock_in" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="rtpSimulation" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/knock_in" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/knock_in/knock_in.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rtpSimulation" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -209,6 +206,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="original_implementation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rtpSimulation" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/experiments/sigmoid_exploration" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/experiments/sigmoid_exploration/original_implementation.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -356,7 +375,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.knock_in" />
+      <item itemvalue="Python.original_implementation" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python.sigmoid_exploration" />
       <item itemvalue="Python.comparison" />
@@ -365,11 +384,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.polarity_reversal" />
-        <item itemvalue="Python.comparison" />
+        <item itemvalue="Python.original_implementation" />
         <item itemvalue="Python.sigmoid_exploration" />
+        <item itemvalue="Python.comparison" />
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.knock_in" />
+        <item itemvalue="Python.polarity_reversal" />
       </list>
     </recent_temporary>
   </component>
@@ -472,14 +491,7 @@
       <workItem from="1717715462226" duration="257000" />
       <workItem from="1717715729826" duration="212000" />
       <workItem from="1717715973442" duration="68000" />
-    </task>
-    <task id="LOCAL-00045" summary="adaptation comparison completed">
-      <option name="closed" value="true" />
-      <created>1705280115973</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1705280115973</updated>
+      <workItem from="1717716048878" duration="7469000" />
     </task>
     <task id="LOCAL-00046" summary="Todo's deleted">
       <option name="closed" value="true" />
@@ -865,7 +877,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717716024948</updated>
     </task>
-    <option name="localTasksCounter" value="94" />
+    <task id="LOCAL-00094" summary="gitignore reverted">
+      <option name="closed" value="true" />
+      <created>1717716094168</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1717716094169</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -950,10 +970,10 @@
     <SUITE FILE_PATH="coverage/rtpSimulation$sigmoid__1_.coverage" NAME="sigmoid (1) Coverage Results" MODIFIED="1716384928164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/polarity_reversal" />
     <SUITE FILE_PATH="coverage/rtpSimulation$All_UnitTests.coverage" NAME="All UnitTests Coverage Results" MODIFIED="1706571903596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/rtpSimulation$run_tests.coverage" NAME="run_tests Coverage Results" MODIFIED="1707494835922" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/rtpSimulation$comparison.coverage" NAME="comparison Coverage Results" MODIFIED="1717543726494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/sigmoid_exploration" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$comparison.coverage" NAME="comparison Coverage Results" MODIFIED="1717723424864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/sigmoid_exploration" />
     <SUITE FILE_PATH="coverage/rtpSimulation$four_plots_comparison.coverage" NAME="four_plots_comparison Coverage Results" MODIFIED="1717539796743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/adaptation_exploration" />
-    <SUITE FILE_PATH="coverage/rtpSimulation$original_implementation.coverage" NAME="original_implementation Coverage Results" MODIFIED="1717542169970" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/sigmoid_exploration" />
-    <SUITE FILE_PATH="coverage/rtpSimulation$sigmoid_exploration.coverage" NAME="sigmoid_exploration Coverage Results" MODIFIED="1717543750482" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/sigmoid_exploration" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$original_implementation.coverage" NAME="original_implementation Coverage Results" MODIFIED="1717723522035" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/sigmoid_exploration" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$sigmoid_exploration.coverage" NAME="sigmoid_exploration Coverage Results" MODIFIED="1717723507844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/sigmoid_exploration" />
     <SUITE FILE_PATH="coverage/rtpSimulation$sigmoid.coverage" NAME="sigmoid Coverage Results" MODIFIED="1716384308614" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/sigmoid_exploration" />
     <SUITE FILE_PATH="coverage/rtpSimulation$initial_comparison.coverage" NAME="initial_comparison Coverage Results" MODIFIED="1717539829222" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/adaptation_exploration" />
     <SUITE FILE_PATH="coverage/rtpSimulation$sigmoid_exploration__1_.coverage" NAME="sigmoid_exploration (1) Coverage Results" MODIFIED="1717535240326" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/sigmoid_exploration" />
@@ -963,7 +983,7 @@
     <SUITE FILE_PATH="coverage/rtpSimulation$polarity_reversal.coverage" NAME="polarity_reversal Coverage Results" MODIFIED="1717588529263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/polarity_reversal" />
     <SUITE FILE_PATH="coverage/rtpSimulation$gui.coverage" NAME="gui Coverage Results" MODIFIED="1716548373600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mockup_gui" />
     <SUITE FILE_PATH="coverage/rtpSimulation$knock_in.coverage" NAME="knock_in Coverage Results" MODIFIED="1717588453075" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/knock_in" />
-    <SUITE FILE_PATH="coverage/rtpSimulation$main.coverage" NAME="main Coverage Results" MODIFIED="1717715536557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/rtpSimulation$main.coverage" NAME="main Coverage Results" MODIFIED="1717717998155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/rtpSimulation$knock_in__1_.coverage" NAME="knock_in (1) Coverage Results" MODIFIED="1714347924681" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/experiments/knock_in" />
   </component>
 </project>
