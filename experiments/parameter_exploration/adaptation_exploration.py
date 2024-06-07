@@ -1,8 +1,25 @@
-from build.config import SUBSTRATE_TYPE, GAP_INV, CUSTOM_FIRST, CUSTOM_SECOND, ROWS, COLS, GC_COUNT, GC_SIZE, STEP_SIZE, \
-    STEP_AMOUNT, X_STEP_POSSIBILITY, Y_STEP_POSSIBILITY, SIGMA, FORCE, ADAPTATION_ENABLED, ADAPTATION_MU, \
-    ADAPTATION_LAMBDA, ADAPTATION_HISTORY, SIGMOID_STEEPNESS, FORWARD_SIG, REVERSE_SIG, FF_INTER, FT_INTER, SIGMOID_SHIFT
-from build import object_factory
+from build import object_factory, config
 import visualization as vz
+from build.config import ADAPTATION_ENABLED, ADAPTATION_MU, ADAPTATION_LAMBDA, ADAPTATION_HISTORY
+
+simulation_config = {
+    config.GC_COUNT: 1,
+    config.GC_SIZE: 5,
+    config.STEP_SIZE: 1,
+    config.STEP_AMOUNT: 250,
+    config.X_STEP_POSSIBILITY: 1,
+    config.Y_STEP_POSSIBILITY: 0.50,
+    config.SIGMOID_STEEPNESS: 4,
+    config.SIGMOID_SHIFT: 3,
+    config.SIGMA: 1,
+    config.FORCE: True,
+    config.FORWARD_SIG: True,
+    config.REVERSE_SIG: True,
+    config.FF_INTER: True,
+    config.FT_INTER: True,
+}
+
+substrate_config = config.gap_inv_substrate
 
 
 def adaptation_comparison_lambda():
@@ -40,25 +57,8 @@ def adaptation_comparison_lambda():
 
 
 GAP_INVERTED_LAMBDA_1 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.0002,  # 0.0045
@@ -66,25 +66,8 @@ GAP_INVERTED_LAMBDA_1 = {
 }
 
 GAP_INVERTED_LAMBDA_2 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.001,  # 0.0045
@@ -92,25 +75,8 @@ GAP_INVERTED_LAMBDA_2 = {
 }
 
 GAP_INVERTED_LAMBDA_3 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.005,  # 0.0045
@@ -118,25 +84,8 @@ GAP_INVERTED_LAMBDA_3 = {
 }
 
 GAP_INVERTED_LAMBDA_4 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.025,  # 0.0045
@@ -144,25 +93,8 @@ GAP_INVERTED_LAMBDA_4 = {
 }
 
 GAP_INVERTED_LAMBDA_5 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.125,  # 0.0045
@@ -203,25 +135,8 @@ def adaptation_comparison_mu():
 
 
 GAP_INVERTED_MU_1 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.002,  # 0.01
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
@@ -229,25 +144,8 @@ GAP_INVERTED_MU_1 = {
 }
 
 GAP_INVERTED_MU_2 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.005,  # 0.01
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
@@ -255,25 +153,8 @@ GAP_INVERTED_MU_2 = {
 }
 
 GAP_INVERTED_MU_3 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
@@ -281,25 +162,8 @@ GAP_INVERTED_MU_3 = {
 }
 
 GAP_INVERTED_MU_4 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.02,  # 0.01
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
@@ -307,25 +171,8 @@ GAP_INVERTED_MU_4 = {
 }
 
 GAP_INVERTED_MU_5 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.05,  # 0.01
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
@@ -366,25 +213,8 @@ def adaptation_comparison_history():
 
 
 GAP_INVERTED_HISTORY_1 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
@@ -392,25 +222,8 @@ GAP_INVERTED_HISTORY_1 = {
 }
 
 GAP_INVERTED_HISTORY_2 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
@@ -418,25 +231,8 @@ GAP_INVERTED_HISTORY_2 = {
 }
 
 GAP_INVERTED_HISTORY_3 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
@@ -444,25 +240,8 @@ GAP_INVERTED_HISTORY_3 = {
 }
 
 GAP_INVERTED_HISTORY_4 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045
@@ -470,25 +249,8 @@ GAP_INVERTED_HISTORY_4 = {
 }
 
 GAP_INVERTED_HISTORY_5 = {
-    SUBSTRATE_TYPE: GAP_INV,
-    CUSTOM_FIRST: 0.4,
-    CUSTOM_SECOND: 0.3,  # 0.3
-    ROWS: 46,  # number of rows = max value along y-axis
-    COLS: 166,  # number of cols = max value along x-axis
-    GC_COUNT: 1,
-    GC_SIZE: 5,
-    STEP_SIZE: 1,
-    STEP_AMOUNT: 250,  # 100
-    X_STEP_POSSIBILITY: 1,
-    Y_STEP_POSSIBILITY: 0.50,
-    SIGMOID_STEEPNESS: 4,
-    SIGMOID_SHIFT: 3,
-    SIGMA: 1,
-    FORCE: True,
-    FORWARD_SIG: True,
-    REVERSE_SIG: True,
-    FF_INTER: True,
-    FT_INTER: True,
+    **simulation_config,
+    **substrate_config,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.01,  # 0.01
     ADAPTATION_LAMBDA: 0.0045,  # 0.0045

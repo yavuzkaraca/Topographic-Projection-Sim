@@ -212,6 +212,7 @@ class GapSubstrate(BaseSubstrate):
 
 class GapSubstrateInverted(GapSubstrate):
     def initialize_substrate(self):
-        first_part, second_part = self.parts
+        first_part = int(self.cols * self.begin)
+        second_part = first_part + int(self.cols * self.end)
         for col in range(first_part, second_part):
             self.set_col_receptor_only(col)

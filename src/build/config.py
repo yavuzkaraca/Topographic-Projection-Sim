@@ -92,7 +92,7 @@ simulation_advanced = {
 
 adaptation = {
     ADAPTATION_ENABLED: True,
-    ADAPTATION_MU: 0.006,
+    ADAPTATION_MU: 0.01,
     ADAPTATION_LAMBDA: 0.0045,
     ADAPTATION_HISTORY: 50
 }
@@ -133,6 +133,15 @@ gap_substrate = {
     GAP_END: 0.1,
     GAP_FIRST_BLOCK: LIGAND,
     GAP_SECOND_BLOCK: RECEPTOR
+}
+
+gap_inv_substrate = {
+    SUBSTRATE_TYPE: GAP_INV,
+    ROWS: 46,
+    COLS: 166,
+    GAP_BEGIN: 0.4,
+    GAP_END: 0.3,
+    GAP_FIRST_BLOCK: RECEPTOR,
 }
 
 """
