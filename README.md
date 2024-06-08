@@ -17,7 +17,7 @@ and balancing of forward and reverse signaling as the driving forces of adaptive
 Special thanks to Dr. Franco Weth from KIT's Department of Neurobiology for his expert guidance throughout this project.
 
 ## Features
-- **Implemented in Python**: Completely reworked and refined in Python for better accessibility.
+- **Implemented in Python**: Completely reworked and refined in Python for improved accessibility, cleaner software design and enhanced performance.
 - **Increased Configurability**: Enhanced parameter configurability allows for extensive experimentation.
 - **Advanced Visualization Tools**: Integrated visualization tools to better observe and analyze the effects of parameter changes and simulation results.
 
