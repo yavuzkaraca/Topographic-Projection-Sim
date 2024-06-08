@@ -56,7 +56,7 @@ def visualize_substrate_separately(substrate):
 
     :param substrate: The Substrate object containing ligand and receptor values.
     """
-    fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
     # Create colored images for ligands and receptors separately
     ligand_colors = create_blended_colors(substrate.ligands, np.zeros_like(substrate.ligands))
@@ -186,7 +186,7 @@ def visualize_growth_cones(gcs):
     receptors = np.array([gc.receptor_current for gc in gcs])
     ligands = np.array([gc.ligand_current for gc in gcs])
 
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(10, 7))
     plt.plot(receptors, 'o-', label='Receptors')
     plt.plot(ligands, 'o-', color='red', label='Ligands')
     plt.xlabel('Growth Cone ID (sorted along %n-t Axis of Retina)')
@@ -302,7 +302,8 @@ def visualize_trajectories(growth_cones, trajectory_freq=50):
 
     :param growth_cones: List of GrowthCone objects.
     """
-    plt.figure()
+    plt.figure(figsize=(10, 10))  # Direct creation of a figure with specified size
+
     for growth_cone in growth_cones:
         trajectory_x, trajectory_y = zip(*growth_cone.history.position[::trajectory_freq])
         plt.plot(trajectory_x, trajectory_y, label=f'Growth Cone {growth_cones.index(growth_cone)}')

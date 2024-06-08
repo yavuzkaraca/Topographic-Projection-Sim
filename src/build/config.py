@@ -197,7 +197,7 @@ gap_config = {
 """
 
 custom_config = {
-    GC_COUNT: 20,
+    GC_COUNT: 15,
     GC_SIZE: 3,
     STEP_SIZE: 1,
     STEP_AMOUNT: 8000,
@@ -229,7 +229,7 @@ custom_config = {
 """
 
 # Current configuration
-current_config = gap_config
+current_config = custom_config
 
 
 
