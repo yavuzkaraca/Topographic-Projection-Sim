@@ -1,4 +1,5 @@
 # Retinotectal-Projection-Sim
+Copyright (c) 2024 Yavuz Karaca
 
 ## Overview
 This repository hosts a Python-based computational model for simulating retinotectal projections. 
