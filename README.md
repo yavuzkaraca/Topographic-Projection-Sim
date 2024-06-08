@@ -1,14 +1,24 @@
 # Retinotectal-Projection-Sim
 
 ## Overview
-This repository contains a Python-based computational model for simulating retinotectal projections. It builds on the original MATLAB implementation by Fiederling et al., incorporating significant enhancements and extensions for increased flexibility and experimental utility. The model explores the molecular mechanisms of axon guidance, specifically focusing on the Ephrin-A/EphA interaction as described in the 2017 eLife paper by Fiederling et al.
+This repository hosts a Python-based computational model for simulating retinotectal projections. 
+Derived from a thorough analysis of a [MATLAB implementation](https://github.com/elifesciences-publications/RTP_Co-adapt_Model), 
+this project translates and refines key concepts and methods into Python to enhance flexibility and experimental utility. 
+The model explores the Ephrin-A/EphA interaction, a key molecular mechanism of axon guidance. 
+It is underpinned by seminal studies on fiber-fiber chemoaffinity, co-adaptive desensitization, 
+and balancing of forward and reverse signaling as the driving forces of adaptive topographic mapping.
 
-**Original Research Paper**:  
-"Ephrin-A/EphA specific co-adaptation as a novel mechanism in topographic axon guidance" by Fiederling et al., eLife, 2017. [Read the paper](http://dx.doi.org/10.7554/eLife.25533)
+**Foundational Studies**:  
+- "Balancing of ephrin-Eph forward and reverse signaling" by Gebhardt at al., 2012. [Read the paper](https://journals.biologists.com/dev/article/139/2/335/45409/Balancing-of-ephrin-Eph-forward-and-reverse)
+- "Fiber–fiber chemoaffinity in the genesis of topographic projections revisited" by Weth at al., 2014. [Read the paper](https://www.sciencedirect.com/science/article/abs/pii/S1084952114002213?via%3Dihub)
+- "Ephrin-A/EphA specific co-adaptation as a novel mechanism in topographic axon guidance" by Fiederling et al., eLife, 2017. [Read the paper](http://dx.doi.org/10.7554/eLife.25533)
+
+## Acknowledgments
+Special thanks to Dr. Franco Weth from KIT's Department of Neurobiology for his expert guidance throughout this project.
 
 ## Features
-- **Reimplemented in Python**: Completely rewritten codebase from MATLAB to Python for better accessibility and integration with modern scientific libraries.
-- **Increased Configurability**: Enhanced parameter configurability allows for extensive experimentation and simulation under various conditions.
+- **Implemented in Python**: Completely reworked and refined in Python for better accessibility.
+- **Increased Configurability**: Enhanced parameter configurability allows for extensive experimentation.
 - **Advanced Visualization Tools**: Integrated visualization tools to better observe and analyze the effects of parameter changes and simulation results.
 
 ## Getting Started

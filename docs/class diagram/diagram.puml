@@ -1,37 +1,28 @@
 @startuml Overview
-package config{
+package build{
+entity config
+protocol object_factory
+}
+
+package model{
+class GrowthCone
+class Result
+class Simulation
+protocol potential_calculation
+class Substrate
 
 }
-package growth_cone{
-    class GrowthCone
-}
-package potential_calculation{
-    
-}
-package result{
-    class Result
-}
-package object_factory{
-    
-}
-package simulation{
-    class Simulation
-}
-package substrate{
-    class Substrate
-}
-package visualization{
 
-}
 
 config <-- object_factory :  uses
 object_factory --> GrowthCone : creates
 object_factory --> Substrate : creates
-object_factory -> Simulation : creates
-Simulation --> potential_calculation : uses
+object_factory --> Simulation : creates
+Simulation -> potential_calculation : uses
 Simulation ---> Result : creates 
 Result <-- visualization : visualizes
 Substrate <-- visualization : visualizes
+GrowthCone <-- visualization : visualizes
 
 Simulation *--- Substrate 
 Simulation *--- GrowthCone
