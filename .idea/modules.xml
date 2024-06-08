@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/rtpSimulation.iml" filepath="$PROJECT_DIR$/.idea/rtpSimulation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Retinotectal-Projection-Sim.iml" filepath="$PROJECT_DIR$/.idea/Retinotectal-Projection-Sim.iml" />
     </modules>
   </component>
 </project>
