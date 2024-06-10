@@ -104,7 +104,7 @@ continuous_substrate = {
     ROWS: 100,
     COLS: 100,
     CONTINUOUS_SIGNAL_START: 0.01,
-    CONTINUOUS_SIGNAL_END: 0.99
+    CONTINUOUS_SIGNAL_END: 6.99
 }
 
 wedges_substrate = {
@@ -218,7 +218,7 @@ custom_config = {
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     ROWS: 100,
     COLS: 100,
-    CONTINUOUS_SIGNAL_START: 0,
+    CONTINUOUS_SIGNAL_START: 0.01,
     CONTINUOUS_SIGNAL_END: 1
 }
 

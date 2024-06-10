@@ -68,8 +68,12 @@ class Simulation:
         self.prepare_gcs()
         print(f"\nInitialization completed.\n")
 
+        print(f"\nGrowth Cones:\n")
         for gc in self.growth_cones:
             print(gc)
+
+        print(f"\nSubstrate:\n")
+        print(self.substrate)
 
         print(f"\nIteration starts, {self.steps_total} many steps will be taken\n")
         self.iterate_simulation()
