@@ -19,6 +19,10 @@ X_STEP_POSSIBILITY = "x_step_possibility"
 Y_STEP_POSSIBILITY = "y_step_possibility"
 SIGMOID_STEEPNESS = "sigmoid_gain"
 SIGMOID_SHIFT = "sigmoid_shift"
+GC_R_STEEPNESS = "gc_r_steepness"
+GC_R_MAX = "gc_r_max"
+GC_L_STEEPNESS = "gc_l_steepness"
+GC_L_MAX = "gc_l_max"
 SIGMA = "sigma"
 FORCE = "force"
 FORWARD_SIG = "forward_sig"
@@ -48,6 +52,10 @@ COLS = "cols"
 # -----------   Continuous  -----------
 CONTINUOUS_SIGNAL_START = "continuous_signal_start"
 CONTINUOUS_SIGNAL_END = "continuous_signal_end"
+CG_R_STEEPNESS = "cg_r_steepness"
+CG_L_STEEPNESS = "cg_l_steepness"
+CG_R_MAX = "cg_r_max"
+CG_L_MAX = "cg_l_max"
 # -----------   Wedges  -----------
 WEDGE_NARROW_EDGE = "wedge_narrow_edge"
 WEDGE_WIDE_EDGE = "wedge_wedge"
@@ -82,12 +90,16 @@ simulation_advanced = {
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
+    GC_R_STEEPNESS: 1,
+    GC_R_MAX: 1,
+    GC_L_STEEPNESS: 1,
+    GC_L_MAX: 1,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
     REVERSE_SIG: True,
     FF_INTER: True,
-    FT_INTER: True
+    FT_INTER: True,
 }
 
 adaptation = {
@@ -104,7 +116,11 @@ continuous_substrate = {
     ROWS: 100,
     COLS: 100,
     CONTINUOUS_SIGNAL_START: 0.01,
-    CONTINUOUS_SIGNAL_END: 0.99
+    CONTINUOUS_SIGNAL_END: 0.99,
+    CG_R_STEEPNESS: 1,
+    CG_R_MAX: 0.99,
+    CG_L_STEEPNESS: 1,
+    CG_L_MAX: 0.99
 }
 
 wedges_substrate = {
@@ -197,14 +213,22 @@ gap_config = {
 """
 
 custom_config = {
-    GC_COUNT: 15,
+    GC_COUNT: 20,
     GC_SIZE: 3,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 8000,
+    STEP_AMOUNT: 5000,
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
+    GC_R_STEEPNESS: 1, # 1 is standard
+    GC_R_MAX: 0.99, #Value over 0.01 0.99 is standard
+    GC_L_STEEPNESS: 1, # 1 is standard
+    GC_L_MAX: 0.99, # Value over 0.01 0.99 ist standard
+    CG_R_STEEPNESS: 1,
+    CG_R_MAX: 0.99,
+    CG_L_STEEPNESS: 1,
+    CG_L_MAX: 0.99,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
