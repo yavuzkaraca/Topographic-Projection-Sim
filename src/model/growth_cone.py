@@ -18,7 +18,7 @@ class GrowthCone:
         potential (float): Current potential of the growth cone.
     """
 
-    def __init__(self, position, size, ligand, receptor, id, freeze=False):
+    def __init__(self, position, size, ligand, receptor, id, freeze=False, marked=False):
         """
         Initializes a GrowthCone with parameters defined above.
 
@@ -42,6 +42,7 @@ class GrowthCone:
         self.reset_force_ligand = 0
         self.id = id
         self.freeze = freeze
+        self.marked = marked
 
         self.history = History(self.potential, self.adap_co, self.pos_current, self.ligand_start, self.receptor_start,
                                self.reset_force_receptor, self.reset_force_ligand)
