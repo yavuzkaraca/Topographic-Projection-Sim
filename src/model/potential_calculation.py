@@ -7,8 +7,8 @@ import math
 import numpy as np
 
 
-def calculate_potential(gc, pos, gcs, substrate, forward_on=True, reverse_on=True, ff_inter_on=True,
-                        ft_inter_on=True, step=0, num_steps=1, sigmoid_steepness=0, sigmoid_shift=0):
+def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inter_on, ft_inter_on,
+                        step, num_steps, sigmoid_steepness, sigmoid_shift):
     """
     Calculate guidance potential for a growth cone (gc) in a model.
 

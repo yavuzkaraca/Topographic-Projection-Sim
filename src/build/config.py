@@ -197,7 +197,7 @@ gap_config = {
 """
 
 custom_config = {
-    GC_COUNT: 15,
+    GC_COUNT: 25,
     GC_SIZE: 3,
     STEP_SIZE: 1,
     STEP_NUM: 8000,

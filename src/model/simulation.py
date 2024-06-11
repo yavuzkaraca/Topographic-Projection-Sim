@@ -95,7 +95,9 @@ class Simulation:
         """
         for gc in self.growth_cones:
             # Potential initialization
-            gc.potential = calculate_potential(gc, gc.pos, self.growth_cones, self.substrate)
+            gc.potential = calculate_potential(gc, gc.pos, self.growth_cones, self.substrate, self.forward_sig,
+                                               self.reverse_sig, self.ff_inter, self.ft_inter, 0,
+                                               self.num_steps, self.sigmoid_steepness, self.sigmoid_shift)
 
     def iterate_simulation(self):
         """
@@ -113,13 +115,11 @@ class Simulation:
                         self.adapt_growth_cone(gc)
                     pos_new = self.gen_random_step(gc)
                     potential_new = calculate_potential(gc, pos_new, self.growth_cones, self.substrate,
-                                                        self.forward_sig, self.reverse_sig, self.ff_inter,
-                                                        self.ft_inter,
-                                                        step_current, self.num_steps, self.sigmoid_steepness,
-                                                        self.sigmoid_shift)
+                                                        self.forward_sig,
+                                                        self.reverse_sig, self.ff_inter, self.ft_inter, step_current,
+                                                        self.num_steps, self.sigmoid_steepness, self.sigmoid_shift)
                     self.step_decision(gc, pos_new, potential_new)
-
-            # TODO: Early stopping mechanism based on total potential
+        # TODO: Early stopping mechanism based on total potential
 
     def adapt_growth_cone(self, gc):
         """
@@ -164,22 +164,6 @@ class Simulation:
         yt_direction *= self.step_size
 
         return clamp_to_boundaries(gc.pos, self.substrate, gc.size, xt_direction, yt_direction)
-
-    def toggles(self):
-        toggles = {
-            'forward_on': self.forward_sig,
-            'reverse_on': self.reverse_sig,
-            'ff_inter_on': self.ff_inter,
-            'ft_inter_on': self.ft_inter
-        }
-
-    def ff_parameters(self):
-        ff_parameters = {
-            'step': 0,
-            'num_steps': self.num_steps,
-            'sigmoid_steepness': self.sigmoid_steepness,
-            'sigmoid_shift': self.sigmoid_shift
-        }
 
 
 """
