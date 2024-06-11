@@ -1,14 +1,14 @@
 """
-Module providing all methods needed for guidance potential calculation
+Module providing all methods needed for guidance potential calculation. Implemented in the paradigm of functional
+programming to ensure correct behaviour and full test coverage
 """
 
 import math
-
 import numpy as np
 
 
-def calculate_potential(gc, gcs, substrate, ff_coef, forward_on=True, reverse_on=True, ff_inter_on=True,
-                        ft_inter_on=True):
+def calculate_potential(gc, pos, gcs, substrate, forward_on=True, reverse_on=True, ff_inter_on=True,
+                        ft_inter_on=True, step=0, num_steps=1, sigmoid_steepness=0, sigmoid_shift=0):
     """
     Calculate guidance potential for a growth cone (gc) in a model.
 
@@ -22,12 +22,14 @@ def calculate_potential(gc, gcs, substrate, ff_coef, forward_on=True, reverse_on
     # Initialize interaction values
     ft_ligands, ft_receptors = (0, 0)
     ff_ligands, ff_receptors = (0, 0)
+    ff_coef = 0
 
     # Compute interactions only if needed
     if ft_inter_on:
-        ft_ligands, ft_receptors = ft_interaction(gc, substrate)
+        ft_ligands, ft_receptors = ft_interaction(gc, pos, substrate)
     if ff_inter_on:
-        ff_ligands, ff_receptors = ff_interaction(gc, gcs)
+        ff_coef = calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift)
+        ff_ligands, ff_receptors = ff_interaction(gc, pos, gcs)
 
     # Calculate the forward and reverse signals based on flags
     forward_sig = reverse_sig = 0
@@ -46,12 +48,12 @@ def calculate_potential(gc, gcs, substrate, ff_coef, forward_on=True, reverse_on
     return abs(math.log(reverse_sig or 0.0001) - math.log(forward_sig or 0.0001))
 
 
-def ft_interaction(gc, substrate):
+def ft_interaction(gc, pos, substrate):
     """
     Calculate fiber-target interaction between a growth cone and a substrate.
     """
 
-    borders = bounding_box(gc.pos_new, gc.size, substrate)
+    borders = bounding_box(pos, gc.size, substrate)
 
     # Needed to ensure the circular modelling of growth cones
     edge_length = abs(borders[2] - borders[3])
@@ -65,14 +67,14 @@ def ft_interaction(gc, substrate):
             d = euclidean_distance(center, (i, j))
             if d > edge_length / 2:
                 # Eliminate cells outside of the circle, as borders define a square matrix
-                continue
+                continue  # TODO: Use a precalculated mask for performance enhancement
             sum_ligands += substrate.ligands[i, j]
             sum_receptors += substrate.receptors[i, j]
 
     return sum_ligands, sum_receptors
 
 
-def ff_interaction(gc1, gcs):
+def ff_interaction(gc1, pos, gcs):
     """
     Calculate the fiber-fiber interaction between a growth cone (gc1) and a list of other growth cones (gcs).
     """
@@ -83,9 +85,9 @@ def ff_interaction(gc1, gcs):
         if gc1 == gc2:
             # Eliminate self from the gcs list, as self-comparison always matches
             continue
-        d = euclidean_distance(gc2.pos_current, gc1.pos_new)
+        d = euclidean_distance(gc2.pos, pos)
         if d < gc1.size * 2:
-            area = intersection_area(gc1.pos_new, gc2.pos_current, gc1.size)
+            area = intersection_area(pos, gc2.pos, gc1.size)
             sum_ligands += area * gc2.ligand_current
             sum_receptors += area * gc2.receptor_current
 

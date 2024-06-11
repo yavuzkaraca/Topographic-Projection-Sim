@@ -13,12 +13,16 @@ class Result:
         self.gcs = gcs
         self.frame = substrate.rows, substrate.cols
 
+    def get_mapping(self):
+        # TODO: Make a unified projection mapping by automatically dividing between position or id number
+        pass
+
     def get_projection_ypos(self):
         """
         Generates a projection mapping representation based on the initial positions of growth cones.
         """
-        x_values = np.array([gc.pos_current[0] for gc in self.gcs])
-        y_values = np.array([gc.pos_start[1] for gc in self.gcs])
+        x_values = np.array([gc.pos[0] for gc in self.gcs])
+        y_values = np.array([gc.get_start_pos()[1] for gc in self.gcs])
 
         return x_values, y_values
 
@@ -26,7 +30,7 @@ class Result:
         """
         Generates a projection mapping representation based on the ids of growth cones.
         """
-        x_values = np.array([gc.pos_current[0] for gc in self.gcs])
+        x_values = np.array([gc.pos[0] for gc in self.gcs])
         y_values = np.array([gc.id for gc in self.gcs])
 
         return x_values, y_values
@@ -35,7 +39,7 @@ class Result:
         """
         Generates a projection mapping representation based on the ids of growth cones.
         """
-        x_values = np.array([gc.pos_current[0] for gc in self.gcs])
+        x_values = np.array([gc.pos[0] for gc in self.gcs])
         y_values = np.array([gc.id / 2 for gc in self.gcs])
 
         return x_values, y_values
@@ -44,8 +48,8 @@ class Result:
         """
         Retrieves the final positions of the growth cones after the model.
         """
-        x_values = np.array([gc.pos_current[0] for gc in self.gcs])
-        y_values = np.array([gc.pos_current[1] for gc in self.gcs])
+        x_values = np.array([gc.pos[0] for gc in self.gcs])
+        y_values = np.array([gc.pos[1] for gc in self.gcs])
 
         return x_values, y_values
 

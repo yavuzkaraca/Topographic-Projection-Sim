@@ -8,7 +8,7 @@ class TestGrowthCone(unittest.TestCase):
 
     def test_str_method(self):
         expected_str = (f"Receptor: {self.growth_cone.receptor_current}, Ligand: {self.growth_cone.ligand_current}, "
-                        f"Position: {self.growth_cone.pos_current}, Start Position: {self.growth_cone.pos_start}, "
+                        f"Position: {self.growth_cone.pos}, Start Position: {self.growth_cone.pos_start}, "
                         f"Potential: {self.growth_cone.potential}, ID: {self.growth_cone.id}, "
                         f"Adaptation Coefficient: {self.growth_cone.adap_co}, "
                         f"Reset Forces: {self.growth_cone.reset_force_ligand}, {self.growth_cone.reset_force_receptor}")
@@ -20,7 +20,7 @@ class TestGrowthCone(unittest.TestCase):
         self.growth_cone.pos_new = new_position
         self.growth_cone.take_step(new_potential)
         self.assertEqual(self.growth_cone.potential, new_potential)
-        self.assertEqual(self.growth_cone.pos_current, new_position)
+        self.assertEqual(self.growth_cone.pos, new_position)
 
     def test_calculate_adaptation(self):
         mu = 0.5

@@ -17,7 +17,7 @@ class Simulation:
         growth_cones (list): A collection of all active growth cone instances participating in the simulation.
         adaptation (bool): Flag to determine whether growth cones adapt.
         step_size (int): The magnitude of each movement step taken by the growth cones.
-        steps_total (int): The number of steps each growth cone will attempt to complete in the simulation.
+        num_steps (int): The number of steps each growth cone will attempt to complete in the simulation.
         x_step_p (float): The probability of a step generated in the positive x-direction.
         y_step_p (float): The probability of a step generated in the positive y-direction.
         sigma (float): The standard deviation parameter used in potential calculations.
@@ -47,7 +47,7 @@ class Simulation:
         self.growth_cones = growth_cones
         self.adaptation = adaptation
         self.step_size = step_size
-        self.steps_total = num_steps
+        self.num_steps = num_steps
         self.x_step_p = x_step_p
         self.y_step_p = y_step_p
         self.sigmoid_steepness = sigmoid_steepness
@@ -75,7 +75,7 @@ class Simulation:
         print(f"\nSubstrate:\n")
         print(self.substrate)
 
-        print(f"\nIteration starts, {self.steps_total} many steps will be taken\n")
+        print(f"\nIteration starts, {self.num_steps} many steps will be taken\n")
         self.iterate_simulation()
 
         end_time = time.time()  # End timing the model
@@ -93,24 +93,31 @@ class Simulation:
         """
         for gc in self.growth_cones:
             # Potential initialization
-            gc.potential = calculate_potential(gc, self.growth_cones, self.substrate, 0)
+            gc.potential = calculate_potential(gc, gc.pos, self.growth_cones, self.substrate)
 
     def iterate_simulation(self):
         """
         Iteratively processes each simulation step, generating random steps, and making stepping decisions.
         """
-        for step_current in range(self.steps_total):
+        for step_current in range(self.num_steps):
             if step_current % 250 == 0:
                 print(f"Current Step: {step_current}")
+
+            # TODO: Parallelize with futures
 
             for gc in self.growth_cones:
                 if not gc.freeze:  # Check if the growth cone is not frozen
                     if self.adaptation:
                         self.adapt_growth_cone(gc)
-                    self.gen_random_step(gc)
-                    ff_coef = calculate_ff_coef(step_current, self.steps_total, self.sigmoid_steepness,
-                                                self.sigmoid_shift)
-                    self.step_decision(gc, ff_coef)
+                    pos_new = self.gen_random_step(gc)
+                    potential_new = calculate_potential(gc, pos_new, self.growth_cones, self.substrate,
+                                                        self.forward_sig, self.reverse_sig, self.ff_inter,
+                                                        self.ft_inter,
+                                                        step_current, self.num_steps, self.sigmoid_steepness,
+                                                        self.sigmoid_shift)
+                    self.step_decision(gc, pos_new, potential_new)
+
+            # TODO: Early stopping mechanism based on total potential
 
     def adapt_growth_cone(self, gc):
         """
@@ -119,28 +126,24 @@ class Simulation:
         gc.calculate_adaptation(self.mu, self.lambda_, self.history_length)
         gc.apply_adaptation()
 
-    def step_decision(self, gc, ff_coef):
+    def step_decision(self, gc, pos_new, potential_new):
         """
         Decides whether the growth cone should step in the new position proposal based on its guidance potential
         """
-        # Calculate new potential
-        new_potential = calculate_potential(gc, self.growth_cones, self.substrate, ff_coef,
-                                            self.forward_sig, self.reverse_sig, self.ff_inter, self.ft_inter)
-
         if self.force:
             # Force gc to take the random generated step, neglecting ques from guidance potential
-            gc.take_step(new_potential)
+            gc.take_step(potential_new)
             return
 
         # Calculate Step realization probabilities
         old_density = probabilistic_density(gc.potential, self.sigma)
-        new_density = probabilistic_density(new_potential, self.sigma)
+        new_density = probabilistic_density(potential_new, self.sigma)
         probability = calculate_step_probability(old_density, new_density)
 
         # Step Decision
         random_number = random.random()
         if random_number > probability:
-            gc.take_step(new_potential)
+            gc.take_step(pos_new, potential_new)
 
     def gen_random_step(self, gc):
         """
@@ -158,7 +161,23 @@ class Simulation:
         xt_direction *= self.step_size
         yt_direction *= self.step_size
 
-        gc.pos_new = clamp_to_boundaries(gc.pos_current, self.substrate, gc.size, xt_direction, yt_direction)
+        return clamp_to_boundaries(gc.pos, self.substrate, gc.size, xt_direction, yt_direction)
+
+    def toggles(self):
+        toggles = {
+            'forward_on': self.forward_sig,
+            'reverse_on': self.reverse_sig,
+            'ff_inter_on': self.ff_inter,
+            'ft_inter_on': self.ft_inter
+        }
+
+    def ff_parameters(self):
+        ff_parameters = {
+            'step': 0,
+            'num_steps': self.num_steps,
+            'sigmoid_steepness': self.sigmoid_steepness,
+            'sigmoid_shift': self.sigmoid_shift
+        }
 
 
 """
