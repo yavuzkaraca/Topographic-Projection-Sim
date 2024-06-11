@@ -3,6 +3,8 @@ import numpy as np
 from scipy.stats import linregress
 
 
+# TODO: Clean up this module
+
 def visualize_substrate(substrate):
     """
     Visualize the substrate with ligands and receptors.
