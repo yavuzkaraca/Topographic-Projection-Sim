@@ -72,8 +72,10 @@ class Simulation:
         for gc in self.growth_cones:
             print(gc)
 
+        """
         print(f"\nSubstrate:\n")
         print(self.substrate)
+        """
 
         print(f"\nIteration starts, {self.num_steps} many steps will be taken\n")
         self.iterate_simulation()
@@ -132,7 +134,7 @@ class Simulation:
         """
         if self.force:
             # Force gc to take the random generated step, neglecting ques from guidance potential
-            gc.take_step(potential_new)
+            gc.take_step(pos_new, potential_new)
             return
 
         # Calculate Step realization probabilities
