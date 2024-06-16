@@ -20,9 +20,7 @@ Y_STEP_POSSIBILITY = "y_step_possibility"
 SIGMOID_STEEPNESS = "sigmoid_gain"
 SIGMOID_SHIFT = "sigmoid_shift"
 GC_R_STEEPNESS = "gc_r_steepness"
-GC_R_MAX = "gc_r_max"
 GC_L_STEEPNESS = "gc_l_steepness"
-GC_L_MAX = "gc_l_max"
 SIGMA = "sigma"
 FORCE = "force"
 FORWARD_SIG = "forward_sig"
@@ -50,12 +48,12 @@ SUBSTRATE_TYPE = "substrate_type"
 ROWS = "rows"
 COLS = "cols"
 # -----------   Continuous  -----------
-CONTINUOUS_SIGNAL_START = "continuous_signal_start"
-CONTINUOUS_SIGNAL_END = "continuous_signal_end"
-CG_R_STEEPNESS = "cg_r_steepness"
-CG_L_STEEPNESS = "cg_l_steepness"
-CG_R_MAX = "cg_r_max"
-CG_L_MAX = "cg_l_max"
+CONT_GRAD_R_STEEPNESS = "cont_grad_r_steepness"
+CONT_GRAD_L_STEEPNESS = "cont_grad_l_steepness"
+CONT_GRAD_R_MIN_VALUE = "cont_grad_r_min_value"
+CONT_GRAD_L_MIN_VALUE = "cont_grad_l_min_value"
+CONT_GRAD_R_MAX_VALUE = "cont_grad_r_max_value"
+CONT_GRAD_L_MAX_VALUE = "cont_grad_l_max_value"
 # -----------   Wedges  -----------
 WEDGE_NARROW_EDGE = "wedge_narrow_edge"
 WEDGE_WIDE_EDGE = "wedge_wedge"
@@ -91,9 +89,7 @@ simulation_advanced = {
     SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
     GC_R_STEEPNESS: 1,
-    GC_R_MAX: 1,
     GC_L_STEEPNESS: 1,
-    GC_L_MAX: 1,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
@@ -115,12 +111,13 @@ continuous_substrate = {
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     ROWS: 100,
     COLS: 100,
-    CONTINUOUS_SIGNAL_START: 0.01,
-    CONTINUOUS_SIGNAL_END: 0.99,
-    CG_R_STEEPNESS: 1,
-    CG_R_MAX: 0.99,
-    CG_L_STEEPNESS: 1,
-    CG_L_MAX: 0.99
+    CONT_GRAD_R_MIN_VALUE: 0.01,
+    CONT_GRAD_L_MIN_VALUE: 0.01,
+    CONT_GRAD_R_MAX_VALUE: 1,
+    CONT_GRAD_L_MAX_VALUE: 1,
+    CONT_GRAD_R_STEEPNESS: 1,
+    CONT_GRAD_L_STEEPNESS: 1,
+
 }
 
 wedges_substrate = {
@@ -221,14 +218,8 @@ custom_config = {
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
-    GC_R_STEEPNESS: 1, # 1 is standard
-    GC_R_MAX: 0.99, #Value over 0.01 0.99 is standard
-    GC_L_STEEPNESS: 1, # 1 is standard
-    GC_L_MAX: 0.99, # Value over 0.01 0.99 ist standard
-    CG_R_STEEPNESS: 1,
-    CG_R_MAX: 0.99,
-    CG_L_STEEPNESS: 1,
-    CG_L_MAX: 0.99,
+    GC_R_STEEPNESS: 1.4,
+    GC_L_STEEPNESS: 1.4,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
@@ -242,8 +233,12 @@ custom_config = {
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     ROWS: 100,
     COLS: 100,
-    CONTINUOUS_SIGNAL_START: 0,
-    CONTINUOUS_SIGNAL_END: 1
+    CONT_GRAD_R_STEEPNESS: 1.4,
+    CONT_GRAD_L_STEEPNESS: 1.4,
+    CONT_GRAD_R_MIN_VALUE: 0.01,
+    CONT_GRAD_L_MIN_VALUE: 0.01,
+    CONT_GRAD_R_MAX_VALUE: 1,
+    CONT_GRAD_L_MAX_VALUE: 1,
 }
 
 """

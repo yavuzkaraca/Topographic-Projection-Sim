@@ -69,15 +69,16 @@ def build_substrate(config):
     substrate_type = config.get(cfg.SUBSTRATE_TYPE)
 
     if substrate_type == cfg.CONTINUOUS_GRADIENTS:
-        continuous_signal_start = config.get(cfg.CONTINUOUS_SIGNAL_START)
-        continuous_signal_end = config.get(cfg.CONTINUOUS_SIGNAL_END)
-        cg_r_steepness = config.get(cfg.CG_R_STEEPNESS)
-        cg_l_steepness = config.get(cfg.CG_L_STEEPNESS)
-        cg_l_max = config.get(cfg.CG_L_MAX)
-        cg_r_max = config.get(cfg.CG_R_MAX)
-        substrate = ContinuousGradientSubstrate(rows, cols, offset, signal_start=continuous_signal_start,
-                                                signal_end=continuous_signal_end, cg_r_steepness=cg_r_steepness, cg_l_steepness=cg_l_steepness,
-                                                cg_r_max=cg_r_max, cg_l_max=cg_l_max)
+        cont_grad_r_min_value = config.get(cfg.CONT_GRAD_R_MIN_VALUE)
+        cont_grad_l_min_value = config.get(cfg.CONT_GRAD_L_MIN_VALUE)
+        cont_grad_r_max_value = config.get(cfg.CONT_GRAD_R_MAX_VALUE)
+        cont_grad_l_max_value = config.get(cfg.CONT_GRAD_L_MAX_VALUE)
+        cont_grad_r_steepness = config.get(cfg.CONT_GRAD_R_STEEPNESS)
+        cont_grad_l_steepness = config.get(cfg.CONT_GRAD_L_STEEPNESS)
+        substrate = ContinuousGradientSubstrate(rows, cols, offset, cont_grad_r_min_value=cont_grad_r_min_value,
+                                                cont_grad_l_min_value=cont_grad_l_min_value, cont_grad_r_max_value=cont_grad_r_max_value,
+                                                cont_grad_l_max_value=cont_grad_l_max_value,
+                                                cont_grad_r_steepness=cont_grad_r_steepness, cont_grad_l_steepness=cont_grad_l_steepness)
 
     elif substrate_type == cfg.WEDGES:
         wedge_narrow_edge = config.get(cfg.WEDGE_NARROW_EDGE)
@@ -122,18 +123,16 @@ def initialize_growth_cones(config):
     gc_count = config.get(cfg.GC_COUNT)
     size = config.get(cfg.GC_SIZE)
     rows = config.get(cfg.ROWS)
-    gc_r_max = config.get(cfg.GC_R_MAX)
     gc_r_steepness = config.get(cfg.GC_R_STEEPNESS)
-    gc_l_max = config.get(cfg.GC_L_MAX)
     gc_l_steepness = config.get(cfg.GC_L_STEEPNESS)
 
     # Non-linear gradient for receptors, starting at 0.99 and decreasing to 0.01
-    receptor_gradient = np.linspace(0, 1, gc_count) ** (0.4 + gc_r_steepness)
-    receptors = 0.01 + receptor_gradient * gc_r_max
+    receptors = np.linspace(0, 1, gc_count) ** gc_r_steepness
+    #receptors = 0.01 + receptor_gradient * 0.99 --> I think this is not necessary
 
     # I changed this to a equation in order to be able to manipulate both curves independently
-    ligand_gradient = np.linspace(1, 0, gc_count) ** (0.4 + gc_l_steepness)
-    ligands = 0.01 + ligand_gradient * gc_l_max
+    ligand_gradient = np.linspace(1, 0, gc_count) ** gc_l_steepness
+    ligands = 0.01 + ligand_gradient * 0.99
 
     # Create an array of evenly distributed y-positions for the growth cones
     y_positions = np.linspace(size, rows - 1 + size, gc_count, dtype=int)
