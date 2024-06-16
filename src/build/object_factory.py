@@ -28,7 +28,7 @@ def build_simulation(config):
 
     # Extract attributes from the configuration
     step_size = config.get(cfg.STEP_SIZE)
-    num_steps = config.get(cfg.STEP_AMOUNT)
+    num_steps = config.get(cfg.STEP_NUM)
 
     x_step_p = config.get(cfg.X_STEP_POSSIBILITY)
     y_step_p = config.get(cfg.Y_STEP_POSSIBILITY)

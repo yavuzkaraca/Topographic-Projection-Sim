@@ -1,6 +1,6 @@
 from build.config import SUBSTRATE_TYPE, CONTINUOUS_GRADIENTS, CONTINUOUS_SIGNAL_START, CONTINUOUS_SIGNAL_END, ROWS, COLS, GC_COUNT, \
     GC_SIZE, STEP_SIZE, \
-    STEP_AMOUNT, X_STEP_POSSIBILITY, Y_STEP_POSSIBILITY, SIGMA, FORCE, ADAPTATION_ENABLED, ADAPTATION_MU, \
+    STEP_NUM, X_STEP_POSSIBILITY, Y_STEP_POSSIBILITY, SIGMA, FORCE, ADAPTATION_ENABLED, ADAPTATION_MU, \
     ADAPTATION_LAMBDA, ADAPTATION_HISTORY, SIGMOID_STEEPNESS, FORWARD_SIG, REVERSE_SIG, FF_INTER, FT_INTER, SIGMOID_SHIFT
 from build import object_factory
 import visualization as vz
@@ -16,7 +16,7 @@ POLARITY_REV_1_CONFIG = {
     GC_COUNT: 100,
     GC_SIZE: 1,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 2000,
+    STEP_NUM: 2000,
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
@@ -42,7 +42,7 @@ POLARITY_REV_2_CONFIG = {
     GC_COUNT: 100,
     GC_SIZE: 1,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 3000,
+    STEP_NUM: 3000,
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
@@ -75,7 +75,7 @@ def polarity_reversal_two_halves():
     result1 = simulation.run()
 
     vz.visualize_results_on_substrate(result1, simulation.substrate)
-    vz.visualize_projection(result1, simulation.substrate, "First Wave of Growth Cones", True)
+    vz.visualize_projection_polyfit(result1, simulation.substrate, "First Wave of Growth Cones", True)
 
     # Stabilize gc_first
     for gc in gc_first:

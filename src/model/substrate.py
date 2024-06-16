@@ -3,6 +3,7 @@ Module providing the Substrate class for substrate representation and initializa
 """
 
 import numpy as np
+import pandas as pd
 
 from build import config
 
@@ -45,10 +46,14 @@ class BaseSubstrate:
         Return a string representation of the ligand and receptor grids in the substrate.
         """
         # Create a string representation of the substrate
+
+        ligands_df = pd.DataFrame(self.ligands)
+        receptors_df = pd.DataFrame(self.receptors)
+
         result = "Ligands:\n"
-        result += str(self.ligands) + "\n\n"
+        result += str(ligands_df) + "\n\n"
         result += "Receptors:\n"
-        result += str(self.receptors)
+        result += str(receptors_df)
         return result
 
     def set_col_ligand_only(self, col):

@@ -12,7 +12,7 @@ Module providing configuration settings for a retinotectal projection model.
 GC_COUNT = "gc_count"
 GC_SIZE = "gc_size"
 STEP_SIZE = "step_size"
-STEP_AMOUNT = "step_amount"
+STEP_NUM = "step_num"
 
 # Simulation Advanced Parameters
 X_STEP_POSSIBILITY = "x_step_possibility"
@@ -82,7 +82,7 @@ simulation_basic = {
     GC_COUNT: 20,
     GC_SIZE: 3,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 8000,
+    STEP_NUM: 8000,
 }
 
 simulation_advanced = {
@@ -99,7 +99,7 @@ simulation_advanced = {
     FORWARD_SIG: True,
     REVERSE_SIG: True,
     FF_INTER: True,
-    FT_INTER: True,
+    FT_INTER: True
 }
 
 adaptation = {
@@ -170,7 +170,7 @@ continuous_config = {
     GC_COUNT: 100,
     GC_SIZE: 3,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 8000,
+    STEP_NUM: 8000,
     **simulation_advanced,
     **adaptation,
     **continuous_substrate
@@ -180,7 +180,7 @@ wedges_config = {
     GC_COUNT: 10,
     GC_SIZE: 10,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 8000,
+    STEP_NUM: 8000,
     **simulation_advanced,
     ADAPTATION_ENABLED: False,
     **wedges_substrate
@@ -190,7 +190,7 @@ stripe_config = {
     GC_COUNT: 10,
     GC_SIZE: 10,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 8000,
+    STEP_NUM: 8000,
     **simulation_advanced,
     ADAPTATION_ENABLED: False,
     **stripe_substrate
@@ -200,7 +200,7 @@ gap_config = {
     GC_COUNT: 5,
     GC_SIZE: 5,
     STEP_SIZE: 2,
-    STEP_AMOUNT: 8000,
+    STEP_NUM: 8000,
     **simulation_advanced,
     **adaptation,
     **gap_substrate
@@ -216,7 +216,7 @@ custom_config = {
     GC_COUNT: 20,
     GC_SIZE: 3,
     STEP_SIZE: 1,
-    STEP_AMOUNT: 5000,
+    STEP_NUM: 8000,
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
@@ -252,7 +252,6 @@ custom_config = {
 --------------------------------------
 """
 
-# Current configuration
 current_config = custom_config
 
 
