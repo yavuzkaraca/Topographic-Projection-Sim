@@ -137,7 +137,7 @@ class WedgeSubstrate(BaseSubstrate):
         # Slope of upper and lower triangle hypotenuse
         ratio = (cols / max_edge_length) * 2
 
-        # TODO: Fit extra cones to bottom, test ligands and receptors separately!
+        # TODO: @Feature Fit extra cones to bottom, test ligands and receptors separately!
         for n in range(num_wedges_x):
 
             # Make upper triangle
@@ -172,7 +172,7 @@ class StripeSubstrate(BaseSubstrate):
         super().__init__(rows, cols, offset, **kwargs)
         self.fwd = kwargs.get('fwd')
         self.rew = kwargs.get('rew')
-        self.conc = kwargs.get('conc')  # TODO: implement concentration
+        self.conc = kwargs.get('conc')  # TODO: @Feature implement concentration
         self.width = kwargs.get('width')
 
     def initialize_substrate(self):

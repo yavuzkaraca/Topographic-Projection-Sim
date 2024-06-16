@@ -67,7 +67,7 @@ def ft_interaction(gc, pos, substrate):
             d = euclidean_distance(center, (i, j))
             if d > edge_length / 2:
                 # Eliminate cells outside of the circle, as borders define a square matrix
-                continue  # TODO: Use a precalculated mask for performance enhancement
+                continue  # TODO: @Performance Use a precalculated mask
             sum_ligands += substrate.ligands[i, j]
             sum_receptors += substrate.receptors[i, j]
 
@@ -85,7 +85,7 @@ def ff_interaction(gc1, pos, gcs):
         if gc1 == gc2:
             # Eliminate self from the gcs list, as self-comparison always matches
             continue
-        # TODO: Sort GCs based on location and use pruning algorithms for performance enhancement
+        # TODO: @Performance Sort GCs based on location and use pruning algorithms
         d = euclidean_distance(gc2.pos, pos)
         if d < gc1.size * 2:
             area = intersection_area(pos, gc2.pos, gc1.size)
@@ -155,5 +155,5 @@ def intersection_area(gc1_pos, gc2_pos, radius):
         z = x ** 2
         y = math.sqrt(radius ** 2 - z)
         area = radius ** 2 * math.acos(x / radius) - x * y
-        # TODO: clean-fix area calculation
+        # TODO: @Clean clean-fix area calculation
         return area * 1.5  # magic number for quick dirty fix

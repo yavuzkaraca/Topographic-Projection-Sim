@@ -14,7 +14,7 @@ class Result:
         self.frame = substrate.rows, substrate.cols
 
     def get_mapping(self):
-        # TODO: Make a unified projection mapping by automatically dividing between position or id number
+        # TODO: @Clean Make a unified projection mapping by automatically dividing between position or id number
         pass
 
     def get_projection_ypos(self):

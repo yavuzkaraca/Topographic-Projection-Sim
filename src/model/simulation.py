@@ -107,7 +107,7 @@ class Simulation:
             if step_current % 250 == 0:
                 print(f"Current Step: {step_current}")
 
-            # TODO: Parallelize with futures
+            # TODO: @Performance Parallelize with futures
 
             for gc in self.growth_cones:
                 if not gc.freeze:  # Check if the growth cone is not frozen
@@ -119,7 +119,7 @@ class Simulation:
                                                         self.ft_inter, step_current, self.num_steps,
                                                         self.sigmoid_steepness, self.sigmoid_shift)
                     self.step_decision(gc, pos_new, potential_new)
-        # TODO: Early stopping mechanism based on total potential
+        # TODO: @Performance Early stopping mechanism based on total potential
 
     def adapt_growth_cone(self, gc):
         """
