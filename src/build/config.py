@@ -21,12 +21,17 @@ SIGMOID_STEEPNESS = "sigmoid_gain"
 SIGMOID_SHIFT = "sigmoid_shift"
 GC_R_STEEPNESS = "gc_r_steepness"
 GC_L_STEEPNESS = "gc_l_steepness"
+GC_R_MIN = "gc_r_min"
+GC_L_MIN = "gc_l_min"
+GC_R_MAX = "gc_r_max"
+GC_L_MAX = "gc_l_max"
 SIGMA = "sigma"
 FORCE = "force"
 FORWARD_SIG = "forward_sig"
 REVERSE_SIG = "reverse_sig"
 FF_INTER = "ff_inter"
 FT_INTER = "ft_inter"
+CIS_INTER = "cis_inter"
 
 
 # Adaptation
@@ -50,10 +55,10 @@ COLS = "cols"
 # -----------   Continuous  -----------
 CONT_GRAD_R_STEEPNESS = "cont_grad_r_steepness"
 CONT_GRAD_L_STEEPNESS = "cont_grad_l_steepness"
-CONT_GRAD_R_MIN_VALUE = "cont_grad_r_min_value"
-CONT_GRAD_L_MIN_VALUE = "cont_grad_l_min_value"
-CONT_GRAD_R_MAX_VALUE = "cont_grad_r_max_value"
-CONT_GRAD_L_MAX_VALUE = "cont_grad_l_max_value"
+CONT_GRAD_R_MIN = "cont_grad_r_min"
+CONT_GRAD_L_MIN = "cont_grad_l_min"
+CONT_GRAD_R_MAX = "cont_grad_r_max"
+CONT_GRAD_L_MAX = "cont_grad_l_max"
 # -----------   Wedges  -----------
 WEDGE_NARROW_EDGE = "wedge_narrow_edge"
 WEDGE_WIDE_EDGE = "wedge_wedge"
@@ -82,7 +87,6 @@ simulation_basic = {
     STEP_SIZE: 1,
     STEP_NUM: 8000,
 }
-
 simulation_advanced = {
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
@@ -90,13 +94,19 @@ simulation_advanced = {
     SIGMOID_SHIFT: 3,
     GC_R_STEEPNESS: 1,
     GC_L_STEEPNESS: 1,
+    GC_R_MIN: 0,
+    GC_L_MIN: 0,
+    GC_R_MAX: 1,
+    GC_L_MAX: 1,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
     REVERSE_SIG: True,
     FF_INTER: True,
-    FT_INTER: True
+    FT_INTER: True,
+    CIS_INTER: True
 }
+
 
 adaptation = {
     ADAPTATION_ENABLED: True,
@@ -111,10 +121,10 @@ continuous_substrate = {
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     ROWS: 100,
     COLS: 100,
-    CONT_GRAD_R_MIN_VALUE: 0.01,
-    CONT_GRAD_L_MIN_VALUE: 0.01,
-    CONT_GRAD_R_MAX_VALUE: 1,
-    CONT_GRAD_L_MAX_VALUE: 1,
+    CONT_GRAD_R_MIN: 0.01,
+    CONT_GRAD_L_MIN: 0.01,
+    CONT_GRAD_R_MAX: 1,
+    CONT_GRAD_L_MAX: 1,
     CONT_GRAD_R_STEEPNESS: 1,
     CONT_GRAD_L_STEEPNESS: 1,
 
@@ -220,12 +230,17 @@ custom_config = {
     SIGMOID_SHIFT: 3,
     GC_R_STEEPNESS: 1.4,
     GC_L_STEEPNESS: 1.4,
+    GC_R_MIN: 0.01,
+    GC_L_MIN: 0.01,
+    GC_R_MAX: 0.2,
+    GC_L_MAX: 0.2,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
     REVERSE_SIG: True,
     FF_INTER: True,
     FT_INTER: True,
+    CIS_INTER: True,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
@@ -235,10 +250,10 @@ custom_config = {
     COLS: 100,
     CONT_GRAD_R_STEEPNESS: 1.4,
     CONT_GRAD_L_STEEPNESS: 1.4,
-    CONT_GRAD_R_MIN_VALUE: 0.01,
-    CONT_GRAD_L_MIN_VALUE: 0.01,
-    CONT_GRAD_R_MAX_VALUE: 1,
-    CONT_GRAD_L_MAX_VALUE: 1,
+    CONT_GRAD_R_MIN: 0.01,
+    CONT_GRAD_L_MIN: 0.01,
+    CONT_GRAD_R_MAX: 0.2,
+    CONT_GRAD_L_MAX: 0.2,
 }
 
 """

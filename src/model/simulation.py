@@ -34,7 +34,7 @@ class Simulation:
     """
 
     def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigmoid_steepness,
-                 sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter, mu, lambda_,
+                 sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter,cis_inter, mu, lambda_,
                  history_length):
         """
         Initialize the Simulation class with necessary parameters explained above.
@@ -43,6 +43,7 @@ class Simulation:
         self.reverse_sig = reverse_sig
         self.ff_inter = ff_inter
         self.ft_inter = ft_inter
+        self.cis_inter = cis_inter
         self.substrate = substrate
         self.growth_cones = growth_cones
         self.adaptation = adaptation

@@ -40,6 +40,7 @@ def build_simulation(config):
     reverse_sig = config.get(cfg.REVERSE_SIG)
     ff_inter = config.get(cfg.FF_INTER)
     ft_inter = config.get(cfg.FT_INTER)
+    cis_inter = config.get(cfg.CIS_INTER)
 
     adaptation = config.get(cfg.ADAPTATION_ENABLED)
     mu = 0
@@ -54,7 +55,7 @@ def build_simulation(config):
     # Initialize the Simulation object with the new parameters
     simulation = Simulation(substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p,
                             sigmoid_steepness, sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter,
-                            ft_inter, mu, lambda_, history_length)
+                            ft_inter, cis_inter, mu, lambda_, history_length)
     return simulation
 
 
@@ -69,15 +70,15 @@ def build_substrate(config):
     substrate_type = config.get(cfg.SUBSTRATE_TYPE)
 
     if substrate_type == cfg.CONTINUOUS_GRADIENTS:
-        cont_grad_r_min_value = config.get(cfg.CONT_GRAD_R_MIN_VALUE)
-        cont_grad_l_min_value = config.get(cfg.CONT_GRAD_L_MIN_VALUE)
-        cont_grad_r_max_value = config.get(cfg.CONT_GRAD_R_MAX_VALUE)
-        cont_grad_l_max_value = config.get(cfg.CONT_GRAD_L_MAX_VALUE)
+        cont_grad_r_min = config.get(cfg.CONT_GRAD_R_MIN)
+        cont_grad_l_min = config.get(cfg.CONT_GRAD_L_MIN)
+        cont_grad_r_max = config.get(cfg.CONT_GRAD_R_MAX)
+        cont_grad_l_max = config.get(cfg.CONT_GRAD_L_MAX)
         cont_grad_r_steepness = config.get(cfg.CONT_GRAD_R_STEEPNESS)
         cont_grad_l_steepness = config.get(cfg.CONT_GRAD_L_STEEPNESS)
-        substrate = ContinuousGradientSubstrate(rows, cols, offset, cont_grad_r_min_value=cont_grad_r_min_value,
-                                                cont_grad_l_min_value=cont_grad_l_min_value, cont_grad_r_max_value=cont_grad_r_max_value,
-                                                cont_grad_l_max_value=cont_grad_l_max_value,
+        substrate = ContinuousGradientSubstrate(rows, cols, offset, cont_grad_r_min=cont_grad_r_min,
+                                                cont_grad_l_min=cont_grad_l_min, cont_grad_r_max=cont_grad_r_max,
+                                                cont_grad_l_max=cont_grad_l_max,
                                                 cont_grad_r_steepness=cont_grad_r_steepness, cont_grad_l_steepness=cont_grad_l_steepness)
 
     elif substrate_type == cfg.WEDGES:
@@ -125,14 +126,28 @@ def initialize_growth_cones(config):
     rows = config.get(cfg.ROWS)
     gc_r_steepness = config.get(cfg.GC_R_STEEPNESS)
     gc_l_steepness = config.get(cfg.GC_L_STEEPNESS)
+    gc_r_min = config.get(cfg.GC_R_MIN)
+    gc_l_min = config.get(cfg.GC_L_MIN)
+    gc_r_max = config.get(cfg.GC_R_MAX)
+    gc_l_max = config.get(cfg.GC_L_MAX)
 
     # Non-linear gradient for receptors, starting at 0.99 and decreasing to 0.01
-    receptors = np.linspace(0, 1, gc_count) ** gc_r_steepness
-    #receptors = 0.01 + receptor_gradient * 0.99 --> I think this is not necessary
+    receptor_gradient = np.linspace(gc_r_min, gc_r_max, gc_count) ** gc_r_steepness
 
     # I changed this to a equation in order to be able to manipulate both curves independently
-    ligand_gradient = np.linspace(1, 0, gc_count) ** gc_l_steepness
-    ligands = 0.01 + ligand_gradient * 0.99
+    ligand_gradient = np.linspace(gc_l_max, gc_l_min, gc_count) ** gc_l_steepness
+
+    # Scale the resulting gradients to the desired range
+    # Step 2: Normalize values to range [0, 1]
+    receptor_gradient = (receptor_gradient - gc_r_min ** gc_r_steepness) / (gc_r_max ** gc_r_steepness - gc_r_min ** gc_r_steepness)
+    ligand_gradient = (ligand_gradient - gc_l_max ** gc_l_steepness) / (gc_l_min ** gc_l_steepness - gc_l_max ** gc_l_steepness)
+
+    # Step 3: Scale normalized values to new range [new_min, new_max]
+    receptor_gradient = gc_r_min + (gc_r_max - gc_r_min) * receptor_gradient
+    ligand_gradient = gc_l_max + (gc_l_min - gc_l_max) * ligand_gradient
+
+    receptors = receptor_gradient * 0.99999
+    ligands = ligand_gradient * 0.99999
 
     # Create an array of evenly distributed y-positions for the growth cones
     y_positions = np.linspace(size, rows - 1 + size, gc_count, dtype=int)
