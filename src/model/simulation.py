@@ -115,9 +115,9 @@ class Simulation:
                         self.adapt_growth_cone(gc)
                     pos_new = self.gen_random_step(gc)
                     potential_new = calculate_potential(gc, pos_new, self.growth_cones, self.substrate,
-                                                        self.forward_sig,
-                                                        self.reverse_sig, self.ff_inter, self.ft_inter, step_current,
-                                                        self.num_steps, self.sigmoid_steepness, self.sigmoid_shift)
+                                                        self.forward_sig, self.reverse_sig, self.ff_inter,
+                                                        self.ft_inter, step_current, self.num_steps,
+                                                        self.sigmoid_steepness, self.sigmoid_shift)
                     self.step_decision(gc, pos_new, potential_new)
         # TODO: Early stopping mechanism based on total potential
 
