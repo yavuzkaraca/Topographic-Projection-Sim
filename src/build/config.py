@@ -232,16 +232,16 @@ custom_config = {
     GC_L_STEEPNESS: 1.4,
     GC_R_MIN: 0.01,
     GC_L_MIN: 0.01,
-    GC_R_MAX: 0.2,
-    GC_L_MAX: 0.2,
+    GC_R_MAX: 1,
+    GC_L_MAX: 1,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
     REVERSE_SIG: True,
     FF_INTER: True,
     FT_INTER: True,
-    CIS_INTER: True,
-    ADAPTATION_ENABLED: True,
+    CIS_INTER: False,
+    ADAPTATION_ENABLED: False,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
     ADAPTATION_HISTORY: 50,
@@ -252,8 +252,8 @@ custom_config = {
     CONT_GRAD_L_STEEPNESS: 1.4,
     CONT_GRAD_R_MIN: 0.01,
     CONT_GRAD_L_MIN: 0.01,
-    CONT_GRAD_R_MAX: 0.2,
-    CONT_GRAD_L_MAX: 0.2,
+    CONT_GRAD_R_MAX: 1,
+    CONT_GRAD_L_MAX: 1
 }
 
 """

@@ -7,7 +7,7 @@ import math
 import numpy as np
 
 
-def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inter_on, ft_inter_on,
+def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inter_on, ft_inter_on, cis_inter_on,
                         step, num_steps, sigmoid_steepness, sigmoid_shift):
     """
     Calculate guidance potential for a growth cone (gc) in a model.
@@ -34,9 +34,9 @@ def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inte
     # Calculate the forward and reverse signals based on flags
     forward_sig = reverse_sig = 0
     if forward_on:
-        forward_sig = gc.receptor_current * (ft_ligands + gc.ligand_current + (ff_coef * ff_ligands))
+        forward_sig = gc.receptor_current * (ft_ligands + (gc.ligand_current if cis_inter_on else 0) + (ff_coef * ff_ligands))
     if reverse_on:
-        reverse_sig = gc.ligand_current * (ft_receptors + gc.receptor_current + (ff_coef * ff_receptors))
+        reverse_sig = gc.ligand_current * (ft_receptors + (gc.receptor_current if cis_inter_on else 0) + (ff_coef * ff_receptors))
 
     # Round and calculate the potential
     forward_sig = float("{:.6f}".format(forward_sig))
