@@ -8,7 +8,7 @@ import numpy as np
 
 
 def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inter_on, ft_inter_on, cis_inter_on,
-                        step, num_steps, sigmoid_steepness, sigmoid_shift):
+                        step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid_height):
     """
     Calculate guidance potential for a growth cone (gc) in a model.
 
@@ -28,7 +28,7 @@ def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inte
     if ft_inter_on:
         ft_ligands, ft_receptors = ft_interaction(gc, pos, substrate)
     if ff_inter_on:
-        ff_coef = calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift)
+        ff_coef = calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid_height)
         ff_ligands, ff_receptors = ff_interaction(gc, pos, gcs)
 
     # Calculate the forward and reverse signals based on flags
@@ -37,7 +37,6 @@ def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inte
         forward_sig = gc.receptor_current * (ft_ligands + (gc.ligand_current if cis_inter_on else 0) + (ff_coef * ff_ligands))
     if reverse_on:
         reverse_sig = gc.ligand_current * (ft_receptors + (gc.receptor_current if cis_inter_on else 0) + (ff_coef * ff_receptors))
-
     # Round and calculate the potential
     forward_sig = float("{:.6f}".format(forward_sig))
     reverse_sig = float("{:.6f}".format(reverse_sig))
@@ -45,6 +44,7 @@ def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inte
     # Return calculated log difference or handle case when both signals are zero
     if forward_sig == 0 and reverse_sig == 0:
         return 0  # Both signals zero would lead to log(0), handle this case as zero potential difference
+    print(ft_ligands, ft_receptors, gc.ligand_current, gc.receptor_current, ff_ligands, ff_receptors)
     return abs(math.log(reverse_sig or 0.0001) - math.log(forward_sig or 0.0001))
 
 
@@ -95,7 +95,7 @@ def ff_interaction(gc1, pos, gcs):
     return sum_ligands, sum_receptors
 
 
-def calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid_height=1):
+def calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid_height):
     """
     Calculate the ratio of steps taken using a sigmoid function, scaled by sigmoid_gain.
 

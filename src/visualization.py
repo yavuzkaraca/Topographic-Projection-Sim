@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import linregress
+from model import potential_calculation as pt
 
 
 # TODO: Clean up this module
@@ -338,6 +339,29 @@ def visualize_adaptation(growth_cones):
 
     # Adjust layout and show the figure
     plt.tight_layout()
+    plt.show()
+
+
+def visualize_ff_coef(simulation):
+    """
+    Takes Values from ff_coef_calculation and visualizes them.
+    """
+    num_steps = simulation.num_steps
+    sigmoid_steepness = simulation.sigmoid_steepness
+    sigmoid_shift = simulation.sigmoid_shift
+    sigmoid_height = simulation.sigmoid_height
+
+    # Generate step values from 0 to num_steps
+    steps = np.linspace(0, num_steps, 500)  # 500 points for a smooth curve
+
+    # Calculate the corresponding y values using the calculate_ff_coef function
+    y_values = [pt.calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid_height) for step in steps]
+
+    # Plot the function
+    plt.plot(steps / num_steps, y_values, label='Sigmoid Approximation')
+    plt.xlabel('Step Ratio')
+    plt.ylabel('ff_coefficient')
+    plt.title('Sigmoid Function Approximation')
     plt.show()
 
 

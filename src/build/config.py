@@ -19,6 +19,7 @@ X_STEP_POSSIBILITY = "x_step_possibility"
 Y_STEP_POSSIBILITY = "y_step_possibility"
 SIGMOID_STEEPNESS = "sigmoid_gain"
 SIGMOID_SHIFT = "sigmoid_shift"
+SIGMOID_HEIGHT = "sigmoid_height"
 GC_R_STEEPNESS = "gc_r_steepness"
 GC_L_STEEPNESS = "gc_l_steepness"
 GC_R_MIN = "gc_r_min"
@@ -92,10 +93,11 @@ simulation_advanced = {
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
-    GC_R_STEEPNESS: 1,
-    GC_L_STEEPNESS: 1,
-    GC_R_MIN: 0,
-    GC_L_MIN: 0,
+    SIGMOID_HEIGHT: 10,
+    GC_R_STEEPNESS: 1.4,
+    GC_L_STEEPNESS: 1.4,
+    GC_R_MIN: 0.01,
+    GC_L_MIN: 0.01,
     GC_R_MAX: 1,
     GC_L_MAX: 1,
     SIGMA: 0.12,
@@ -220,7 +222,7 @@ gap_config = {
 """
 
 custom_config = {
-    GC_COUNT: 20,
+    GC_COUNT: 100,
     GC_SIZE: 3,
     STEP_SIZE: 1,
     STEP_NUM: 8000,
@@ -228,6 +230,7 @@ custom_config = {
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
+    SIGMOID_HEIGHT: 10,
     GC_R_STEEPNESS: 1.4,
     GC_L_STEEPNESS: 1.4,
     GC_R_MIN: 0.01,
@@ -240,8 +243,8 @@ custom_config = {
     REVERSE_SIG: True,
     FF_INTER: True,
     FT_INTER: True,
-    CIS_INTER: False,
-    ADAPTATION_ENABLED: False,
+    CIS_INTER: True,
+    ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
     ADAPTATION_HISTORY: 50,

@@ -34,7 +34,7 @@ class Simulation:
     """
 
     def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigmoid_steepness,
-                 sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter,cis_inter, mu, lambda_,
+                 sigmoid_shift, sigmoid_height, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter,cis_inter, mu, lambda_,
                  history_length):
         """
         Initialize the Simulation class with necessary parameters explained above.
@@ -53,6 +53,7 @@ class Simulation:
         self.y_step_p = y_step_p
         self.sigmoid_steepness = sigmoid_steepness
         self.sigmoid_shift = sigmoid_shift
+        self.sigmoid_height = sigmoid_height
         self.sigma = sigma
         self.force = force
         self.mu = mu
@@ -98,7 +99,7 @@ class Simulation:
             # Potential initialization
             gc.potential = calculate_potential(gc, gc.pos, self.growth_cones, self.substrate, self.forward_sig,
                                                self.reverse_sig, self.ff_inter, self.ft_inter, self.cis_inter, 0,
-                                               self.num_steps, self.sigmoid_steepness, self.sigmoid_shift)
+                                               self.num_steps, self.sigmoid_steepness, self.sigmoid_shift, self.sigmoid_height)
 
     def iterate_simulation(self):
         """
@@ -118,8 +119,9 @@ class Simulation:
                     potential_new = calculate_potential(gc, pos_new, self.growth_cones, self.substrate,
                                                         self.forward_sig, self.reverse_sig, self.ff_inter,
                                                         self.ft_inter, self.cis_inter, step_current, self.num_steps,
-                                                        self.sigmoid_steepness, self.sigmoid_shift)
+                                                        self.sigmoid_steepness, self.sigmoid_shift, self.sigmoid_height)
                     self.step_decision(gc, pos_new, potential_new)
+
         # TODO: Early stopping mechanism based on total potential
 
     def adapt_growth_cone(self, gc):
