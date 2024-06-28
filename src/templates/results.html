@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulation Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Simulation Results</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Growth Cones</h2>
+                <img src="{{ url_for('static', filename='growth_cones.png') }}" class="img-fluid" alt="Growth Cones">
+            </div>
+            <div class="col-md-6">
+                <h2>Substrate</h2>
+                <img src="{{ url_for('static', filename='substrate.png') }}" class="img-fluid" alt="Substrate">
+                <img src="{{ url_for('static', filename='substrate_separate.png') }}" class="img-fluid mt-3" alt="Substrate Separate">
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h2>Projection Linear</h2>
+                <img src="{{ url_for('static', filename='projection_linear.png') }}" class="img-fluid" alt="Projection Linear">
+            </div>
+            <div class="col-md-6">
+                <h2>Results on Substrate</h2>
+                <img src="{{ url_for('static', filename='results_on_substrate.png') }}" class="img-fluid" alt="Results on Substrate">
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h2>Trajectories on Substrate</h2>
+                <img src="{{ url_for('static', filename='trajectory_on_substrate.png') }}" class="img-fluid" alt="Trajectory on Substrate">
+            </div>
+            <div class="col-md-6">
+                <h2>Trajectories</h2>
+                <img src="{{ url_for('static', filename='trajectories.png') }}" class="img-fluid" alt="Trajectories">
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
