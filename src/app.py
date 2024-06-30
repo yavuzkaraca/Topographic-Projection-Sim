@@ -1,5 +1,4 @@
-# app.py
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, jsonify
 import os
 
 from matplotlib import pyplot as plt
@@ -13,46 +12,45 @@ app.config['SECRET_KEY'] = 'your_secret_key_here'
 
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    return render_template('home.html')
 
 
-@app.route('/config', methods=['GET', 'POST'])
-def configure():
+@app.route('/papers')
+def papers():
+    return "<h1>Papers Page</h1>"
+
+
+@app.route('/simulation', methods=['GET', 'POST'])
+def simulation():
     form = ConfigForm()
-    if form.validate_on_submit():
-        cfg.current_config = {
-            cfg.SUBSTRATE_TYPE: form.SUBSTRATE_TYPE.data,
-            cfg.ROWS: form.ROWS.data,
-            cfg.COLS: form.COLS.data,
-            cfg.GC_COUNT: form.GC_COUNT.data,
-            cfg.GC_SIZE: form.GC_SIZE.data,
-            cfg.STEP_SIZE: form.STEP_SIZE.data,
-            cfg.STEP_NUM: form.STEP_AMOUNT.data,
-            cfg.X_STEP_POSSIBILITY: form.X_STEP_POSSIBILITY.data,
-            cfg.Y_STEP_POSSIBILITY: form.Y_STEP_POSSIBILITY.data,
-            cfg.SIGMOID_STEEPNESS: form.SIGMOID_GAIN.data,
-            cfg.SIGMOID_SHIFT: form.SIGMOID_SHIFT.data,
-            cfg.SIGMA: form.SIGMA.data,
-            cfg.FORCE: form.FORCE.data,
-            cfg.FORWARD_SIG: form.FORWARD_SIG.data,
-            cfg.REVERSE_SIG: form.REVERSE_SIG.data,
-            cfg.FF_INTER: form.FF_INTER.data,
-            cfg.FT_INTER: form.FT_INTER.data,
-            cfg.ADAPTATION_ENABLED: form.ADAPTATION_ENABLED.data,
-            cfg.ADAPTATION_MU: form.ADAPTATION_MU.data,
-            cfg.ADAPTATION_LAMBDA: form.ADAPTATION_LAMBDA.data,
-            cfg.ADAPTATION_HISTORY: form.ADAPTATION_HISTORY.data,
-            'CUSTOM_FIRST': form.CUSTOM_FIRST.data,
-            'CUSTOM_SECOND': form.CUSTOM_SECOND.data,
-        }
-        return redirect(url_for('index'))
-    return render_template('config.html', form=form)
+    return render_template('index.html', form=form)
+
+
+@app.route('/login')
+def login():
+    return "<h1>Login Page</h1>"
+
+
+@app.route('/source-code')
+def source_code():
+    return "<h1>Source Code Page</h1>"
+
+
 
 
 @app.route('/run_simulation', methods=['POST'])
 def run_simulation():
     simulation = object_factory.build_default()
+    total_steps = cfg.current_config[cfg.STEP_NUM]
+    step_interval = 250
+
+    # Simulate progress
+    for step in range(0, total_steps, step_interval):
+        if step % step_interval == 0:
+            # Simulate some work
+            print(f"Current Step: {step}")
+
     result = simulation.run()
 
     # Save visualization images
@@ -87,12 +85,7 @@ def run_simulation():
     plt.savefig('static/trajectories.png')
     plt.close()
 
-    return redirect(url_for('results'))
-
-
-@app.route('/results')
-def results():
-    return render_template('results.html')
+    return jsonify({'success': True})
 
 
 if __name__ == '__main__':

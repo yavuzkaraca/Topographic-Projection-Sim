@@ -1,12 +1,10 @@
-# forms.py
 from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, IntegerField, FloatField, SelectField, SubmitField
-from wtforms.validators import DataRequired
+
 
 class ConfigForm(FlaskForm):
-    SUBSTRATE_TYPE = SelectField('Substrate Type', choices=[('CONTINUOUS_GRADIENTS', 'Continuous Gradients'), ('WEDGES', 'Wedges'), ('STRIPE', 'Stripe'), ('GAP', 'Gap'), ('GAP_INV', 'Gap Inverted')])
-    CUSTOM_FIRST = IntegerField('Custom First', default=0)
-    CUSTOM_SECOND = IntegerField('Custom Second', default=0)
+    SUBSTRATE_TYPE = SelectField('Substrate Type', choices=[('CONTINUOUS_GRADIENTS', 'Continuous Gradients'),
+                                                            ('WEDGES', 'Wedges'), ('STRIPE', 'Stripe'), ('GAP', 'Gap')])
     ROWS = IntegerField('Rows', default=100)
     COLS = IntegerField('Cols', default=100)
     GC_COUNT = IntegerField('Growth Cone Count', default=20)
