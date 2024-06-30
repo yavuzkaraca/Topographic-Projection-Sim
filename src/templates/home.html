@@ -8,13 +8,29 @@
         body {
             background-color: black;
             color: white;
-            height: 70vh;
+            height: 80vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             margin: 0;
             padding: 0;
+        }
+        .navbar {
+            width: 100%;
+            background-color: rgba(5, 3, 10, 0.8);  /* A dark purplish tone */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px;
+            position: fixed;
+            top: 0;
+            z-index: 3;
+            box-sizing: border-box;
+            border-bottom: 1px solid white;  /* Add this line for a white border */
+        }
+        .logo {
+            width: 120px;
         }
         .background-image {
             position: absolute;
@@ -58,24 +74,16 @@
         .option-button:hover {
             transform: scale(1.1);
         }
-        .logo {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-        }
-        .login-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <a href="/" class="logo">
+            <img src="/static/logo.png" alt="Homepage Logo" width="120">
+        </a>
+        <a href="/login" class="btn btn-outline-light">Login</a>
+    </div>
     <div class="background-image" style="background-image: url('/static/background.jpg');"></div>
-    <a href="/" class="logo">
-        <img src="/static/logo.png" alt="Homepage Logo" width="100">
-    </a>
-    <a href="/login" class="btn btn-outline-light login-button">Login</a>
     <div class="content">
         <h1>Welcome to RTP Simulation</h1>
         <p>Login for dedicated simulation time. :)</p>

@@ -8,7 +8,7 @@
         body {
             background-color: black;
             color: white;
-            margin: 30px;
+            margin-top: 80px;
             padding: 0;
         }
         .background-image {
@@ -21,10 +21,21 @@
             background-position: center;
             opacity: 0.15;
         }
+        .navbar {
+            width: 100%;
+            background-color: rgba(5, 3, 10, 0.8);  /* A dark purplish tone */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px;
+            position: fixed;
+            top: 0;
+            z-index: 3;
+            box-sizing: border-box;
+            border-bottom: 1px solid white;  /* Add this line for a white border */
+        }
         .logo {
-            position: absolute;
-            top: 30px;
-            left: 30px;
+            width: 120px;
         }
         .content {
             position: relative;
@@ -83,7 +94,6 @@
             .config-panel {
                 width: 60%;
             }
-
             .button-group {
                 flex-direction: row;
             }
@@ -91,10 +101,13 @@
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <a href="/" class="logo">
+            <img src="/static/logo.png" alt="Homepage Logo" width="120">
+        </a>
+        <a href="/login" class="btn btn-outline-light">Login</a>
+    </div>
     <div class="background-image" style="background-image: url('/static/background.jpg');"></div>
-    <a href="/" class="logo">
-        <img src="/static/logo.png" alt="Homepage Logo" width="100">
-    </a>
     <div class="content">
         <h1>Simulation Configuration</h1>
         <div class="config-panel">
@@ -118,19 +131,19 @@
                 <div class="row">
                     <div class="col-md-3 mb-3">
                         <label for="gcCount" class="form-label">Growth Cone Count</label>
-                        <input type="number" class="form-control" id="gcCount" name="gc_count" required>
+                        <input type="number" class="form-control" id="gcCount" name="gc_count" min="1" required>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="gcSize" class="form-label">Growth Cone Size</label>
-                        <input type="number" class="form-control" id="gcSize" name="gc_size" required>
+                        <input type="number" class="form-control" id="gcSize" name="gc_size" min="1" required>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="stepSize" class="form-label">Step Size</label>
-                        <input type="number" class="form-control" id="stepSize" name="step_size" required>
+                        <input type="number" class="form-control" id="stepSize" name="step_size" min="1" required>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label for="stepNum" class="form-label">Step Amount</label>
-                        <input type="number" class="form-control" id="stepNum" name="step_num" required>
+                        <input type="number" class="form-control" id="stepNum" name="step_num" min="1" max="100000" required>
                     </div>
                 </div>
                 <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#advancedConfig" aria-expanded="false" aria-controls="advancedConfig">
@@ -145,17 +158,17 @@
                             <div class="row">
                                 <div class="col-md-3 mb-3">
                                     <label for="xStepPossibility" class="form-label">X Step Possibility</label>
-                                    <input type="number" step="any" class="form-control" id="xStepPossibility" name="x_step_possibility" required>
+                                    <input type="number" step="any" class="form-control" id="xStepPossibility" name="x_step_possibility" min="0" max="1" required>
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label for="yStepPossibility" class="form-label">Y Step Possibility</label>
-                                    <input type="number" step="any" class="form-control" id="yStepPossibility" name="y_step_possibility" required>
+                                    <input type="number" step="any" class="form-control" id="yStepPossibility" name="y_step_possibility" min="0" max="1" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-3 mb-3">
                                     <label for="sigmoidSteepness" class="form-label">Sigmoid Steepness</label>
-                                    <input type="number" step="any" class="form-control" id="sigmoidSteepness" name="sigmoid_gain" required>
+                                    <input type="number" step="any" class="form-control" id="sigmoidSteepness" name="sigmoid_gain" min="0" required>
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label for="sigmoidShift" class="form-label">Sigmoid Shift</label>
@@ -163,7 +176,7 @@
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label for="sigmoidHeight" class="form-label">Sigmoid Height</label>
-                                    <input type="number" step="any" class="form-control" id="sigmoidHeight" name="sigmoid_height" required>
+                                    <input type="number" step="any" class="form-control" id="sigmoidHeight" name="sigmoid_height" min="0" required>
                                 </div>
                                     <div class="col-md-3 mb-3 d-flex align-items-end">
                                         <button type="button" class="btn btn-secondary w-80 mx-3" data-bs-toggle="modal" data-bs-target="#visualizeSigmoidModal">
@@ -174,7 +187,7 @@
                             <div class="row">
                                 <div class="col-md-3 mb-3">
                                     <label for="sigma" class="form-label">Sigma</label>
-                                    <input type="number" step="any" class="form-control" id="sigma" name="sigma" required>
+                                    <input type="number" step="any" class="form-control" id="sigma" name="sigma" min="0" max="1" required>
                                 </div>
                             </div>
                         </div>
@@ -226,7 +239,7 @@
                                             </div>
                                             <div class="col-md-4 mb-3">
                                                 <label for="adaptationHistory" class="form-label">History</label>
-                                                <input type="number" class="form-control" id="adaptationHistory" name="adaptation_history" required>
+                                                <input type="number" class="form-control" id="adaptationHistory" name="adaptation_history" min="0" required>
                                             </div>
                                         </div>
                                     </div>
