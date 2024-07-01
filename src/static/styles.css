@@ -100,3 +100,30 @@ body {
         flex-direction: row;
     }
 }
+.option-buttons {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+.option-buttons a {
+    text-decoration: none;
+}
+.option-button {
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 2px solid white;
+    border-radius: 10px;
+    transition: transform 0.2s;
+}
+.option-button:hover {
+    transform: scale(1.1);
+}
