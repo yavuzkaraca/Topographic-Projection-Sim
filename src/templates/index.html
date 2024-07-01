@@ -50,12 +50,37 @@
         // Trigger change event on page load to set default values
         document.getElementById('substrateType').dispatchEvent(new Event('change'));
     </script>
+
     <script>
         document.getElementById('startSimulation').addEventListener('click', function() {
-            // Handle simulation start logic
+            const config = {}; // Get the configuration from your form or session
+            document.querySelectorAll('#configForm [name]').forEach(element => {
+                if (element.type === 'checkbox') {
+                    config[element.name] = element.checked;
+                } else {
+                    config[element.name] = element.value;
+                }
+            });
+
             const progressBar = document.getElementById('progressBar');
             const resultsSection = document.getElementById('resultsSection');
             let progress = 0;
+
+            fetch('/start_simulation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(config),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the results
+                document.getElementById('visualization').innerHTML = JSON.stringify(data, null, 2);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
 
             // Simulate progress update
             const interval = setInterval(() => {
@@ -65,8 +90,6 @@
                 if (progress >= 100) {
                     clearInterval(interval);
                     resultsSection.style.display = 'block';
-                    // Call a function to visualize results
-                    visualizeResults();
                 }
             }, 500);
         });

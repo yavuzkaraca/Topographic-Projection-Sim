@@ -27,6 +27,14 @@ def simulation():
     return render_template('index.html', form=form)
 
 
+@app.route('/start_simulation', methods=['POST'])
+def start_simulation():
+    config = request.json
+    simulation = object_factory.build_simulation(config)  # Assuming you have a Simulation class that takes a config
+    results = simulation.run()  # Assuming your Simulation class has a run method
+    return jsonify(results)
+
+
 @app.route('/login')
 def login():
     return "<h1>Login Page</h1>"
@@ -37,6 +45,7 @@ def source_code():
     return "<h1>Source Code Page</h1>"
 
 
+"""
 @app.route('/run_simulation', methods=['POST'])
 def run_simulation():
     simulation = object_factory.build_default()
@@ -72,7 +81,7 @@ def run_simulation():
     plt.close()
 
     return jsonify({'success': True})
-
+"""
 
 if __name__ == '__main__':
     app.run(debug=True)
