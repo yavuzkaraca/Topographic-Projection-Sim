@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, IntegerField, FloatField, SelectField, SubmitField
+import build.config as cfg
 
 
 class ConfigForm(FlaskForm):

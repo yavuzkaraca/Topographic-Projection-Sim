@@ -1,35 +1,198 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Configuration</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1 class="text-center">Configuration</h1>
-        <form method="post">
-            {{ form.hidden_tag() }}
-            <div class="row">
-                <div class="col-md-6 offset-md-3">
-                    <div class="mb-3">
-                        {{ form.SUBSTRATE_TYPE.label(class="form-label") }}
-                        {{ form.SUBSTRATE_TYPE(class="form-control") }}
+<div class="config-panel">
+    <form id="configForm">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="substrateType" class="form-label">Substrate Type</label>
+                <select class="form-select" id="substrateType" name="substrate_type" required>
+                    <option value="CONTINUOUS_GRADIENTS">Continuous Gradients</option>
+                    <option value="WEDGES">Wedges</option>
+                    <option value="STRIPE">Stripe</option>
+                    <option value="GAP">Gap</option>
+                </select>
+            </div>
+            <div class="col-md-8 mb-3 d-flex align-items-end justify-content-between">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#configureSubstrateModal">
+                    Configure Substrate
+                </button>
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#configureGCModal">
+                    Configure GCs
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label for="gcCount" class="form-label">Growth Cone Count</label>
+                <input type="number" class="form-control" id="gcCount" name="gc_count" min="1" required>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="gcSize" class="form-label">Growth Cone Size</label>
+                <input type="number" class="form-control" id="gcSize" name="gc_size" min="1" required>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="stepSize" class="form-label">Step Size</label>
+                <input type="number" class="form-control" id="stepSize" name="step_size" min="1" required>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="stepNum" class="form-label">Step Amount</label>
+                <input type="number" class="form-control" id="stepNum" name="step_num" min="1" max="100000" required>
+            </div>
+        </div>
+        <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#advancedConfig" aria-expanded="false" aria-controls="advancedConfig">
+            Advanced Parameters
+        </button>
+        <div class="collapse" id="advancedConfig">
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5 class="mb-0">Advanced Simulation Parameters</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label for="xStepPossibility" class="form-label">X Step Possibility</label>
+                            <input type="number" step="any" class="form-control" id="xStepPossibility" name="x_step_possibility" min="0" max="1" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="yStepPossibility" class="form-label">Y Step Possibility</label>
+                            <input type="number" step="any" class="form-control" id="yStepPossibility" name="y_step_possibility" min="0" max="1" required>
+                        </div>
                     </div>
-                    {% for field in form if field.type != 'HiddenField' and field.name != 'SUBSTRATE_TYPE' %}
-                    <div class="mb-3">
-                        {{ field.label(class="form-label") }}
-                        {{ field(class="form-control") }}
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label for="sigmoidSteepness" class="form-label">Sigmoid Steepness</label>
+                            <input type="number" step="any" class="form-control" id="sigmoidSteepness" name="sigmoid_gain" min="0" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="sigmoidShift" class="form-label">Sigmoid Shift</label>
+                            <input type="number" step="any" class="form-control" id="sigmoidShift" name="sigmoid_shift" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="sigmoidHeight" class="form-label">Sigmoid Height</label>
+                            <input type="number" step="any" class="form-control" id="sigmoidHeight" name="sigmoid_height" min="0" required>
+                        </div>
+                            <div class="col-md-3 mb-3 d-flex align-items-end">
+                                <button type="button" class="btn btn-secondary w-80 mx-3" data-bs-toggle="modal" data-bs-target="#visualizeSigmoidModal">
+                                    Visualize
+                                </button>
+                            </div>
                     </div>
-                    {% endfor %}
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Save Configuration</button>
-                        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label for="sigma" class="form-label">Sigma</label>
+                            <input type="number" step="any" class="form-control" id="sigma" name="sigma" min="0" max="1" required>
+                        </div>
                     </div>
                 </div>
             </div>
-        </form>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <h5 class="mb-0">Interaction Switches</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-6 mb-3 form-check">
+                                <input class="form-check-input" type="checkbox" id="forwardSig" name="forward_sig" checked>
+                                <label class="form-check-label" for="forwardSig">Forward Signal</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-check">
+                                <input class="form-check-input" type="checkbox" id="reverseSig" name="reverse_sig" checked>
+                                <label class="form-check-label" for="reverseSig">Reverse Signal</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-check">
+                                <input class="form-check-input" type="checkbox" id="ffInter" name="ff_inter" checked>
+                                <label class="form-check-label" for="ffInter">Fiber-Fiber Interaction</label>
+                            </div>
+                            <div class="col-md-6 mb-3 form-check">
+                                <input class="form-check-input" type="checkbox" id="ftInter" name="ft_inter" checked>
+                                <label class="form-check-label" for="ftInter">Fiber-Target Interaction</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mt-3">
+                        <div class="card-header">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="adaptationEnabled" name="adaptation_enabled" checked data-bs-toggle="collapse" data-bs-target="#adaptationConfig" aria-expanded="false" aria-controls="adaptationConfig">
+                                <label class="form-check-label" for="adaptationEnabled">Adaptation</label>
+                            </div>
+                        </div>
+                        <div id="adaptationConfig" class="collapse show">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="adaptationMu" class="form-label">Mu</label>
+                                        <input type="number" step="any" class="form-control" id="adaptationMu" name="adaptation_mu" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="adaptationLambda" class="form-label">Lambda</label>
+                                        <input type="number" step="any" class="form-control" id="adaptationLambda" name="adaptation_lambda" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="adaptationHistory" class="form-label">History</label>
+                                        <input type="number" class="form-control" id="adaptationHistory" name="adaptation_history" min="0" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal for Configure Substrate -->
+<div class="modal fade" id="configureSubstrateModal" tabindex="-1" aria-labelledby="configureSubstrateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="configureSubstrateModalLabel">Configure Substrate</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form elements or configuration inputs go here -->
+                <form>
+                    <div class="mb-3">
+                        <label for="substrateTypeModal" class="form-label">Substrate Type</label>
+                        <select class="form-select" id="substrateTypeModal" name="substrate_type" required>
+                            <option value="CONTINUOUS_GRADIENTS">Continuous Gradients</option>
+                            <option value="WEDGES">Wedges</option>
+                            <option value="STRIPE">Stripe</option>
+                            <option value="GAP">Gap</option>
+                        </select>
+                    </div>
+                    <!-- Add more form fields as needed -->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
+
+<!-- Modal for Configure GCs -->
+<div class="modal fade" id="configureGCModal" tabindex="-1" aria-labelledby="configureGCModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="configureGCModalLabel">Configure GCs</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Form elements or configuration inputs go here -->
+                <form>
+                    <div class="mb-3">
+                        <!-- Add more form fields as needed -->
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
