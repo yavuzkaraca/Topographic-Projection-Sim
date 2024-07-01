@@ -3,7 +3,7 @@ import numpy as np
 from scipy.stats import linregress
 
 
-# TODO: @Clean Clean up this module
+# TODO: @Clean up this module
 
 def visualize_substrate(substrate):
     """
@@ -111,6 +111,7 @@ def visualize_results_on_substrate(result, substrate):
     # plt.show()
     plt.savefig('static/growth_cones.png')
     plt.close()
+
 
 def visualize_projection_linear(result, substrate):
     """
