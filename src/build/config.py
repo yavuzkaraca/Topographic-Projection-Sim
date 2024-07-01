@@ -26,13 +26,11 @@ REVERSE_SIG = "reverse_sig"
 FF_INTER = "ff_inter"
 FT_INTER = "ft_inter"
 
-
 # Adaptation
 ADAPTATION_ENABLED = "adaptation_enabled"
 ADAPTATION_MU = "adaptation_mu"
 ADAPTATION_LAMBDA = "adaptation_lambda"
 ADAPTATION_HISTORY = "adaptation_history"
-
 
 # Substrate Types
 CONTINUOUS_GRADIENTS = "continuous_gradients"
@@ -150,45 +148,107 @@ gap_inv_substrate = {
 --------------------------------------
 """
 
-continuous_config = {
-    GC_COUNT: 100,
-    GC_SIZE: 3,
-    STEP_SIZE: 1,
-    STEP_NUM: 8000,
-    **simulation_advanced,
-    **adaptation,
-    **continuous_substrate
+default_configs = {
+    "CONTINUOUS_GRADIENTS": {
+        GC_COUNT: 100,
+        GC_SIZE: 3,
+        STEP_SIZE: 1,
+        STEP_NUM: 8000,
+        X_STEP_POSSIBILITY: 0.55,
+        Y_STEP_POSSIBILITY: 0.50,
+        SIGMOID_STEEPNESS: 4,
+        SIGMOID_SHIFT: 3,
+        SIGMA: 0.12,
+        FORCE: False,
+        FORWARD_SIG: True,
+        REVERSE_SIG: True,
+        FF_INTER: True,
+        FT_INTER: True,
+        ADAPTATION_ENABLED: True,
+        ADAPTATION_MU: 0.01,
+        ADAPTATION_LAMBDA: 0.0045,
+        ADAPTATION_HISTORY: 50,
+        SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
+        ROWS: 100,
+        COLS: 100,
+        CONTINUOUS_SIGNAL_START: 0.01,
+        CONTINUOUS_SIGNAL_END: 6.99
+    },
+    "WEDGES": {
+        GC_COUNT: 10,
+        GC_SIZE: 10,
+        STEP_SIZE: 1,
+        STEP_NUM: 8000,
+        X_STEP_POSSIBILITY: 0.55,
+        Y_STEP_POSSIBILITY: 0.50,
+        SIGMOID_STEEPNESS: 4,
+        SIGMOID_SHIFT: 3,
+        SIGMA: 0.12,
+        FORCE: False,
+        FORWARD_SIG: True,
+        REVERSE_SIG: True,
+        FF_INTER: True,
+        FT_INTER: True,
+        ADAPTATION_ENABLED: False,
+        SUBSTRATE_TYPE: WEDGES,
+        ROWS: 96,
+        COLS: 96,
+        WEDGE_NARROW_EDGE: 1,
+        WEDGE_WIDE_EDGE: 12
+    },
+    "STRIPE": {
+        GC_COUNT: 10,
+        GC_SIZE: 10,
+        STEP_SIZE: 1,
+        STEP_NUM: 8000,
+        X_STEP_POSSIBILITY: 0.55,
+        Y_STEP_POSSIBILITY: 0.50,
+        SIGMOID_STEEPNESS: 4,
+        SIGMOID_SHIFT: 3,
+        SIGMA: 0.12,
+        FORCE: False,
+        FORWARD_SIG: True,
+        REVERSE_SIG: True,
+        FF_INTER: True,
+        FT_INTER: True,
+        ADAPTATION_ENABLED: False,
+        SUBSTRATE_TYPE: STRIPE,
+        ROWS: 150,
+        COLS: 150,
+        STRIPE_FWD: True,
+        STRIPE_REW: True,
+        STRIPE_CONC: 1,
+        STRIPE_WIDTH: 12
+    },
+    "GAP": {
+        GC_COUNT: 5,
+        GC_SIZE: 5,
+        STEP_SIZE: 2,
+        STEP_NUM: 8000,
+        X_STEP_POSSIBILITY: 0.55,
+        Y_STEP_POSSIBILITY: 0.50,
+        SIGMOID_STEEPNESS: 4,
+        SIGMOID_SHIFT: 3,
+        SIGMA: 0.12,
+        FORCE: False,
+        FORWARD_SIG: True,
+        REVERSE_SIG: True,
+        FF_INTER: True,
+        FT_INTER: True,
+        ADAPTATION_ENABLED: True,
+        ADAPTATION_MU: 0.01,
+        ADAPTATION_LAMBDA: 0.0045,
+        ADAPTATION_HISTORY: 50,
+        SUBSTRATE_TYPE: GAP,
+        ROWS: 96,
+        COLS: 96,
+        GAP_BEGIN: 0.5,
+        GAP_END: 0.1,
+        GAP_FIRST_BLOCK: LIGAND,
+        GAP_SECOND_BLOCK: RECEPTOR
+    },
 }
 
-wedges_config = {
-    GC_COUNT: 10,
-    GC_SIZE: 10,
-    STEP_SIZE: 1,
-    STEP_NUM: 8000,
-    **simulation_advanced,
-    ADAPTATION_ENABLED: False,
-    **wedges_substrate
-}
-
-stripe_config = {
-    GC_COUNT: 10,
-    GC_SIZE: 10,
-    STEP_SIZE: 1,
-    STEP_NUM: 8000,
-    **simulation_advanced,
-    ADAPTATION_ENABLED: False,
-    **stripe_substrate
-}
-
-gap_config = {
-    GC_COUNT: 5,
-    GC_SIZE: 5,
-    STEP_SIZE: 2,
-    STEP_NUM: 8000,
-    **simulation_advanced,
-    **adaptation,
-    **gap_substrate
-}
 
 """
 --------------------------------------
@@ -229,7 +289,3 @@ custom_config = {
 """
 
 current_config = custom_config
-
-
-
-

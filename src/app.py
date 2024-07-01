@@ -1,11 +1,10 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, Response
 import os
-
-from matplotlib import pyplot as plt
-
+import io
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
 from build import object_factory, config as cfg
 import visualization as vz
-from forms import ConfigForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
@@ -21,18 +20,63 @@ def papers():
     return "<h1>Papers Page</h1>"
 
 
+@app.route('/default-configs')
+def get_default_configs():
+    return jsonify(cfg.default_configs)
+
+
 @app.route('/simulation', methods=['GET', 'POST'])
 def simulation():
-    form = ConfigForm()
-    return render_template('index.html', form=form)
+    return render_template('index.html')
 
 
-@app.route('/start_simulation', methods=['POST'])
+@app.route('/start_simulation', methods=['GET', 'POST'])
 def start_simulation():
-    config = request.json
-    simulation = object_factory.build_simulation(config)  # Assuming you have a Simulation class that takes a config
-    results = simulation.run()  # Assuming your Simulation class has a run method
+    form_data = request.form
+
+    # Extract data from form and build configuration dictionary
+    config_data = {
+        cfg.SUBSTRATE_TYPE: form_data.get(cfg.SUBSTRATE_TYPE),
+        cfg.ROWS: int(form_data.get(cfg.ROWS)),
+        cfg.COLS: int(form_data.get(cfg.COLS)),
+        cfg.GC_COUNT: int(form_data.get(cfg.GC_COUNT)),
+        cfg.GC_SIZE: int(form_data.get(cfg.GC_SIZE)),
+        cfg.STEP_SIZE: int(form_data.get(cfg.STEP_SIZE)),
+        cfg.STEP_NUM: int(form_data.get(cfg.STEP_NUM)),
+        cfg.X_STEP_POSSIBILITY: float(form_data.get(cfg.X_STEP_POSSIBILITY)),
+        cfg.Y_STEP_POSSIBILITY: float(form_data.get(cfg.Y_STEP_POSSIBILITY)),
+        cfg.SIGMOID_GAIN: float(form_data.get(cfg.SIGMOID_GAIN)),
+        cfg.SIGMOID_SHIFT: float(form_data.get(cfg.SIGMOID_SHIFT)),
+        cfg.SIGMA: float(form_data.get(cfg.SIGMA)),
+        cfg.FORCE: form_data.get(cfg.FORCE) == 'on',
+        cfg.FORWARD_SIG: form_data.get(cfg.FORWARD_SIG) == 'on',
+        cfg.REVERSE_SIG: form_data.get(cfg.REVERSE_SIG) == 'on',
+        cfg.FF_INTER: form_data.get(cfg.FF_INTER) == 'on',
+        cfg.FT_INTER: form_data.get(cfg.FT_INTER) == 'on',
+        cfg.ADAPTATION_ENABLED: form_data.get(cfg.ADAPTATION_ENABLED) == 'on',
+        cfg.ADAPTATION_MU: float(form_data.get(cfg.ADAPTATION_MU)),
+        cfg.ADAPTATION_LAMBDA: float(form_data.get(cfg.ADAPTATION_LAMBDA)),
+        cfg.ADAPTATION_HISTORY: int(form_data.get(cfg.ADAPTATION_HISTORY))
+    }
+
+    # Build the simulation with the config
+    simulation = object_factory.build_simulation(config_data)
+
+    # Run the simulation
+    results = simulation.run()
+
+    # Return results as JSON (modify as needed)
     return jsonify(results)
+
+
+@app.route('/plot')
+def plot_png():
+    # Assuming you have a way to create or obtain a Substrate object
+    sim = object_factory.build_default()  # Replace with actual substrate creation
+    fig = vz.visualize_substrate(sim.substrate)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
 
 
 @app.route('/login')
@@ -45,43 +89,12 @@ def source_code():
     return "<h1>Source Code Page</h1>"
 
 
-"""
-@app.route('/run_simulation', methods=['POST'])
-def run_simulation():
+def setup_simulation():
     simulation = object_factory.build_default()
-    total_steps = cfg.current_config[cfg.STEP_NUM]
-    step_interval = 250
-
     vz.visualize_growth_cones(simulation.growth_cones)
-    plt.savefig('static/growth_cones.png')
-    plt.close()
-
     vz.visualize_substrate(simulation.substrate)
-    plt.savefig('static/substrate.png')
-    plt.close()
-
     vz.visualize_substrate_separately(simulation.substrate)
-    plt.savefig('static/substrate_separate.png')
-    plt.close()
 
-    vz.visualize_projection_linear(result, simulation.substrate)
-    plt.savefig('static/projection_linear.png')
-    plt.close()
-
-    vz.visualize_results_on_substrate(result, simulation.substrate)
-    plt.savefig('static/results_on_substrate.png')
-    plt.close()
-
-    vz.visualize_trajectory_on_substrate(result, simulation.substrate, simulation.growth_cones)
-    plt.savefig('static/trajectory_on_substrate.png')
-    plt.close()
-
-    vz.visualize_trajectories(simulation.growth_cones)
-    plt.savefig('static/trajectories.png')
-    plt.close()
-
-    return jsonify({'success': True})
-"""
 
 if __name__ == '__main__':
     app.run(debug=True)
