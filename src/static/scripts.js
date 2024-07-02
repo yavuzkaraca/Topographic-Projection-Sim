@@ -13,8 +13,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     for (const key in config) {
                         const element = document.querySelector(`[name=${key}]`);
                         if (element) {
+
                             if (element.type === 'checkbox') {
                                 element.checked = config[key];
+                            } else if (element.type === 'select-one') {
+                                // Do nothing
                             } else {
                                 element.value = config[key];
                             }
@@ -22,11 +25,13 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 }
             });
+
             // Trigger change event on page load to set default values
             substrateTypeElement.dispatchEvent(new Event('change'));
         })
         .catch(error => console.error('Error fetching default configs:', error));
 });
+
 
 /**
  * Start Button
