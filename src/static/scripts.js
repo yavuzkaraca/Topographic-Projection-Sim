@@ -1,3 +1,6 @@
+/**
+ * Default config fetching
+ */
 document.addEventListener('DOMContentLoaded', function () {
     fetch('/default-configs')
         .then(response => response.json())
@@ -18,17 +21,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     }
                 }
-                // Force re-render of the dropdown
-                substrateTypeElement.blur();
-                substrateTypeElement.focus();
             });
-
             // Trigger change event on page load to set default values
             substrateTypeElement.dispatchEvent(new Event('change'));
         })
         .catch(error => console.error('Error fetching default configs:', error));
+});
 
-
+/**
+ * Start Button
+ */
+document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('startSimulation').addEventListener('click', function () {
         const form = document.getElementById('configForm');
         const formData = new FormData(form);
@@ -63,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 500);
     });
 });
+
 
 function visualizeResults(data) {
     // Placeholder for actual visualization logic
