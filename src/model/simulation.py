@@ -10,6 +10,11 @@ import random
 progress = 0  # Global progress variable
 
 
+def get_updated_progress():
+    print(progress)
+    return progress
+
+
 class Simulation:
     """
     Manages the simulation of growth cone dynamics within a defined substrate.
@@ -127,6 +132,7 @@ class Simulation:
 
         progress = 100
         # TODO: @Performance Early stopping mechanism based on total potential
+
 
     def adapt_growth_cone(self, gc):
         """

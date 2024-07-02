@@ -6,7 +6,7 @@ from matplotlib.figure import Figure
 from build import object_factory, config as cfg
 import visualization as vz
 
-from model.simulation import progress
+from model.simulation import progress, get_updated_progress
 
 app = Flask(__name__)
 
@@ -47,8 +47,7 @@ def start_simulation():
 
 @app.route('/progress', methods=['GET'])
 def get_progress():
-    print(progress)
-    return jsonify({"progress": progress})
+    return jsonify({"progress": get_updated_progress()})
 
 
 @app.route('/get_default_config', methods=['GET'])

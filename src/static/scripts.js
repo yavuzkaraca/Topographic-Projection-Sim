@@ -1,3 +1,5 @@
+let interval;
+
 /**
  * Default config fetching
  */
@@ -48,9 +50,12 @@ document.getElementById('startSimulation').addEventListener('click', function() 
     config.continuous_signal_end = "6.99"
     config.substrate_type = config.substrate_type.toLowerCase();
 
-
     // Convert specific fields to the appropriate types
     const typedConfig = convertTypes(config);
+
+    interval = setInterval(function(){
+      updateProgress();
+    }, 100);
 
     fetch('/start_simulation', {
         method: 'POST',
@@ -61,8 +66,8 @@ document.getElementById('startSimulation').addEventListener('click', function() 
     })
     .then(response => response.json())
     .then(data => {
-        if (data.status === 'Simulation started') {
-            updateProgress();
+        if (data.status === 'Simulation completed') {
+            console.log("jsdfhjds") // Stop the interval when the simulation is completed
         }
     });
 });
@@ -100,14 +105,15 @@ function updateProgress() {
     fetch('/progress')
     .then(response => response.json())
     .then(data => {
+        console.log(data.progress)
         const progressBar = document.getElementById('progressBar');
         progressBar.style.width = data.progress + '%';
         progressBar.setAttribute('aria-valuenow', data.progress);
         progressBar.textContent = data.progress + '%';
 
         if (data.progress >= 100) {
-                clearInterval(interval);
-            }
+            clearInterval(interval);
+        }
     });
 }
 
