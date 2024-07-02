@@ -1,3 +1,7 @@
+from flask import Flask, render_template, request, jsonify
+import threading
+import time
+from build.config import get_default_config
 from flask import Flask, render_template, request, jsonify, Response
 import os
 import io
@@ -7,7 +11,9 @@ from build import object_factory, config as cfg
 import visualization as vz
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key_here'
+
+# Placeholder for the progress of the simulation
+progress = 0
 
 
 @app.route('/')
@@ -25,75 +31,53 @@ def get_default_configs():
     return jsonify(cfg.default_configs)
 
 
-@app.route('/simulation', methods=['GET', 'POST'])
+@app.route('/simulation')
 def simulation():
     return render_template('index.html')
 
 
-@app.route('/start_simulation', methods=['GET', 'POST'])
+@app.route('/start_simulation', methods=['POST'])
 def start_simulation():
-    form_data = request.form
-
-    # Extract data from form and build configuration dictionary
-    config_data = {
-        cfg.SUBSTRATE_TYPE: form_data.get(cfg.SUBSTRATE_TYPE),
-        cfg.ROWS: int(form_data.get(cfg.ROWS)),
-        cfg.COLS: int(form_data.get(cfg.COLS)),
-        cfg.GC_COUNT: int(form_data.get(cfg.GC_COUNT)),
-        cfg.GC_SIZE: int(form_data.get(cfg.GC_SIZE)),
-        cfg.STEP_SIZE: int(form_data.get(cfg.STEP_SIZE)),
-        cfg.STEP_NUM: int(form_data.get(cfg.STEP_NUM)),
-        cfg.X_STEP_POSSIBILITY: float(form_data.get(cfg.X_STEP_POSSIBILITY)),
-        cfg.Y_STEP_POSSIBILITY: float(form_data.get(cfg.Y_STEP_POSSIBILITY)),
-        cfg.SIGMOID_GAIN: float(form_data.get(cfg.SIGMOID_GAIN)),
-        cfg.SIGMOID_SHIFT: float(form_data.get(cfg.SIGMOID_SHIFT)),
-        cfg.SIGMA: float(form_data.get(cfg.SIGMA)),
-        cfg.FORCE: form_data.get(cfg.FORCE) == 'on',
-        cfg.FORWARD_SIG: form_data.get(cfg.FORWARD_SIG) == 'on',
-        cfg.REVERSE_SIG: form_data.get(cfg.REVERSE_SIG) == 'on',
-        cfg.FF_INTER: form_data.get(cfg.FF_INTER) == 'on',
-        cfg.FT_INTER: form_data.get(cfg.FT_INTER) == 'on',
-        cfg.ADAPTATION_ENABLED: form_data.get(cfg.ADAPTATION_ENABLED) == 'on',
-        cfg.ADAPTATION_MU: float(form_data.get(cfg.ADAPTATION_MU)),
-        cfg.ADAPTATION_LAMBDA: float(form_data.get(cfg.ADAPTATION_LAMBDA)),
-        cfg.ADAPTATION_HISTORY: int(form_data.get(cfg.ADAPTATION_HISTORY))
-    }
-
-    # Build the simulation with the config
-    simulation = object_factory.build_simulation(config_data)
-
-    # Run the simulation
-    results = simulation.run()
-
-    # Return results as JSON (modify as needed)
-    return jsonify(results)
+    config = request.json
+    thread = threading.Thread(target=run_simulation, args=(config,))
+    thread.start()
+    return jsonify({"status": "Simulation started"}), 202
 
 
-@app.route('/plot')
-def plot_png():
-    # Assuming you have a way to create or obtain a Substrate object
-    sim = object_factory.build_default()  # Replace with actual substrate creation
-    fig = vz.visualize_substrate(sim.substrate)
-    output = io.BytesIO()
-    FigureCanvas(fig).print_png(output)
-    return Response(output.getvalue(), mimetype='image/png')
+@app.route('/progress', methods=['GET'])
+def get_progress():
+    global progress
+    return jsonify({"progress": progress})
 
 
-@app.route('/login')
-def login():
-    return "<h1>Login Page</h1>"
+@app.route('/get_default_config', methods=['GET'])
+def get_default_config_route():
+    substrate_type = request.args.get('substrate_type')
+    default_config = get_default_config(substrate_type)
+    return jsonify(default_config)
 
 
-@app.route('/source-code')
-def source_code():
-    return "<h1>Source Code Page</h1>"
+def run_simulation(config):
+    global progress
+    from build.object_factory import build_simulation
+    simulation = build_simulation(config)
 
+    from visualization import visualize_substrate
+    substrate_fig = visualize_substrate(simulation.substrate)
+    substrate_fig.savefig('static/results/substrate.png')
 
-def setup_simulation():
-    simulation = object_factory.build_default()
-    vz.visualize_growth_cones(simulation.growth_cones)
-    vz.visualize_substrate(simulation.substrate)
-    vz.visualize_substrate_separately(simulation.substrate)
+    progress = 10
+
+    total_steps = simulation.num_steps
+    for step in range(total_steps):
+        simulation.iterate_simulation()
+        progress = int((step / total_steps) * 100)
+
+    from visualization import visualize_growth_cones
+    result_fig = visualize_growth_cones(simulation.growth_cones)
+    result_fig.savefig('static/results/results.png')
+
+    progress = 100
 
 
 if __name__ == '__main__':

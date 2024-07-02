@@ -250,6 +250,10 @@ default_configs = {
 }
 
 
+def get_default_config(substrate_type):
+    return default_configs.get(substrate_type.upper(), {})
+
+
 """
 --------------------------------------
         CUSTOM CONFIGURATION

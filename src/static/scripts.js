@@ -1,70 +1,64 @@
-document.addEventListener('DOMContentLoaded', function () {
-    fetch('/default-configs')
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('substrateType').addEventListener('change', fetchDefaultConfig);
+    fetchDefaultConfig(); // Fetch default config on page load
+});
+
+function fetchDefaultConfig() {
+    const substrateType = document.getElementById('substrateType').value;
+
+    fetch(`/get_default_config?substrate_type=${substrateType}`)
         .then(response => response.json())
-        .then(configs => {
-            const substrateTypeElement = document.getElementById('substrateType');
-            substrateTypeElement.addEventListener('change', function () {
-                const selectedType = this.value;
-                const config = configs[selectedType];
-                if (config) {
-                    for (const key in config) {
-                        const element = document.querySelector(`[name=${key}]`);
-                        if (element) {
-                            if (element.type === 'checkbox') {
-                                element.checked = config[key];
-                            } else {
-                                element.value = config[key];
-                            }
-                        }
-                    }
+        .then(config => {
+            for (const key in config) {
+                const element = document.getElementsByName(key)[0];
+                if (element) {
+                    element.value = config[key];
                 }
-                // Force re-render of the dropdown
-                substrateTypeElement.blur();
-                substrateTypeElement.focus();
-            });
-
-            // Trigger change event on page load to set default values
-            substrateTypeElement.dispatchEvent(new Event('change'));
-        })
-        .catch(error => console.error('Error fetching default configs:', error));
-
-
-    document.getElementById('startSimulation').addEventListener('click', function () {
-        const form = document.getElementById('configForm');
-        const formData = new FormData(form);
-
-        fetch('/simulation', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Simulation results:', data);
-                document.getElementById('progressBar').style.width = '100%';
-                document.getElementById('progressBar').innerText = '100%';
-                document.getElementById('resultsSection').style.display = 'block';
-                visualizeResults(data);
-            })
-            .catch(error => console.error('Error:', error));
-
-        // Simulate progress update
-        const progressBar = document.getElementById('progressBar');
-        const resultsSection = document.getElementById('resultsSection');
-        let progress = 0;
-
-        const interval = setInterval(() => {
-            progress += 10;
-            progressBar.style.width = progress + '%';
-            progressBar.innerHTML = progress + '%';
-            if (progress >= 100) {
-                clearInterval(interval);
-                resultsSection.style.display = 'block';
             }
-        }, 500);
+        });
+}
+
+document.getElementById('startSimulation').addEventListener('click', function() {
+    const configForm = document.getElementById('configForm');
+    const formData = new FormData(configForm);
+    const config = Object.fromEntries(formData);
+
+    fetch('/start_simulation', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(config)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'Simulation started') {
+            updateProgress();
+        }
     });
 });
 
-function visualizeResults(data) {
-    // Placeholder for actual visualization logic
-    document.getElementById('visualization').innerHTML = '<img src="/plot" alt="Simulation Result" style="width: 400px; height: auto;">';
+function updateProgress() {
+    fetch('/progress')
+    .then(response => response.json())
+    .then(data => {
+        const progressBar = document.getElementById('progressBar');
+        progressBar.style.width = data.progress + '%';
+        progressBar.setAttribute('aria-valuenow', data.progress);
+        progressBar.textContent = data.progress + '%';
+
+        if (data.progress < 100) {
+            setTimeout(updateProgress, 1000);
+        } else {
+            showResults();
+        }
+    });
+}
+
+function showResults() {
+    document.getElementById('resultsSection').style.display = 'block';
+    document.getElementById('substrateImage').src = '/static/results/substrate.png';
+    document.getElementById('substrateImage').style.display = 'block';
+    document.getElementById('resultsImage').src = '/static/results/results.png';
+    document.getElementById('resultsImage').style.display = 'block';
 }
