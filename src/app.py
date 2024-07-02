@@ -80,5 +80,37 @@ def run_simulation(config):
     progress = 100
 
 
+@app.route('/plot')
+def plot_png():
+    # Assuming you have a way to create or obtain a Substrate object
+    sim = object_factory.build_default()  # Replace with actual substrate creation
+    fig = vz.visualize_substrate(sim.substrate)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
+
+
+@app.route('/plot/substrate')
+def plot_substrate():
+    """
+    global current_simulation
+    fig = vz.visualize_substrate(current_simulation.substrate)
+    """
+    sim = object_factory.build_default()  # Replace with actual substrate creation
+    fig = vz.visualize_substrate(sim.substrate)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
+
+
+@app.route('/plot/growth_cones')
+def plot_growth_cones():
+    sim = object_factory.build_default()  # Replace with actual substrate creation
+    fig = vz.visualize_substrate(sim.substrate)
+    output = io.BytesIO()
+    FigureCanvas(fig).print_png(output)
+    return Response(output.getvalue(), mimetype='image/png')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
