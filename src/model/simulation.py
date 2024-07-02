@@ -7,6 +7,8 @@ from model.result import Result
 from model.potential_calculation import calculate_potential, calculate_ff_coef
 import random
 
+progress = 0  # Global progress variable
+
 
 class Simulation:
     """
@@ -103,9 +105,12 @@ class Simulation:
         """
         Iteratively processes each simulation step, generating random steps, and making stepping decisions.
         """
+        global progress
+
         for step_current in range(self.num_steps):
             if step_current % 250 == 0:
                 print(f"Current Step: {step_current}")
+                progress = int((step_current / self.num_steps) * 100)
 
             # TODO: @Performance Parallelize with futures
 
@@ -119,6 +124,8 @@ class Simulation:
                                                         self.ft_inter, step_current, self.num_steps,
                                                         self.sigmoid_steepness, self.sigmoid_shift)
                     self.step_decision(gc, pos_new, potential_new)
+
+        progress = 100
         # TODO: @Performance Early stopping mechanism based on total potential
 
     def adapt_growth_cone(self, gc):

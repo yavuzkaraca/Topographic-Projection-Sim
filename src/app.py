@@ -1,7 +1,3 @@
-from flask import Flask, render_template, request, jsonify
-import threading
-import time
-from build.config import get_default_config
 from flask import Flask, render_template, request, jsonify, Response
 import os
 import io
@@ -10,10 +6,11 @@ from matplotlib.figure import Figure
 from build import object_factory, config as cfg
 import visualization as vz
 
+from model.simulation import progress
+
 app = Flask(__name__)
 
-# Placeholder for the progress of the simulation
-progress = 0
+
 
 
 @app.route('/')
@@ -39,14 +36,18 @@ def simulation():
 @app.route('/start_simulation', methods=['POST'])
 def start_simulation():
     config = request.json
-    thread = threading.Thread(target=run_simulation, args=(config,))
-    thread.start()
-    return jsonify({"status": "Simulation started"}), 202
+    print(config)
+
+    from build.object_factory import build_simulation
+    simulation = build_simulation(config)
+    result = simulation.run()
+
+    return jsonify({"status": "Simulation completed"})
 
 
 @app.route('/progress', methods=['GET'])
 def get_progress():
-    global progress
+    print(progress)
     return jsonify({"progress": progress})
 
 
@@ -55,29 +56,6 @@ def get_default_config_route():
     substrate_type = request.args.get('substrate_type')
     default_config = get_default_config(substrate_type)
     return jsonify(default_config)
-
-
-def run_simulation(config):
-    global progress
-    from build.object_factory import build_simulation
-    simulation = build_simulation(config)
-
-    from visualization import visualize_substrate
-    substrate_fig = visualize_substrate(simulation.substrate)
-    substrate_fig.savefig('static/results/substrate.png')
-
-    progress = 10
-
-    total_steps = simulation.num_steps
-    for step in range(total_steps):
-        simulation.iterate_simulation()
-        progress = int((step / total_steps) * 100)
-
-    from visualization import visualize_growth_cones
-    result_fig = visualize_growth_cones(simulation.growth_cones)
-    result_fig.savefig('static/results/results.png')
-
-    progress = 100
 
 
 @app.route('/plot')
@@ -92,10 +70,6 @@ def plot_png():
 
 @app.route('/plot/substrate')
 def plot_substrate():
-    """
-    global current_simulation
-    fig = vz.visualize_substrate(current_simulation.substrate)
-    """
     sim = object_factory.build_default()  # Replace with actual substrate creation
     fig = vz.visualize_substrate(sim.substrate)
     output = io.BytesIO()
@@ -106,7 +80,7 @@ def plot_substrate():
 @app.route('/plot/growth_cones')
 def plot_growth_cones():
     sim = object_factory.build_default()  # Replace with actual substrate creation
-    fig = vz.visualize_substrate(sim.substrate)
+    fig = vz.visualize_growth_cones(sim.growth_cones)
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
     return Response(output.getvalue(), mimetype='image/png')

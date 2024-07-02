@@ -46,7 +46,7 @@ body {
     background-color: rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 10px;
-    min-width: 700px; /* Set a minimum width */
+    min-width: 700px;
 }
 .results {
     margin-top: 30px;
@@ -61,7 +61,7 @@ body {
     margin-top: 20px;
 }
 .progress-container {
-    width: 60%;
+    width: 40%;
     margin: auto;
 }
 .card-header {
@@ -75,13 +75,21 @@ body {
     background-color: rgba(255, 255, 255, 0.1);
 }
 .modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: auto;
+}
+.modal-content {
+    background-color: rgba(0, 0, 0, 1);
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 100%; /* Could be more or less, depending on screen size */
 }
 .modal-backdrop {
-  z-index: -1;
+    z-index: -1;
 }
 @media (max-width: 768px) {
     .config-panel {

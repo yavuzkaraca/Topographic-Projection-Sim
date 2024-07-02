@@ -150,10 +150,10 @@ gap_inv_substrate = {
 
 default_configs = {
     "CONTINUOUS_GRADIENTS": {
-        GC_COUNT: 100,
+        GC_COUNT: 5,  # 100
         GC_SIZE: 3,
         STEP_SIZE: 1,
-        STEP_NUM: 8000,
+        STEP_NUM: 1000,  # 8000
         X_STEP_POSSIBILITY: 0.55,
         Y_STEP_POSSIBILITY: 0.50,
         SIGMOID_STEEPNESS: 4,
