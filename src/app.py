@@ -5,12 +5,11 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from build import object_factory, config as cfg
 import visualization as vz
+from build.config import get_default_config
 
 from model.simulation import progress, get_updated_progress
 
 app = Flask(__name__)
-
-
 
 
 @app.route('/')
@@ -36,7 +35,7 @@ def simulation():
 @app.route('/start_simulation', methods=['POST'])
 def start_simulation():
     config = request.json
-    print(config)
+    # print(config)
 
     from build.object_factory import build_simulation
     simulation = build_simulation(config)
@@ -48,13 +47,6 @@ def start_simulation():
 @app.route('/progress', methods=['GET'])
 def get_progress():
     return jsonify({"progress": get_updated_progress()})
-
-
-@app.route('/get_default_config', methods=['GET'])
-def get_default_config_route():
-    substrate_type = request.args.get('substrate_type')
-    default_config = get_default_config(substrate_type)
-    return jsonify(default_config)
 
 
 @app.route('/plot')

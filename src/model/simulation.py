@@ -4,14 +4,14 @@ Main module which executes simulation logic
 import math
 import time
 from model.result import Result
-from model.potential_calculation import calculate_potential, calculate_ff_coef
+from model.potential_calculation import calculate_potential
 import random
 
 progress = 0  # Global progress variable
 
 
 def get_updated_progress():
-    print(progress)
+    # print(progress)
     return progress
 
 
