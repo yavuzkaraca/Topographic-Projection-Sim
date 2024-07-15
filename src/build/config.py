@@ -222,7 +222,7 @@ gap_config = {
 """
 
 custom_config = {
-    GC_COUNT: 100,
+    GC_COUNT: 40,
     GC_SIZE: 3,
     STEP_SIZE: 1,
     STEP_NUM: 8000,
@@ -230,10 +230,10 @@ custom_config = {
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
-    SIGMOID_HEIGHT: 10,
+    SIGMOID_HEIGHT: 1,
     GC_R_STEEPNESS: 1.4,
     GC_L_STEEPNESS: 1.4,
-    GC_R_MIN: 0.01,
+    GC_R_MIN: 0.5,
     GC_L_MIN: 0.01,
     GC_R_MAX: 1,
     GC_L_MAX: 1,
@@ -243,20 +243,28 @@ custom_config = {
     REVERSE_SIG: True,
     FF_INTER: True,
     FT_INTER: True,
-    CIS_INTER: True,
+    CIS_INTER: False,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
     ADAPTATION_HISTORY: 50,
-    SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
+    SUBSTRATE_TYPE: STRIPE,
     ROWS: 100,
     COLS: 100,
+
+    # Continuous substrate values
     CONT_GRAD_R_STEEPNESS: 1.4,
     CONT_GRAD_L_STEEPNESS: 1.4,
     CONT_GRAD_R_MIN: 0.01,
     CONT_GRAD_L_MIN: 0.01,
     CONT_GRAD_R_MAX: 1,
-    CONT_GRAD_L_MAX: 1
+    CONT_GRAD_L_MAX: 1,
+
+    #stripe substrate values
+    STRIPE_FWD: False,
+    STRIPE_REW: True,
+    STRIPE_CONC: 1,
+    STRIPE_WIDTH: 6.625
 }
 
 """

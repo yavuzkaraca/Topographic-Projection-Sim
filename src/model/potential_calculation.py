@@ -44,7 +44,6 @@ def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inte
     # Return calculated log difference or handle case when both signals are zero
     if forward_sig == 0 and reverse_sig == 0:
         return 0  # Both signals zero would lead to log(0), handle this case as zero potential difference
-    print(ft_ligands, ft_receptors, gc.ligand_current, gc.receptor_current, ff_ligands, ff_receptors)
     return abs(math.log(reverse_sig or 0.0001) - math.log(forward_sig or 0.0001))
 
 
@@ -156,4 +155,4 @@ def intersection_area(gc1_pos, gc2_pos, radius):
         y = math.sqrt(radius ** 2 - z)
         area = radius ** 2 * math.acos(x / radius) - x * y
         # TODO: clean-fix area calculation
-        return area * 1.5  # magic number for quick dirty fix
+        return area * 2  # Chat-GPT suggestion: apparently the equations before only calculate one of
