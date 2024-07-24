@@ -3,7 +3,7 @@ import numpy as np
 from scipy.stats import linregress
 
 
-# TODO: @Clean Clean up this module
+# TODO: @Clean up this module
 
 def visualize_substrate(substrate):
     """
@@ -26,8 +26,7 @@ def visualize_substrate(substrate):
 
     # Flip the y-axis to have zero at the bottom
     ax.set_ylim(ax.get_ylim()[::-1])
-
-    plt.show()
+    return fig
 
 
 def visualize_substrate_separately(substrate):
@@ -56,7 +55,7 @@ def visualize_substrate_separately(substrate):
     axes[1].set_title("Receptors")
     axes[1].set_ylim(axes[1].get_ylim()[::-1])  # Flip the y-axis
 
-    plt.show()
+    return fig
 
 
 def visualize_growth_cones(gcs):
@@ -70,7 +69,8 @@ def visualize_growth_cones(gcs):
     plt.ylabel('Signal Value')
     plt.title('GCs')
     plt.legend()
-    plt.show()
+
+    return fig
 
 
 def visualize_results_on_substrate(result, substrate):
@@ -100,7 +100,7 @@ def visualize_results_on_substrate(result, substrate):
     # Flip the y-axis to have zero at the bottom
     ax.set_ylim(ax.get_ylim()[::-1])
 
-    plt.show()
+    return fig
 
 
 def visualize_projection_linear(result, substrate):
@@ -126,8 +126,8 @@ def visualize_projection_linear(result, substrate):
 
     plt.plot(x_values_normalized, y_values_normalized, '*', label='Growth Cones')
     plt.plot(x_values_normalized, regression_line, 'r-',
-                 label=f'Linear Regression\nSlope: {slope:.2f}\nR^2: {correlation:.2f}'
-                       f'\nNull Point X: {null_point_x:.2f}\nNull Point Y: {null_point_y:.2f}')
+             label=f'Linear Regression\nSlope: {slope:.2f}\nR^2: {correlation:.2f}'
+                   f'\nNull Point X: {null_point_x:.2f}\nNull Point Y: {null_point_y:.2f}')
     plt.title("Projection Mapping")
     plt.xlabel("% a-p Axis of Target")
     plt.ylabel("% n-t Axis of Retina")
@@ -135,7 +135,7 @@ def visualize_projection_linear(result, substrate):
     plt.ylim(0, 100)  # Set y-axis limit
     plt.legend()
 
-    plt.show()
+    return fig
 
 
 def visualize_projection_polyfit(result, substrate, label="Growth Cones", halved=False):
@@ -175,7 +175,7 @@ def visualize_projection_polyfit(result, substrate, label="Growth Cones", halved
     plt.ylim(0, 100)
     plt.legend()
 
-    plt.show()
+    return fig
 
 
 def visualize_projection_disjunctsets(result, substrate, mutated_indexes,
@@ -228,7 +228,7 @@ def visualize_projection_disjunctsets(result, substrate, mutated_indexes,
     plt.ylim(0, 100)
     plt.legend()
 
-    plt.show()
+    return fig
 
 
 def visualize_trajectories(growth_cones, trajectory_freq=50):
@@ -247,7 +247,8 @@ def visualize_trajectories(growth_cones, trajectory_freq=50):
     plt.ylabel('Y Coordinate')
     plt.title('Growth Cone Trajectories')
     plt.legend()
-    plt.show()
+
+    return fig
 
 
 def visualize_trajectory_on_substrate(result, substrate, growth_cones, trajectory_freq=50):
@@ -282,7 +283,8 @@ def visualize_trajectory_on_substrate(result, substrate, growth_cones, trajector
     ax.set_title("Tectum End-positions and Growth Cone Trajectories on Substrate")
     ax.legend()
     ax.set_ylim(ax.get_ylim()[::-1])  # Flip the y-axis
-    plt.show()
+
+    return fig
 
 
 def visualize_adaptation(growth_cones):
@@ -338,7 +340,7 @@ def visualize_adaptation(growth_cones):
 
     # Adjust layout and show the figure
     plt.tight_layout()
-    plt.show()
+    return fig
 
 
 """
