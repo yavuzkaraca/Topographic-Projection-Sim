@@ -10,7 +10,7 @@ class GrowthCone:
 
     Attributes:
         pos_start (tuple): Initial position of the growth cone.
-        pos_current (tuple): Center point of the circular modeled growth cone (x, y coordinates).
+        pos (tuple): Center point of the circular modeled growth cone (x, y coordinates).
         pos_new (tuple): New position proposal (used for step decision).
         size (int): Radius of the growth cone.
         ligand_current (float): Ligand value of growth cone.
@@ -18,51 +18,45 @@ class GrowthCone:
         potential (float): Current potential of the growth cone.
     """
 
-    def __init__(self, position, size, ligand, receptor, id, freeze=False):
+    def __init__(self, position, size, ligand, receptor, id, freeze=False, marked=False):
         """
         Initializes a GrowthCone with parameters defined above.
 
         :param id: The unique identifier sorted along n-t axis of retina
         :param freeze: The toggle to freeze growth cone during simulation
         """
-        self.pos_start = position
-        self.pos_current = position
-        self.pos_new = position
-
+        self.pos = position
         self.size = size
-
-        self.ligand_start = ligand
-        self.receptor_start = receptor
         self.ligand_current = ligand
         self.receptor_current = receptor
-
         self.potential = 0
         self.adap_co = 1  # Adaptation coefficient starts at 1
         self.reset_force_receptor = 0  # Resetting forces start at 0
         self.reset_force_ligand = 0
         self.id = id
-        self.freeze = freeze
+        self.freeze = freeze  # needed for polarity reversal
+        self.marked = marked  # needed to visualize two sets of GCs like in knock-in
 
-        self.history = History(self.potential, self.adap_co, self.pos_current, self.ligand_start, self.receptor_start,
+        self.history = History(self.potential, self.adap_co, self.pos, self.ligand_current, self.receptor_current,
                                self.reset_force_receptor, self.reset_force_ligand)
 
     def __str__(self):
         """
         Provides a string representation of the growth cone's attributes.
         """
-        return (f"Receptor: {self.receptor_current}, Ligand: {self.ligand_current}, Position: {self.pos_current}, "
-                f"Start Position: {self.pos_start}, Potential: {self.potential}, "
+        return (f"Receptor: {self.receptor_current}, Ligand: {self.ligand_current}, Position: {self.pos}, "
+                f"Start Position: {self.get_start_pos()}, Potential: {self.potential}, "
                 f"ID: {self.id}, Adaptation Coefficient: {self.adap_co}, "
                 f"Reset Forces: {self.reset_force_ligand}, {self.reset_force_receptor}")
 
-    def take_step(self, new_potential):
+    def take_step(self, pos_new, potential_new):
         """
         Actualize growth cone by moving it to its new position
         """
-        self.history.update_potential(new_potential)
-        self.history.update_position(self.pos_new)
-        self.potential = new_potential
-        self.pos_current = self.pos_new
+        self.history.update_potential(potential_new)
+        self.history.update_position(pos_new)
+        self.potential = potential_new
+        self.pos = pos_new
 
     def calculate_adaptation(self, mu, lambda_, h):
         """
@@ -84,8 +78,8 @@ class GrowthCone:
             self.adap_co = float("{:.6f}".format(adap_co_temp))
 
             # Calculate the resetting force
-            self.reset_force_receptor = lambda_ * (self.receptor_start - self.receptor_current)
-            self.reset_force_ligand = lambda_ * (self.ligand_start - self.ligand_current)
+            self.reset_force_receptor = lambda_ * (self.get_start_receptor() - self.receptor_current)
+            self.reset_force_ligand = lambda_ * (self.get_start_ligand() - self.ligand_current)
 
         self.history.update_adap_co(self.adap_co)
         self.history.update_reset_force_receptor(self.reset_force_receptor)
@@ -112,6 +106,15 @@ class GrowthCone:
         """
         self.receptor_current += knock_in
         self.ligand_current = 0.35 / self.receptor_current
+
+    def get_start_pos(self):
+        return self.history.position[0]
+
+    def get_start_ligand(self):
+        return self.history.ligand[0]
+
+    def get_start_receptor(self):
+        return self.history.receptor[0]
 
 
 class History:

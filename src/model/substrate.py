@@ -3,6 +3,7 @@ Module providing the Substrate class for substrate representation and initializa
 """
 
 import numpy as np
+import pandas as pd
 
 from build import config
 
@@ -45,10 +46,14 @@ class BaseSubstrate:
         Return a string representation of the ligand and receptor grids in the substrate.
         """
         # Create a string representation of the substrate
+
+        ligands_df = pd.DataFrame(self.ligands)
+        receptors_df = pd.DataFrame(self.receptors)
+
         result = "Ligands:\n"
-        result += str(self.ligands) + "\n\n"
+        result += str(ligands_df) + "\n\n"
         result += "Receptors:\n"
-        result += str(self.receptors)
+        result += str(receptors_df)
         return result
 
     def set_col_ligand_only(self, col):
@@ -88,10 +93,14 @@ class ContinuousGradientSubstrate(BaseSubstrate):
         Initialize the substrate using continuous gradients of ligand and receptor values.
         """
 
-        ligand_gradient = np.linspace(self.signal_start, self.signal_end,
-                                      self.cols - (2 * self.offset))
-        receptor_gradient = np.linspace(self.signal_end, self.signal_start,
-                                        self.cols - (2 * self.offset))
+        # Rooting the values such that after exponential they end up at the same value
+        root_start = self.signal_start ** 0.714
+        root_end = self.signal_end ** 0.714
+
+        ligand_gradient = np.linspace(root_start, root_end,
+                                      self.cols - (2 * self.offset)) ** 1.4
+        receptor_gradient = np.linspace(root_end, root_start,
+                                        self.cols - (2 * self.offset)) ** 1.4
 
         # Append offset on both ends
         low_end = np.full(self.offset, self.signal_start)  # Creates an array of 0.01 with length self.offset
@@ -128,7 +137,7 @@ class WedgeSubstrate(BaseSubstrate):
         # Slope of upper and lower triangle hypotenuse
         ratio = (cols / max_edge_length) * 2
 
-        # TODO: Fit extra cones to bottom, test ligands and receptors separately!
+        # TODO: @Feature Fit extra cones to bottom, test ligands and receptors separately!
         for n in range(num_wedges_x):
 
             # Make upper triangle
@@ -163,7 +172,7 @@ class StripeSubstrate(BaseSubstrate):
         super().__init__(rows, cols, offset, **kwargs)
         self.fwd = kwargs.get('fwd')
         self.rew = kwargs.get('rew')
-        self.conc = kwargs.get('conc')  # TODO: implement concentration
+        self.conc = kwargs.get('conc')  # TODO: @Feature implement concentration
         self.width = kwargs.get('width')
 
     def initialize_substrate(self):

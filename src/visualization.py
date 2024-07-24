@@ -1,28 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import linregress
-from scipy.optimize import curve_fit
 
 
-def create_blended_colors(ligands, receptors):
-    """
-    Create blended colors for ligands and receptors with custom adjustments.
-    Initializes a white background and adjusts the color channels based on ligand and receptor values.
-
-    :param ligands: Array of ligand values.
-    :param receptors: Array of receptor values.
-    :return: Array of blended colors.
-    """
-    # Initialize with a white background
-    blended_colors = np.ones(ligands.shape + (3,))
-
-    # Custom color adjustments for ligands and receptors
-    blended_colors[..., 0] -= ligands * 0.1 + receptors * 0.9  # Adjust Red channel
-    blended_colors[..., 1] -= ligands * 0.9 + receptors * 0.6  # Adjust Green channel
-    blended_colors[..., 2] -= ligands * 0.6 + receptors * 0.1  # Adjust Blue channel
-
-    return blended_colors
-
+# TODO: @Clean Clean up this module
 
 def visualize_substrate(substrate):
     """
@@ -58,6 +39,9 @@ def visualize_substrate_separately(substrate):
     """
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
+    normalized_ligands = normalize_substrate(substrate.ligands)
+    normalized_receptors = normalize_substrate(substrate.ligands)
+
     # Create colored images for ligands and receptors separately
     ligand_colors = create_blended_colors(substrate.ligands, np.zeros_like(substrate.ligands))
     receptor_colors = create_blended_colors(np.zeros_like(substrate.receptors), substrate.receptors)
@@ -72,6 +56,20 @@ def visualize_substrate_separately(substrate):
     axes[1].set_title("Receptors")
     axes[1].set_ylim(axes[1].get_ylim()[::-1])  # Flip the y-axis
 
+    plt.show()
+
+
+def visualize_growth_cones(gcs):
+    receptors = np.array([gc.receptor_current for gc in gcs])
+    ligands = np.array([gc.ligand_current for gc in gcs])
+
+    plt.figure(figsize=(10, 7))
+    plt.plot(receptors, 'o-', label='Receptors')
+    plt.plot(ligands, 'o-', color='red', label='Ligands')
+    plt.xlabel('Growth Cone ID (sorted along %n-t Axis of Retina)')
+    plt.ylabel('Signal Value')
+    plt.title('GCs')
+    plt.legend()
     plt.show()
 
 
@@ -105,55 +103,20 @@ def visualize_results_on_substrate(result, substrate):
     plt.show()
 
 
-def visualize_trajectory_on_substrate(result, substrate, growth_cones, trajectory_freq=50):
+def visualize_projection_linear(result, substrate):
     """
-    Visualize tectum end-positions and growth cone trajectories on top of the substrate.
-
-    :param trajectory_freq:
-    :param result: Result object containing tectum end-positions.
-    :param substrate: The Substrate object containing ligand and receptor values.
-    :param growth_cones: List of GrowthCone objects with trajectory data.
-    """
-    fig, ax = plt.subplots(figsize=(8, 8))
-
-    # Create blended colors for the substrate
-    blended_colors = create_blended_colors(substrate.ligands, substrate.receptors)
-    ax.imshow(blended_colors)
-
-    # Plot tectum end-positions
-    x_values, y_values = result.get_final_positioning()
-    ax.plot(x_values, y_values, '*', color='orange', label='Tectum End-positions')
-
-    # Drawing the border to represent the offset
-    offset = substrate.offset
-    ax.add_patch(plt.Rectangle((offset - 0.5, offset - 0.5), substrate.cols - 2 * offset,
-                               substrate.rows - 2 * offset, fill=False, edgecolor='black', lw=2))
-
-    # Plot growth cone trajectories
-    for growth_cone in growth_cones:
-        trajectory_x, trajectory_y = zip(*growth_cone.history.position[::trajectory_freq])
-        ax.plot(trajectory_x, trajectory_y, label=f'Growth Cone {growth_cones.index(growth_cone)}')
-
-    ax.set_title("Tectum End-positions and Growth Cone Trajectories on Substrate")
-    ax.legend()
-    ax.set_ylim(ax.get_ylim()[::-1])  # Flip the y-axis
-    plt.show()
-
-
-def visualize_result(result, substrate):
-    """
-    Generate plots for the projection mapping and tectum end-positions, including linear regression for the
+    Generate plots for the projection mapping, including linear regression for the
     projection mapping.
 
     :param substrate: The Substrate object containing dimensions. (for normalization)
     :param result: Result object containing growth cone positions and details.
     """
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))  # Create a single figure with two subplots
+    fig, axes = plt.subplots(figsize=(10, 10))  # Create a single figure with two subplots
 
     # Get projection mapping data and normalize
     x_values, y_values = result.get_projection_ypos()
-    x_values_normalized = normalize_values(x_values, substrate.offset, substrate.cols - substrate.offset)
-    y_values_normalized = normalize_values(y_values, substrate.offset, substrate.rows - substrate.offset - 1)
+    x_values_normalized = normalize_mapping(x_values, substrate.offset, substrate.cols - substrate.offset)
+    y_values_normalized = normalize_mapping(y_values, substrate.offset, substrate.rows - substrate.offset - 1)
 
     slope, intercept, r_value, _, _ = linregress(x_values_normalized, y_values_normalized)
     regression_line = slope * x_values_normalized + intercept
@@ -161,42 +124,21 @@ def visualize_result(result, substrate):
     null_point_x = -intercept / slope if slope != 0 else None
     null_point_y = intercept
 
-    axes[0].plot(x_values_normalized, y_values_normalized, '*', label='Growth Cones')
-    axes[0].plot(x_values_normalized, regression_line, 'r-',
+    plt.plot(x_values_normalized, y_values_normalized, '*', label='Growth Cones')
+    plt.plot(x_values_normalized, regression_line, 'r-',
                  label=f'Linear Regression\nSlope: {slope:.2f}\nR^2: {correlation:.2f}'
                        f'\nNull Point X: {null_point_x:.2f}\nNull Point Y: {null_point_y:.2f}')
-    axes[0].set_title("Projection Mapping")
-    axes[0].set_xlabel("% a-p Axis of Target")
-    axes[0].set_ylabel("% n-t Axis of Retina")
-    axes[0].set_xlim(0, 100)  # Set x-axis limit
-    axes[0].set_ylim(0, 100)  # Set y-axis limit
-    axes[0].legend()
-
-    # Tectum End-positions
-    x_values, y_values = result.get_final_positioning()
-    axes[1].plot(x_values, y_values, '*')  # Plot tectum end-positions in the second subplot
-    axes[1].set_title("Tectum End-positions")
-    axes[1].set_xlabel("X Coordinate")
-    axes[1].set_ylabel("Y Coordinate")
-
-    plt.show()
-
-
-def visualize_growth_cones(gcs):
-    receptors = np.array([gc.receptor_current for gc in gcs])
-    ligands = np.array([gc.ligand_current for gc in gcs])
-
-    plt.figure(figsize=(10, 7))
-    plt.plot(receptors, 'o-', label='Receptors')
-    plt.plot(ligands, 'o-', color='red', label='Ligands')
-    plt.xlabel('Growth Cone ID (sorted along %n-t Axis of Retina)')
-    plt.ylabel('Signal Value')
-    plt.title('GCs')
+    plt.title("Projection Mapping")
+    plt.xlabel("% a-p Axis of Target")
+    plt.ylabel("% n-t Axis of Retina")
+    plt.xlim(0, 100)  # Set x-axis limit
+    plt.ylim(0, 100)  # Set y-axis limit
     plt.legend()
+
     plt.show()
 
 
-def visualize_projection(result, substrate, label="Growth Cones", halved=False):
+def visualize_projection_polyfit(result, substrate, label="Growth Cones", halved=False):
     """
     Generate a plot for the projection mapping of growth cones.
 
@@ -213,10 +155,10 @@ def visualize_projection(result, substrate, label="Growth Cones", halved=False):
     if halved:
         x_values, y_values = result.get_projection_halved()
 
-    x_values_normalized = normalize_values(x_values, substrate.offset, substrate.cols - substrate.offset)
+    x_values_normalized = normalize_mapping(x_values, substrate.offset, substrate.cols - substrate.offset)
 
     max_val = len(y_values) - 1
-    y_values_normalized = normalize_values(y_values, 0, max_val)
+    y_values_normalized = normalize_mapping(y_values, 0, max_val)
 
     # Cubic polynomial fitting for the data
     coeffs = np.polyfit(x_values_normalized, y_values_normalized, 3)
@@ -251,9 +193,9 @@ def visualize_projection_disjunctsets(result, substrate, mutated_indexes,
 
     # Projection mapping data and normalization
     x_values, y_values = result.get_projection_id()
-    x_values_normalized = normalize_values(x_values, substrate.offset, substrate.cols - substrate.offset)
+    x_values_normalized = normalize_mapping(x_values, substrate.offset, substrate.cols - substrate.offset)
     max_val = len(y_values) - 1
-    y_values_normalized = normalize_values(y_values, 0, max_val)
+    y_values_normalized = normalize_mapping(y_values, 0, max_val)
 
     # Segment data into mutated and non-mutated
     mutated_x = [x for i, x in enumerate(x_values_normalized) if i in mutated_indexes]
@@ -289,13 +231,6 @@ def visualize_projection_disjunctsets(result, substrate, mutated_indexes,
     plt.show()
 
 
-def normalize_values(values, min_val, max_val):
-    """
-    Normalize the given values to a range between 0 and 100.
-    """
-    return (values - min_val) / (max_val - min_val) * 100
-
-
 def visualize_trajectories(growth_cones, trajectory_freq=50):
     """
     Visualize the trajectories of growth cones.
@@ -312,6 +247,41 @@ def visualize_trajectories(growth_cones, trajectory_freq=50):
     plt.ylabel('Y Coordinate')
     plt.title('Growth Cone Trajectories')
     plt.legend()
+    plt.show()
+
+
+def visualize_trajectory_on_substrate(result, substrate, growth_cones, trajectory_freq=50):
+    """
+    Visualize tectum end-positions and growth cone trajectories on top of the substrate.
+
+    :param trajectory_freq:
+    :param result: Result object containing tectum end-positions.
+    :param substrate: The Substrate object containing ligand and receptor values.
+    :param growth_cones: List of GrowthCone objects with trajectory data.
+    """
+    fig, ax = plt.subplots(figsize=(8, 8))
+
+    # Create blended colors for the substrate
+    blended_colors = create_blended_colors(substrate.ligands, substrate.receptors)
+    ax.imshow(blended_colors)
+
+    # Plot tectum end-positions
+    x_values, y_values = result.get_final_positioning()
+    ax.plot(x_values, y_values, '*', color='orange', label='Tectum End-positions')
+
+    # Drawing the border to represent the offset
+    offset = substrate.offset
+    ax.add_patch(plt.Rectangle((offset - 0.5, offset - 0.5), substrate.cols - 2 * offset,
+                               substrate.rows - 2 * offset, fill=False, edgecolor='black', lw=2))
+
+    # Plot growth cone trajectories
+    for growth_cone in growth_cones:
+        trajectory_x, trajectory_y = zip(*growth_cone.history.position[::trajectory_freq])
+        ax.plot(trajectory_x, trajectory_y, label=f'Growth Cone {growth_cones.index(growth_cone)}')
+
+    ax.set_title("Tectum End-positions and Growth Cone Trajectories on Substrate")
+    ax.legend()
+    ax.set_ylim(ax.get_ylim()[::-1])  # Flip the y-axis
     plt.show()
 
 
@@ -369,3 +339,48 @@ def visualize_adaptation(growth_cones):
     # Adjust layout and show the figure
     plt.tight_layout()
     plt.show()
+
+
+"""
+--------------------------------------
+        UTILITY METHODS
+--------------------------------------
+"""
+
+
+def normalize_mapping(values, min_val, max_val):
+    """
+    Normalize the given values to a range between 0 and 100.
+    """
+    return (values - min_val) / (max_val - min_val) * 100
+
+
+def normalize_substrate(values):
+    """
+    Normalize the given array to a range between 0 and 1 based on its min and max values.
+    """
+    return (values - np.min(values)) / (np.max(values) - np.min(values))
+
+
+def create_blended_colors(ligands, receptors):
+    """
+    Create blended colors for ligands and receptors with custom adjustments.
+    Initializes a white background and adjusts the color channels based on ligand and receptor values.
+
+    :param ligands: Array of ligand values.
+    :param receptors: Array of receptor values.
+    :return: Array of blended colors.
+    """
+    # Create an RGB image where:
+    # - red channel intensity is proportional to ligand concentration
+    # - blue channel intensity is proportional to receptor concentration
+
+    # Initialize with a white background
+    blended_colors = np.ones(ligands.shape + (3,))
+
+    # Custom color adjustments for ligands and receptors
+    blended_colors[..., 0] -= ligands * 0.1 + receptors * 0.9  # Adjust Red channel
+    blended_colors[..., 1] -= ligands * 0.9 + receptors * 0.6  # Adjust Green channel
+    blended_colors[..., 2] -= ligands * 0.6 + receptors * 0.1  # Adjust Blue channel
+
+    return blended_colors

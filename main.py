@@ -10,7 +10,7 @@ def run():
 
     result = simulation.run()
 
-    vz.visualize_result(result,simulation.substrate)
+    vz.visualize_projection_linear(result, simulation.substrate)
     vz.visualize_results_on_substrate(result, simulation.substrate)
     vz.visualize_trajectory_on_substrate(result, simulation.substrate, simulation.growth_cones)
     vz.visualize_trajectories(simulation.growth_cones)

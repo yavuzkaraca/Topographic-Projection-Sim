@@ -6,7 +6,7 @@ simulation_config = {
     config.GC_COUNT: 1,
     config.GC_SIZE: 5,
     config.STEP_SIZE: 1,
-    config.STEP_AMOUNT: 250,
+    config.STEP_NUM: 250,
     config.X_STEP_POSSIBILITY: 1,
     config.Y_STEP_POSSIBILITY: 0.50,
     config.SIGMOID_STEEPNESS: 4,
