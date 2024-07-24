@@ -1,7 +1,7 @@
-# Retinotectal-Projection-Sim
+# Topographic-Projection-Sim
 
 ## Overview
-This repository hosts a Python-based computational model for simulating retinotectal projections. 
+This repository hosts a Python-based computational model for simulating topographic projections. 
 Derived from a thorough analysis of a [MATLAB implementation](https://github.com/elifesciences-publications/RTP_Co-adapt_Model), 
 this project translates and refines key concepts and methods into Python to enhance flexibility and experimental utility. 
 The model explores the Ephrin-A/EphA interaction, a key molecular mechanism of axon guidance. 
