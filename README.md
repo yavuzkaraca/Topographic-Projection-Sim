@@ -1,4 +1,4 @@
-# Retinotectal-Projection-Sim
+# Topographic-Projection-Sim
 Copyright (c) 2024 Yavuz Karaca
 
 ## Overview
