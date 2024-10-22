@@ -133,7 +133,6 @@ class Simulation:
         progress = 100
         # TODO: @Performance Early stopping mechanism based on total potential
 
-
     def adapt_growth_cone(self, gc):
         """
         Adapt the growth cones. Check parameter_exploration experiment for more details on the parameters.
