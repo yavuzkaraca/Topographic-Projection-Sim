@@ -64,6 +64,8 @@ class Result:
         fig = vz.visualize_trajectories(self.simulation.growth_cones)
         images["trajectories"] = generate_base64_image(fig)
 
+        return images
+
     def get_mapping(self):
         # TODO: @Clean Make a unified projection mapping by automatically dividing between position or id number
         pass
