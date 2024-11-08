@@ -98,7 +98,6 @@ class Simulation:
 
         for step_current in range(self.num_steps):
             if step_current % 250 == 0:
-                print(f"Current Step: {step_current}")
                 progress = int((step_current / self.num_steps) * 100)
 
             # TODO: @Performance Parallelize with futures
