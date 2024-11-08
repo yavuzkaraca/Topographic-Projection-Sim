@@ -73,28 +73,12 @@ class Simulation:
         start_time = time.time()  # Start timing the model
 
         self.prepare_gcs()
-        print(f"\nInitialization completed.\n")
-
-        print(f"\nGrowth Cones:\n")
-        for gc in self.growth_cones:
-            print(gc)
-
-        """
-        print(f"\nSubstrate:\n")
-        print(self.substrate)
-        """
-
-        print(f"\nIteration starts, {self.num_steps} many steps will be taken\n")
         self.iterate_simulation()
 
-        end_time = time.time()  # End timing the model
+        end_time = time.time()
         total_time = end_time - start_time
-        print(f"\nIteration completed in {total_time:.2f} seconds\n")
 
-        for gc in self.growth_cones:
-            print(gc)
-
-        return Result(self.growth_cones, self.substrate)
+        return Result(self, total_time)
 
     def prepare_gcs(self):
         """

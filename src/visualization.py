@@ -70,8 +70,8 @@ def visualize_growth_cones(gcs):
     plt.title('GCs')
     plt.legend()
 
+    fig = plt.gcf()  # Get the current figure
     return fig
-
 
 def visualize_results_on_substrate(result, substrate):
     """
@@ -175,8 +175,8 @@ def visualize_projection_polyfit(result, substrate, label="Growth Cones", halved
     plt.ylim(0, 100)
     plt.legend()
 
+    fig = plt.gcf()  # Get the current figure
     return fig
-
 
 def visualize_projection_disjunctsets(result, substrate, mutated_indexes,
                                       label_first="Wildtype Growth Cones", label_second="Mutated Growth Cones"):
@@ -228,6 +228,7 @@ def visualize_projection_disjunctsets(result, substrate, mutated_indexes,
     plt.ylim(0, 100)
     plt.legend()
 
+    fig = plt.gcf()  # Get the current figure
     return fig
 
 
@@ -248,7 +249,9 @@ def visualize_trajectories(growth_cones, trajectory_freq=50):
     plt.title('Growth Cone Trajectories')
     plt.legend()
 
+    fig = plt.gcf()  # Get the current figure
     return fig
+
 
 
 def visualize_trajectory_on_substrate(result, substrate, growth_cones, trajectory_freq=50):
