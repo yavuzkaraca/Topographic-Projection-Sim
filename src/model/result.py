@@ -26,23 +26,22 @@ class Result:
         """
         Generates visualizations and encodes them as base64 strings for frontend display.
         """
-        images = {}
+        return {
+            # Pre-Simulation visualizations
+            "growth_cones": _generate_image(visualize_growth_cones, self.simulation.growth_cones),
+            "substrate": _generate_image(visualize_substrate, self.simulation.substrate),
+            "substrate_separate": _generate_image(visualize_substrate_separately, self.simulation.substrate),
 
-        # Pre-simulation visualizations
-        images["growth_cones"] = _generate_image(visualize_growth_cones, self.simulation.growth_cones)
-        images["substrate"] = _generate_image(visualize_substrate, self.simulation.substrate)
-        images["substrate_separate"] = _generate_image(visualize_substrate_separately, self.simulation.substrate)
+            # Post-simulation visualizations
+            "projection_linear": _generate_image(visualize_projection, self, self.simulation.substrate),
+            "results_on_substrate": _generate_image(visualize_results_on_substrate, self,
+                                                    self.simulation.substrate),
+            "trajectory_on_substrate": _generate_image(visualize_trajectory_on_substrate, self,
+                                                       self.simulation.substrate, self.simulation.growth_cones),
+            "trajectories": _generate_image(visualize_trajectories, self.simulation.growth_cones),
+            "adaptation": _generate_image(visualize_adaptation, self.simulation.growth_cones)
 
-        # Post-simulation visualizations
-        images["projection_linear"] = _generate_image(visualize_projection, self, self.simulation.substrate)
-        images["results_on_substrate"] = _generate_image(visualize_results_on_substrate, self,
-                                                         self.simulation.substrate)
-        images["trajectory_on_substrate"] = _generate_image(visualize_trajectory_on_substrate, self,
-                                                            self.simulation.substrate, self.simulation.growth_cones)
-        images["trajectories"] = _generate_image(visualize_trajectories, self.simulation.growth_cones)
-        images["adaptation"] = _generate_image(visualize_adaptation, self.simulation.growth_cones)
-
-        return images
+        }
 
     def get_gc_count(self):
         return len(self.simulation.growth_cones)
@@ -58,7 +57,7 @@ class Result:
             "totalGrowthCones": self.get_gc_count(),
             "simulationSteps": self.get_num_steps(),
             "computationTime": f"{self.runtime:.3f}",
-            "config": self.config
+            "config": self.config,
         }
 
     def get_mapping(self, attribute="id", halved=False):
