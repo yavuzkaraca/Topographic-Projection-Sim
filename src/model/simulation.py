@@ -40,12 +40,13 @@ class Simulation:
         history_length (int): The number of historical steps to consider for adaptation.
     """
 
-    def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigmoid_steepness,
+    def __init__(self, config, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigmoid_steepness,
                  sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter, mu, lambda_,
                  history_length):
         """
         Initialize the Simulation class with necessary parameters explained above.
         """
+        self.config = config
         self.forward_sig = forward_sig
         self.reverse_sig = reverse_sig
         self.ff_inter = ff_inter
@@ -78,7 +79,7 @@ class Simulation:
         end_time = time.time()
         total_time = end_time - start_time
 
-        return Result(self, total_time)
+        return Result(self, total_time, self.config)
 
     def prepare_gcs(self):
         """

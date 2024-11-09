@@ -175,7 +175,7 @@ default_configs = {
         ROWS: 100,
         COLS: 100,
         CONTINUOUS_SIGNAL_START: 0.01,
-        CONTINUOUS_SIGNAL_END: 6.99
+        CONTINUOUS_SIGNAL_END: 0.99
     },
     "WEDGES": {
         GC_COUNT: 10,
@@ -267,7 +267,7 @@ def get_default_config(substrate_type):
 """
 
 custom_config = {
-    GC_COUNT: 25,
+    GC_COUNT: 5,
     GC_SIZE: 3,
     STEP_SIZE: 1,
     STEP_NUM: 8000,

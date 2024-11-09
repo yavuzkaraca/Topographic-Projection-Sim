@@ -11,14 +11,14 @@ from model.substrate import (ContinuousGradientSubstrate, WedgeSubstrate,
                              StripeSubstrate, GapSubstrate, GapSubstrateInverted)
 
 
-def build_default():
+def build_default() -> Simulation:
     """
     Build a default model.
     """
     return build_simulation(cfg.current_config)
 
 
-def build_simulation(config):
+def build_simulation(config) -> Simulation:
     """
     Build substrate object and growth cone list to then build the simulation instance.
     """
@@ -53,7 +53,7 @@ def build_simulation(config):
         history_length = config.get(cfg.ADAPTATION_HISTORY)
 
     # Initialize the Simulation object with the new parameters
-    simulation = Simulation(substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p,
+    simulation = Simulation(config, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p,
                             sigmoid_steepness, sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter,
                             ft_inter, mu, lambda_, history_length)
     return simulation
