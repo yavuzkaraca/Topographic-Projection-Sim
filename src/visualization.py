@@ -1,9 +1,37 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.figure import Figure
 from scipy.stats import linregress
+import base64
+import io
 
 
-# TODO: Cleaned and simplified module
+def get_images_pre(simulation):
+    return {
+        # Pre-Simulation visualizations
+        "growth_cones_pre": generate_image(visualize_growth_cones, simulation.growth_cones),
+        "substrate": generate_image(visualize_substrate, simulation.substrate),
+        "substrate_separate": generate_image(visualize_substrate_separately, simulation.substrate),
+    }
+
+
+def get_images_post(simulation, result):
+    """
+    Generates visualizations and encodes them as base64 strings for frontend display.
+    """
+    return {
+        # Post-simulation visualizations
+        "growth_cones_post": generate_image(visualize_growth_cones, simulation.growth_cones),
+        "projection_linear": generate_image(visualize_projection, result, simulation.substrate),
+        "results_on_substrate": generate_image(visualize_results_on_substrate, result,
+                                               simulation.substrate),
+        "trajectory_on_substrate": generate_image(visualize_trajectory_on_substrate, result,
+                                                  simulation.substrate, simulation.growth_cones),
+        "trajectories": generate_image(visualize_trajectories, simulation.growth_cones),
+        "adaptation": generate_image(visualize_adaptation, simulation.growth_cones)
+
+    }
+
 
 def visualize_image(image, title, rect=None):
     fig, ax = plt.subplots(figsize=(8, 8))
@@ -167,3 +195,19 @@ def create_blended_colors(ligands, receptors):
 
 def normalize_mapping(values, min_val, max_val):
     return (values - min_val) / (max_val - min_val) * 100
+
+
+def _generate_base64_image(figure: Figure) -> str:
+    """Convert a matplotlib figure to a base64-encoded PNG image."""
+    output = io.BytesIO()
+    figure.savefig(output, format='png', transparent=False)
+    output.seek(0)
+    return base64.b64encode(output.getvalue()).decode('utf8')
+
+
+def generate_image(visualization_func, *args):
+    """
+    Generates a visualization with the provided function and encodes it in base64.
+    """
+    fig = visualization_func(*args)
+    return _generate_base64_image(fig)

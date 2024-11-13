@@ -3,14 +3,6 @@ Module providing Result class for result representation.
 """
 
 import numpy as np
-import base64
-import io
-
-from matplotlib.figure import Figure
-
-from visualization import visualize_projection, visualize_trajectories, visualize_adaptation, \
-    visualize_trajectory_on_substrate, visualize_results_on_substrate, visualize_substrate_separately, \
-    visualize_substrate, visualize_growth_cones
 
 
 class Result:
@@ -21,27 +13,6 @@ class Result:
         self.config = config
         self.simulation = simulation
         self.runtime = runtime
-
-    def get_images(self):
-        """
-        Generates visualizations and encodes them as base64 strings for frontend display.
-        """
-        return {
-            # Pre-Simulation visualizations
-            "growth_cones": _generate_image(visualize_growth_cones, self.simulation.growth_cones),
-            "substrate": _generate_image(visualize_substrate, self.simulation.substrate),
-            "substrate_separate": _generate_image(visualize_substrate_separately, self.simulation.substrate),
-
-            # Post-simulation visualizations
-            "projection_linear": _generate_image(visualize_projection, self, self.simulation.substrate),
-            "results_on_substrate": _generate_image(visualize_results_on_substrate, self,
-                                                    self.simulation.substrate),
-            "trajectory_on_substrate": _generate_image(visualize_trajectory_on_substrate, self,
-                                                       self.simulation.substrate, self.simulation.growth_cones),
-            "trajectories": _generate_image(visualize_trajectories, self.simulation.growth_cones),
-            "adaptation": _generate_image(visualize_adaptation, self.simulation.growth_cones)
-
-        }
 
     def get_gc_count(self):
         return len(self.simulation.growth_cones)
@@ -111,19 +82,3 @@ class Result:
         """
         x_values, y_values = self.get_projection_id()
         return x_values.__str__(), y_values.__str__()
-
-
-def _generate_base64_image(figure: Figure) -> str:
-    """Convert a matplotlib figure to a base64-encoded PNG image."""
-    output = io.BytesIO()
-    figure.savefig(output, format='png', transparent=False)
-    output.seek(0)
-    return base64.b64encode(output.getvalue()).decode('utf8')
-
-
-def _generate_image(visualization_func, *args):
-    """
-    Generates a visualization with the provided function and encodes it in base64.
-    """
-    fig = visualization_func(*args)
-    return _generate_base64_image(fig)
