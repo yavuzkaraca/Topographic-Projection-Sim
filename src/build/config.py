@@ -49,7 +49,7 @@ CONTINUOUS_SIGNAL_START = "continuous_signal_start"
 CONTINUOUS_SIGNAL_END = "continuous_signal_end"
 # -----------   Wedges  -----------
 WEDGE_NARROW_EDGE = "wedge_narrow_edge"
-WEDGE_WIDE_EDGE = "wedge_wedge"
+WEDGE_WIDE_EDGE = "wedge_wide_edge"
 # -----------   Stripe Assay  -----------
 STRIPE_FWD = "stripe_fwd"
 STRIPE_REW = "stripe_rew"
