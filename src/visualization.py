@@ -71,6 +71,8 @@ def visualize_substrate_separately(substrate):
         ax.imshow(img)
         ax.set_title(title)
         ax.set_ylim(ax.get_ylim()[::-1])
+        ax.set_xlabel("n-t Axis of Retina")
+        ax.set_ylabel("d-v Axis of Retina")
     return fig
 
 
@@ -97,6 +99,8 @@ def visualize_results_on_substrate(result, substrate):
     x_values, y_values = result.get_final_positioning()
     plt.plot(x_values, y_values, '*', color='orange', label='Tectum End-positions')
     plt.legend()
+    plt.xlabel("n-t Axis of Retina")
+    plt.ylabel("d-v Axis of Retina")
     return fig
 
 
@@ -141,10 +145,10 @@ def visualize_trajectories(growth_cones, trajectory_freq=50):
     for idx, gc in enumerate(growth_cones):
         trajectory_x, trajectory_y = zip(*gc.history.position[::trajectory_freq])
         ax.plot(trajectory_x, trajectory_y, label=f'Growth Cone {idx}')
-    ax.set_xlabel('X Coordinate')
-    ax.set_ylabel('Y Coordinate')
     ax.set_title('Growth Cone Trajectories')
-    ax.legend()
+    # ax.legend()
+    plt.xlabel("n-t Axis of Retina")
+    plt.ylabel("d-v Axis of Retina")
     return fig
 
 
@@ -158,7 +162,9 @@ def visualize_trajectory_on_substrate(result, substrate, growth_cones, trajector
         trajectory_x, trajectory_y = zip(*gc.history.position[::trajectory_freq])
         plt.plot(trajectory_x, trajectory_y, label=f'Growth Cone {idx}')
 
-    plt.legend()
+    # plt.legend()
+    plt.xlabel("n-t Axis of Retina")
+    plt.ylabel("d-v Axis of Retina")
     return fig
 
 
@@ -173,7 +179,7 @@ def visualize_adaptation(growth_cones):
     ]
     for ax, ylabel, title, metric, scale in metrics:
         for gc in growth_cones:
-            ax.plot(getattr(gc.history, metric), label=gc.id)
+            ax.plot(getattr(gc.history, metric), label=f"Growth Cone {gc.id}")
         ax.set_xlabel('Step')
         ax.set_ylabel(ylabel)
         ax.set_title(title)
