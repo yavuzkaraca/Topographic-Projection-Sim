@@ -40,12 +40,14 @@ class Simulation:
         history_length (int): The number of historical steps to consider for adaptation.
     """
 
-    def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigmoid_steepness,
+    def __init__(self, config, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p,
+                 sigmoid_steepness,
                  sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter, mu, lambda_,
                  history_length):
         """
         Initialize the Simulation class with necessary parameters explained above.
         """
+        self.config = config
         self.forward_sig = forward_sig
         self.reverse_sig = reverse_sig
         self.ff_inter = ff_inter
@@ -73,28 +75,12 @@ class Simulation:
         start_time = time.time()  # Start timing the model
 
         self.prepare_gcs()
-        print(f"\nInitialization completed.\n")
-
-        print(f"\nGrowth Cones:\n")
-        for gc in self.growth_cones:
-            print(gc)
-
-        """
-        print(f"\nSubstrate:\n")
-        print(self.substrate)
-        """
-
-        print(f"\nIteration starts, {self.num_steps} many steps will be taken\n")
         self.iterate_simulation()
 
-        end_time = time.time()  # End timing the model
+        end_time = time.time()
         total_time = end_time - start_time
-        print(f"\nIteration completed in {total_time:.2f} seconds\n")
 
-        for gc in self.growth_cones:
-            print(gc)
-
-        return Result(self.growth_cones, self.substrate)
+        return Result(self, total_time, self.config)
 
     def prepare_gcs(self):
         """
@@ -114,7 +100,6 @@ class Simulation:
 
         for step_current in range(self.num_steps):
             if step_current % 250 == 0:
-                print(f"Current Step: {step_current}")
                 progress = int((step_current / self.num_steps) * 100)
 
             # TODO: @Performance Parallelize with futures

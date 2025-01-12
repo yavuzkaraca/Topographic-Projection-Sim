@@ -6,52 +6,75 @@ import numpy as np
 
 
 class Result:
-    def __init__(self, gcs, substrate):
+    def __init__(self, simulation, runtime, config):
         """
-        Initializes a Result object
+        Initializes a Result object.
         """
-        self.gcs = gcs
-        self.frame = substrate.rows, substrate.cols
+        self.config = config
+        self.simulation = simulation
+        self.runtime = runtime
 
-    def get_mapping(self):
-        # TODO: @Clean Make a unified projection mapping by automatically dividing between position or id number
-        pass
+    def get_gc_count(self):
+        return len(self.simulation.growth_cones)
+
+    def get_num_steps(self):
+        return self.simulation.num_steps
+
+    def get_summary(self):
+        """
+        Returns a summary dictionary with key simulation parameters and runtime.
+        """
+        return {
+            "totalGrowthCones": self.get_gc_count(),
+            "simulationSteps": self.get_num_steps(),
+            "computationTime": f"{self.runtime:.3f}",
+            "config": self.config,
+        }
+
+    def get_mapping(self, attribute="id", halved=False):
+        """
+        Generates a projection mapping representation based on a specified attribute.
+        Supports 'id', 'start_pos', or 'final_pos' for y-axis mapping.
+
+        :param attribute: Attribute for y-axis values ('id', 'start_pos', 'final_pos').
+        :param halved: Whether to halve the y-axis values.
+        """
+        x_values = np.array([gc.pos[0] for gc in self.simulation.growth_cones])
+        if attribute == "id":
+            y_values = np.array([gc.id / 2 if halved else gc.id for gc in self.simulation.growth_cones])
+        elif attribute == "start_pos":
+            y_values = np.array(
+                [gc.get_start_pos()[1] / 2 if halved else gc.get_start_pos()[1] for gc in self.simulation.growth_cones])
+        elif attribute == "final_pos":
+            y_values = np.array([gc.pos[1] / 2 if halved else gc.pos[1] for gc in self.simulation.growth_cones])
+        else:
+            raise ValueError("Invalid attribute specified for mapping.")
+
+        return x_values, y_values
 
     def get_projection_ypos(self):
         """
-        Generates a projection mapping representation based on the initial positions of growth cones.
+        Generates a projection mapping based on initial y-positions of growth cones.
         """
-        x_values = np.array([gc.pos[0] for gc in self.gcs])
-        y_values = np.array([gc.get_start_pos()[1] for gc in self.gcs])
-
-        return x_values, y_values
+        return self.get_mapping(attribute="start_pos")
 
     def get_projection_id(self):
         """
-        Generates a projection mapping representation based on the ids of growth cones.
+        Generates a projection mapping based on the ids of growth cones.
         """
-        x_values = np.array([gc.pos[0] for gc in self.gcs])
-        y_values = np.array([gc.id for gc in self.gcs])
-
-        return x_values, y_values
+        return self.get_mapping(attribute="id")
 
     def get_projection_halved(self):
         """
-        Generates a projection mapping representation based on the ids of growth cones.
+        Generates a halved projection mapping based on the ids of growth cones.
         """
-        x_values = np.array([gc.pos[0] for gc in self.gcs])
-        y_values = np.array([gc.id / 2 for gc in self.gcs])
-
-        return x_values, y_values
+        return self.get_mapping(attribute="id", halved=True)
 
     def get_final_positioning(self):
         """
         Retrieves the final positions of the growth cones after the model.
         """
-        x_values = np.array([gc.pos[0] for gc in self.gcs])
-        y_values = np.array([gc.pos[1] for gc in self.gcs])
-
-        return x_values, y_values
+        return self.get_mapping(attribute="final_pos")
 
     def __str__(self):
         """

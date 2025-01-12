@@ -49,7 +49,7 @@ CONTINUOUS_SIGNAL_START = "continuous_signal_start"
 CONTINUOUS_SIGNAL_END = "continuous_signal_end"
 # -----------   Wedges  -----------
 WEDGE_NARROW_EDGE = "wedge_narrow_edge"
-WEDGE_WIDE_EDGE = "wedge_wedge"
+WEDGE_WIDE_EDGE = "wedge_wide_edge"
 # -----------   Stripe Assay  -----------
 STRIPE_FWD = "stripe_fwd"
 STRIPE_REW = "stripe_rew"
@@ -152,10 +152,10 @@ gap_inv_substrate = {
 
 default_configs = {
     "CONTINUOUS_GRADIENTS": {
-        GC_COUNT: 5,  # 100
+        GC_COUNT: 15,  # 100
         GC_SIZE: 3,
         STEP_SIZE: 1,
-        STEP_NUM: 1000,  # 8000
+        STEP_NUM: 5000,  # 8000
         X_STEP_POSSIBILITY: 0.55,
         Y_STEP_POSSIBILITY: 0.50,
         SIGMOID_STEEPNESS: 4,
@@ -175,7 +175,7 @@ default_configs = {
         ROWS: 100,
         COLS: 100,
         CONTINUOUS_SIGNAL_START: 0.01,
-        CONTINUOUS_SIGNAL_END: 6.99
+        CONTINUOUS_SIGNAL_END: 0.99
     },
     "WEDGES": {
         GC_COUNT: 10,
@@ -267,7 +267,7 @@ def get_default_config(substrate_type):
 """
 
 custom_config = {
-    GC_COUNT: 25,
+    GC_COUNT: 5,
     GC_SIZE: 3,
     STEP_SIZE: 1,
     STEP_NUM: 8000,
