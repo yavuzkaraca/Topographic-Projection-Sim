@@ -124,6 +124,9 @@ class Simulation:
                     if self.adaptation:
                         self.adapt_growth_cone(gc)
                     pos_new = self.gen_random_step(gc)
+
+                    # do NOT recalculate the current potential (although the environment might be different now)
+
                     potential_new = calculate_potential(gc, pos_new, self.growth_cones, self.substrate,
                                                         self.forward_sig, self.reverse_sig, self.ff_inter,
                                                         self.ft_inter, step_current, self.num_steps,
@@ -132,7 +135,6 @@ class Simulation:
 
         progress = 100
         # TODO: @Performance Early stopping mechanism based on total potential
-
 
     def adapt_growth_cone(self, gc):
         """
