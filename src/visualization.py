@@ -40,8 +40,9 @@ def visualize_substrate_separately(substrate):
     """
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
-    normalized_ligands = normalize_substrate(substrate.ligands)
-    normalized_receptors = normalize_substrate(substrate.ligands)
+    # this is not used and leads sometimes to a runtime error so i commented it out
+    #normalized_ligands = normalize_substrate(substrate.ligands)
+    #normalized_receptors = normalize_substrate(substrate.ligands)
 
     # Create colored images for ligands and receptors separately
     ligand_colors = create_blended_colors(substrate.ligands, np.zeros_like(substrate.ligands))
