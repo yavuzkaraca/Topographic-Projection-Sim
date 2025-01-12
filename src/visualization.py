@@ -119,16 +119,20 @@ def visualize_projection_linear(result, substrate):
     x_values_normalized = normalize_mapping(x_values, substrate.offset, substrate.cols - substrate.offset)
     y_values_normalized = normalize_mapping(y_values, substrate.offset, substrate.rows - substrate.offset - 1)
 
-    slope, intercept, r_value, _, _ = linregress(x_values_normalized, y_values_normalized)
-    regression_line = slope * x_values_normalized + intercept
-    correlation = np.corrcoef(x_values_normalized, y_values_normalized)[0, 1] ** 2  # Squaring for R^2
-    null_point_x = -intercept / slope if slope != 0 else None
-    null_point_y = intercept
-
-    plt.plot(x_values_normalized, y_values_normalized, '*', label='Growth Cones')
-    plt.plot(x_values_normalized, regression_line, 'r-',
+    # calculate linear regression only if possible
+    try:
+        slope, intercept, r_value, _, _ = linregress(x_values_normalized, y_values_normalized)
+        regression_line = slope * x_values_normalized + intercept
+        null_point_x = -intercept / slope if slope != 0 else None
+        null_point_y = intercept
+        correlation = np.corrcoef(x_values_normalized, y_values_normalized)[0, 1] ** 2  # Squaring for R^2
+        plt.plot(x_values_normalized, regression_line, 'r-',
                  label=f'Linear Regression\nSlope: {slope:.2f}\nR^2: {correlation:.2f}'
                        f'\nNull Point X: {null_point_x:.2f}\nNull Point Y: {null_point_y:.2f}')
+    except ValueError:
+        print("could not calculate linear regression")
+
+    plt.plot(x_values_normalized, y_values_normalized, '*', label='Growth Cones')
     plt.title("Projection Mapping")
     plt.xlabel("% a-p Axis of Target")
     plt.ylabel("% n-t Axis of Retina")
