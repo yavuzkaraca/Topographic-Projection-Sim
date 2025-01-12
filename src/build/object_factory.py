@@ -135,7 +135,7 @@ def initialize_growth_cones(config):
     # Non-linear gradient for receptors, starting at 0.99 and decreasing to 0.01
     receptor_gradient = np.linspace(gc_r_min, gc_r_max, gc_count) ** gc_r_steepness
 
-    # I changed this to a equation in order to be able to manipulate both curves independently
+    # I changed this to an equation in order to be able to manipulate both curves independently
     ligand_gradient = np.linspace(gc_l_max, gc_l_min, gc_count) ** gc_l_steepness
 
     # Scale the resulting gradients to the desired range
@@ -143,12 +143,9 @@ def initialize_growth_cones(config):
     receptor_gradient = (receptor_gradient - gc_r_min ** gc_r_steepness) / (gc_r_max ** gc_r_steepness - gc_r_min ** gc_r_steepness)
     ligand_gradient = (ligand_gradient - gc_l_max ** gc_l_steepness) / (gc_l_min ** gc_l_steepness - gc_l_max ** gc_l_steepness)
 
-    # Step 3: Scale normalized values to new range [new_min, new_max]
-    receptor_gradient = gc_r_min + (gc_r_max - gc_r_min) * receptor_gradient
-    ligand_gradient = gc_l_max + (gc_l_min - gc_l_max) * ligand_gradient
-
-    receptors = receptor_gradient * 0.99999
-    ligands = ligand_gradient * 0.99999
+    # Step 3: Scale normalized values to users range
+    receptors = gc_r_min + (gc_r_max - gc_r_min) * receptor_gradient
+    ligands = gc_l_max + (gc_l_min - gc_l_max) * ligand_gradient
 
     # Create an array of evenly distributed y-positions for the growth cones
     y_positions = np.linspace(size, rows - 1 + size, gc_count, dtype=int)
