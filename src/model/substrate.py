@@ -109,7 +109,7 @@ class ContinuousGradientSubstrate(BaseSubstrate):
         ligand_gradient = ((ligand_gradient - self.ligand_signal_start ** self.cont_grad_l_steepness)
                              / (self.ligand_signal_end ** self.cont_grad_l_steepness - self.ligand_signal_start ** self.cont_grad_l_steepness))
 
-        # Step 2: Scale normalized values to new range [new_min, new_max]
+        # Step 2: Scale normalized values to users range
         receptor_gradient = self.receptor_signal_end + (self.receptor_signal_start - self.receptor_signal_end) * receptor_gradient
         ligand_gradient = self.ligand_signal_start + (self.ligand_signal_end - self.ligand_signal_start) * ligand_gradient
 
@@ -118,6 +118,8 @@ class ContinuousGradientSubstrate(BaseSubstrate):
         high_end_ligand = np.full(self.offset, self.ligand_signal_end)
         low_end_receptor = np.full(self.offset, self.receptor_signal_start)
         high_end_receptor = np.full(self.offset, self.receptor_signal_end)
+
+        # concatenate offsets and gradient
         ligand_gradient = np.concatenate([low_end_ligand, ligand_gradient, high_end_ligand])
         receptor_gradient = np.concatenate([high_end_receptor, receptor_gradient, low_end_receptor])
 
