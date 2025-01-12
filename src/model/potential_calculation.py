@@ -50,6 +50,9 @@ def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inte
 def ft_interaction(gc, pos, substrate):
     """
     Calculate fiber-target interaction between a growth cone and a substrate.
+
+    I think this does not work correctly. it gives back 27 for a gc with size 3 on a full receptor tectum
+    what happens with field that are half in the circle and half not?
     """
 
     borders = bounding_box(pos, gc.size, substrate)
@@ -139,6 +142,7 @@ def euclidean_distance(point1, point2):
 def intersection_area(gc1_pos, gc2_pos, radius):
     """
     Calculate the area of intersection between two circles (circumscribed around growth cones).
+    This should be fixed
     """
     d = euclidean_distance(gc1_pos, gc2_pos)  # Distance between the centers of the circles
 
@@ -150,9 +154,9 @@ def intersection_area(gc1_pos, gc2_pos, radius):
         return 0
     else:
         # Partial overlap
-        x = (d ** 2) / (2 * d)
+        x = (d ** 2) / (2 * d)  # this is d/2
         z = x ** 2
         y = math.sqrt(radius ** 2 - z)
         area = radius ** 2 * math.acos(x / radius) - x * y
         # TODO: clean-fix area calculation
-        return area * 2  # Chat-GPT suggestion: apparently the equations before only calculate one of
+        return area * 1.5
