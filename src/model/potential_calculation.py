@@ -30,14 +30,17 @@ def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inte
         forward_sig = gc.receptor_current * (ft_ligands + (gc.ligand_current if cis_inter_on else 0) + (ff_coef * ff_ligands))
     if reverse_on:
         reverse_sig = gc.ligand_current * (ft_receptors + (gc.receptor_current if cis_inter_on else 0) + (ff_coef * ff_receptors))
+
     # Round and calculate the potential
     forward_sig = float("{:.6f}".format(forward_sig))
     reverse_sig = float("{:.6f}".format(reverse_sig))
 
-    # Return calculated log difference or handle case when both signals are zero
-    if forward_sig == 0 and reverse_sig == 0:
-        return 0  # Both signals zero would lead to log(0), handle this case as zero potential difference
-    return abs(math.log(reverse_sig or 0.0001) - math.log(forward_sig or 0.0001))
+    # Ensure signals are strictly positive
+    forward_sig = max(forward_sig, 0.0001)
+    reverse_sig = max(reverse_sig, 0.0001)
+
+    # Calculate and return the potential
+    return abs(math.log(reverse_sig) - math.log(forward_sig))
 
 
 def ft_interaction(gc, pos, substrate):

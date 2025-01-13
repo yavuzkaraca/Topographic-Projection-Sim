@@ -288,20 +288,28 @@ def get_default_config(substrate_type):
 """
 
 custom_config = {
-    GC_COUNT: 5,
-    GC_SIZE: 3,
+    GC_COUNT: 10,
+    GC_SIZE: 3,  # means there will be an input of 27 for a full sensor matrix at the moment
     STEP_SIZE: 1,
     STEP_NUM: 8000,
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
+    SIGMOID_HEIGHT: 5,
+    GC_R_STEEPNESS: 2,
+    GC_L_STEEPNESS: 2,
+    GC_R_MIN: 0.01,  # it is possible to use 0 -> Does this make sense
+    GC_L_MIN: 0.01,  # it is possible to use 0 -> Does this make sense
+    GC_R_MAX: 5,
+    GC_L_MAX: 5,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
     REVERSE_SIG: True,
     FF_INTER: True,
     FT_INTER: True,
+    CIS_INTER: True,
     ADAPTATION_ENABLED: True,
     ADAPTATION_MU: 0.006,
     ADAPTATION_LAMBDA: 0.0045,
