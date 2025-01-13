@@ -44,9 +44,6 @@ class Simulation:
                  sigmoid_steepness,
                  sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter, mu, lambda_,
                  history_length):
-        """
-        Initialize the Simulation class with necessary parameters explained above.
-        """
         self.config = config
         self.forward_sig = forward_sig
         self.reverse_sig = reverse_sig
@@ -102,15 +99,13 @@ class Simulation:
             if step_current % 250 == 0:
                 progress = int((step_current / self.num_steps) * 100)
 
-            # TODO: @Performance Parallelize with futures
-
             for gc in self.growth_cones:
                 if not gc.freeze:  # Check if the growth cone is not frozen
                     if self.adaptation:
                         self.adapt_growth_cone(gc)
                     pos_new = self.gen_random_step(gc)
 
-                    # do NOT recalculate the current potential (although the environment might be different now)
+                    # do NOT recalculate the current potential to save resources
 
                     potential_new = calculate_potential(gc, pos_new, self.growth_cones, self.substrate,
                                                         self.forward_sig, self.reverse_sig, self.ff_inter,

@@ -19,12 +19,6 @@ class GrowthCone:
     """
 
     def __init__(self, position, size, ligand, receptor, id, freeze=False, marked=False):
-        """
-        Initializes a GrowthCone with parameters defined above.
-
-        :param id: The unique identifier sorted along n-t axis of retina
-        :param freeze: The toggle to freeze growth cone during simulation
-        """
         self.pos = position
         self.size = size
         self.ligand_current = ligand
@@ -118,6 +112,9 @@ class GrowthCone:
 
 
 class History:
+    """
+    Represents a history of the Growth Cone object by storing all the past data
+    """
     def __init__(self, potential_ini, adap_co_ini, position_ini, ligand_ini, receptor_ini,
                  reset_force_receptor_ini, reset_force_ligand_ini):
         self.potential = [potential_ini]

@@ -10,12 +10,6 @@ def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inte
                         step, num_steps, sigmoid_steepness, sigmoid_shift):
     """
     Calculate guidance potential for a growth cone (gc) in a model.
-
-    :param gc: Growth Cone object representing the cone for which potential is calculated.
-    :param gcs: List of other growth cones (for fiber-fiber interaction).
-    :param substrate: Substrate object (for fiber-target interaction).
-    :param ff_coef: The iteration of the simulation processed by a sigmoid function (used for fiber-fiber interaction).
-    :return: The guidance potential as a floating-point number.
     """
 
     # Initialize interaction values
@@ -66,7 +60,7 @@ def ft_interaction(gc, pos, substrate):
             d = euclidean_distance(center, (i, j))
             if d > edge_length / 2:
                 # Eliminate cells outside of the circle, as borders define a square matrix
-                continue  # TODO: @Performance Use a precalculated mask
+                continue
             sum_ligands += substrate.ligands[i, j]
             sum_receptors += substrate.receptors[i, j]
 
@@ -142,11 +136,8 @@ def intersection_area(gc1_pos, gc2_pos, radius):
         # No overlap
         return 0
     else:
-        # Partial overlap
-        x = (d ** 2) / (2 * d)
-        z = x ** 2
-        y = math.sqrt(radius ** 2 - z)
-        area = radius ** 2 * math.acos(x / radius) - x * y
-        # TODO: @Fix clean-fix area calculation
-        return area * 1.5  # magic number for quick dirty fix
+        # Check figure intersection_area for visualization: sector = PBDC, triangle = PBEC
+        sector = radius ** 2 * math.acos(d / (2 * radius))
+        triangle = 0.5 * d * math.sqrt(4 * radius ** 2 - d ** 2)
+        return (sector - triangle) * 2
 
