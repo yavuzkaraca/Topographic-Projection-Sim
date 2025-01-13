@@ -1,415 +1,219 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.figure import Figure
 from scipy.stats import linregress
-from model import potential_calculation as pt
+import base64
+import io
 
 
-# TODO: Clean up this module
+def get_images_pre(simulation):
+    return {
+        # Pre-Simulation visualizations
+        "growth_cones_pre": generate_image(visualize_growth_cones, simulation.growth_cones),
+        "substrate": generate_image(visualize_substrate, simulation.substrate),
+        "substrate_separate": generate_image(visualize_substrate_separately, simulation.substrate),
+    }
+
+
+def get_images_post(simulation, result):
+    """
+    Generates visualizations and encodes them as base64 strings for frontend display.
+    """
+    return {
+        # Post-simulation visualizations
+        "growth_cones_post": generate_image(visualize_growth_cones, simulation.growth_cones),
+        "projection_linear": generate_image(visualize_projection, result, simulation.substrate),
+        "results_on_substrate": generate_image(visualize_results_on_substrate, result,
+                                               simulation.substrate),
+        "trajectory_on_substrate": generate_image(visualize_trajectory_on_substrate, result,
+                                                  simulation.substrate, simulation.growth_cones),
+        "trajectories": generate_image(visualize_trajectories, simulation.growth_cones),
+        "adaptation": generate_image(visualize_adaptation, simulation.growth_cones)
+
+    }
+
+
+def visualize_image(image, title, rect=None):
+    fig, ax = plt.subplots(figsize=(8, 8))
+    ax.imshow(image)
+    ax.set_title(title)
+    if rect:
+        ax.add_patch(plt.Rectangle(*rect, fill=False, edgecolor='black', lw=2))
+    ax.set_ylim(ax.get_ylim()[::-1])  # Flip y-axis
+    return fig
+
+
+def visualize_data_points(x, y, x_label, y_label, title, **kwargs):
+    fig, ax = plt.subplots(figsize=(10, 10))
+    ax.plot(x, y, '*', **kwargs)
+    ax.set_title(title)
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
+    ax.set_xlim(0, 100)
+    ax.set_ylim(0, 100)
+    return fig
+
 
 def visualize_substrate(substrate):
-    """
-    Visualize the substrate with ligands and receptors.
-    Uses the create_blended_colors function to generate the color representation.
-
-    :param substrate: The Substrate object containing ligand and receptor values.
-    """
-    fig, ax = plt.subplots(figsize=(8, 8))
     blended_colors = create_blended_colors(substrate.ligands, substrate.receptors)
-
-    # Display the color-mixed substrate
-    ax.imshow(blended_colors)
-    ax.set_title("Combined Ligands and Receptors")
-
-    # Drawing the border to represent the offset
-    offset = substrate.offset
-    ax.add_patch(plt.Rectangle((offset - 0.5, offset - 0.5), substrate.cols - 2 * offset, substrate.rows - 2 * offset,
-                               fill=False, edgecolor='black', lw=2))
-
-    # Flip the y-axis to have zero at the bottom
-    ax.set_ylim(ax.get_ylim()[::-1])
-
-    plt.show()
+    rect = ((substrate.offset - 0.5, substrate.offset - 0.5),
+            substrate.cols - 2 * substrate.offset, substrate.rows - 2 * substrate.offset)
+    return visualize_image(blended_colors, "Combined Ligands and Receptors", rect)
 
 
 def visualize_substrate_separately(substrate):
-    """
-    Visualize the ligands and receptors in separate subplots with custom colors.
-    Applies color blending to ligands and receptors separately.
-
-    :param substrate: The Substrate object containing ligand and receptor values.
-    """
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # this is not used and leads sometimes to a runtime error so i commented it out
-    #normalized_ligands = normalize_substrate(substrate.ligands)
-    #normalized_receptors = normalize_substrate(substrate.ligands)
-
-    # Create colored images for ligands and receptors separately
-    ligand_colors = create_blended_colors(substrate.ligands, np.zeros_like(substrate.ligands))
-    receptor_colors = create_blended_colors(np.zeros_like(substrate.receptors), substrate.receptors)
-
-    # Display ligands with custom colors
-    axes[0].imshow(ligand_colors)
-    axes[0].set_title("Ligands")
-    axes[0].set_ylim(axes[0].get_ylim()[::-1])  # Flip the y-axis
-
-    # Display receptors with custom colors
-    axes[1].imshow(receptor_colors)
-    axes[1].set_title("Receptors")
-    axes[1].set_ylim(axes[1].get_ylim()[::-1])  # Flip the y-axis
-
-    plt.show()
+    images = [
+        (create_blended_colors(substrate.ligands, np.zeros_like(substrate.ligands)), "Ligands"),
+        (create_blended_colors(np.zeros_like(substrate.receptors), substrate.receptors), "Receptors")
+    ]
+    for ax, (img, title) in zip(axes, images):
+        ax.imshow(img)
+        ax.set_title(title)
+        ax.set_ylim(ax.get_ylim()[::-1])
+        ax.set_xlabel("n-t Axis of Retina")
+        ax.set_ylabel("d-v Axis of Retina")
+    return fig
 
 
 def visualize_growth_cones(gcs):
     receptors = np.array([gc.receptor_current for gc in gcs])
     ligands = np.array([gc.ligand_current for gc in gcs])
 
-    plt.figure(figsize=(10, 7))
-    plt.plot(receptors, 'o-', label='Receptors')
-    plt.plot(ligands, 'o-', color='red', label='Ligands')
-    plt.xlabel('Growth Cone ID (sorted along %n-t Axis of Retina)')
-    plt.ylabel('Signal Value')
-    plt.title('GCs')
-    plt.legend()
-    plt.show()
+    # Create the plot
+    fig, ax = plt.subplots(figsize=(10, 7))
+    ax.plot(range(len(gcs)), receptors, 'o-', label='Receptors')
+    ax.plot(range(len(gcs)), ligands, 'o-', label='Ligands', color='red')
+
+    ax.set_xlabel('Growth Cone ID')
+    ax.set_ylabel('Signal Value')
+    ax.set_title('Growth Cone Signal Values')
+    ax.legend()
+
+    return fig
 
 
 def visualize_results_on_substrate(result, substrate):
-    """
-    Visualize tectum end-positions on top of the substrate.
-    Overlays the results of tectum end-positions onto the color-mixed substrate.
-
-    :param result: Result object containing tectum end-positions.
-    :param substrate: The Substrate object containing ligand and receptor values.
-    """
-    fig, ax = plt.subplots(figsize=(8, 8))
     blended_colors = create_blended_colors(substrate.ligands, substrate.receptors)
-
-    # Display the color-mixed substrate
-    ax.imshow(blended_colors)
-
-    # Plot tectum end-positions over the substrate
+    fig = visualize_image(blended_colors, "Tectum End-positions on Color-Mixed Substrate")
     x_values, y_values = result.get_final_positioning()
-    ax.plot(x_values, y_values, '*', color='orange', label='Tectum End-positions')
-    ax.set_title("Tectum End-positions on Color-Mixed Substrate")
-    ax.legend()
-
-    # Drawing the border to represent the offset
-    offset = substrate.offset
-    ax.add_patch(plt.Rectangle((offset - 0.5, offset - 0.5), substrate.cols - 2 * offset, substrate.rows - 2 * offset,
-                               fill=False, edgecolor='black', lw=2))
-    # Flip the y-axis to have zero at the bottom
-    ax.set_ylim(ax.get_ylim()[::-1])
-
-    plt.show()
-
-
-def visualize_projection_linear(result, substrate):
-    """
-    Generate plots for the projection mapping, including linear regression for the
-    projection mapping.
-
-    :param substrate: The Substrate object containing dimensions. (for normalization)
-    :param result: Result object containing growth cone positions and details.
-    """
-    fig, axes = plt.subplots(figsize=(10, 10))  # Create a single figure with two subplots
-
-    # Get projection mapping data and normalize
-    x_values, y_values = result.get_projection_ypos()
-    x_values_normalized = normalize_mapping(x_values, substrate.offset, substrate.cols - substrate.offset)
-    y_values_normalized = normalize_mapping(y_values, substrate.offset, substrate.rows - substrate.offset - 1)
-
-    # calculate linear regression only if possible
-    try:
-        slope, intercept, r_value, _, _ = linregress(x_values_normalized, y_values_normalized)
-        regression_line = slope * x_values_normalized + intercept
-        null_point_x = -intercept / slope if slope != 0 else None
-        null_point_y = intercept
-        correlation = np.corrcoef(x_values_normalized, y_values_normalized)[0, 1] ** 2  # Squaring for R^2
-        plt.plot(x_values_normalized, regression_line, 'r-',
-                 label=f'Linear Regression\nSlope: {slope:.2f}\nR^2: {correlation:.2f}'
-                       f'\nNull Point X: {null_point_x:.2f}\nNull Point Y: {null_point_y:.2f}')
-    except ValueError:
-        print("could not calculate linear regression")
-
-    plt.plot(x_values_normalized, y_values_normalized, '*', label='Growth Cones')
-    plt.title("Projection Mapping")
-    plt.xlabel("% a-p Axis of Target")
-    plt.ylabel("% n-t Axis of Retina")
-    plt.xlim(0, 100)  # Set x-axis limit
-    plt.ylim(0, 100)  # Set y-axis limit
+    plt.plot(x_values, y_values, '*', color='orange', label='Tectum End-positions')
     plt.legend()
+    plt.xlabel("n-t Axis of Retina")
+    plt.ylabel("d-v Axis of Retina")
+    return fig
 
-    plt.show()
 
-
-def visualize_projection_polyfit(result, substrate, label="Growth Cones", halved=False):
-    """
-    Generate a plot for the projection mapping of growth cones.
-
-    :param halved:
-    :param label: Label for the data plotted, defaulting to "Growth Cones".
-    :param substrate: The Substrate object containing dimensions for normalization.
-    :param result: Result object containing growth cone positions and details.
-    """
-    plt.figure(figsize=(10, 10))  # Direct creation of a figure with specified size
-
-    # Projection mapping data and normalization
+def visualize_projection(result, substrate, fit_type="linear", halved=False, mutated_indexes=None):
     x_values, y_values = result.get_projection_id()
-
     if halved:
         x_values, y_values = result.get_projection_halved()
-
     x_values_normalized = normalize_mapping(x_values, substrate.offset, substrate.cols - substrate.offset)
+    y_values_normalized = normalize_mapping(y_values, 0, len(y_values) - 1)
 
-    max_val = len(y_values) - 1
-    y_values_normalized = normalize_mapping(y_values, 0, max_val)
+    fig = visualize_data_points(x_values_normalized, y_values_normalized, "% a-p Axis of Target",
+                                "% n-t Axis of Retina", "Projection Mapping")
+    if fit_type == "linear":
+        add_linear_regression(x_values_normalized, y_values_normalized)
+    elif fit_type == "polyfit":
+        add_polynomial_fit(x_values_normalized, y_values_normalized, mutated_indexes)
 
-    # Cubic polynomial fitting for the data
-    coeffs = np.polyfit(x_values_normalized, y_values_normalized, 3)
+    plt.legend()
+    return fig
+
+
+def add_linear_regression(x, y):
+    slope, intercept, r_value, *_ = linregress(x, y)
+    regression_line = slope * x + intercept
+    correlation = r_value ** 2  # R² value
+    null_point_x = -intercept / slope if slope != 0 else None
+
+    # Plot the regression line
+    plt.plot(x, regression_line, 'r-',
+             label=f'Linear Regression\nSlope: {slope:.2f}\n'
+                   f'R²: {correlation:.2f}\nNull Point X: {null_point_x:.2f}\nNull Point Y: {intercept:.2f}')
+
+
+def add_polynomial_fit(x, y, mutated_indexes):
+    coeffs = np.polyfit(x, y, 3)
     poly = np.poly1d(coeffs)
-    x_new = np.linspace(min(x_values_normalized), max(x_values_normalized), 300)
-    y_new = poly(x_new)
-    plt.plot(x_values_normalized, y_values_normalized, 'b*', label=label)
-    plt.plot(x_new, y_new, 'b-')
-
-    plt.title("Projection Mapping")
-    plt.xlabel("% a-p Axis of Target")
-    plt.ylabel("% n-t Axis of Retina")
-    plt.xlim(0, 100)
-    plt.ylim(0, 100)
-    plt.legend()
-
-    plt.show()
-
-
-def visualize_projection_disjunctsets(result, substrate, mutated_indexes,
-                                      label_first="Wildtype Growth Cones", label_second="Mutated Growth Cones"):
-    """
-    Generate a plot for the projection mapping of non-mutated and mutated growth cones.
-
-    :param label_second:
-    :param label_first:
-    :param substrate: The Substrate object containing dimensions. (for normalization)
-    :param result: Result object containing growth cone positions and details.
-    :param mutated_indexes: List of indexes of mutated growth cones to be colored differently.
-    """
-    plt.figure(figsize=(10, 10))  # Direct creation of a figure with specified size
-
-    # Projection mapping data and normalization
-    x_values, y_values = result.get_projection_id()
-    x_values_normalized = normalize_mapping(x_values, substrate.offset, substrate.cols - substrate.offset)
-    max_val = len(y_values) - 1
-    y_values_normalized = normalize_mapping(y_values, 0, max_val)
-
-    # Segment data into mutated and non-mutated
-    mutated_x = [x for i, x in enumerate(x_values_normalized) if i in mutated_indexes]
-    mutated_y = [y for i, y in enumerate(y_values_normalized) if i not in mutated_indexes]
-    non_mutated_x = [x for i, x in enumerate(x_values_normalized) if i not in mutated_indexes]
-    non_mutated_y = [y for i, y in enumerate(y_values_normalized) if i not in mutated_indexes]
-
-    # Cubic polynomial fitting for non-mutated data
-    if non_mutated_x and non_mutated_y:
-        nm_coeffs = np.polyfit(non_mutated_x, non_mutated_y, 3)
-        nm_poly = np.poly1d(nm_coeffs)
-        nm_x_new = np.linspace(min(non_mutated_x), max(non_mutated_x), 300)
-        nm_y_new = nm_poly(nm_x_new)
-        plt.plot(non_mutated_x, non_mutated_y, 'r*', label=label_first)
-        plt.plot(nm_x_new, nm_y_new, 'r-')
-
-    # Cubic polynomial fitting for mutated data
-    if mutated_x and mutated_y:
-        m_coeffs = np.polyfit(mutated_x, mutated_y, 3)
-        m_poly = np.poly1d(m_coeffs)
-        m_x_new = np.linspace(min(mutated_x), max(mutated_x), 300)
-        m_y_new = m_poly(m_x_new)
-        plt.plot(mutated_x, mutated_y, 'b*', label=label_second)
-        plt.plot(m_x_new, m_y_new, 'b-')
-
-    plt.title("Projection Mapping")
-    plt.xlabel("% a-p Axis of Target")
-    plt.ylabel("% n-t Axis of Retina")
-    plt.xlim(0, 100)
-    plt.ylim(0, 100)
-    plt.legend()
-
-    plt.show()
+    plt.plot(x, poly(x), 'b-', label="Cubic Fit")
 
 
 def visualize_trajectories(growth_cones, trajectory_freq=50):
-    """
-    Visualize the trajectories of growth cones.
-
-    :param growth_cones: List of GrowthCone objects.
-    """
-    plt.figure(figsize=(10, 10))  # Direct creation of a figure with specified size
-
-    for growth_cone in growth_cones:
-        trajectory_x, trajectory_y = zip(*growth_cone.history.position[::trajectory_freq])
-        plt.plot(trajectory_x, trajectory_y, label=f'Growth Cone {growth_cones.index(growth_cone)}')
-
-    plt.xlabel('X Coordinate')
-    plt.ylabel('Y Coordinate')
-    plt.title('Growth Cone Trajectories')
-    plt.legend()
-    plt.show()
+    fig, ax = plt.subplots(figsize=(10, 10))
+    for idx, gc in enumerate(growth_cones):
+        trajectory_x, trajectory_y = zip(*gc.history.position[::trajectory_freq])
+        ax.plot(trajectory_x, trajectory_y, label=f'Growth Cone {idx}')
+    ax.set_title('Growth Cone Trajectories')
+    # ax.legend()
+    plt.xlabel("n-t Axis of Retina")
+    plt.ylabel("d-v Axis of Retina")
+    return fig
 
 
 def visualize_trajectory_on_substrate(result, substrate, growth_cones, trajectory_freq=50):
-    """
-    Visualize tectum end-positions and growth cone trajectories on top of the substrate.
-
-    :param trajectory_freq:
-    :param result: Result object containing tectum end-positions.
-    :param substrate: The Substrate object containing ligand and receptor values.
-    :param growth_cones: List of GrowthCone objects with trajectory data.
-    """
-    fig, ax = plt.subplots(figsize=(8, 8))
-
-    # Create blended colors for the substrate
     blended_colors = create_blended_colors(substrate.ligands, substrate.receptors)
-    ax.imshow(blended_colors)
-
-    # Plot tectum end-positions
+    fig = visualize_image(blended_colors, "Tectum End-positions and Growth Cone Trajectories on Substrate")
     x_values, y_values = result.get_final_positioning()
-    ax.plot(x_values, y_values, '*', color='orange', label='Tectum End-positions')
+    plt.plot(x_values, y_values, '*', color='orange', label='Tectum End-positions')
 
-    # Drawing the border to represent the offset
-    offset = substrate.offset
-    ax.add_patch(plt.Rectangle((offset - 0.5, offset - 0.5), substrate.cols - 2 * offset,
-                               substrate.rows - 2 * offset, fill=False, edgecolor='black', lw=2))
+    for idx, gc in enumerate(growth_cones):
+        trajectory_x, trajectory_y = zip(*gc.history.position[::trajectory_freq])
+        plt.plot(trajectory_x, trajectory_y, label=f'Growth Cone {idx}')
 
-    # Plot growth cone trajectories
-    for growth_cone in growth_cones:
-        trajectory_x, trajectory_y = zip(*growth_cone.history.position[::trajectory_freq])
-        ax.plot(trajectory_x, trajectory_y, label=f'Growth Cone {growth_cones.index(growth_cone)}')
-
-    ax.set_title("Tectum End-positions and Growth Cone Trajectories on Substrate")
-    ax.legend()
-    ax.set_ylim(ax.get_ylim()[::-1])  # Flip the y-axis
-    plt.show()
+    # plt.legend()
+    plt.xlabel("n-t Axis of Retina")
+    plt.ylabel("d-v Axis of Retina")
+    return fig
 
 
 def visualize_adaptation(growth_cones):
-    """
-    Used only in adaptation exploration experiment
-    """
-    # Create a figure with 2 rows and 2 columns of subplots
-    fig, axs = plt.subplots(2, 2, figsize=(12, 10))  # Adjust figsize as needed
-
-    # Determine the maximum number of steps across all growth cones
+    fig, axs = plt.subplots(2, 2, figsize=(12, 10))
     max_steps = max(len(gc.history.potential) for gc in growth_cones)
+    metrics = [
+        (axs[0, 0], "Potential", "Guidance Potentials", 'potential', 'linear'),
+        (axs[0, 1], "Adaptation Coefficient", "Adaptation Coefficients", 'adap_co', 'linear'),
+        (axs[1, 0], "Ligand", "Ligand Value", 'ligand', 'log'),
+        (axs[1, 1], "Reset Force", "Reset Force for Ligand", 'reset_force_ligand', 'symlog')
+    ]
+    for ax, ylabel, title, metric, scale in metrics:
+        for gc in growth_cones:
+            ax.plot(getattr(gc.history, metric), label=f"Growth Cone {gc.id}")
+        ax.set_xlabel('Step')
+        ax.set_ylabel(ylabel)
+        ax.set_title(title)
+        ax.set_xlim(0, max_steps)
+        ax.set_yscale(scale)
+        ax.legend()
 
-    # Plotting potentials on the first subplot
-    for gc in growth_cones:
-        axs[0, 0].plot(gc.history.potential, label=gc.id)
-    axs[0, 0].set_xlabel('Step')
-    axs[0, 0].set_ylabel('Potential')
-    axs[0, 0].set_title('Guidance Potentials')
-    axs[0, 0].set_xlim(0, max_steps)
-    axs[0, 0].legend()
-
-    # Plotting adaptation coefficients on the second subplot
-    for gc in growth_cones:
-        axs[0, 1].plot(gc.history.adap_co, label=gc.id)
-    axs[0, 1].set_xlabel('Step')
-    axs[0, 1].set_ylabel('Adaptation Coefficient')
-    axs[0, 1].set_title('Adaptation Coefficients')
-    axs[0, 1].set_xlim(0, max_steps)
-    axs[0, 1].legend()
-
-    # Placeholder for third plot
-    # For example, plotting another metric here
-    for gc in growth_cones:
-        axs[1, 0].plot(gc.history.ligand, label=gc.id)
-    axs[1, 0].set_xlabel('Step')
-    axs[1, 0].set_ylabel('Ligand')
-    axs[1, 0].set_title('Ligand Value')
-    axs[1, 0].set_xlim(0, max_steps)
-    axs[1, 0].set_yscale('log')  # Set the y-axis to logarithmic scale
-    axs[1, 0].legend()
-
-    # Placeholder for fourth plot
-    # For example, plotting yet another metric here
-    for gc in growth_cones:
-        axs[1, 1].plot(gc.history.reset_force_ligand, label=gc.id)
-    axs[1, 1].set_xlabel('Step')
-    axs[1, 1].set_ylabel('Reset force')
-    axs[1, 1].set_title('Reset Force for Ligand')
-    axs[1, 1].set_xlim(0, max_steps)
-    axs[1, 1].set_ylim(top=0.05)
-    axs[1, 1].set_yscale('symlog')  # Set the y-axis to logarithmic scale
-    axs[1, 1].legend()
-
-    # Adjust layout and show the figure
     plt.tight_layout()
-    plt.show()
-
-
-def visualize_ff_coef(simulation):
-    """
-    Takes Values from ff_coef_calculation and visualizes them.
-    """
-    num_steps = simulation.num_steps
-    sigmoid_steepness = simulation.sigmoid_steepness
-    sigmoid_shift = simulation.sigmoid_shift
-    sigmoid_height = simulation.sigmoid_height
-
-    # Generate step values from 0 to num_steps
-    steps = np.linspace(0, num_steps, 500)  # 500 points for a smooth curve
-
-    # Calculate the corresponding y values using the calculate_ff_coef function
-    y_values = [pt.calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid_height) for step in steps]
-
-    # Plot the function
-    plt.plot(steps / num_steps, y_values, label='Sigmoid Approximation')
-    plt.xlabel('Step Ratio')
-    plt.ylabel('ff_coefficient')
-    plt.title('Sigmoid Function Approximation')
-    plt.show()
-
-
-"""
---------------------------------------
-        UTILITY METHODS
---------------------------------------
-"""
-
-
-def normalize_mapping(values, min_val, max_val):
-    """
-    Normalize the given values to a range between 0 and 100.
-    """
-    return (values - min_val) / (max_val - min_val) * 100
-
-
-def normalize_substrate(values):
-    """
-    Normalize the given array to a range between 0 and 1 based on its min and max values.
-    """
-    return (values - np.min(values)) / (np.max(values) - np.min(values))
+    return fig
 
 
 def create_blended_colors(ligands, receptors):
-    """
-    Create blended colors for ligands and receptors with custom adjustments.
-    Initializes a white background and adjusts the color channels based on ligand and receptor values.
-
-    :param ligands: Array of ligand values.
-    :param receptors: Array of receptor values.
-    :return: Array of blended colors.
-    """
-    # Create an RGB image where:
-    # - red channel intensity is proportional to ligand concentration
-    # - blue channel intensity is proportional to receptor concentration
-
-    # Initialize with a white background
     blended_colors = np.ones(ligands.shape + (3,))
-
-    # Custom color adjustments for ligands and receptors
-    blended_colors[..., 0] -= ligands * 0.1 + receptors * 0.9  # Adjust Red channel
-    blended_colors[..., 1] -= ligands * 0.9 + receptors * 0.6  # Adjust Green channel
-    blended_colors[..., 2] -= ligands * 0.6 + receptors * 0.1  # Adjust Blue channel
-
+    blended_colors[..., 0] -= ligands * 0.1 + receptors * 0.9
+    blended_colors[..., 1] -= ligands * 0.9 + receptors * 0.6
+    blended_colors[..., 2] -= ligands * 0.6 + receptors * 0.1
     return blended_colors
+
+
+def normalize_mapping(values, min_val, max_val):
+    return (values - min_val) / (max_val - min_val) * 100
+
+
+def _generate_base64_image(figure: Figure) -> str:
+    """Convert a matplotlib figure to a base64-encoded PNG image."""
+    output = io.BytesIO()
+    figure.savefig(output, format='png', transparent=False)
+    output.seek(0)
+    return base64.b64encode(output.getvalue()).decode('utf8')
+
+
+def generate_image(visualization_func, *args):
+    """
+    Generates a visualization with the provided function and encodes it in base64.
+    """
+    fig = visualization_func(*args)
+    return _generate_base64_image(fig)

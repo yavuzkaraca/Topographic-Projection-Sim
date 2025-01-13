@@ -41,7 +41,6 @@ ADAPTATION_MU = "adaptation_mu"
 ADAPTATION_LAMBDA = "adaptation_lambda"
 ADAPTATION_HISTORY = "adaptation_history"
 
-
 # Substrate Types
 CONTINUOUS_GRADIENTS = "continuous_gradients"
 WEDGES = "wedges"
@@ -62,7 +61,7 @@ CONT_GRAD_R_MAX = "cont_grad_r_max"
 CONT_GRAD_L_MAX = "cont_grad_l_max"
 # -----------   Wedges  -----------
 WEDGE_NARROW_EDGE = "wedge_narrow_edge"
-WEDGE_WIDE_EDGE = "wedge_wedge"
+WEDGE_WIDE_EDGE = "wedge_wide_edge"
 # -----------   Stripe Assay  -----------
 STRIPE_FWD = "stripe_fwd"
 STRIPE_REW = "stripe_rew"
@@ -88,31 +87,24 @@ simulation_basic = {
     STEP_SIZE: 1,
     STEP_NUM: 8000,
 }
+
 simulation_advanced = {
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
-    SIGMOID_HEIGHT: 10,
-    GC_R_STEEPNESS: 1.4,
-    GC_L_STEEPNESS: 1.4,
-    GC_R_MIN: 0.01,
-    GC_L_MIN: 0.01,
-    GC_R_MAX: 1,
-    GC_L_MAX: 1,
+    SIGMOID_HEIGHT: 1,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
     REVERSE_SIG: True,
     FF_INTER: True,
-    FT_INTER: True,
-    CIS_INTER: True
+    FT_INTER: True
 }
-
 
 adaptation = {
     ADAPTATION_ENABLED: True,
-    ADAPTATION_MU: 0.01, # 0.01
+    ADAPTATION_MU: 0.01,
     ADAPTATION_LAMBDA: 0.0045,
     ADAPTATION_HISTORY: 50
 }
@@ -157,7 +149,7 @@ gap_substrate = {
     GAP_BEGIN: 0.5,
     GAP_END: 0.1,
     GAP_FIRST_BLOCK: LIGAND,
-    GAP_SECOND_BLOCK: LIGAND,
+    GAP_SECOND_BLOCK: RECEPTOR
 }
 
 gap_inv_substrate = {
@@ -166,7 +158,7 @@ gap_inv_substrate = {
     COLS: 166,
     GAP_BEGIN: 0.4,
     GAP_END: 0.3,
-    GAP_FIRST_BLOCK: LIGAND,
+    GAP_FIRST_BLOCK: RECEPTOR,
 }
 
 """
@@ -175,45 +167,119 @@ gap_inv_substrate = {
 --------------------------------------
 """
 
-continuous_config = {
-    GC_COUNT: 100,
-    GC_SIZE: 3,
-    STEP_SIZE: 1,
-    STEP_NUM: 8000,
-    **simulation_advanced,
-    **adaptation,
-    **continuous_substrate
+default_configs = {
+    "CONTINUOUS_GRADIENTS": {
+        GC_COUNT: 15,  # 100
+        GC_SIZE: 3,
+        STEP_SIZE: 1,
+        STEP_NUM: 5000,  # 8000
+        X_STEP_POSSIBILITY: 0.55,
+        Y_STEP_POSSIBILITY: 0.50,
+        SIGMOID_STEEPNESS: 4,
+        SIGMOID_SHIFT: 3,
+        SIGMOID_HEIGHT: 1,
+        SIGMA: 0.12,
+        FORCE: False,
+        FORWARD_SIG: True,
+        REVERSE_SIG: True,
+        FF_INTER: True,
+        FT_INTER: True,
+        ADAPTATION_ENABLED: True,
+        ADAPTATION_MU: 0.01,
+        ADAPTATION_LAMBDA: 0.0045,
+        ADAPTATION_HISTORY: 50,
+        SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
+        ROWS: 100,
+        COLS: 100,
+        CONT_GRAD_R_MIN: 0.01,
+        CONT_GRAD_L_MIN: 0.01,
+        CONT_GRAD_R_MAX: 1,
+        CONT_GRAD_L_MAX: 1,
+        CONT_GRAD_R_STEEPNESS: 1,
+        CONT_GRAD_L_STEEPNESS: 1
+    },
+    "WEDGES": {
+        GC_COUNT: 10,
+        GC_SIZE: 10,
+        STEP_SIZE: 1,
+        STEP_NUM: 8000,
+        X_STEP_POSSIBILITY: 0.55,
+        Y_STEP_POSSIBILITY: 0.50,
+        SIGMOID_STEEPNESS: 4,
+        SIGMOID_SHIFT: 3,
+        SIGMOID_HEIGHT: 1,
+        SIGMA: 0.12,
+        FORCE: False,
+        FORWARD_SIG: True,
+        REVERSE_SIG: True,
+        FF_INTER: True,
+        FT_INTER: True,
+        ADAPTATION_ENABLED: False,
+        SUBSTRATE_TYPE: WEDGES,
+        ROWS: 96,
+        COLS: 96,
+        WEDGE_NARROW_EDGE: 1,
+        WEDGE_WIDE_EDGE: 12
+    },
+    "STRIPE": {
+        GC_COUNT: 10,
+        GC_SIZE: 10,
+        STEP_SIZE: 1,
+        STEP_NUM: 8000,
+        X_STEP_POSSIBILITY: 0.55,
+        Y_STEP_POSSIBILITY: 0.50,
+        SIGMOID_STEEPNESS: 4,
+        SIGMOID_SHIFT: 3,
+        SIGMOID_HEIGHT: 1,
+        SIGMA: 0.12,
+        FORCE: False,
+        FORWARD_SIG: True,
+        REVERSE_SIG: True,
+        FF_INTER: True,
+        FT_INTER: True,
+        ADAPTATION_ENABLED: False,
+        SUBSTRATE_TYPE: STRIPE,
+        ROWS: 150,
+        COLS: 150,
+        STRIPE_FWD: True,
+        STRIPE_REW: True,
+        STRIPE_CONC: 1,
+        STRIPE_WIDTH: 12
+    },
+    "GAP": {
+        GC_COUNT: 5,
+        GC_SIZE: 5,
+        STEP_SIZE: 2,
+        STEP_NUM: 8000,
+        X_STEP_POSSIBILITY: 0.55,
+        Y_STEP_POSSIBILITY: 0.50,
+        SIGMOID_STEEPNESS: 4,
+        SIGMOID_SHIFT: 3,
+        SIGMOID_HEIGHT: 1,
+        SIGMA: 0.12,
+        FORCE: False,
+        FORWARD_SIG: True,
+        REVERSE_SIG: True,
+        FF_INTER: True,
+        FT_INTER: True,
+        ADAPTATION_ENABLED: True,
+        ADAPTATION_MU: 0.01,
+        ADAPTATION_LAMBDA: 0.0045,
+        ADAPTATION_HISTORY: 50,
+        SUBSTRATE_TYPE: GAP,
+        ROWS: 96,
+        COLS: 96,
+        GAP_BEGIN: 0.5,
+        GAP_END: 0.1,
+        GAP_FIRST_BLOCK: LIGAND,
+        GAP_SECOND_BLOCK: RECEPTOR
+    },
 }
 
-wedges_config = {
-    GC_COUNT: 10,
-    GC_SIZE: 10,
-    STEP_SIZE: 1,
-    STEP_NUM: 8000,
-    **simulation_advanced,
-    ADAPTATION_ENABLED: False,
-    **wedges_substrate
-}
 
-stripe_config = {
-    GC_COUNT: 10,
-    GC_SIZE: 10,
-    STEP_SIZE: 1,
-    STEP_NUM: 8000,
-    **simulation_advanced,
-    ADAPTATION_ENABLED: False,
-    **stripe_substrate
-}
+def get_default_config(substrate_type):
+    return default_configs.get(substrate_type.upper(), {})
 
-gap_config = {
-    GC_COUNT: 5,
-    GC_SIZE: 5,
-    STEP_SIZE: 2, #2
-    STEP_NUM: 8000, #8000
-    **simulation_advanced,
-    **adaptation,
-    **gap_substrate
-}
 
 """
 --------------------------------------
@@ -222,56 +288,33 @@ gap_config = {
 """
 
 custom_config = {
-    GC_COUNT: 100,
-    GC_SIZE: 3,  # means there will be an input of 27 for a full sensor matrix at the moment
+    GC_COUNT: 5,
+    GC_SIZE: 3,
     STEP_SIZE: 1,
-    STEP_NUM: 1,
+    STEP_NUM: 8000,
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
-    SIGMOID_HEIGHT: 5,
-    GC_R_STEEPNESS: 2,
-    GC_L_STEEPNESS: 2,
-    GC_R_MIN: 1,  # it is possible to use 0 -> Does this make sense
-    GC_L_MIN: 1,  # it is possible to use 0 -> Does this make sense
-    GC_R_MAX: 5,
-    GC_L_MAX: 5,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
     REVERSE_SIG: True,
     FF_INTER: True,
     FT_INTER: True,
-    CIS_INTER: True,
     ADAPTATION_ENABLED: True,
-    ADAPTATION_MU: 0.006,  # 0,006
-    ADAPTATION_LAMBDA: 0.0045,  # 0.0045
-    ADAPTATION_HISTORY: 10,
+    ADAPTATION_MU: 0.006,
+    ADAPTATION_LAMBDA: 0.0045,
+    ADAPTATION_HISTORY: 50,
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     ROWS: 100,
     COLS: 100,
-
-    # Continuous substrate values
-    CONT_GRAD_R_STEEPNESS: 2,
-    CONT_GRAD_L_STEEPNESS: 2,
-    CONT_GRAD_R_MIN: 1,  # it is possible to use 0 -> Does this make sense
-    CONT_GRAD_L_MIN: 1,  # it is possible to use 0 -> Does this make sense
-    CONT_GRAD_R_MAX: 5,
-    CONT_GRAD_L_MAX: 5,
-
-    # Stripe substrate values
-    STRIPE_FWD: True,
-    STRIPE_REW: True,
-    STRIPE_CONC: 1,
-    STRIPE_WIDTH: 6.625,
-
-    # Gap substrate Values
-    GAP_BEGIN: 0.8,
-    GAP_END: 0.05,
-    GAP_FIRST_BLOCK: RECEPTOR,
-    GAP_SECOND_BLOCK: RECEPTOR,
-
+    CONT_GRAD_R_MIN: 0.01,
+    CONT_GRAD_L_MIN: 0.01,
+    CONT_GRAD_R_MAX: 1,
+    CONT_GRAD_L_MAX: 1,
+    CONT_GRAD_R_STEEPNESS: 1,
+    CONT_GRAD_L_STEEPNESS: 1
 }
 
 """

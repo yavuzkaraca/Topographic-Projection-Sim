@@ -11,14 +11,14 @@ from model.substrate import (ContinuousGradientSubstrate, WedgeSubstrate,
                              StripeSubstrate, GapSubstrate, GapSubstrateInverted)
 
 
-def build_default():
+def build_default() -> Simulation:
     """
     Build a default model.
     """
     return build_simulation(cfg.current_config)
 
 
-def build_simulation(config):
+def build_simulation(config) -> Simulation:
     """
     Build substrate object and growth cone list to then build the simulation instance.
     """
@@ -34,14 +34,12 @@ def build_simulation(config):
     y_step_p = config.get(cfg.Y_STEP_POSSIBILITY)
     sigmoid_steepness = config.get(cfg.SIGMOID_STEEPNESS)
     sigmoid_shift = config.get(cfg.SIGMOID_SHIFT)
-    sigmoid_height = config.get(cfg.SIGMOID_HEIGHT)
     sigma = config.get(cfg.SIGMA)
     force = config.get(cfg.FORCE)
     forward_sig = config.get(cfg.FORWARD_SIG)
     reverse_sig = config.get(cfg.REVERSE_SIG)
     ff_inter = config.get(cfg.FF_INTER)
     ft_inter = config.get(cfg.FT_INTER)
-    cis_inter = config.get(cfg.CIS_INTER)
 
     adaptation = config.get(cfg.ADAPTATION_ENABLED)
     mu = 0
@@ -54,7 +52,7 @@ def build_simulation(config):
         history_length = config.get(cfg.ADAPTATION_HISTORY)
 
     # Initialize the Simulation object with the new parameters
-    simulation = Simulation(substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p,
+    simulation = Simulation(config, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p,
                             sigmoid_steepness, sigmoid_shift, sigmoid_height, sigma, force, forward_sig, reverse_sig, ff_inter,
                             ft_inter, cis_inter, mu, lambda_, history_length)
     return simulation

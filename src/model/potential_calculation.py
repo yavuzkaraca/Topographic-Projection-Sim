@@ -1,6 +1,5 @@
 """
-Module providing all methods needed for guidance potential calculation. Implemented in the paradigm of functional
-programming to ensure correct behaviour and full test coverage
+Module providing all methods needed for guidance potential calculation.
 """
 
 import math
@@ -11,12 +10,6 @@ def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inte
                         step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid_height):
     """
     Calculate guidance potential for a growth cone (gc) in a model.
-
-    :param gc: Growth Cone object representing the cone for which potential is calculated.
-    :param gcs: List of other growth cones (for fiber-fiber interaction).
-    :param substrate: Substrate object (for fiber-target interaction).
-    :param ff_coef: The iteration of the simulation processed by a sigmoid function (used for fiber-fiber interaction).
-    :return: The guidance potential as a floating-point number.
     """
 
     # Initialize interaction values
@@ -50,9 +43,6 @@ def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inte
 def ft_interaction(gc, pos, substrate):
     """
     Calculate fiber-target interaction between a growth cone and a substrate.
-
-    I think this does not work correctly. it gives back 27 for a gc with size 3 on a full receptor tectum
-    what happens with field that are half in the circle and half not?
     """
 
     borders = bounding_box(pos, gc.size, substrate)
@@ -69,7 +59,7 @@ def ft_interaction(gc, pos, substrate):
             d = euclidean_distance(center, (i, j))
             if d > edge_length / 2:
                 # Eliminate cells outside of the circle, as borders define a square matrix
-                continue  # TODO: Use a precalculated mask for performance enhancement
+                continue
             sum_ligands += substrate.ligands[i, j]
             sum_receptors += substrate.receptors[i, j]
 
@@ -85,9 +75,9 @@ def ff_interaction(gc1, pos, gcs):
 
     for gc2 in gcs:
         if gc1 == gc2:
+            # TODO: @Performance Sort GCs based on location and use pruning algorithms
             # Eliminate self from the gcs list, as self-comparison always matches
             continue
-        # TODO: Sort GCs based on location and use pruning algorithms for performance enhancement
         d = euclidean_distance(gc2.pos, pos)
         if d < gc1.size * 2:
             area = intersection_area(pos, gc2.pos, gc1.size)
@@ -97,16 +87,9 @@ def ff_interaction(gc1, pos, gcs):
     return sum_ligands, sum_receptors
 
 
-def calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid_height):
+def calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid_height=1):
     """
     Calculate the ratio of steps taken using a sigmoid function, scaled by sigmoid_gain.
-
-    :param sigmoid_height: The factor to set the strongest point of fiber-fiber interaction.
-    :param step: The current step number of the growth cone.
-    :param num_steps: The total steps possible for the growth cone.
-    :param sigmoid_steepness: The factor that controls the steepness of the sigmoid curve.
-    :param sigmoid_shift: The factor to adjust the midpoint of the sigmoid; defaults to 0.01.
-    :return: The scaled output of the sigmoid function, representing the step ratio.
     """
 
     step += (num_steps * 0.01)  # such that with shift = 100 immediate activation
@@ -142,7 +125,6 @@ def euclidean_distance(point1, point2):
 def intersection_area(gc1_pos, gc2_pos, radius):
     """
     Calculate the area of intersection between two circles (circumscribed around growth cones).
-    This should be fixed
     """
     d = euclidean_distance(gc1_pos, gc2_pos)  # Distance between the centers of the circles
 
@@ -153,10 +135,8 @@ def intersection_area(gc1_pos, gc2_pos, radius):
         # No overlap
         return 0
     else:
-        # Partial overlap
-        x = (d ** 2) / (2 * d)  # this is d/2
-        z = x ** 2
-        y = math.sqrt(radius ** 2 - z)
-        area = radius ** 2 * math.acos(x / radius) - x * y
-        # TODO: clean-fix area calculation
-        return area * 1.5
+        # Check figure intersection_area for visualization: sector = PBDC, triangle = PBEC
+        sector = radius ** 2 * math.acos(d / (2 * radius))
+        triangle = 0.5 * d * math.sqrt(4 * radius ** 2 - d ** 2)
+        return (sector - triangle) * 2
+

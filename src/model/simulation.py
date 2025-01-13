@@ -4,8 +4,15 @@ Main module which executes simulation logic
 import math
 import time
 from model.result import Result
-from model.potential_calculation import calculate_potential, calculate_ff_coef
+from model.potential_calculation import calculate_potential
 import random
+
+progress = 0  # Global progress variable
+
+
+def get_updated_progress():
+    # print(progress)
+    return progress
 
 
 class Simulation:
@@ -33,12 +40,10 @@ class Simulation:
         history_length (int): The number of historical steps to consider for adaptation.
     """
 
-    def __init__(self, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigmoid_steepness,
+    def __init__(self, config, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigmoid_steepness,
                  sigmoid_shift, sigmoid_height, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter,cis_inter, mu, lambda_,
                  history_length):
-        """
-        Initialize the Simulation class with necessary parameters explained above.
-        """
+        self.config = config
         self.forward_sig = forward_sig
         self.reverse_sig = reverse_sig
         self.ff_inter = ff_inter
@@ -68,28 +73,12 @@ class Simulation:
         start_time = time.time()  # Start timing the model
 
         self.prepare_gcs()
-        print(f"\nInitialization completed.\n")
-
-        print(f"\nGrowth Cones:\n")
-        for gc in self.growth_cones:
-            print(gc)
-
-        """
-        print(f"\nSubstrate:\n")
-        print(self.substrate)
-        """
-
-        print(f"\nIteration starts, {self.num_steps} many steps will be taken\n")
         self.iterate_simulation()
 
-        end_time = time.time()  # End timing the model
+        end_time = time.time()
         total_time = end_time - start_time
-        print(f"\nIteration completed in {total_time:.2f} seconds\n")
 
-        for gc in self.growth_cones:
-            print(gc)
-
-        return Result(self.growth_cones, self.substrate)
+        return Result(self, total_time, self.config)
 
     def prepare_gcs(self):
         """
@@ -105,24 +94,28 @@ class Simulation:
         """
         Iteratively processes each simulation step, generating random steps, and making stepping decisions.
         """
+        global progress
+
         for step_current in range(self.num_steps):
             if step_current % 250 == 0:
-                print(f"Current Step: {step_current}")
-
-            # TODO: Parallelize with futures
+                progress = int((step_current / self.num_steps) * 100)
 
             for gc in self.growth_cones:
                 if not gc.freeze:  # Check if the growth cone is not frozen
                     if self.adaptation:
                         self.adapt_growth_cone(gc)
                     pos_new = self.gen_random_step(gc)
+
+                    # do NOT recalculate the current potential for reduced time-complexity
+
                     potential_new = calculate_potential(gc, pos_new, self.growth_cones, self.substrate,
                                                         self.forward_sig, self.reverse_sig, self.ff_inter,
                                                         self.ft_inter, self.cis_inter, step_current, self.num_steps,
                                                         self.sigmoid_steepness, self.sigmoid_shift, self.sigmoid_height)
                     self.step_decision(gc, pos_new, potential_new)
 
-        # TODO: Early stopping mechanism based on total potential
+        progress = 100
+        # TODO: @Performance Early stopping mechanism based on total potential
 
     def adapt_growth_cone(self, gc):
         """
@@ -199,18 +192,13 @@ def clamp_to_boundaries(position, substrate, size, xt_direction, yt_direction):
 
 
 def probabilistic_density(potential, sigma):
-    """
-    Computes the value of the Gaussian probability density function at a given potential. Peaks at 0.
-    """
-    return math.exp(-potential ** 2 / (2 * sigma ** 2)) / (math.sqrt(2 * math.pi) * sigma)
+    return math.exp(-potential**2 / (sigma**2))  # simplified version
+    # return math.exp(-potential ** 2 / (2 * sigma ** 2)) / (math.sqrt(2 * math.pi) * sigma)
 
 
 def calculate_step_probability(old_prob, new_prob):
-    """
-    Determines the decision probability for a growth cone's step based on comparing new and old potentials.
-    """
     if old_prob + new_prob == 0:
-        probability = 0.5  # Handle the case where optimal location is arrived
+        probability = 0.5  # Both possibilities are zero = GC is far off from optimal location
     else:
         probability = old_prob / (old_prob + new_prob)
     return probability
