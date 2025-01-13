@@ -17,15 +17,23 @@ STEP_NUM = "step_num"
 # Simulation Advanced Parameters
 X_STEP_POSSIBILITY = "x_step_possibility"
 Y_STEP_POSSIBILITY = "y_step_possibility"
-SIGMOID_STEEPNESS = "sigmoid_steepness"
+SIGMOID_STEEPNESS = "sigmoid_gain"
 SIGMOID_SHIFT = "sigmoid_shift"
 SIGMOID_HEIGHT = "sigmoid_height"
+GC_R_STEEPNESS = "gc_r_steepness"
+GC_L_STEEPNESS = "gc_l_steepness"
+GC_R_MIN = "gc_r_min"
+GC_L_MIN = "gc_l_min"
+GC_R_MAX = "gc_r_max"
+GC_L_MAX = "gc_l_max"
 SIGMA = "sigma"
 FORCE = "force"
 FORWARD_SIG = "forward_sig"
 REVERSE_SIG = "reverse_sig"
 FF_INTER = "ff_inter"
 FT_INTER = "ft_inter"
+CIS_INTER = "cis_inter"
+
 
 # Adaptation
 ADAPTATION_ENABLED = "adaptation_enabled"
@@ -45,8 +53,12 @@ SUBSTRATE_TYPE = "substrate_type"
 ROWS = "rows"
 COLS = "cols"
 # -----------   Continuous  -----------
-CONTINUOUS_SIGNAL_START = "continuous_signal_start"
-CONTINUOUS_SIGNAL_END = "continuous_signal_end"
+CONT_GRAD_R_STEEPNESS = "cont_grad_r_steepness"
+CONT_GRAD_L_STEEPNESS = "cont_grad_l_steepness"
+CONT_GRAD_R_MIN = "cont_grad_r_min"
+CONT_GRAD_L_MIN = "cont_grad_l_min"
+CONT_GRAD_R_MAX = "cont_grad_r_max"
+CONT_GRAD_L_MAX = "cont_grad_l_max"
 # -----------   Wedges  -----------
 WEDGE_NARROW_EDGE = "wedge_narrow_edge"
 WEDGE_WIDE_EDGE = "wedge_wide_edge"
@@ -103,8 +115,13 @@ continuous_substrate = {
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     ROWS: 100,
     COLS: 100,
-    CONTINUOUS_SIGNAL_START: 0.01,
-    CONTINUOUS_SIGNAL_END: 6.99
+    CONT_GRAD_R_MIN: 0.01,
+    CONT_GRAD_L_MIN: 0.01,
+    CONT_GRAD_R_MAX: 1,
+    CONT_GRAD_L_MAX: 1,
+    CONT_GRAD_R_STEEPNESS: 1,
+    CONT_GRAD_L_STEEPNESS: 1,
+
 }
 
 wedges_substrate = {

@@ -41,6 +41,7 @@ def build_simulation(config) -> Simulation:
     reverse_sig = config.get(cfg.REVERSE_SIG)
     ff_inter = config.get(cfg.FF_INTER)
     ft_inter = config.get(cfg.FT_INTER)
+    cis_inter = config.get(cfg.CIS_INTER)
 
     adaptation = config.get(cfg.ADAPTATION_ENABLED)
     mu = 0
@@ -54,8 +55,8 @@ def build_simulation(config) -> Simulation:
 
     # Initialize the Simulation object with the new parameters
     simulation = Simulation(config, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p,
-                            sigmoid_steepness, sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter,
-                            ft_inter, mu, lambda_, history_length)
+                            sigmoid_steepness, sigmoid_shift, sigmoid_height, sigma, force, forward_sig, reverse_sig, ff_inter,
+                            ft_inter, cis_inter, mu, lambda_, history_length)
     return simulation
 
 
@@ -70,10 +71,16 @@ def build_substrate(config):
     substrate_type = config.get(cfg.SUBSTRATE_TYPE)
 
     if substrate_type == cfg.CONTINUOUS_GRADIENTS:
-        continuous_signal_start = config.get(cfg.CONTINUOUS_SIGNAL_START)
-        continuous_signal_end = config.get(cfg.CONTINUOUS_SIGNAL_END)
-        substrate = ContinuousGradientSubstrate(rows, cols, offset, signal_start=continuous_signal_start,
-                                                signal_end=continuous_signal_end)
+        cont_grad_r_min = config.get(cfg.CONT_GRAD_R_MIN)
+        cont_grad_l_min = config.get(cfg.CONT_GRAD_L_MIN)
+        cont_grad_r_max = config.get(cfg.CONT_GRAD_R_MAX)
+        cont_grad_l_max = config.get(cfg.CONT_GRAD_L_MAX)
+        cont_grad_r_steepness = config.get(cfg.CONT_GRAD_R_STEEPNESS)
+        cont_grad_l_steepness = config.get(cfg.CONT_GRAD_L_STEEPNESS)
+        substrate = ContinuousGradientSubstrate(rows, cols, offset, cont_grad_r_min=cont_grad_r_min,
+                                                cont_grad_l_min=cont_grad_l_min, cont_grad_r_max=cont_grad_r_max,
+                                                cont_grad_l_max=cont_grad_l_max,
+                                                cont_grad_r_steepness=cont_grad_r_steepness, cont_grad_l_steepness=cont_grad_l_steepness)
 
     elif substrate_type == cfg.WEDGES:
         wedge_narrow_edge = config.get(cfg.WEDGE_NARROW_EDGE)
@@ -118,14 +125,27 @@ def initialize_growth_cones(config):
     gc_count = config.get(cfg.GC_COUNT)
     size = config.get(cfg.GC_SIZE)
     rows = config.get(cfg.ROWS)
+    gc_r_steepness = config.get(cfg.GC_R_STEEPNESS)
+    gc_l_steepness = config.get(cfg.GC_L_STEEPNESS)
+    gc_r_min = config.get(cfg.GC_R_MIN)
+    gc_l_min = config.get(cfg.GC_L_MIN)
+    gc_r_max = config.get(cfg.GC_R_MAX)
+    gc_l_max = config.get(cfg.GC_L_MAX)
 
     # Non-linear gradient for receptors, starting at 0.99 and decreasing to 0.01
-    receptor_gradient = np.linspace(0, 1, gc_count) ** 1.4
-    receptors = 0.01 + receptor_gradient * 2.99
+    receptor_gradient = np.linspace(gc_r_min, gc_r_max, gc_count) ** gc_r_steepness
 
-    # This is the inverse of the receptor gradient
-    ligands = 0.01 + receptor_gradient * 2.99
-    ligands = ligands[::-1]
+    # I changed this to an equation in order to be able to manipulate both curves independently
+    ligand_gradient = np.linspace(gc_l_max, gc_l_min, gc_count) ** gc_l_steepness
+
+    # Scale the resulting gradients to the desired range
+    # Step 2: Normalize values to range [0, 1]
+    receptor_gradient = (receptor_gradient - gc_r_min ** gc_r_steepness) / (gc_r_max ** gc_r_steepness - gc_r_min ** gc_r_steepness)
+    ligand_gradient = (ligand_gradient - gc_l_max ** gc_l_steepness) / (gc_l_min ** gc_l_steepness - gc_l_max ** gc_l_steepness)
+
+    # Step 3: Scale normalized values to users range
+    receptors = gc_r_min + (gc_r_max - gc_r_min) * receptor_gradient
+    ligands = gc_l_max + (gc_l_min - gc_l_max) * ligand_gradient
 
     # Create an array of evenly distributed y-positions for the growth cones
     y_positions = np.linspace(size, rows - 1 + size, gc_count, dtype=int)

@@ -40,15 +40,15 @@ class Simulation:
         history_length (int): The number of historical steps to consider for adaptation.
     """
 
-    def __init__(self, config, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p,
-                 sigmoid_steepness,
-                 sigmoid_shift, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter, mu, lambda_,
+    def __init__(self, config, substrate, growth_cones, adaptation, step_size, num_steps, x_step_p, y_step_p, sigmoid_steepness,
+                 sigmoid_shift, sigmoid_height, sigma, force, forward_sig, reverse_sig, ff_inter, ft_inter,cis_inter, mu, lambda_,
                  history_length):
         self.config = config
         self.forward_sig = forward_sig
         self.reverse_sig = reverse_sig
         self.ff_inter = ff_inter
         self.ft_inter = ft_inter
+        self.cis_inter = cis_inter
         self.substrate = substrate
         self.growth_cones = growth_cones
         self.adaptation = adaptation
@@ -58,6 +58,7 @@ class Simulation:
         self.y_step_p = y_step_p
         self.sigmoid_steepness = sigmoid_steepness
         self.sigmoid_shift = sigmoid_shift
+        self.sigmoid_height = sigmoid_height
         self.sigma = sigma
         self.force = force
         self.mu = mu
@@ -105,12 +106,12 @@ class Simulation:
                         self.adapt_growth_cone(gc)
                     pos_new = self.gen_random_step(gc)
 
-                    # do NOT recalculate the current potential to save resources
+                    # do NOT recalculate the current potential for reduced time-complexity
 
                     potential_new = calculate_potential(gc, pos_new, self.growth_cones, self.substrate,
                                                         self.forward_sig, self.reverse_sig, self.ff_inter,
-                                                        self.ft_inter, step_current, self.num_steps,
-                                                        self.sigmoid_steepness, self.sigmoid_shift)
+                                                        self.ft_inter, self.cis_inter, step_current, self.num_steps,
+                                                        self.sigmoid_steepness, self.sigmoid_shift, self.sigmoid_height)
                     self.step_decision(gc, pos_new, potential_new)
 
         progress = 100
@@ -187,7 +188,7 @@ def probabilistic_density(potential, sigma):
 
 def calculate_step_probability(old_prob, new_prob):
     if old_prob + new_prob == 0:
-        probability = 0.5  # Handle the case where optimal location is arrived
+        probability = 0.5  # Both possibilities are zero = GC is far off from optimal location
     else:
         probability = old_prob / (old_prob + new_prob)
     return probability
