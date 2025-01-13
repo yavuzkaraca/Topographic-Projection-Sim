@@ -34,12 +34,14 @@ def build_simulation(config) -> Simulation:
     y_step_p = config.get(cfg.Y_STEP_POSSIBILITY)
     sigmoid_steepness = config.get(cfg.SIGMOID_STEEPNESS)
     sigmoid_shift = config.get(cfg.SIGMOID_SHIFT)
+    sigmoid_height = config.get(cfg.SIGMOID_HEIGHT)
     sigma = config.get(cfg.SIGMA)
     force = config.get(cfg.FORCE)
     forward_sig = config.get(cfg.FORWARD_SIG)
     reverse_sig = config.get(cfg.REVERSE_SIG)
     ff_inter = config.get(cfg.FF_INTER)
     ft_inter = config.get(cfg.FT_INTER)
+    cis_inter = config.get(cfg.CIS_INTER)
 
     adaptation = config.get(cfg.ADAPTATION_ENABLED)
     mu = 0

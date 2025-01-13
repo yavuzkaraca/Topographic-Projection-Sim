@@ -192,10 +192,17 @@ def visualize_adaptation(growth_cones):
 
 
 def create_blended_colors(ligands, receptors):
+    # Normalize ligands and receptors to the range [0, 1] if they exceed 1
+    ligands = ligands / np.maximum(1, ligands.max())
+    receptors = receptors / np.maximum(1, receptors.max())
+
     blended_colors = np.ones(ligands.shape + (3,))
     blended_colors[..., 0] -= ligands * 0.1 + receptors * 0.9
     blended_colors[..., 1] -= ligands * 0.9 + receptors * 0.6
     blended_colors[..., 2] -= ligands * 0.6 + receptors * 0.1
+
+    # Clip values to ensure they remain in the valid color range [0, 1]
+    blended_colors = np.clip(blended_colors, 0, 1)
     return blended_colors
 
 
