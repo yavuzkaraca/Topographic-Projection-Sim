@@ -1,6 +1,5 @@
 """
-Module providing all methods needed for guidance potential calculation. Implemented in the paradigm of functional
-programming to ensure correct behaviour and full test coverage
+Module providing all methods needed for guidance potential calculation.
 """
 
 import math
@@ -98,13 +97,6 @@ def ff_interaction(gc1, pos, gcs):
 def calculate_ff_coef(step, num_steps, sigmoid_steepness, sigmoid_shift, sigmoid_height=1):
     """
     Calculate the ratio of steps taken using a sigmoid function, scaled by sigmoid_gain.
-
-    :param sigmoid_height: The factor to set the strongest point of fiber-fiber interaction.
-    :param step: The current step number of the growth cone.
-    :param num_steps: The total steps possible for the growth cone.
-    :param sigmoid_steepness: The factor that controls the steepness of the sigmoid curve.
-    :param sigmoid_shift: The factor to adjust the midpoint of the sigmoid; defaults to 0.01.
-    :return: The scaled output of the sigmoid function, representing the step ratio.
     """
 
     step += (num_steps * 0.01)  # such that with shift = 100 immediate activation
@@ -155,5 +147,6 @@ def intersection_area(gc1_pos, gc2_pos, radius):
         z = x ** 2
         y = math.sqrt(radius ** 2 - z)
         area = radius ** 2 * math.acos(x / radius) - x * y
-        # TODO: @Clean clean-fix area calculation
+        # TODO: @Fix clean-fix area calculation
         return area * 1.5  # magic number for quick dirty fix
+

@@ -137,7 +137,7 @@ class WedgeSubstrate(BaseSubstrate):
         # Slope of upper and lower triangle hypotenuse
         ratio = (cols / max_edge_length) * 2
 
-        # TODO: @Feature Fit extra cones to bottom, test ligands and receptors separately!
+        # TODO: @Fix Fit extra cones to bottom, test ligands and receptors separately!
         for n in range(num_wedges_x):
 
             # Make upper triangle

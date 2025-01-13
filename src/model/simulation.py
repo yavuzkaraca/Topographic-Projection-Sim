@@ -174,16 +174,6 @@ Utility functions needed for step decision
 def clamp_to_boundaries(position, substrate, size, xt_direction, yt_direction):
     """
     Ensures that the position of the growth cone remains within the boundaries defined by the substrate after moving.
-
-    Parameters:
-        position (tuple): Current x and y coordinates of the growth cone.
-        substrate (object): Substrate defining the boundaries and structure of the model area.
-        size (int): Radius of the growth cone to ensure it does not overlap the boundary.
-        xt_direction (int): Horizontal movement direction and magnitude.
-        yt_direction (int): Vertical movement direction and magnitude.
-
-    Returns:
-        tuple: Clamped x and y coordinates of the growth cone.
     """
     new_x = position[0] + xt_direction
     new_y = position[1] + yt_direction
@@ -196,18 +186,9 @@ def clamp_to_boundaries(position, substrate, size, xt_direction, yt_direction):
 
 
 def probabilistic_density(potential, sigma):
-    """
-    Computes the value of the Gaussian probability density function at a given potential. Peaks at 0.
-    """
+    # TODO: @Clean find a simpler function to achieve same results
     return math.exp(-potential ** 2 / (2 * sigma ** 2)) / (math.sqrt(2 * math.pi) * sigma)
 
 
 def calculate_step_probability(old_prob, new_prob):
-    """
-    Determines the decision probability for a growth cone's step based on comparing new and old potentials.
-    """
-    if old_prob + new_prob == 0:
-        probability = 0.5  # Handle the case where optimal location is arrived
-    else:
-        probability = old_prob / (old_prob + new_prob)
-    return probability
+    return old_prob / (old_prob + new_prob)
