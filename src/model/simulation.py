@@ -181,9 +181,13 @@ def clamp_to_boundaries(position, substrate, size, xt_direction, yt_direction):
 
 
 def probabilistic_density(potential, sigma):
-    # TODO: @Clean find a simpler function to achieve same results
-    return math.exp(-potential ** 2 / (2 * sigma ** 2)) / (math.sqrt(2 * math.pi) * sigma)
+    return math.exp(-potential**2 / (sigma**2))  # simplified version
+    # return math.exp(-potential ** 2 / (2 * sigma ** 2)) / (math.sqrt(2 * math.pi) * sigma)
 
 
 def calculate_step_probability(old_prob, new_prob):
-    return old_prob / (old_prob + new_prob)
+    if old_prob + new_prob == 0:
+        probability = 0.5  # Handle the case where optimal location is arrived
+    else:
+        probability = old_prob / (old_prob + new_prob)
+    return probability

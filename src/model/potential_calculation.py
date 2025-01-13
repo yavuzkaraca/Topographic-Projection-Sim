@@ -76,9 +76,9 @@ def ff_interaction(gc1, pos, gcs):
 
     for gc2 in gcs:
         if gc1 == gc2:
+            # TODO: @Performance Sort GCs based on location and use pruning algorithms
             # Eliminate self from the gcs list, as self-comparison always matches
             continue
-        # TODO: @Performance Sort GCs based on location and use pruning algorithms
         d = euclidean_distance(gc2.pos, pos)
         if d < gc1.size * 2:
             area = intersection_area(pos, gc2.pos, gc1.size)
