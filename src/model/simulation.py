@@ -87,8 +87,8 @@ class Simulation:
         for gc in self.growth_cones:
             # Potential initialization
             gc.potential = calculate_potential(gc, gc.pos, self.growth_cones, self.substrate, self.forward_sig,
-                                               self.reverse_sig, self.ff_inter, self.ft_inter, 0,
-                                               self.num_steps, self.sigmoid_steepness, self.sigmoid_shift)
+                                               self.reverse_sig, self.ff_inter, self.ft_inter, self.cis_inter, 0,
+                                               self.num_steps, self.sigmoid_steepness, self.sigmoid_shift, self.sigmoid_height)
 
     def iterate_simulation(self):
         """
