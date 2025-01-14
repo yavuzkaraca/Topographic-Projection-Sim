@@ -20,12 +20,6 @@ Y_STEP_POSSIBILITY = "y_step_possibility"
 SIGMOID_STEEPNESS = "sigmoid_gain"
 SIGMOID_SHIFT = "sigmoid_shift"
 SIGMOID_HEIGHT = "sigmoid_height"
-GC_R_STEEPNESS = "gc_r_steepness"
-GC_L_STEEPNESS = "gc_l_steepness"
-GC_R_MIN = "gc_r_min"
-GC_L_MIN = "gc_l_min"
-GC_R_MAX = "gc_r_max"
-GC_L_MAX = "gc_l_max"
 SIGMA = "sigma"
 FORCE = "force"
 FORWARD_SIG = "forward_sig"
@@ -34,6 +28,13 @@ FF_INTER = "ff_inter"
 FT_INTER = "ft_inter"
 CIS_INTER = "cis_inter"
 
+# Growth Cones
+GC_R_STEEPNESS = "receptor_steepness"
+GC_L_STEEPNESS = "ligand_steepness"
+GC_R_MIN = "receptor_min"
+GC_L_MIN = "ligand_min"
+GC_R_MAX = "receptor_max"
+GC_L_MAX = "ligand_max"
 
 # Adaptation
 ADAPTATION_ENABLED = "adaptation_enabled"
@@ -41,12 +42,14 @@ ADAPTATION_MU = "adaptation_mu"
 ADAPTATION_LAMBDA = "adaptation_lambda"
 ADAPTATION_HISTORY = "adaptation_history"
 
+
 # Substrate Types
 CONTINUOUS_GRADIENTS = "continuous_gradients"
 WEDGES = "wedges"
 STRIPE = "stripe"
 GAP = "gap"
 GAP_INV = "gap_inv"
+
 
 # Substrate Parameters
 SUBSTRATE_TYPE = "substrate_type"
@@ -173,6 +176,12 @@ default_configs = {
         GC_SIZE: 3,
         STEP_SIZE: 1,
         STEP_NUM: 5000,  # 8000
+        GC_R_STEEPNESS: 1.5,
+        GC_L_STEEPNESS: 1.5,
+        GC_R_MIN: 0.01,
+        GC_L_MIN: 0.01,
+        GC_R_MAX: 2.99,
+        GC_L_MAX: 2.99,
         X_STEP_POSSIBILITY: 0.55,
         Y_STEP_POSSIBILITY: 0.50,
         SIGMOID_STEEPNESS: 4,
@@ -203,6 +212,12 @@ default_configs = {
         GC_SIZE: 10,
         STEP_SIZE: 1,
         STEP_NUM: 8000,
+        GC_R_STEEPNESS: 1.5,
+        GC_L_STEEPNESS: 1.5,
+        GC_R_MIN: 0.01,
+        GC_L_MIN: 0.01,
+        GC_R_MAX: 2.99,
+        GC_L_MAX: 2.99,
         X_STEP_POSSIBILITY: 0.55,
         Y_STEP_POSSIBILITY: 0.50,
         SIGMOID_STEEPNESS: 4,
@@ -226,6 +241,12 @@ default_configs = {
         GC_SIZE: 10,
         STEP_SIZE: 1,
         STEP_NUM: 8000,
+        GC_R_STEEPNESS: 1.5,
+        GC_L_STEEPNESS: 1.5,
+        GC_R_MIN: 0.01,
+        GC_L_MIN: 0.01,
+        GC_R_MAX: 2.99,
+        GC_L_MAX: 2.99,
         X_STEP_POSSIBILITY: 0.55,
         Y_STEP_POSSIBILITY: 0.50,
         SIGMOID_STEEPNESS: 4,
@@ -251,6 +272,12 @@ default_configs = {
         GC_SIZE: 5,
         STEP_SIZE: 2,
         STEP_NUM: 8000,
+        GC_R_STEEPNESS: 1.5,
+        GC_L_STEEPNESS: 1.5,
+        GC_R_MIN: 0.01,
+        GC_L_MIN: 0.01,
+        GC_R_MAX: 2.99,
+        GC_L_MAX: 2.99,
         X_STEP_POSSIBILITY: 0.55,
         Y_STEP_POSSIBILITY: 0.50,
         SIGMOID_STEEPNESS: 4,
