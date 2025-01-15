@@ -17,7 +17,7 @@ STEP_NUM = "step_num"
 # Simulation Advanced Parameters
 X_STEP_POSSIBILITY = "x_step_possibility"
 Y_STEP_POSSIBILITY = "y_step_possibility"
-SIGMOID_STEEPNESS = "sigmoid_gain"
+SIGMOID_STEEPNESS = "sigmoid_steepness"
 SIGMOID_SHIFT = "sigmoid_shift"
 SIGMOID_HEIGHT = "sigmoid_height"
 SIGMA = "sigma"
@@ -56,12 +56,12 @@ SUBSTRATE_TYPE = "substrate_type"
 ROWS = "rows"
 COLS = "cols"
 # -----------   Continuous  -----------
-CONT_GRAD_R_STEEPNESS = "cont_grad_r_steepness"
-CONT_GRAD_L_STEEPNESS = "cont_grad_l_steepness"
-CONT_GRAD_R_MIN = "cont_grad_r_min"
-CONT_GRAD_L_MIN = "cont_grad_l_min"
-CONT_GRAD_R_MAX = "cont_grad_r_max"
-CONT_GRAD_L_MAX = "cont_grad_l_max"
+CONT_GRAD_R_STEEPNESS = "continuous_receptor_steepness"
+CONT_GRAD_L_STEEPNESS = "continuous_ligand_steepness"
+CONT_GRAD_R_MIN = "continuous_receptor_start"
+CONT_GRAD_L_MIN = "continuous_ligand_start"
+CONT_GRAD_R_MAX = "continuous_receptor_end"
+CONT_GRAD_L_MAX = "continuous_ligand_end"
 # -----------   Wedges  -----------
 WEDGE_NARROW_EDGE = "wedge_narrow_edge"
 WEDGE_WIDE_EDGE = "wedge_wide_edge"
@@ -193,6 +193,7 @@ default_configs = {
         REVERSE_SIG: True,
         FF_INTER: True,
         FT_INTER: True,
+        CIS_INTER: True,
         ADAPTATION_ENABLED: True,
         ADAPTATION_MU: 0.01,
         ADAPTATION_LAMBDA: 0.0045,
@@ -202,10 +203,10 @@ default_configs = {
         COLS: 100,
         CONT_GRAD_R_MIN: 0.01,
         CONT_GRAD_L_MIN: 0.01,
-        CONT_GRAD_R_MAX: 1,
-        CONT_GRAD_L_MAX: 1,
-        CONT_GRAD_R_STEEPNESS: 1,
-        CONT_GRAD_L_STEEPNESS: 1
+        CONT_GRAD_R_MAX: 0.99,
+        CONT_GRAD_L_MAX: 0.99,
+        CONT_GRAD_R_STEEPNESS: 1.4,
+        CONT_GRAD_L_STEEPNESS: 1.4
     },
     "WEDGES": {
         GC_COUNT: 10,
@@ -229,6 +230,7 @@ default_configs = {
         REVERSE_SIG: True,
         FF_INTER: True,
         FT_INTER: True,
+        CIS_INTER: True,
         ADAPTATION_ENABLED: False,
         SUBSTRATE_TYPE: WEDGES,
         ROWS: 96,
@@ -258,6 +260,7 @@ default_configs = {
         REVERSE_SIG: True,
         FF_INTER: True,
         FT_INTER: True,
+        CIS_INTER: True,
         ADAPTATION_ENABLED: False,
         SUBSTRATE_TYPE: STRIPE,
         ROWS: 150,
@@ -289,6 +292,7 @@ default_configs = {
         REVERSE_SIG: True,
         FF_INTER: True,
         FT_INTER: True,
+        CIS_INTER: True,
         ADAPTATION_ENABLED: True,
         ADAPTATION_MU: 0.01,
         ADAPTATION_LAMBDA: 0.0045,
