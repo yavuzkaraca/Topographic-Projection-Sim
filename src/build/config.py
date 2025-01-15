@@ -17,15 +17,9 @@ STEP_NUM = "step_num"
 # Simulation Advanced Parameters
 X_STEP_POSSIBILITY = "x_step_possibility"
 Y_STEP_POSSIBILITY = "y_step_possibility"
-SIGMOID_STEEPNESS = "sigmoid_gain"
+SIGMOID_STEEPNESS = "sigmoid_steepness"
 SIGMOID_SHIFT = "sigmoid_shift"
 SIGMOID_HEIGHT = "sigmoid_height"
-GC_R_STEEPNESS = "gc_r_steepness"
-GC_L_STEEPNESS = "gc_l_steepness"
-GC_R_MIN = "gc_r_min"
-GC_L_MIN = "gc_l_min"
-GC_R_MAX = "gc_r_max"
-GC_L_MAX = "gc_l_max"
 SIGMA = "sigma"
 FORCE = "force"
 FORWARD_SIG = "forward_sig"
@@ -34,6 +28,13 @@ FF_INTER = "ff_inter"
 FT_INTER = "ft_inter"
 CIS_INTER = "cis_inter"
 
+# Growth Cones
+GC_R_STEEPNESS = "receptor_steepness"
+GC_L_STEEPNESS = "ligand_steepness"
+GC_R_MIN = "receptor_min"
+GC_L_MIN = "ligand_min"
+GC_R_MAX = "receptor_max"
+GC_L_MAX = "ligand_max"
 
 # Adaptation
 ADAPTATION_ENABLED = "adaptation_enabled"
@@ -48,17 +49,18 @@ STRIPE = "stripe"
 GAP = "gap"
 GAP_INV = "gap_inv"
 
+
 # Substrate Parameters
 SUBSTRATE_TYPE = "substrate_type"
 ROWS = "rows"
 COLS = "cols"
 # -----------   Continuous  -----------
-CONT_GRAD_R_STEEPNESS = "cont_grad_r_steepness"
-CONT_GRAD_L_STEEPNESS = "cont_grad_l_steepness"
-CONT_GRAD_R_MIN = "cont_grad_r_min"
-CONT_GRAD_L_MIN = "cont_grad_l_min"
-CONT_GRAD_R_MAX = "cont_grad_r_max"
-CONT_GRAD_L_MAX = "cont_grad_l_max"
+CONT_GRAD_R_STEEPNESS = "continuous_receptor_steepness"
+CONT_GRAD_L_STEEPNESS = "continuous_ligand_steepness"
+CONT_GRAD_R_MIN = "continuous_receptor_start"
+CONT_GRAD_L_MIN = "continuous_ligand_start"
+CONT_GRAD_R_MAX = "continuous_receptor_end"
+CONT_GRAD_L_MAX = "continuous_ligand_end"
 # -----------   Wedges  -----------
 WEDGE_NARROW_EDGE = "wedge_narrow_edge"
 WEDGE_WIDE_EDGE = "wedge_wide_edge"
@@ -94,7 +96,7 @@ simulation_advanced = {
     SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
     SIGMOID_HEIGHT: 1,
-    SIGMA: 0.12,
+    SIGMA: 0.06,
     FORCE: False,
     FORWARD_SIG: True,
     REVERSE_SIG: True,
@@ -173,17 +175,24 @@ default_configs = {
         GC_SIZE: 3,
         STEP_SIZE: 1,
         STEP_NUM: 5000,  # 8000
+        GC_R_STEEPNESS: 1.5,
+        GC_L_STEEPNESS: 1.5,
+        GC_R_MIN: 0.01,
+        GC_L_MIN: 0.01,
+        GC_R_MAX: 2.99,
+        GC_L_MAX: 2.99,
         X_STEP_POSSIBILITY: 0.55,
         Y_STEP_POSSIBILITY: 0.50,
         SIGMOID_STEEPNESS: 4,
         SIGMOID_SHIFT: 3,
         SIGMOID_HEIGHT: 1,
-        SIGMA: 0.12,
+        SIGMA: 0.06,
         FORCE: False,
         FORWARD_SIG: True,
         REVERSE_SIG: True,
         FF_INTER: True,
         FT_INTER: True,
+        CIS_INTER: True,
         ADAPTATION_ENABLED: True,
         ADAPTATION_MU: 0.01,
         ADAPTATION_LAMBDA: 0.0045,
@@ -193,27 +202,34 @@ default_configs = {
         COLS: 100,
         CONT_GRAD_R_MIN: 0.01,
         CONT_GRAD_L_MIN: 0.01,
-        CONT_GRAD_R_MAX: 1,
-        CONT_GRAD_L_MAX: 1,
-        CONT_GRAD_R_STEEPNESS: 1,
-        CONT_GRAD_L_STEEPNESS: 1
+        CONT_GRAD_R_MAX: 0.99,
+        CONT_GRAD_L_MAX: 0.99,
+        CONT_GRAD_R_STEEPNESS: 1.4,
+        CONT_GRAD_L_STEEPNESS: 1.4
     },
     "WEDGES": {
         GC_COUNT: 10,
         GC_SIZE: 10,
         STEP_SIZE: 1,
         STEP_NUM: 8000,
+        GC_R_STEEPNESS: 1.5,
+        GC_L_STEEPNESS: 1.5,
+        GC_R_MIN: 0.01,
+        GC_L_MIN: 0.01,
+        GC_R_MAX: 2.99,
+        GC_L_MAX: 2.99,
         X_STEP_POSSIBILITY: 0.55,
         Y_STEP_POSSIBILITY: 0.50,
         SIGMOID_STEEPNESS: 4,
         SIGMOID_SHIFT: 3,
         SIGMOID_HEIGHT: 1,
-        SIGMA: 0.12,
+        SIGMA: 0.06,
         FORCE: False,
         FORWARD_SIG: True,
         REVERSE_SIG: True,
         FF_INTER: True,
         FT_INTER: True,
+        CIS_INTER: True,
         ADAPTATION_ENABLED: False,
         SUBSTRATE_TYPE: WEDGES,
         ROWS: 96,
@@ -226,17 +242,24 @@ default_configs = {
         GC_SIZE: 10,
         STEP_SIZE: 1,
         STEP_NUM: 8000,
+        GC_R_STEEPNESS: 1.5,
+        GC_L_STEEPNESS: 1.5,
+        GC_R_MIN: 0.01,
+        GC_L_MIN: 0.01,
+        GC_R_MAX: 2.99,
+        GC_L_MAX: 2.99,
         X_STEP_POSSIBILITY: 0.55,
         Y_STEP_POSSIBILITY: 0.50,
         SIGMOID_STEEPNESS: 4,
         SIGMOID_SHIFT: 3,
         SIGMOID_HEIGHT: 1,
-        SIGMA: 0.12,
+        SIGMA: 0.06,
         FORCE: False,
         FORWARD_SIG: True,
         REVERSE_SIG: True,
         FF_INTER: True,
         FT_INTER: True,
+        CIS_INTER: True,
         ADAPTATION_ENABLED: False,
         SUBSTRATE_TYPE: STRIPE,
         ROWS: 150,
@@ -251,17 +274,24 @@ default_configs = {
         GC_SIZE: 5,
         STEP_SIZE: 2,
         STEP_NUM: 8000,
+        GC_R_STEEPNESS: 1.5,
+        GC_L_STEEPNESS: 1.5,
+        GC_R_MIN: 0.01,
+        GC_L_MIN: 0.01,
+        GC_R_MAX: 2.99,
+        GC_L_MAX: 2.99,
         X_STEP_POSSIBILITY: 0.55,
         Y_STEP_POSSIBILITY: 0.50,
         SIGMOID_STEEPNESS: 4,
         SIGMOID_SHIFT: 3,
         SIGMOID_HEIGHT: 1,
-        SIGMA: 0.12,
+        SIGMA: 0.06,
         FORCE: False,
         FORWARD_SIG: True,
         REVERSE_SIG: True,
         FF_INTER: True,
         FT_INTER: True,
+        CIS_INTER: True,
         ADAPTATION_ENABLED: True,
         ADAPTATION_MU: 0.01,
         ADAPTATION_LAMBDA: 0.0045,

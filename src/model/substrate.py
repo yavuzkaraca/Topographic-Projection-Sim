@@ -128,7 +128,6 @@ class ContinuousGradientSubstrate(BaseSubstrate):
             self.receptors[row, :] = receptor_gradient
 
 
-
 class WedgeSubstrate(BaseSubstrate):
     def __init__(self, rows, cols, offset, **kwargs):
         # Initialize the superclass with all given keyword arguments
