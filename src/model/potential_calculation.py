@@ -16,6 +16,8 @@ def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inte
     ft_ligands, ft_receptors = (0, 0)
     ff_ligands, ff_receptors = (0, 0)
     ff_coef = 0
+    gc_receptor_sum = gc.receptor_current * gc.radius * gc.radius * math.pi
+    gc_ligand_sum = gc.ligand_current * gc.radius * gc.radius * math.pi
 
     # Compute interactions only if needed
     if ft_inter_on:
@@ -27,9 +29,9 @@ def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inte
     # Calculate the forward and reverse signals based on flags
     forward_sig = reverse_sig = 0
     if forward_on:
-        forward_sig = gc.receptor_current * (ft_ligands + (gc.ligand_current if cis_inter_on else 0) + (ff_coef * ff_ligands))
+        forward_sig = gc_receptor_sum * (ft_ligands + (gc_ligand_sum if cis_inter_on else 0) + (ff_coef * ff_ligands))
     if reverse_on:
-        reverse_sig = gc.ligand_current * (ft_receptors + (gc.receptor_current if cis_inter_on else 0) + (ff_coef * ff_receptors))
+        reverse_sig = gc_ligand_sum * (ft_receptors + (gc_receptor_sum if cis_inter_on else 0) + (ff_coef * ff_receptors))
 
     # Round and calculate the potential
     forward_sig = float("{:.6f}".format(forward_sig))
@@ -48,7 +50,7 @@ def ft_interaction(gc, pos, substrate):
     Calculate fiber-target interaction between a growth cone and a substrate.
     """
 
-    borders = bounding_box(pos, gc.size, substrate)
+    borders = bounding_box(pos, gc.radius, substrate)
 
     # Needed to ensure the circular modelling of growth cones
     edge_length = abs(borders[2] - borders[3])
@@ -82,8 +84,8 @@ def ff_interaction(gc1, pos, gcs):
             # Eliminate self from the gcs list, as self-comparison always matches
             continue
         d = euclidean_distance(gc2.pos, pos)
-        if d < gc1.size * 2:
-            area = intersection_area(pos, gc2.pos, gc1.size)
+        if d < gc1.radius * 2:
+            area = intersection_area(pos, gc2.pos, gc1.radius)
             sum_ligands += area * gc2.ligand_current
             sum_receptors += area * gc2.receptor_current
 

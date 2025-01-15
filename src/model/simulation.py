@@ -159,7 +159,7 @@ class Simulation:
         xt_direction *= self.step_size
         yt_direction *= self.step_size
 
-        return clamp_to_boundaries(gc.pos, self.substrate, gc.size, xt_direction, yt_direction)
+        return clamp_to_boundaries(gc.pos, self.substrate, gc.radius, xt_direction, yt_direction)
 
 
 """

@@ -12,7 +12,7 @@ class GrowthCone:
         pos_start (tuple): Initial position of the growth cone.
         pos (tuple): Center point of the circular modeled growth cone (x, y coordinates).
         pos_new (tuple): New position proposal (used for step decision).
-        size (int): Radius of the growth cone.
+        radius (int): Radius of the growth cone.
         ligand_current (float): Ligand value of growth cone.
         receptor_current (float): Receptor value of growth cone.
         potential (float): Current potential of the growth cone.
@@ -20,7 +20,7 @@ class GrowthCone:
 
     def __init__(self, position, size, ligand, receptor, id, freeze=False, marked=False):
         self.pos = position
-        self.size = size
+        self.radius = size
         self.ligand_current = ligand
         self.receptor_current = receptor
         self.potential = 0
