@@ -192,7 +192,8 @@ def clamp_to_boundaries(position, substrate, size, xt_direction, yt_direction):
 
 
 def probabilistic_density(potential, sigma):
-    return math.exp(-potential**2 / (sigma**2))  # simplified version
+    return math.exp(-potential**2/ sigma) # even more simplified
+    # return math.exp(-potential**2 / (sigma**2))  # simplified version
     # return math.exp(-potential ** 2 / (2 * sigma ** 2)) / (math.sqrt(2 * math.pi) * sigma)
 
 
