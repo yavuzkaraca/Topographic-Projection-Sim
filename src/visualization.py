@@ -113,10 +113,13 @@ def visualize_projection(result, substrate, fit_type="linear", halved=False, mut
 
     fig = visualize_data_points(x_values_normalized, y_values_normalized, "% a-p Axis of Target",
                                 "% n-t Axis of Retina", "Projection Mapping")
-    if fit_type == "linear":
-        add_linear_regression(x_values_normalized, y_values_normalized)
-    elif fit_type == "polyfit":
-        add_polynomial_fit(x_values_normalized, y_values_normalized, mutated_indexes)
+    try:
+        if fit_type == "linear":
+            add_linear_regression(x_values_normalized, y_values_normalized)
+        elif fit_type == "polyfit":
+            add_polynomial_fit(x_values_normalized, y_values_normalized, mutated_indexes)
+    except (ValueError) as e:
+        print ("could not calculate linear regression")
 
     plt.legend()
     return fig
