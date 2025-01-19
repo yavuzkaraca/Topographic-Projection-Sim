@@ -56,25 +56,25 @@ class BaseSubstrate:
         result += str(receptors_df)
         return result
 
-    def set_col_ligand_only(self, col):
-        self.ligands[:, col] = np.ones(self.rows)
+    def set_col_ligand_only(self, col, conc):
+        self.ligands[:, col] = np.full(self.rows, conc)
         self.receptors[:, col] = np.zeros(self.rows)
 
-    def set_col_receptor_only(self, col):
+    def set_col_receptor_only(self, col, conc):
         self.ligands[:, col] = np.zeros(self.rows)
-        self.receptors[:, col] = np.ones(self.rows)
+        self.receptors[:, col] = np.full(self.rows, conc)
 
     def set_col_empty(self, col):
         self.ligands[:, col] = np.zeros(self.rows)
         self.receptors[:, col] = np.zeros(self.rows)
 
-    def set_row_ligand_only(self, row):
-        self.ligands[row, :] = np.ones(self.cols)
+    def set_row_ligand_only(self, row, ligand_conc):
+        self.ligands[row, :] = np.full(self.cols, ligand_conc)
         self.receptors[row, :] = np.zeros(self.cols)
 
-    def set_row_receptor_only(self, row):
+    def set_row_receptor_only(self, row, receptor_conc):
         self.ligands[row, :] = np.zeros(self.cols)
-        self.receptors[row, :] = np.ones(self.cols)
+        self.receptors[row, :] = np.full(self.cols, receptor_conc)
 
     def set_row_empty(self, row):
         self.ligands[row, :] = np.zeros(self.cols)
@@ -187,7 +187,8 @@ class StripeSubstrate(BaseSubstrate):
         super().__init__(rows, cols, offset, **kwargs)
         self.fwd = kwargs.get('fwd')
         self.rew = kwargs.get('rew')
-        self.conc = kwargs.get('conc')  # TODO: @Feature implement concentration
+        self.ligand_conc = kwargs.get('ligand_conc')  # TODO: @Feature implement concentration
+        self.receptor_conc = kwargs.get('receptor_conc')
         self.width = kwargs.get('width')
 
     def initialize_substrate(self):
@@ -195,11 +196,11 @@ class StripeSubstrate(BaseSubstrate):
             if (row // self.width) % 2 == 0:
                 # Even stripe: Set ligands and clear receptors
                 if self.fwd:
-                    self.set_row_ligand_only(row)
+                    self.set_row_ligand_only(row, self.ligand_conc)
             else:
                 # Odd stripe: Clear ligands and set receptors
                 if self.rew:
-                    self.set_row_receptor_only(row)
+                    self.set_row_receptor_only(row, self.receptor_conc)
 
 
 class GapSubstrate(BaseSubstrate):
@@ -210,28 +211,30 @@ class GapSubstrate(BaseSubstrate):
         self.end = kwargs.get('end')
         self.first_block = kwargs.get('first_block')
         self.second_block = kwargs.get('second_block')
+        self.first_block_conc = kwargs.get('first_block_conc')
+        self.second_block_conc = kwargs.get('second_block_conc')
 
     def initialize_substrate(self):
         first_part = int(self.cols * self.begin)
         second_part = first_part + int(self.cols * self.end)
 
-        # First third: Filled with Signals
+        # First part: Filled with Signals
         for col in range(first_part):
             if self.first_block == config.LIGAND:
-                self.set_col_ligand_only(col)
+                self.set_col_ligand_only(col, self.first_block_conc)
             else:
-                self.set_col_receptor_only(col)
+                self.set_col_receptor_only(col, self.first_block_conc)
 
-        # Second third: Empty
+        # Gap: Empty
         for col in range(first_part, second_part):
             self.set_col_empty(col)
 
-        # Final third: Filled with Signals
+        # Final part: Filled with Signals
         for col in range(second_part, self.cols):
             if self.second_block == config.LIGAND:
-                self.set_col_ligand_only(col)
+                self.set_col_ligand_only(col, self.second_block_conc)
             else:
-                self.set_col_receptor_only(col)
+                self.set_col_receptor_only(col, self.second_block_conc)
 
 
 class GapSubstrateInverted(GapSubstrate):
@@ -239,4 +242,8 @@ class GapSubstrateInverted(GapSubstrate):
         first_part = int(self.cols * self.begin)
         second_part = first_part + int(self.cols * self.end)
         for col in range(first_part, second_part):
-            self.set_col_receptor_only(col)
+            if self.first_block == config.LIGAND:
+                self.set_col_ligand_only(col, self.first_block_conc)
+            else:
+                self.set_col_receptor_only(col, self.first_block_conc)
+ # ToDo: initialize GAP_INV seperately

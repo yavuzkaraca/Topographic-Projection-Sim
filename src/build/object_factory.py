@@ -90,24 +90,30 @@ def build_substrate(config):
     elif substrate_type == cfg.STRIPE:
         stripe_fwd = config.get(cfg.STRIPE_FWD)
         stripe_rew = config.get(cfg.STRIPE_REW)
-        stripe_conc = config.get(cfg.STRIPE_CONC)
+        stripe_ligand_conc = config.get(cfg.STRIPE_LIGAND_CONC)
+        stripe_receptor_conc = config.get(cfg.STRIPE_RECEPTOR_CONC)
         stripe_width = config.get(cfg.STRIPE_WIDTH)
-        substrate = StripeSubstrate(rows, cols, offset, fwd=stripe_fwd, rew=stripe_rew, conc=stripe_conc,
-                                    width=stripe_width)
+        substrate = StripeSubstrate(rows, cols, offset, fwd=stripe_fwd, rew=stripe_rew, ligand_conc=stripe_ligand_conc,
+                                    receptor_conc=stripe_receptor_conc, width=stripe_width)
 
     elif substrate_type == cfg.GAP:
         gap_begin = config.get(cfg.GAP_BEGIN)
         gap_end = config.get(cfg.GAP_END)
         gap_first_block = config.get(cfg.GAP_FIRST_BLOCK)
         gap_second_block = config.get(cfg.GAP_SECOND_BLOCK)
+        gap_first_block_conc = config.get(cfg.GAP_FIRST_BLOCK_CONC)
+        gap_second_block_conc = config.get(cfg.GAP_SECOND_BLOCK_CONC)
         substrate = GapSubstrate(rows, cols, offset, begin=gap_begin, end=gap_end, first_block=gap_first_block,
-                                 second_block=gap_second_block)
+                                 second_block=gap_second_block, first_block_conc=gap_first_block_conc,
+                                 second_block_conc=gap_second_block_conc)
 
     elif substrate_type == cfg.GAP_INV:
         gap_begin = config.get(cfg.GAP_BEGIN)
         gap_end = config.get(cfg.GAP_END)
         gap_first_block = config.get(cfg.GAP_FIRST_BLOCK)
-        substrate = GapSubstrateInverted(rows, cols, offset, begin=gap_begin, end=gap_end, first_block=gap_first_block)
+        gap_first_block_conc = config.get(cfg.GAP_FIRST_BLOCK_CONC)
+        substrate = GapSubstrateInverted(rows, cols, offset, begin=gap_begin, end=gap_end, first_block=gap_first_block,
+                                         first_block_conc=gap_first_block_conc)
 
     else:
         raise ValueError("SubstrateType unknown")
