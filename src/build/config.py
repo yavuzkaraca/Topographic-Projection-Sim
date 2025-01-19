@@ -67,7 +67,8 @@ WEDGE_WIDE_EDGE = "wedge_wide_edge"
 # -----------   Stripe Assay  -----------
 STRIPE_FWD = "stripe_fwd"
 STRIPE_REW = "stripe_rew"
-STRIPE_CONC = "stripe_conc"
+STRIPE_LIGAND_CONC = "stripe_ligand_conc"
+STRIPE_RECEPTOR_CONC = "stripe_receptor_conc"
 STRIPE_WIDTH = "stripe_width"
 # -----------   Gap Assay   -----------
 GAP_BEGIN = "gap_begin"
@@ -76,6 +77,8 @@ LIGAND = "ligand"
 RECEPTOR = "receptor"
 GAP_FIRST_BLOCK = "gap_first_block"
 GAP_SECOND_BLOCK = "gap_second_block"
+GAP_FIRST_BLOCK_CONC = "gap_first_block_conc"
+GAP_SECOND_BLOCK_CONC = "gap_second_block_conc"
 
 """
 --------------------------------------
@@ -140,7 +143,8 @@ stripe_substrate = {
     COLS: 150,
     STRIPE_FWD: True,
     STRIPE_REW: True,
-    STRIPE_CONC: 1,
+    STRIPE_LIGAND_CONC: 1,
+    STRIPE_RECEPTOR_CONC: 1,
     STRIPE_WIDTH: 12
 }
 
@@ -151,7 +155,9 @@ gap_substrate = {
     GAP_BEGIN: 0.5,
     GAP_END: 0.1,
     GAP_FIRST_BLOCK: LIGAND,
-    GAP_SECOND_BLOCK: RECEPTOR
+    GAP_SECOND_BLOCK: RECEPTOR,
+    GAP_FIRST_BLOCK_CONC: 1,
+    GAP_SECOND_BLOCK_CONC: 1,
 }
 
 gap_inv_substrate = {
@@ -161,6 +167,7 @@ gap_inv_substrate = {
     GAP_BEGIN: 0.4,
     GAP_END: 0.3,
     GAP_FIRST_BLOCK: RECEPTOR,
+    GAP_FIRST_BLOCK_CONC: 1
 }
 
 """
@@ -266,7 +273,8 @@ default_configs = {
         COLS: 150,
         STRIPE_FWD: True,
         STRIPE_REW: True,
-        STRIPE_CONC: 1,
+        STRIPE_LIGAND_CONC: 1,
+        STRIPE_RECEPTOR_CONC: 1,
         STRIPE_WIDTH: 12
     },
     "GAP": {
@@ -302,7 +310,9 @@ default_configs = {
         GAP_BEGIN: 0.5,
         GAP_END: 0.1,
         GAP_FIRST_BLOCK: LIGAND,
-        GAP_SECOND_BLOCK: RECEPTOR
+        GAP_SECOND_BLOCK: RECEPTOR,
+        GAP_FIRST_BLOCK_CONC: 1,
+        GAP_SECOND_BLOCK_CONC: 1
     },
 }
 
@@ -318,21 +328,21 @@ def get_default_config(substrate_type):
 """
 
 custom_config = {
-    GC_COUNT: 100,
-    GC_SIZE: 3,  # means there will be an input of 27 for a full sensor matrix at the moment
+    GC_COUNT: 12,
+    GC_SIZE: 3,
     STEP_SIZE: 1,
-    STEP_NUM: 1,
+    STEP_NUM: 15000,
     X_STEP_POSSIBILITY: 0.55,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
-    SIGMOID_HEIGHT: 5,
-    GC_R_STEEPNESS: 2,
-    GC_L_STEEPNESS: 2,
-    GC_R_MIN: 1,  # it is possible to use 0 -> Does this make sense
-    GC_L_MIN: 1,  # it is possible to use 0 -> Does this make sense
-    GC_R_MAX: 5,
-    GC_L_MAX: 5,
+    SIGMOID_HEIGHT: 1,
+    GC_R_STEEPNESS: 1.4,
+    GC_L_STEEPNESS: 1.4,
+    GC_R_MIN: 0.01,
+    GC_L_MIN: 0.01,
+    GC_R_MAX: 1,
+    GC_L_MAX: 1,
     SIGMA: 0.12,
     FORCE: False,
     FORWARD_SIG: True,
@@ -341,33 +351,35 @@ custom_config = {
     FT_INTER: True,
     CIS_INTER: True,
     ADAPTATION_ENABLED: True,
-    ADAPTATION_MU: 0.006,  # 0,006
-    ADAPTATION_LAMBDA: 0.0045,  # 0.0045
+    ADAPTATION_MU: 0.012,  # 0,006
+    ADAPTATION_LAMBDA: 0.0017,  # 0.0045
     ADAPTATION_HISTORY: 10,
     SUBSTRATE_TYPE: CONTINUOUS_GRADIENTS,
     ROWS: 100,
     COLS: 100,
 
     # Continuous substrate values
-    CONT_GRAD_R_STEEPNESS: 2,
-    CONT_GRAD_L_STEEPNESS: 2,
-    CONT_GRAD_R_MIN: 1,  # it is possible to use 0 -> Does this make sense
-    CONT_GRAD_L_MIN: 1,  # it is possible to use 0 -> Does this make sense
-    CONT_GRAD_R_MAX: 5,
-    CONT_GRAD_L_MAX: 5,
+    CONT_GRAD_R_STEEPNESS: 1.4,
+    CONT_GRAD_L_STEEPNESS: 1.4,
+    CONT_GRAD_R_MIN: 0.03,  # it is possible to use 0 -> Does this make sense
+    CONT_GRAD_L_MIN: 0.1,  # it is possible to use 0 -> Does this make sense
+    CONT_GRAD_R_MAX: 10,
+    CONT_GRAD_L_MAX: 10,
 
     # Stripe substrate values
     STRIPE_FWD: True,
     STRIPE_REW: True,
-    STRIPE_CONC: 1,
+    STRIPE_LIGAND_CONC: 0.5,
+    STRIPE_RECEPTOR_CONC: 1,
     STRIPE_WIDTH: 6.625,
 
     # Gap substrate Values
-    GAP_BEGIN: 0.8,
+    GAP_BEGIN: 0.6,
     GAP_END: 0.05,
-    GAP_FIRST_BLOCK: RECEPTOR,
-    GAP_SECOND_BLOCK: RECEPTOR,
-
+    GAP_FIRST_BLOCK: LIGAND,
+    GAP_SECOND_BLOCK: LIGAND,
+    GAP_FIRST_BLOCK_CONC: 4,
+    GAP_SECOND_BLOCK_CONC: 4
 }
 
 """
