@@ -192,9 +192,8 @@ def clamp_to_boundaries(position, substrate, size, xt_direction, yt_direction):
 
 
 def probabilistic_density(potential, sigma):
-    return math.exp(-potential**2/ sigma) # even more simplified
-    # return math.exp(-potential**2 / (sigma**2))  # simplified version
-    # return math.exp(-potential ** 2 / (2 * sigma ** 2)) / (math.sqrt(2 * math.pi) * sigma)
+    # let this function as it is for now, it is already pretty intuitive if you know sigma is the standard deviation
+    return math.exp(-potential ** 2 / (2 * sigma ** 2)) / (math.sqrt(2 * math.pi) * sigma)
 
 
 def calculate_step_probability(old_prob, new_prob):
