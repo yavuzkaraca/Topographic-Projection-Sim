@@ -328,11 +328,11 @@ def get_default_config(substrate_type):
 """
 
 custom_config = {
-    GC_COUNT: 12,
+    GC_COUNT: 20,
     GC_SIZE: 3,
     STEP_SIZE: 1,
     STEP_NUM: 15000,
-    X_STEP_POSSIBILITY: 0.55,
+    X_STEP_POSSIBILITY: 0.6,
     Y_STEP_POSSIBILITY: 0.50,
     SIGMOID_STEEPNESS: 4,
     SIGMOID_SHIFT: 3,
@@ -361,10 +361,10 @@ custom_config = {
     # Continuous substrate values
     CONT_GRAD_R_STEEPNESS: 1.4,
     CONT_GRAD_L_STEEPNESS: 1.4,
-    CONT_GRAD_R_MIN: 0.03,  # it is possible to use 0 -> Does this make sense
-    CONT_GRAD_L_MIN: 0.1,  # it is possible to use 0 -> Does this make sense
-    CONT_GRAD_R_MAX: 10,
-    CONT_GRAD_L_MAX: 10,
+    CONT_GRAD_R_MIN: 0.27,  # it is possible to use 0 -> Does this make sense
+    CONT_GRAD_L_MIN: 0.27,  # it is possible to use 0 -> Does this make sense
+    CONT_GRAD_R_MAX: 27,
+    CONT_GRAD_L_MAX: 27,
 
     # Stripe substrate values
     STRIPE_FWD: True,
@@ -376,10 +376,10 @@ custom_config = {
     # Gap substrate Values
     GAP_BEGIN: 0.6,
     GAP_END: 0.05,
-    GAP_FIRST_BLOCK: LIGAND,
-    GAP_SECOND_BLOCK: LIGAND,
-    GAP_FIRST_BLOCK_CONC: 4,
-    GAP_SECOND_BLOCK_CONC: 4
+    GAP_FIRST_BLOCK: RECEPTOR,
+    GAP_SECOND_BLOCK: RECEPTOR,
+    GAP_FIRST_BLOCK_CONC: 2,
+    GAP_SECOND_BLOCK_CONC: 2
 }
 
 """
