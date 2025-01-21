@@ -15,7 +15,7 @@ and balancing of forward and reverse signaling as the driving forces of adaptive
 - "Ephrin-A/EphA specific co-adaptation as a novel mechanism in topographic axon guidance" by Fiederling et al., eLife, 2017. [Read the paper](http://dx.doi.org/10.7554/eLife.25533)
 
 ## Acknowledgments
-Special thanks to Dr. Franco Weth from KIT's Department of Neurobiology for his expert guidance throughout this project.
+Special thanks to Dr. Franco Weth from KIT's Department of Neurobiology for his expert guidance throughout this project. Additional thanks to Fynn Burger for helping with the implementation of several parameters, identifying/fixing bugs and analyzing the simulation logic.
 
 ## Features
 - **Implemented in Python**: Completely reworked and refined in Python for improved accessibility, cleaner software design and enhanced performance.
