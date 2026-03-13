@@ -39,19 +39,19 @@ main.py                      Entry point for running simulations
 
 ## Getting Started
 
-### Installation
+Installation:
 ```bash
 git clone git@github.com:yavuzkaraca/Topographic-Projection-Sim.git
 cd Topographic-Projection-Sim
 pip install -r requirements.txt
 ```
 
-### Running Simulations
+Running Simulations:
 ```bash
 python main.py
 ```
 
-### Configuring Simulations
+
 Simulation parameters are defined in the `config.py` file. 
 
 - **Line ~270**: `custom_config` — modify parameters here to run your own configuration.
