@@ -118,6 +118,9 @@ class GrowthCone:
 
 
 class History:
+    """
+    Represents a history of the Growth Cone object by storing all the past data
+    """
     def __init__(self, potential_ini, adap_co_ini, position_ini, ligand_ini, receptor_ini,
                  reset_force_receptor_ini, reset_force_ligand_ini):
         self.potential = [potential_ini]

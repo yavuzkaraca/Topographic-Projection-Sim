@@ -1,6 +1,5 @@
 """
-Module providing all methods needed for guidance potential calculation. Implemented in the paradigm of functional
-programming to ensure correct behaviour and full test coverage
+Module providing all methods needed for guidance potential calculation.
 """
 
 import math
@@ -42,10 +41,12 @@ def calculate_potential(gc, pos, gcs, substrate, forward_on, reverse_on, ff_inte
     forward_sig = float("{:.6f}".format(forward_sig))
     reverse_sig = float("{:.6f}".format(reverse_sig))
 
-    # Return calculated log difference or handle case when both signals are zero
-    if forward_sig == 0 and reverse_sig == 0:
-        return 0  # Both signals zero would lead to log(0), handle this case as zero potential difference
-    return abs(math.log(reverse_sig or 0.0001) - math.log(forward_sig or 0.0001))
+    # Ensure signals are strictly positive
+    forward_sig = max(forward_sig, 0.0001)
+    reverse_sig = max(reverse_sig, 0.0001)
+
+    # Calculate and return the potential
+    return abs(math.log(reverse_sig) - math.log(forward_sig))
 
 
 def ft_interaction(gc, pos, substrate):
@@ -150,10 +151,8 @@ def intersection_area(gc1_pos, gc2_pos, radius):
         # No overlap
         return 0
     else:
-        # Partial overlap
-        x = (d ** 2) / (2 * d)
-        z = x ** 2
-        y = math.sqrt(radius ** 2 - z)
-        area = radius ** 2 * math.acos(x / radius) - x * y
-        # TODO: @Clean clean-fix area calculation
-        return area * 1.5  # magic number for quick dirty fix
+        # Check figure intersection_area for visualization: sector = PBDC, triangle = PBEC
+        sector = radius ** 2 * math.acos(d / (2 * radius))
+        triangle = 0.5 * d * math.sqrt(4 * radius ** 2 - d ** 2)
+        return (sector - triangle) * 2
+
